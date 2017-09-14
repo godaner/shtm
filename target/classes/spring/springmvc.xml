@@ -1,0 +1,179 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                        http://www.springframework.org/schema/beans/spring-beans.xsd  
+                        http://www.springframework.org/schema/mvc  
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd  
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context.xsd">
+                 
+    <!-- *******************配置spring对控制层的管理 start******************* -->
+    
+	
+	
+	
+	
+	
+	
+	
+	<!-- 配置拦截器 start -->
+	<!-- 
+		注意：拦截器执行的顺序和配置顺序有关;
+		这是一个连接器链,前面的拦截器没有放行,后面的拦截器将不会被执行;
+	-->
+	<mvc:interceptors>
+		<!-- **表示子孙包及类 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.zk.ssm.interceptor.UsersStatusInterceptor"></bean>
+		</mvc:interceptor>
+
+	</mvc:interceptors>
+	<!-- 配置拦截器 end -->	
+
+	
+	
+	
+	
+	
+	
+	
+	<!-- 配置springmvc在url-pattern为"/"时springmvc不会对静态资源的访问进行处理,直接放行 start -->
+	<mvc:resources location="/plugin/" mapping="/plugin/**"></mvc:resources>
+	<mvc:resources location="/js/" mapping="/js/**"></mvc:resources>
+	<mvc:resources location="/css/" mapping="/css/**"></mvc:resources>
+	<mvc:resources location="/img/" mapping="/img/**"></mvc:resources>
+	<!-- 配置springmvc在url-pattern为"/"时springmvc不会对静态资源的访问进行处理,直接放行 end -->
+	
+	
+	
+	
+	
+	
+	
+    <!-- *********配置试图解析器 start********* -->
+	<!-- *视图解析器 --> 
+	<!-- **解析jsp,默认使用jstl标签 -->            
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    	<property name="suffix" value=".jsp"></property>
+    	<property name="prefix" value="/WEB-INF/view/"></property>
+    </bean>
+    <!-- *********配置试图解析器 end********* -->
+    
+    
+    
+    
+     
+    
+    
+     
+    
+    <!-- *********配置全局异常处理器 start********* -->
+    <!-- springmvc会将继承HandlerExceptionResolver的类作为全局异常处理器,且全局异常处理器只有一个 -->
+    <bean class="com.zk.ssm.exception.ExceptionResolver"></bean>
+    <!-- *********配置全局异常处理器 end********* -->
+    
+    
+    
+    
+    
+    
+    
+   
+    <!-- *********配置注解驱动 start********* -->
+	<!-- 
+		*使用注解驱动可以代替注解映射器和注解适配器的配置;
+		默认加载了许多参数方法,比如json转化解析器(jackson);
+		实际开发用<mvc:annotation-driven></mvc:annotation-driven>
+		*conversion-service声明类型转换器
+		*validator声明校验器
+	-->
+	<mvc:annotation-driven conversion-service="conversionService" validator="validator"></mvc:annotation-driven>
+    <!-- *********配置注解驱动 end********* -->
+    
+    
+    
+    
+	
+	
+	
+	<!-- *********配置幻转换器 start********* -->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="com.zk.ssm.converter.IntegerConverter"></bean>
+			</list>
+		</property>
+	
+	</bean>
+	<!-- *********配置幻转换器 end********* -->
+	
+	
+	
+    
+    
+    
+    
+    
+    
+    <!-- *********配置controller的bean start********* -->
+    <!--       
+    	组件扫描,即将注解类加入spring容器;
+    	可以扫描controller,service..。
+	-->
+    <context:component-scan base-package="com.zk.ssm.controller"></context:component-scan>      
+    <!-- *********配置controller的bean end********* -->
+    
+
+    
+    
+    
+    
+    
+    
+    
+	<!-- *********配置校验器 start********* -->
+	<!-- 配置校验器 -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<!-- 此处配置的是hibernate校验器 -->
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator"></property>
+		<!-- 指定信息的配置文件,默认是ValidationMessage.properties -->		
+		<property name="validationMessageSource" ref="messageSource"></property>
+	
+	</bean>
+	<!-- 指定信息的配置文件 -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<!-- 资源文件名 -->
+		<property name="basenames">
+			<list>
+				<value>classpath:hibernate/validatorMessage</value>
+			</list>
+		</property>
+		<!-- 资源编码格式 -->
+		<property name="fileEncodings" value="utf-8"></property>
+		<!-- 对资源文件的缓存时间,单位秒 -->
+		<property name="cacheSeconds" value="120"></property>
+	</bean>
+	<!-- *********配置校验器 end********* -->   
+    
+    
+    
+    
+    
+    <!-- *********配置文件上传 start********* -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置文件上传最大尺寸为5m -->
+		<property name="maxUploadSize">
+			<value>5242880</value>
+		</property>
+	</bean>
+    <!-- *********配置文件上传 end********* -->
+    
+    
+    
+    
+    
+	<!-- *******************配置spring对控制层的管理 end******************* -->  
+</beans>  
