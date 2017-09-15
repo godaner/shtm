@@ -64,19 +64,6 @@
     
     
     
-     
-    
-    
-     
-    
-    <!-- *********配置全局异常处理器 start********* -->
-    <!-- springmvc会将继承HandlerExceptionResolver的类作为全局异常处理器,且全局异常处理器只有一个 -->
-    <bean class="com.zk.ssm.exception.ExceptionResolver"></bean>
-    <!-- *********配置全局异常处理器 end********* -->
-    
-    
-    
-    
     
     
     

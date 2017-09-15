@@ -1,0 +1,10 @@
+[{    
+    "id":1,    
+    "text":"用户管理",       
+    "state":"closed"   
+},
+{    
+    "id":2,    
+    "text":"商品管理",    
+    "state":"closed"   
+}]
