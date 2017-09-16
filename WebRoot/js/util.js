@@ -131,21 +131,22 @@ var ajax = {
 			/*重点*/
 			dataType : "json",
 			data : jsonStr,
-			success : function(data) {
+			success : function(data, textStatus) {
 				
 				//回调
 				if(success){
-					success(data);
+					success(data, textStatus);
 				}
 			},
-			error : function(data) {
-				a("ajax失败:" + data);
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				showMsg("连接服务器失败,请稍后尝试");
 				c("ajax失败:");
-				c(data);
-				
+				c(XMLHttpRequest);
+				c(textStatus);
+				c(errorThrown);
 				//回调
 				if(error){
-					error(data);
+					error(XMLHttpRequest, textStatus, errorThrown);
 				}
 			}
 		});

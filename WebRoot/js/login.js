@@ -59,7 +59,9 @@ function initLoginLis() {
 
 		ajax.sendForm(url, formObject, function(data) {
 			//连接到服务器后,回调index.js的函數
-			afterLogin(data);
+			afterLogin(data,true);
+		},function(data){//连接服务器错误
+			afterLogin(data,false);
 		});
 
 	});

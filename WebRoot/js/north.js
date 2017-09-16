@@ -52,7 +52,10 @@ function initNorthLis(){
 				url,
 				function(data){
 					//回调index.js的afterLogout
-					afterLogout(data);
+					afterLogout(data,true);
+				},function(data){
+					//回调index.js的afterLogout
+					afterLogout(data,false);
 				});
 	});
 }
@@ -93,10 +96,11 @@ function updateThemes(newThemeString) {
 			//设置主题
 			setLocalTheme(newThemeString);
 			
-			showMsg("同步主题成功");
+			showMsg(data.msg);
 			
-		},function(){
+		},function(data){
 			pro.close();
+			showMsg("同步主题失敗");
 		});
 	
 	

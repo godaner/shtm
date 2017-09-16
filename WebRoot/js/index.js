@@ -129,7 +129,18 @@ function loguting() {
 /**
  * north.js注销后的回调
  */
-function afterLogout(d) {
+function afterLogout(d,success) {
+	if(success == false){//连接服务其错误
+		//调用util.js的方法
+		pro.close();
+		
+		return;
+	}
+	//连接服务器成功
+	
+	//重设主题为默认defaultTheme在index.js
+	setLocalTheme(defaultTheme);
+	
 	//调用util.js的方法
 	pro.close();
 
@@ -148,7 +159,15 @@ function afterLogout(d) {
 /**
  * login.js登陸后回调的方法
  */
-function afterLogin(d) {
+function afterLogin(d,success) {
+	if(success == false){//连接服务其错误
+		//调用util.js的方法
+		pro.close();
+		//显示登录窗口
+		loginDialog.show();
+		return;
+	}
+	//连接服务器成功
 
 	//调用util.js的方法
 	showMsg(d.msg);
