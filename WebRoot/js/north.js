@@ -6,7 +6,7 @@
  * 变量申明
  */
 var logoutBtn;
-var adminUsernameDiv;
+var usernameDisplayer;
 $(function(){
 	
 	
@@ -23,7 +23,7 @@ $(function(){
  * 初始化变量
  */
 function initNorthVar(){
-	adminUsernameDiv = $("#adminUsernameDiv");
+	usernameDisplayer = $("#usernameDisplayer");
 	logoutBtn = $("#logoutBtn");
 	
 }
@@ -62,61 +62,58 @@ function initNorthLis(){
  * @param un
  */
 function setUsername(un){
-	adminUsernameDiv.html(un);
+	usernameDisplayer.html(un);
 	
 }
 
 
 
 /**
- * 修改主题，更新数据库数据
+ * 修改管理员的主题,并且同步远端
+ * @param newThemeString 	新的主题
+ * @param sync	是否更新数据库
+ *  
  */
 function updateThemes(newThemeString) {
 
-	/*zkAjax("/adminsAction!updateTheme.action?theme=" + newThemeString,
-			function(data) {
-				var success = data.success;
-				showMsg(data);
-				try {
-					isOnline(data);
-				} catch (e) {
-					return;
-				}
-				if (success) {
-					setThemes(newThemeString);
-				}
-			});*/
-	setThemes(newThemeString);
-}
+	
+	pro.show("正在同步主题");
+	
+	//执行ajax
+	var url = "/admins/updateTheme.action";
 
+	ajax.sendJson(
+		url, 
+		{theme:newThemeString}, 
+		function(data) {
+			
+			pro.close();
+		
+
+			//设置主题
+			setLocalTheme(newThemeString);
+			
+			showMsg("同步主题成功");
+			
+		},function(){
+			pro.close();
+		});
+	
+	
+	
+}
 /**
- * 设置主题
- * 将easyui导入主题的的css添加id为 easyuiTheme
+ * 设置本地主题
  * @param newThemeString
  */
-function setThemes(newThemeString) {
-
-	setTimeout(function() {
-		showProgress("正在加载主题");
-	}, 1);
-	setTimeout(function() {
-		/* 得到现有主题信息 */
-		/* ../jquery-easyui-1.4.1/themes/default/easyui.css */
-		var currtThemeString = $("#easyuiTheme").attr("href");
-		/* 得到替代结束位置 */
-		var replaceEndPosition = currtThemeString.indexOf("themes") + 7;
-		/* 替代就主题 */
-		var newTheme = currtThemeString.substring(0, replaceEndPosition)
-				+ newThemeString + "/easyui.css";
-		$("#easyuiTheme").attr("href", newTheme);
-		/* 保存cookkie主题信息 
-		$.cookie("easyuiTheme", newTheme, {
-			expires : 365,
-			path : '/'
-		});*/
-	}, 250);
-	setTimeout(function() {
-		closeProgress();
-	}, 500);
-
+function setLocalTheme(newThemeString){
+	//得到现有主题信息 
+	// ../jquery-easyui-1.4.1/themes/default/easyui.css 
+	var currtThemeString = $("#easyuiTheme").attr("href");
+	// 得到替代结束位置 
+	var replaceEndPosition = currtThemeString.indexOf("themes") + 7;
+	// 替代就主题 
+	var newTheme = currtThemeString.substring(0, replaceEndPosition)
+			+ newThemeString + "/easyui.css";
+	$("#easyuiTheme").attr("href", newTheme);
 }

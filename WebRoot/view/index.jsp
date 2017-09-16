@@ -9,7 +9,7 @@
 <title>SHTM</title>
 <link rel="stylesheet" type="text/css"
 	href="${baseUrl}/plugin/jquery-easyui-1.5.3/themes/bootstrap/easyui.css">
-<link rel="stylesheet" type="text/css"
+<link id="easyuiTheme" rel="stylesheet" type="text/css"
 	href="${baseUrl}/plugin/jquery-easyui-1.5.3/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}/css/global.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}/css/index.css">
@@ -32,8 +32,8 @@
 	<div class="easyui-layout" style="width: 100%; height: 100%;">
 
 		<!-- 北部 start -->
-		<div data-options="region:'north'" style="height: 100px;">
-			<div id="north_panel" style="width: 100%; height: 100%;"></div>
+		<div data-options="region:'north'" style="height: 80px;">
+			<div id="north_panel" style="overflow: hidden;width: 100%; height: 100%;"></div>
 		</div>
 		<!-- 北部 end -->
 
@@ -60,7 +60,6 @@
 		<div
 			data-options="region:'center',title:'Main Title',iconCls:'icon-ok'"
 			style="height: 100%;">
-			欢迎 ${sessionScope.onlineUser.username}
 			<div id="center_panel" style="width: 100%; height: 100%;"></div>	
 		</div>
 		<!-- 中部end -->
