@@ -129,6 +129,50 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 		} catch (Exception e) {
 			e.printStackTrace();
 			po.setResult(RESULT.FALSE);
+			
+			po.setMsg("注销失败");
+		}
+		
+		
+		return po;
+	}
+	/**
+	 * Title:
+	 * <p>
+	 * Description:更新主题
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月16日 下午4:28:49
+	 * @version 1.0
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/updateTheme")
+	public @ResponseBody CustomAdmins updateTheme(@RequestBody CustomAdmins po) throws IOException{
+		
+		try {
+			//获取id
+			CustomAdmins onlineAdmin = getSessionAttr(FILED_ONLINE_ADMIN);
+			
+			po.setId(onlineAdmin.getId());
+			
+			//更新
+			service.updateTheme(po);
+			
+			//更新session
+			
+			onlineAdmin.setTheme(po.getTheme());
+			
+			setSessionAttr(FILED_ONLINE_ADMIN, onlineAdmin);
+			
+			po.setResult(RESULT.TRUE);
+			
+			po.setMsg("主题同步成功");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			po.setResult(RESULT.FALSE);
+			po.setMsg("主题同步失败");
 		}
 		
 		

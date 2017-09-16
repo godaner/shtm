@@ -77,7 +77,13 @@ function loadIndexUI() {
 	var cd = true;
 	//获取index.jsp的onlineUser参数,判断用户数是否在线
 	if (onlineUsername == undefined || onlineUsername == "") {
+		//离线
 		cd = false;
+	}else{
+		//在线
+		setTimeout(function(){
+			setLocalTheme(onlineUserTheme);
+		}, 1);
 	}
 	login_dialog.dialog({
 		title : '登录',
@@ -161,6 +167,11 @@ function afterLogin(d) {
 	//如果连接服务器成功
 	//调用north.js的setUsername()加载用户名
 	setUsername(d.username);
+	
+	//调用north.js的加载主题
+	
+	setLocalTheme(d.theme);
+	
 
 }
 

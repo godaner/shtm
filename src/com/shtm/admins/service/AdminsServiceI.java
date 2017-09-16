@@ -24,4 +24,18 @@ public interface AdminsServiceI {
 	 * @throws Exception
 	 */
 	public CustomAdmins login(CustomAdmins po) throws Exception;
+	
+	/**
+	 * 
+	 * Title:updateTheme
+	 * <p>
+	 * Description:更新主题
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月16日 下午4:34:15
+	 * @version 1.0
+	 * @param po
+	 * @throws Exception
+	 */
+	public void updateTheme(CustomAdmins po)throws Exception;
 }

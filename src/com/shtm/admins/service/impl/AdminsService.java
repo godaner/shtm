@@ -6,13 +6,16 @@ import org.springframework.stereotype.Service;
 import com.shtm.admins.mapper.CustomAdminsMapper;
 import com.shtm.admins.po.CustomAdmins;
 import com.shtm.admins.service.AdminsServiceI;
+import com.shtm.mapper.AdminsMapper;
 import com.shtm.po.Admins;
+import com.shtm.po.AdminsExample;
+import com.shtm.po.AdminsExample.Criteria;
 import com.shtm.service.impl.BaseService;
 
 /**
- * Title:UsersService
+ * Title:AdminsService
  * <p>
- * Description:用户业务接口实现
+ * Description:管理员业务接口实现
  * <p>
  * @author Kor_Zhang
  * @date 2017年9月15日 上午10:44:41
@@ -23,6 +26,9 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	
 	@Autowired
 	private CustomAdminsMapper customAdminsMapper;
+
+	@Autowired
+	private AdminsMapper adminsMapper;
 	
 	@Override
 	public CustomAdmins login(CustomAdmins po) throws Exception {
@@ -41,8 +47,31 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		
 		eject(!dbAD.getPassword().equals(md5PW), "密码错误");
 		
+		//屏蔽关键信息
+		dbAD.setPassword("");
+		
+		dbAD.setSalt("");
 		
 		return (CustomAdmins) dbAD;
+		
+	}
+
+	@Override
+	public void updateTheme(CustomAdmins po) throws Exception {
+		
+		
+		//设置Example
+		AdminsExample ae = new AdminsExample();
+		
+		Criteria cc = ae.createCriteria();
+		
+		cc.andIdEqualTo(po.getId());
+		
+		//设置要更新的字段
+		po.setId(null);
+		
+		//执行更新
+		adminsMapper.updateByExampleSelective(po,ae );
 		
 	}
 

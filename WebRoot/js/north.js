@@ -107,6 +107,10 @@ function updateThemes(newThemeString) {
  * @param newThemeString
  */
 function setLocalTheme(newThemeString){
+	var theme = "default";
+	if(newThemeString != undefined && newThemeString != ""){
+		theme = newThemeString;
+	}	
 	//得到现有主题信息 
 	// ../jquery-easyui-1.4.1/themes/default/easyui.css 
 	var currtThemeString = $("#easyuiTheme").attr("href");
@@ -114,6 +118,6 @@ function setLocalTheme(newThemeString){
 	var replaceEndPosition = currtThemeString.indexOf("themes") + 7;
 	// 替代就主题 
 	var newTheme = currtThemeString.substring(0, replaceEndPosition)
-			+ newThemeString + "/easyui.css";
+			+ theme + "/easyui.css";
 	$("#easyuiTheme").attr("href", newTheme);
 }

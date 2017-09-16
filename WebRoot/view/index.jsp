@@ -7,9 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SHTM</title>
-<link rel="stylesheet" type="text/css"
-	href="${baseUrl}/plugin/jquery-easyui-1.5.3/themes/bootstrap/easyui.css">
 <link id="easyuiTheme" rel="stylesheet" type="text/css"
+	href="${baseUrl}/plugin/jquery-easyui-1.5.3/themes/bootstrap/easyui.css">
+<link rel="stylesheet" type="text/css"
 	href="${baseUrl}/plugin/jquery-easyui-1.5.3/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}/css/global.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}/css/index.css">
@@ -76,6 +76,8 @@
 <script type="text/javascript" >
 	/*在线用户的usernmae*/
 	var onlineUsername = '${sessionScope.onlineUser.username}';
+	/*在线用户的theme*/
+	var onlineUserTheme = '${sessionScope.onlineUser.theme}';
 </script>
 <script type="text/javascript"
 	src="${baseUrl}/js/index.js"></script>
