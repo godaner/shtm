@@ -8,66 +8,70 @@
 var verifyCodeImg;
 var loginBtn;
 var loginForm;
-$(function(){
-	
-	initVar();
-	
-	loadUI();
-	
+$(function() {
+
+	initLoginVar();
+
+	loadLoginUI();
+
 	/**
 	 * 监听事件
 	 */
-	initLis();
-	
-	
-	
-	
+	initLoginLis();
 
-	/**
-	 * 初始化变量
-	 */
-	function initVar(){
-		verifyCodeImg = $("#verifyCodeImg");
-		loginBtn = $("#loginBtn");
-		loginForm = $('#loginForm');
-	}
-	/**
-	 * 加载界面
-	 */
-	function loadUI(){
-
-	}
-	/**
-	 * 监听事件
-	 */
-	function initLis(){
-		/**
-		 * 点击验证码刷新
-		 */
-		verifyCodeImg.on("click",function(){
-			verifyCodeImg.attr("src",getWebProjectName()+"/admins/verifyCode.action?t="+(new Date().getTime()));
-			
-		});
-		/**
-		 * 点击登录按钮
-		 */
-		loginBtn.on("click",function(){
-			loginForm.form('submit', {    
-				url:getWebProjectName()+"/admins/login.action?t="+(new Date().getTime()),
-			    onSubmit: function(){    
-			    	return loginForm.form('validate');  
-			    },    
-			    success:function(data){    
-			    	a(data)
-			    }    
-			});   
-		});
-		
-
-		
-	}
-	
-	
-	
 });
 
+/**
+ * 初始化变量
+ */
+function initLoginVar() {
+	verifyCodeImg = $("#verifyCodeImg");
+	loginBtn = $("#loginBtn");
+	loginForm = $('#loginForm');
+}
+/**
+ * 加载界面
+ */
+function loadLoginUI() {
+
+}
+/**
+ * 监听事件
+ */
+function initLoginLis() {
+	/**
+	 * 点击验证码刷新
+	 */
+	verifyCodeImg.on("click", function() {
+		refreshVerifyCode();
+	});
+	/**
+	 * 点击登录按钮
+	 */
+	loginBtn.on("click", function() {
+		
+		//回调index.js的正在登录方法
+		loging();
+		//执行ajax
+		var url = "/admins/login.action";
+
+		var formObject = loginForm.serializeObject();
+
+		ajax.sendForm(url, formObject, function(data) {
+			//连接到服务器后,回调index.js的函數
+			afterLogin(data);
+		});
+
+	});
+
+}
+
+
+
+/**
+ * 刷新登录验证码
+ */
+function refreshVerifyCode() {
+	verifyCodeImg.attr("src", getWebProjectName()
+			+ "/admins/verifyCode.action?t=" + (new Date().getTime()));
+}

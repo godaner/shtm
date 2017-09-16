@@ -57,7 +57,7 @@
 	<!-- **解析jsp,默认使用jstl标签 -->            
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     	<property name="suffix" value=".jsp"></property>
-    	<property name="prefix" value="/WEB-INF/view/"></property>
+    	<property name="prefix" value="/view/"></property>
     </bean>
     <!-- *********配置试图解析器 end********* -->
     

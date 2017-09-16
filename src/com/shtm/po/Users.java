@@ -1,5 +1,6 @@
 package com.shtm.po;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Users {
@@ -21,7 +22,7 @@ public class Users {
 
     private String description;
 
-    private Double score;
+    private BigDecimal score;
 
     private Date registtime;
 
@@ -99,11 +100,11 @@ public class Users {
         this.description = description;
     }
 
-    public Double getScore() {
+    public BigDecimal getScore() {
         return score;
     }
 
-    public void setScore(Double score) {
+    public void setScore(BigDecimal score) {
         this.score = score;
     }
 

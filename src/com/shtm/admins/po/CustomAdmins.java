@@ -3,6 +3,7 @@ package com.shtm.admins.po;
 import org.springframework.stereotype.Component;
 
 import com.shtm.po.Admins;
+import com.shtm.util.Static;
 
 /**
  * Title:CustomAdmins
@@ -14,16 +15,35 @@ import com.shtm.po.Admins;
  * @version 1.0
  */
 @Component
-public class CustomAdmins extends Admins {
-	private Boolean loginSuccess = false;
+public class CustomAdmins extends Admins implements Static{
+	//操作结果
+	private Integer result = RESULT.FALSE;
 
+	//返回信息
 	private String msg = "未知信息";
-	public Boolean getLoginSuccess() {
-		return loginSuccess;
+	
+	//验证码
+	private String verifyCode;
+	
+	
+	
+	public String getVerifyCode() {
+		return verifyCode;
 	}
 
-	public void setLoginSuccess(Boolean loginSuccess) {
-		this.loginSuccess = loginSuccess;
+	public void setVerifyCode(String verifyCode) {
+		this.verifyCode = verifyCode;
+	}
+
+
+	
+
+	public Integer getResult() {
+		return result;
+	}
+
+	public void setResult(Integer result) {
+		this.result = result;
 	}
 
 	public String getMsg() {

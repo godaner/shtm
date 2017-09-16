@@ -1,12 +1,13 @@
 package com.shtm.po;
 
+import java.math.BigDecimal;
 
 public class Addrs {
     private String id;
 
     private String master;
 
-    private Double region;
+    private BigDecimal region;
 
     private String detail;
 
@@ -34,11 +35,11 @@ public class Addrs {
         this.master = master;
     }
 
-    public Double getRegion() {
+    public BigDecimal getRegion() {
         return region;
     }
 
-    public void setRegion(Double region) {
+    public void setRegion(BigDecimal region) {
         this.region = region;
     }
 

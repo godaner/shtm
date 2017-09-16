@@ -1,17 +1,83 @@
 /**
- * 封装console.info(msg);
+ * 表单转json
+ */
+$.fn.serializeObject = function() {
+	var o = {};
+	var a = this.serializeArray();
+	$.each(a, function() {
+		if (o[this.name]) {
+			if (!o[this.name].push) {
+				o[this.name] = [ o[this.name] ];
+			}
+			o[this.name].push(this.value || '');
+		} else {
+			o[this.name] = this.value || '';
+		}
+	});
+	return o;
+};
+
+/**
+ * 右下角提示信息
+ * 
  * @param msg
  */
-function c(msg){
-	
+function showMsg(m) {
+	// 消息将显示在顶部中间
+	$.messager.show({
+		title : '消息',
+		msg : m,
+		height : 170,
+		width : 300,
+		timeout : 5000,
+		showType : 'slide'
+	});
+
+}
+
+/**
+ * 进度条
+ */
+var pro = {
+	/**
+	 * 关闭进度条
+	 * 
+	 * @returns
+	 */
+	close : function() {
+		$.messager.progress('close');
+	},
+	/**
+	 * 中部进度条显示
+	 */
+	show : function(m) {
+		$.messager.progress({
+			title : "请稍等",
+			msg : m
+		});
+
+	}
+
+};
+
+
+/**
+ * 封装console.info(msg);
+ * 
+ * @param msg
+ */
+function c(msg) {
 	console.info(msg);
 }
 /**
  * 封装alert
+ * 
  * @param msg
  */
-function a(msg){
-	alert(msg);
+function a(msg) {
+	//alert(msg);
+	$.messager.alert('提示',msg);    
+
 }
 
 /**
@@ -24,12 +90,14 @@ var ajax = {
 	 * 
 	 * @param url
 	 *            不包含项目名的路径
-	 * @param callfun
-	 * 			  回调方法,第二个参数代表是否成功
+	 * @param success
+	 *            连接服务器成功回调方法
+	 * @param error
+	 *            连接服务器失败回调方法
 	 */
-	send : function(url, callfun) {
+	send : function(url, success,error) {
 
-		this.sendJson(url, {}, callfun);
+		this.sendJson(url, {}, success,error);
 	},
 
 	/**
@@ -37,26 +105,71 @@ var ajax = {
 	 * 
 	 * @param url
 	 *            不包含项目名的路径
-	 * @param callFun
-	 *            回调方法,第二个参数代表是否成功
+	 *            
+	 * @param jsObjectOrJsonStr
+	 * 			js对象或者json字符串
+	 *            不包含项目名的路径
+	 * @param success
+	 *            连接服务器成功回调方法
+	 * @param error
+	 *            连接服务器失败回调方法
 	 */
-	sendJson : function(url, jsonData, callfun) {
+	sendJson : function(url, jsObjectOrJsonStr,success,error) {
+		//假设jsObjectOrJsonStr是json字符
+		var jsonStr = jsObjectOrJsonStr;
+		//如果jsObjectOrJsonStr是js对象,转化为json字符串
+		if(typeof jsObjectOrJsonStr == "object"){
+			jsonStr = JSON.stringify(jsObjectOrJsonStr);
+		}
 
 		// 发送登陆请求
 		$.ajax({
 			type : "POST",
 			url : getWebProjectName() + url,
+			/*重点*/
+			contentType : "application/json;charset=utf-8",
+			/*重点*/
 			dataType : "json",
-			contentType : "application/json",
-			data : jsonData,
+			data : jsonStr,
 			success : function(data) {
-				callfun(data, true);
+				
+				//回调
+				if(success){
+					success(data);
+				}
 			},
 			error : function(data) {
-				alert("ajax失败");
-				callfun(data, false);
+				a("ajax失败:" + data);
+				c("ajax失败:");
+				c(data);
+				
+				//回调
+				if(error){
+					error(data);
+				}
 			}
 		});
+	},
+	/**
+	 * 将form表单的参数转化为json,发送ajax异步请求
+	 * 
+	 * @param url
+	 *            不包含项目名的路径
+	 * @param form 
+	 * 			  表单
+	 * @param success
+	 *            连接服务器成功回调方法
+	 * @param error
+	 *            连接服务器失败回调方法
+	 */
+	sendForm : function(url, form, success,error) {
+
+		var formObject = loginForm.serializeObject();
+
+		var jsonStr = JSON.stringify(formObject);
+		
+		this.sendJson(url, jsonStr, success,error);
+
 	}
 
 };
@@ -134,17 +247,15 @@ function getCurrtRowData(datagrid, index) {
  * 
  * eg. ---------转化前的form.serializeArray()-------- [ {name: 'firstname',
  * value: 'Hello'}, {name: 'lastname', value: 'World'}, {name: 'alias'}, //
- * this one was empty ] -------------转化后的结果为对象obj------------------
- *  { firstname: 'Hello', lastname: 'World', alias:''
- *  }
+ * this one was empty ] -------------转化后的结果为对象obj------------------ {
+ * firstname: 'Hello', lastname: 'World', alias:'' }
  * 
  */
 /*
  * zk.serializeObject = function(form){ jquery化表单 var obj = {}; 遍历form的字段信息
  * $.each(form.serializeArray(),function(index){ 当前遍历对象不为空
  * if(obj[this['name']]){ obj[this['name']] = obj[this['name']] + "," +
- * this['value']; }else{ obj[this['name']] = this['value']; } }); return
- * obj; };
+ * this['value']; }else{ obj[this['name']] = this['value']; } }); return obj; };
  */
 
 /**
@@ -181,8 +292,8 @@ function getMaxDay(year, month) {
  *            是否url中含有web项目名
  */
 /*
- * function zkAjax(url,type,dataType,fisished,data,haveWebName){ var u =
- * url; var t = (type==""||type==undefined)?"GET":type; var dt =
+ * function zkAjax(url,type,dataType,fisished,data,haveWebName){ var u = url;
+ * var t = (type==""||type==undefined)?"GET":type; var dt =
  * (dataType==""||dataType==undefined)?"json":type; var f =
  * (fisished==""||fisished==undefined)?(function(){}):fisished; var da =
  * (data==""||data==undefined)?"":data; //发送登陆请求 $.ajax({ type: "POST",
@@ -190,23 +301,6 @@ function getMaxDay(year, month) {
  * success:function(data){ f(data); } }); };
  */
 
-/**
- * 将form表单元素的值序列化成对象
- * 
- * @param form
- * @returns {___anonymous3934_3935}
- */
-function serializeObject(form) {
-	var o = {};
-	$.each(form.serializeArray(), function(index) {
-		if (o[this['name']]) {
-			o[this['name']] = o[this['name']] + "," + this['value'];
-		} else {
-			o[this['name']] = this['value'];
-		}
-	});
-	return o;
-};
 /**
  * 选中parentId的dom节点下的所有的select，并且将其选项变成第一个option
  * 

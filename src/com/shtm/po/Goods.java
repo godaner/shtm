@@ -1,5 +1,6 @@
 package com.shtm.po;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Goods {
@@ -9,13 +10,13 @@ public class Goods {
 
     private String description;
 
-    private Double sprice;
+    private BigDecimal sprice;
 
-    private Double price;
+    private BigDecimal price;
 
     private Short condition;
 
-    private Double region;
+    private BigDecimal region;
 
     private Short status;
 
@@ -49,19 +50,19 @@ public class Goods {
         this.description = description;
     }
 
-    public Double getSprice() {
+    public BigDecimal getSprice() {
         return sprice;
     }
 
-    public void setSprice(Double sprice) {
+    public void setSprice(BigDecimal sprice) {
         this.sprice = sprice;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -73,11 +74,11 @@ public class Goods {
         this.condition = condition;
     }
 
-    public Double getRegion() {
+    public BigDecimal getRegion() {
         return region;
     }
 
-    public void setRegion(Double region) {
+    public void setRegion(BigDecimal region) {
         this.region = region;
     }
 

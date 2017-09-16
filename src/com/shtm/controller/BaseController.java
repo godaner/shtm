@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.shtm.util.Static;
 import com.shtm.util.Util;
 
 /**
@@ -20,7 +21,7 @@ import com.shtm.util.Util;
  * @date 2017年9月15日 上午10:39:42
  * @version 1.0
  */
-public class BaseController<S> extends Util {
+public class BaseController<S> extends Util implements Static{
 	/**
 	 * 自动注入service
 	 */

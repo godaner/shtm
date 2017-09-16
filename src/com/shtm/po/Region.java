@@ -1,28 +1,29 @@
 package com.shtm.po;
 
+import java.math.BigDecimal;
 
 public class Region {
-    private Double regionId;
+    private BigDecimal regionId;
 
     private String regionCode;
 
     private String regionName;
 
-    private Double parentId;
+    private BigDecimal parentId;
 
-    private Double regionLevel;
+    private BigDecimal regionLevel;
 
-    private Double regionOrder;
+    private BigDecimal regionOrder;
 
     private String regionNameEn;
 
     private String regionShortnameEn;
 
-    public Double getRegionId() {
+    public BigDecimal getRegionId() {
         return regionId;
     }
 
-    public void setRegionId(Double regionId) {
+    public void setRegionId(BigDecimal regionId) {
         this.regionId = regionId;
     }
 
@@ -42,27 +43,27 @@ public class Region {
         this.regionName = regionName == null ? null : regionName.trim();
     }
 
-    public Double getParentId() {
+    public BigDecimal getParentId() {
         return parentId;
     }
 
-    public void setParentId(Double parentId) {
+    public void setParentId(BigDecimal parentId) {
         this.parentId = parentId;
     }
 
-    public Double getRegionLevel() {
+    public BigDecimal getRegionLevel() {
         return regionLevel;
     }
 
-    public void setRegionLevel(Double regionLevel) {
+    public void setRegionLevel(BigDecimal regionLevel) {
         this.regionLevel = regionLevel;
     }
 
-    public Double getRegionOrder() {
+    public BigDecimal getRegionOrder() {
         return regionOrder;
     }
 
-    public void setRegionOrder(Double regionOrder) {
+    public void setRegionOrder(BigDecimal regionOrder) {
         this.regionOrder = regionOrder;
     }
 

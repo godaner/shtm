@@ -3,6 +3,6 @@
 	height:100%;
 	
 }
-#north_content>div{
-	
+#north_content *{
+	overflow: hidden;
 }

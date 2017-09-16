@@ -1,6 +1,9 @@
 package com.shtm.admins.controller;
 
+import java.io.IOException;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,7 +41,7 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 		
 		vc.createCode();
 		
-		setApplicationAttr("loginVerifyCode", vc.getCode());
+		setApplicationAttr(FILED_LOGIN_VERIFYCODE, vc.getCode());
 		
 		vc.write(res.getOutputStream());
 		
@@ -55,20 +58,80 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 	 * @param po
 	 * @return
 	 */
-	@RequestMapping("/login")
-	public @ResponseBody CustomAdmins login(CustomAdmins po) {
+	@RequestMapping("login")
+	public @ResponseBody CustomAdmins login(@RequestBody CustomAdmins po) {
 		
 		try{
 			
-			//验证验证码
-			service.login(po);
-			po.setLoginSuccess(true);
+			/**
+			 * 验证验证码
+			 *//*
+			String msg = "验证码错误";
+			//正确验证码
+			Object vc = getApplicationAttr(FILED_LOGIN_VERIFYCODE);
+			eject(vc == null,msg);
+			
+			//表单验证码
+			String formVc = po.getVerifyCode();
+			eject(formVc == null,msg);
+			
+			eject(!vc.toString().toLowerCase().equals(formVc.toLowerCase()),
+					"验证码错误");*/
+			
+			//---start,模拟用户信息,用于测试
+			po.setUsername("123");
+			po.setPassword("123");
+			
+			//---end
+			
+			/**
+			 * 执行业务
+			 */
+			po = service.login(po);
+			
+			//设置到session
+			setSessionAttr(FILED_ONLINE_ADMIN, po);
+			
+			po.setResult(RESULT.TRUE);
 			po.setMsg("登录成功");
 		}catch(Exception e){
 			e.printStackTrace();
-			po.setLoginSuccess(false);
+			po.setResult(RESULT.FALSE);
 			po.setMsg(e.getMessage());
 		}
+		return po;
+	}
+	
+	
+	/**
+	 * 
+	 * Title:logout
+	 * <p>
+	 * Description:注销
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月16日 上午9:19:53
+	 * @version 1.0
+	 * @throws IOException 
+	 */
+	@RequestMapping("/logout")
+	public @ResponseBody CustomAdmins logout() throws IOException{
+		
+		CustomAdmins po = new CustomAdmins();
+		try {
+			removeSessionAttr(FILED_ONLINE_ADMIN);
+			
+			getSession().invalidate();
+
+			po.setResult(RESULT.TRUE);
+			
+			po.setMsg("注销成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			po.setResult(RESULT.FALSE);
+		}
+		
+		
 		return po;
 	}
 }

@@ -1,5 +1,6 @@
 package com.shtm.po;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Admins {
@@ -11,11 +12,13 @@ public class Admins {
 
     private String salt;
 
-    private Double status;
+    private BigDecimal status;
 
     private Date createtime;
 
     private String creator;
+
+    private String theme;
 
     public String getId() {
         return id;
@@ -49,11 +52,11 @@ public class Admins {
         this.salt = salt;
     }
 
-    public Double getStatus() {
+    public BigDecimal getStatus() {
         return status;
     }
 
-    public void setStatus(Double status) {
+    public void setStatus(BigDecimal status) {
         this.status = status;
     }
 
@@ -71,5 +74,13 @@ public class Admins {
 
     public void setCreator(String creator) {
         this.creator = creator;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 }
