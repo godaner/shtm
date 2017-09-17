@@ -28,12 +28,34 @@ function loadWestUI(){
 	menutree.tree({    
 	    url:getWebProjectName()+'/permissions/selectPermissionsByPid.action',
 	    onClick: function(node){
-			alert(node.text);  // 在用户点击的时候提示
+	    	//添加选项卡到index.jsp的tabs
+	    	var url = getWebProjectName()+node.attributes.url;
+	    	var title = node.text;
+	    	if(url == null || url == undefined){
+	    		return ;
+	    	}
+	    	
+			addTab(title,url);
 		},    
 	    loadFilter: function(data){    
 	        if (data.datagrid){    
 	            return data.datagrid;    
 	        }   
+	    },
+	    onLoadSuccess:function(node, data){
+	    	//设置url到attributes
+	    	for (var i = 0; i < data.length; i++) {
+				var d = data[i];
+		    	var n = menutree.tree('find',d.id);
+		    	
+		    	menutree.tree('update',{
+		    		target: n.target,
+		    		attributes:{
+		                 "url":d.url
+		             }
+		    	});
+				
+			}
 	    }
 
 

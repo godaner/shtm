@@ -12,3 +12,4 @@
 <link rel="stylesheet" type="text/css" href="${baseUrl}/css/users_manage.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}/css/west.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}/css/east.css">
+<link rel="stylesheet" type="text/css" href="${baseUrl}/css/center.css">

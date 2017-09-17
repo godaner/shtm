@@ -2,9 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@include file="./base.jsp"%>
 
-<div id="east_content">
+<div id="east_content" style="width:100%;height:300px">
 
-	<div id="cc" class="easyui-calendar" style="width:100%;height:300px"></div>  
+	<div id="cc" style="width:100%;height:300px" class="easyui-calendar" ></div>  
 
 </div>
 

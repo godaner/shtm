@@ -6,7 +6,6 @@
  * 变量申明
  */
 $(function(){
-	a(1);
 	
 	initUsersManageVar();
 	

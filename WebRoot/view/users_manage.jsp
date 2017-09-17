@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@include file="./base.jsp"%>
 
-<div id="users_manage_content">
+<div id="users_manage_content" class="easyui-panel" data-options="fit:true">
 
 
 </div>

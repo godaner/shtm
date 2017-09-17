@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <%@include file="./base.jsp"%>
 
 <div id="login_content" class="easyui-panel">

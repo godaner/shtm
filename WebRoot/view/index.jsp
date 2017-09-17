@@ -10,7 +10,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SHTM</title>
 
-
+<!-- 默认的主题 -->
+<c:set value="bootstrap" var="defaultTheme"></c:set>
 
 
 <!-- 导入css start -->
@@ -25,7 +26,7 @@
 
 		<!-- 北部 start -->
 		<div data-options="region:'north'" style="height: 80px;">
-			<div id="north_panel" style="overflow: hidden;width: 100%; height: 100%;"></div>
+			<div id="north_panel" class="easyui-panel" data-options="fit:true" style="overflow: hidden;"></div>
 		</div>
 		<!-- 北部 end -->
 
@@ -36,7 +37,7 @@
 		<!-- 东部 start -->
 		<div data-options="region:'east',split:true" title="East"
 			style="width: 250px;">
-			<div id="east_panel" style="width: 100%; height: 100%;"></div>	
+			<div id="east_panel" class="easyui-panel" data-options="fit:true""></div>	
 		</div>
 		<!-- 东部 start -->
 
@@ -44,15 +45,15 @@
 		<!-- 西部start -->
 		<div data-options="region:'west',split:true" title="菜单"
 			style="width: 250px;">
-			<div id="west_panel" style="width: 100%; height: 100%;"></div>
+			<div id="west_panel" class="easyui-panel" data-options="fit:true"></div>
 		</div>
 		<!-- 西部 end -->
 
 		<!-- 中部start -->
 		<div
-			data-options="region:'center',title:'Main Title',iconCls:'icon-ok'"
+			data-options="region:'center'"
 			style="height: 100%;">
-			<div id="center_panel" style="width: 100%; height: 100%;"></div>	
+			<div id="center_panel" class="easyui-panel" data-options="fit:true"></div>	
 		</div>
 		<!-- 中部end -->
 	</div>

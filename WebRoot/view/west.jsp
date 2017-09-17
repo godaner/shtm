@@ -2,10 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@include file="./base.jsp"%>
 
-<div style="width: 100%; height: 100%;" id="west_content" class="easyui-panel" >
-	<ul id="menutree" style="width:100%;height:100%;">
-	
-	</ul>  
+<ul id="menutree" class="easyui-tree" data-options="fit:true">
 
-</div>
+</ul>  
+
 <script type="text/javascript" src="${baseUrl}/js/west.js"></script>

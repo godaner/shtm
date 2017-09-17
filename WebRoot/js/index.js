@@ -11,6 +11,8 @@ var north_panel;
 var west_panel;
 //东部面板
 var east_panel;
+//北部面板
+var center_panel;
 //登录弹窗
 var login_dialog;
 //登录框加载后是否直接关闭,不现实
@@ -61,6 +63,8 @@ function initIndexVar() {
 	west_panel = $("#west_panel");
 	//东部面板
 	east_panel = $("#east_panel");
+	//北部面板
+	center_panel = $("#center_panel");
 	//登录弹窗
 	login_dialog = $("#login_dialog");
 }
@@ -100,7 +104,16 @@ function loadIndexUI() {
 		onLoad : function() {
 		}
 	});
-
+	/**
+	 * 加载北部
+	 */
+	center_panel.panel({
+		fit : true,
+		border : false,
+		href : getWebProjectName() + '/view/center.jsp',
+		onLoad : function() {
+		}
+	});
 	/**
 	 * 登录弹窗
 	 */
