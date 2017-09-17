@@ -5,35 +5,39 @@
 /**
  * 变量申明
  */
-var meutree;
+var menutree;
 $(function(){
 	
-	initVar();
+	initWestVar();
 	
-	loadUI();
+	loadWestUI();
 	
 });
 
 /**
  * 初始化变量
  */
-function initVar(){
-	meutree = $("#meutree");
+function initWestVar(){
+	menutree = $("#menutree");
 }
 /**
  * 加载界面
  */
-function loadUI(){
+function loadWestUI(){
 	//加载树
-	meutree.tree({    
-	    url:getWebProjectName()+'/js/menutree.json'   
-	});  
-	//树节点触发事件
-	meutree.tree({
-		onClick: function(node){
+	menutree.tree({    
+	    url:getWebProjectName()+'/permissions/selectPermissionsByPid.action',
+	    onClick: function(node){
 			alert(node.text);  // 在用户点击的时候提示
-		}
-	});
+		},    
+	    loadFilter: function(data){    
+	        if (data.datagrid){    
+	            return data.datagrid;    
+	        }   
+	    }
+
+
+	});  
 
 
 

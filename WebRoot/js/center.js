@@ -7,21 +7,21 @@
  */
 $(function(){
 	
-	initVar();
+	initCenterVar();
 	
-	loadUI();
+	loadCenterUI();
 	
 });
 
 /**
  * 初始化变量
  */
-function initVar(){
+function initCenterVar(){
 }
 /**
  * 加载界面
  */
-function loadUI(){
+function loadCenterUI(){
 	
 
 }

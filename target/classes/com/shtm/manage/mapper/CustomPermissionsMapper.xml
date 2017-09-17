@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shtm.manage.mapper.CustomPermissionsMapper">
+	<select id="selectPermissionsByPid" parameterType="string" resultType="com.shtm.manage.po.CustomPermissions">
+		
+		
+		SELECT p4.*,
+		CASE when  p3.n &lt;=0 then 'open'
+		    when  p3.n &gt;0 then 'closed'
+		end AS STATE
+		FROM (
+		  SELECT p0.id,COUNT(p2.id) AS n
+		
+		  FROM (
+		       SELECT p1.*
+		       FROM PERMISSIONS p1
+		       <where>
+					<if test=" value == null ">
+						p1.pid is null
+					</if>
+					<if test=" value != null ">
+						p1.pid=#{value}
+					</if>
+				</where>
+		
+		  ) p0,
+		  PERMISSIONS p2
+		
+		  WHERE p0.ID = p2.pid(+)
+		
+		  GROUP BY (p0.ID)
+		
+		) p3
+		,PERMISSIONS p4
+		
+		WHERE p3.id = p4.ID
+		
+	</select>
+</mapper>

@@ -42,5 +42,18 @@ public interface Static {
 		Integer FALSE = 0;
 		
 	}
-	
+	/**
+	 * 权限节点状态
+	 */
+	public interface PERS_STATE{
+		/**
+		 * 关闭
+		 */
+		String CLOSED = "closed";
+		/**
+		 * 开启
+		 */
+		String OPEN = "open";
+		
+	}
 }

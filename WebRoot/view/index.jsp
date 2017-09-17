@@ -1,33 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@include file="./base.jsp"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SHTM</title>
-<!-- 默认的主题 -->
-<c:set value="bootstrap" var="defaultTheme"></c:set>
-
-<link id="easyuiTheme" rel="stylesheet" type="text/css"
-	href="${baseUrl}/plugin/jquery-easyui-1.5.3/themes/${defaultTheme}/easyui.css">
-<link rel="stylesheet" type="text/css"
-	href="${baseUrl}/plugin/jquery-easyui-1.5.3/themes/icon.css">
-<link rel="stylesheet" type="text/css" href="${baseUrl}/css/global.css">
-<link rel="stylesheet" type="text/css" href="${baseUrl}/css/index.css">
 
 
 
 
-<script type="text/javascript"
-	src="${baseUrl}/plugin/jquery-3.2.1.min.js"></script>
-<%-- <script type="text/javascript"
-	src="${baseUrl}/plugin/jquery-easyui-1.5.3/jquery.min.js"></script> --%>
-<script type="text/javascript"
-	src="${baseUrl}/plugin/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
-<script type="text/javascript"
-	src="${baseUrl}/js/util.js"></script>
+<!-- 导入css start -->
+<%@include file="./css.jsp" %>
+<!-- 导入css end -->
+
 
 </head>
 <body>
@@ -76,15 +65,16 @@
 	
 	
 </body>
-<script type="text/javascript" >
-	/*在线用户的usernmae*/
-	var onlineUsername = '${sessionScope.onlineUser.username}';
-	/*在线用户的theme*/
-	var onlineUserTheme = '${sessionScope.onlineUser.theme}';
-	/*默认theme*/
-	var defaultTheme = '${defaultTheme}';
-</script>
-<script type="text/javascript"
-	src="${baseUrl}/js/index.js"></script>
+
+
+
+
+<!-- 导入js start -->
+<%@include file="./js.jsp" %>
+<!-- 导入js start -->
+
+<script type="text/javascript" src="${baseUrl}/js/index.js"></script>
+
+
 
 </html>

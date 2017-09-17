@@ -8,20 +8,39 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.shtm.manage.po.JsonResult;
 import com.shtm.util.Static;
 import com.shtm.util.Util;
+
 
 /**
  * Title:BaseController
  * <p>
- * Description:基础控制器;
- * 	自动注入service;
+ * Description:基础控制器;<br/>
+ * 	自动注入事务;<br/>
+ * 	自动生成返回对象;<br/>
  * <p>
  * @author Kor_Zhang
- * @date 2017年9月15日 上午10:39:42
+ * @date 2017年9月17日 下午1:30:30
  * @version 1.0
+ * @param <J>	返回json数据的对象
+ * @param <S>	事务对象
+ * @param <D>
  */
-public class BaseController<S> extends Util implements Static{
+public class BaseController<J extends JsonResult, S> extends Util implements Static{
+	
+	/**
+	 * 自动注入json返回结果
+	 */
+	protected JsonResult jsonResult;
+	
+	@Autowired
+	public void setResult(JsonResult jsonResult){
+		this.jsonResult = jsonResult;
+	}
+	
+	
+	
 	/**
 	 * 自动注入service
 	 */
@@ -31,6 +50,7 @@ public class BaseController<S> extends Util implements Static{
 	public void setS(S service){
 		this.service = service;
 	}
+	
 	
 	
 	/**

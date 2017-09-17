@@ -13,13 +13,43 @@ var west_panel;
 var east_panel;
 //登录弹窗
 var login_dialog;
+//登录框加载后是否直接关闭,不现实
+var login_dialog_closed = true
 $(function() {
 
+	//加载页面时第一个执行的方法;这个方法的执行顺序是由index.js的拜访顺序决定的;
+	onLoadPage();
+	
 	initIndexVar();
 
 	loadIndexUI();
 
+	
 });
+/**
+ * 加载页面时第一个执行的方法;
+ */
+function onLoadPage(){
+
+	//获取index.jsp的onlineUser参数,判断用户数是否在线
+	if (onlineUsername == undefined || onlineUsername == "") {
+		//离线
+		login_dialog_closed = false;
+	}else{
+		//在线
+		
+		//加载主题
+		pro.show("正在加载页面");
+		setTimeout(function(){
+			setLocalTheme(onlineUserTheme);
+			pro.close();
+		}, 1000);
+	}
+	
+	
+	
+	
+}
 
 /**
  * 初始化变量
@@ -74,22 +104,12 @@ function loadIndexUI() {
 	/**
 	 * 登录弹窗
 	 */
-	var cd = true;
-	//获取index.jsp的onlineUser参数,判断用户数是否在线
-	if (onlineUsername == undefined || onlineUsername == "") {
-		//离线
-		cd = false;
-	}else{
-		//在线
-		setTimeout(function(){
-			setLocalTheme(onlineUserTheme);
-		}, 1);
-	}
+	
 	login_dialog.dialog({
 		title : '登录',
 		width : 320,
 		height : 285,
-		closed : cd,
+		closed : login_dialog_closed,
 		closable : false,
 		cache : true,
 		modal : true,
