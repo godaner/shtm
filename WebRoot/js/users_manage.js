@@ -7,6 +7,7 @@
  */
 var users_datagrid;
 var usersSearchForm;
+var editUserWindow;
 $(function(){
 	
 	initUsersManageVar();
@@ -21,6 +22,7 @@ $(function(){
 function initUsersManageVar(){
 	users_datagrid = $("#users_datagrid");
 	usersSearchForm = $("#usersSearchForm");
+	editUserWindow = $("#editUserWindow");
 }
 /**
  * 加载界面
@@ -144,6 +146,29 @@ function loadUsersManageUI(){
 	});  
 
 
+}
+
+/**
+ * 编辑users
+ */
+function editUser(){
+	//获取datagrid当前选择行
+	var row = users_datagrid.datagrid('getSelected');
+	if(row == null){
+		showMsg("请先选择行");
+		return ;
+	}
+	
+	//选择了行
+	c(row);
+	editUserWindow.propertygrid({    
+	       
+	    showGroup: true,    
+	    scrollbarSize: 0    
+	});  
+
+	
+	
 }
 /**
  * 按条件搜索users

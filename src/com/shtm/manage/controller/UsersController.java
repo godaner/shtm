@@ -52,4 +52,37 @@ public class UsersController extends BaseController<UsersServiceI>{
 		}
 		return replier;
 	}
+	
+	
+	/**
+	 * Title:
+	 * <p>
+	 * Description:获取指定id的user信息
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月18日 下午8:56:31
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/selectUserByPK")
+	public @ResponseBody UsersReplier selectUserByPK(String id){
+		UsersReplier replier = new UsersReplier();
+		try {
+			replier = service.selectUserByPK(id);
+			
+			replier.setMsg("获取信息成功");
+			
+			replier.setResult(RESULT.TRUE);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			replier.setMsg(e.getMessage());
+			
+			replier.setResult(RESULT.FALSE);
+		}
+		return replier;
+		
+	}
 }

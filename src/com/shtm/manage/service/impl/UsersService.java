@@ -7,6 +7,7 @@ import com.shtm.manage.mapper.CustomUsersMapper;
 import com.shtm.manage.po.UsersReceiver;
 import com.shtm.manage.po.UsersReplier;
 import com.shtm.manage.service.UsersServiceI;
+import com.shtm.mapper.UsersMapper;
 import com.shtm.service.impl.BaseService;
 
 /**
@@ -24,6 +25,8 @@ public class UsersService extends BaseService implements UsersServiceI {
 	
 	@Autowired
 	private CustomUsersMapper customUsersMapper;
+	@Autowired
+	private UsersMapper usersMapper;
 
 	@Override
 	public UsersReplier selectUsersDatagrid(UsersReceiver receiver) throws Exception {
@@ -34,9 +37,17 @@ public class UsersService extends BaseService implements UsersServiceI {
 		
 		//设置记录总数
 		Integer totalNum = customUsersMapper.selectUsersNum(receiver);
+		
 		replier.setTotal(totalNum);
 		
 		return replier;
 	}
 
+	@Override
+	public UsersReplier selectUserByPK(String id)throws Exception {
+		
+		
+		return (UsersReplier) usersMapper.selectByPrimaryKey(id);
+	}
+	
 }

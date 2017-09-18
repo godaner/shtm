@@ -29,4 +29,18 @@ public interface UsersServiceI {
 	 * @throws Exception 
 	 */
 	public UsersReplier selectUsersDatagrid(UsersReceiver receiver) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:根据逐渐查找user
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月18日 下午8:55:04
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	UsersReplier selectUserByPK(String id) throws Exception;
 }
