@@ -1,77 +1,77 @@
 package com.shtm.po;
 
 public class Permissions {
-    private String id;
+    private Object id;
 
-    private String text;
+    private Object text;
 
-    private String type;
+    private Object type;
 
-    private String url;
+    private Object url;
 
-    private String code;
+    private Object code;
 
-    private String pid;
+    private Object pid;
 
-    private String pids;
+    private Object pids;
 
     private Short sort;
 
     private Short status;
 
-    public String getId() {
+    public Object getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Object id) {
         this.id = id;
     }
 
-    public String getText() {
+    public Object getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(Object text) {
         this.text = text;
     }
 
-    public String getType() {
+    public Object getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Object type) {
         this.type = type;
     }
 
-    public String getUrl() {
+    public Object getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(Object url) {
         this.url = url;
     }
 
-    public String getCode() {
+    public Object getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Object code) {
         this.code = code;
     }
 
-    public String getPid() {
+    public Object getPid() {
         return pid;
     }
 
-    public void setPid(String pid) {
+    public void setPid(Object pid) {
         this.pid = pid;
     }
 
-    public String getPids() {
+    public Object getPids() {
         return pids;
     }
 
-    public void setPids(String pids) {
+    public void setPids(Object pids) {
         this.pids = pids;
     }
 

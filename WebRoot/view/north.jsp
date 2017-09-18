@@ -3,6 +3,7 @@
 <%@include file="./base.jsp"%>
 
 
+<link rel="stylesheet" type="text/css" href="${baseUrl}/css/north.css">
 
 <div id="north_content" class="easyui-layout"
 	style="background-color: rgb(66, 166, 206); width: 100%; height: 80px;"
@@ -78,4 +79,3 @@
 
 </div>
 
-<script type="text/javascript" src="${baseUrl}/js/north.js"></script>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shtm.manage.mapper.CustomAdminsMapper">
-	<select id="selectAdminByUsername" parameterType="string" resultType="com.shtm.manage.po.CustomAdmins">
+	<select id="selectAdminByUsername" parameterType="string" resultType="com.shtm.manage.po.AdminsReplier">
 		SELECT * FROM ADMINS WHERE ADMINS.USERNAME = #{USERNAME}
 	</select>
 </mapper>

@@ -2,7 +2,8 @@ package com.shtm.manage.mapper;
 
 import java.util.List;
 
-import com.shtm.manage.po.CustomUsers;
+import com.shtm.manage.po.UsersReceiver;
+import com.shtm.po.Users;
 
 
 
@@ -28,5 +29,19 @@ public interface CustomUsersMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	List<CustomUsers> selectUsersDatagrid(CustomUsers po)throws Exception;
+	List<Users> selectUsersDatagrid(UsersReceiver po)throws Exception;
+	/**
+	 * 
+	 * Title:selectUsersNum
+	 * <p>
+	 * Description:查询users记录数
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月18日 上午11:46:13
+	 * @version 1.0
+	 * @param po
+	 * @return
+	 * @throws Exception
+	 */
+	Integer selectUsersNum(UsersReceiver po)throws Exception;
 }

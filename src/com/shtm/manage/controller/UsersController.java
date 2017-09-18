@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
-import com.shtm.manage.po.CustomUsers;
+import com.shtm.manage.po.UsersReceiver;
+import com.shtm.manage.po.UsersReplier;
 import com.shtm.manage.service.UsersServiceI;
 
 /**
@@ -21,33 +22,34 @@ import com.shtm.manage.service.UsersServiceI;
 @Controller
 public class UsersController extends BaseController<UsersServiceI>{
 	/**
-	 * Title:selectUsers
+	 * Title:
 	 * <p>
-	 * Description:查询用户
+	 * Description:分页查询用户
 	 * <p>
 	 * @author Kor_Zhang
-	 * @date 2017年9月18日 上午8:53:58
+	 * @date 2017年9月18日 上午11:28:19
 	 * @version 1.0
-	 * @param po
+	 * @param rows	一页的行数
+	 * @param page	第几页
 	 * @return
 	 */
 	@RequestMapping("/selectUsersDatagrid")
-	public @ResponseBody CustomUsers selectUsersDatagrid(CustomUsers po){
-		CustomUsers retJson = new CustomUsers();
+	public @ResponseBody UsersReplier selectUsersDatagrid(UsersReceiver receiver){
+		UsersReplier replier = new UsersReplier();
 		try {
-			retJson = service.selectUsersDatagrid(po);
+			replier = service.selectUsersDatagrid(receiver);
 			
-			retJson.setMsg("获取列表成功");
+			replier.setMsg("获取列表成功");
 			
-			retJson.setResult(RESULT.TRUE);
+			replier.setResult(RESULT.TRUE);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			retJson.setMsg(e.getMessage());
+			replier.setMsg(e.getMessage());
 			
-			retJson.setResult(RESULT.FALSE);
+			replier.setResult(RESULT.FALSE);
 		}
-		return retJson;
+		return replier;
 	}
 }

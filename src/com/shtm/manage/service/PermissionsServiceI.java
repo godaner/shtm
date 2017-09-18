@@ -2,7 +2,7 @@ package com.shtm.manage.service;
 
 import java.util.List;
 
-import com.shtm.manage.po.CustomPermissions;
+import com.shtm.manage.po.PermissionsReplier;
 
 /**
  * Title:PermissionServiceI
@@ -24,5 +24,5 @@ public interface PermissionsServiceI {
 	 * @version 1.0
 	 * @return
 	 */
-	List<CustomPermissions> selectPermissionsByPid(String pid) throws Exception;
+	List<PermissionsReplier> selectPermissionsByPid(String pid) throws Exception;
 }

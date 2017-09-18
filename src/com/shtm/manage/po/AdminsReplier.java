@@ -1,7 +1,5 @@
 package com.shtm.manage.po;
 
-import org.springframework.stereotype.Component;
-
 import com.shtm.po.Admins;
 import com.shtm.util.Static;
 
@@ -14,28 +12,12 @@ import com.shtm.util.Static;
  * @date 2017年9月15日 上午11:11:14
  * @version 1.0
  */
-@Component
-public class CustomAdmins extends Admins implements Static{
+public class AdminsReplier extends Admins implements Static{
 	//操作结果
 	private Integer result;
 
 	//返回信息
 	private String msg;
-	
-	//验证码
-	private String verifyCode;
-	
-	
-	
-	public String getVerifyCode() {
-		return verifyCode;
-	}
-
-	public void setVerifyCode(String verifyCode) {
-		this.verifyCode = verifyCode;
-	}
-
-
 	
 
 	public Integer getResult() {

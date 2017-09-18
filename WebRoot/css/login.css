@@ -1,11 +1,12 @@
-#login_content{
+#login_dialog{
+	overflow:hidden;
 	width:100%;
 	height:100%;
 }
-#login_content table{
+#login_dialog table{
 	margin:0px 20px;
 	width:calc( 100% - 40px);
 }
-#login_content table{
+#login_dialog table{
 	border-spacing: 0px 15px;
 }

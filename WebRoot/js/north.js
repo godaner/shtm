@@ -44,21 +44,43 @@ function initNorthLis(){
 	
 	logoutBtn.on("click",function(){
 		//回调index.js的loguting
-		loguting();
+		
+		//调用util.js的方法
+		pro.show("正在注销");
 		
 		var url = "/admins/logout.action";
 		
 		ajax.send(
 				url,
 				function(data){
-					//回调index.js的afterLogout
-					afterLogout(data,true);
+					//连接服务器成功
+
+					//重设主题为默认defaultTheme在index.js
+					setLocalTheme(defaultTheme);
+
+					//调用util.js的方法
+					pro.close();
+
+					//调用util.js的方法
+					showMsg(data.msg);
+
+					if (data.result == 1) {
+						loginDialog.show();
+						//调用north方法
+						setUsername("");
+						return;
+					}
+					
+					
 				},function(data){
-					//回调index.js的afterLogout
-					afterLogout(data,false);
+					//调用util.js的方法
+					pro.close();
 				});
 	});
 }
+
+
+
 
 /**
  * 设置username
@@ -91,12 +113,16 @@ function updateThemes(newThemeString) {
 		function(data) {
 			
 			pro.close();
-		
 
-			//设置主题
-			setLocalTheme(newThemeString);
-			
 			showMsg(data.msg);
+			
+			//同步成功
+			if(data.result == 1){
+				//设置主题
+				setLocalTheme(newThemeString);
+				
+			}
+			
 			
 		},function(data){
 			pro.close();

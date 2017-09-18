@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shtm.manage.mapper.CustomPermissionsMapper;
-import com.shtm.manage.po.CustomPermissions;
+import com.shtm.manage.po.PermissionsReplier;
 import com.shtm.manage.service.PermissionsServiceI;
 
 /**
@@ -24,7 +24,7 @@ public class PermissionsService implements PermissionsServiceI{
 	private CustomPermissionsMapper customPermissionsMapper;
 	
 	@Override
-	public List<CustomPermissions> selectPermissionsByPid(String pid) throws Exception {
+	public List<PermissionsReplier> selectPermissionsByPid(String pid) throws Exception {
 		
 		if(null != pid && pid.trim().equals("")){
 			pid = null;

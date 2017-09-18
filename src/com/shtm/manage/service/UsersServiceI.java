@@ -1,7 +1,7 @@
 package com.shtm.manage.service;
 
-import com.shtm.manage.po.CustomAdmins;
-import com.shtm.manage.po.CustomUsers;
+import com.shtm.manage.po.UsersReceiver;
+import com.shtm.manage.po.UsersReplier;
 
 /**
  * 
@@ -14,16 +14,19 @@ import com.shtm.manage.po.CustomUsers;
  * @version 1.0
  */
 public interface UsersServiceI {
+
+
 	/**
 	 * Title:selectUsersDatagrid
 	 * <p>
-	 * Description:查询用户
+	 * Description:分页查询用户
 	 * <p>
 	 * @author Kor_Zhang
-	 * @date 2017年9月18日 上午8:50:31
+	 * @date 2017年9月18日 下午3:45:01
 	 * @version 1.0
-	 * @param po
+	 * @param receiver
 	 * @return
+	 * @throws Exception 
 	 */
-	public CustomUsers selectUsersDatagrid(CustomUsers po) throws Exception ;
+	public UsersReplier selectUsersDatagrid(UsersReceiver receiver) throws Exception;
 }

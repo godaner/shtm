@@ -1,6 +1,6 @@
 package com.shtm.manage.mapper;
 
-import com.shtm.manage.po.CustomAdmins;
+import com.shtm.manage.po.AdminsReplier;
 
 
 /**
@@ -13,5 +13,5 @@ import com.shtm.manage.po.CustomAdmins;
  * @version 1.0
  */
 public interface CustomAdminsMapper {
-	CustomAdmins selectAdminByUsername(String username)throws Exception;
+	AdminsReplier selectAdminByUsername(String username)throws Exception;
 }

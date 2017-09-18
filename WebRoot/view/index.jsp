@@ -15,8 +15,25 @@
 
 
 <!-- 导入css start -->
-<%@include file="./css.jsp" %>
+<link id="easyuiTheme" rel="stylesheet" type="text/css"
+	href="${baseUrl}/plugin/jquery-easyui-1.5.3/themes/${defaultTheme}/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="${baseUrl}/plugin/jquery-easyui-1.5.3/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="${baseUrl}/css/global.css">
+<link rel="stylesheet" type="text/css" href="${baseUrl}/css/index.css">
 <!-- 导入css end -->
+
+
+
+<!-- 导入插件 start -->
+<script type="text/javascript" src="${baseUrl}/plugin/jquery-3.2.1.min.js"></script>
+<%-- <script type="text/javascript"
+	src="${baseUrl}/plugin/jquery-easyui-1.5.3/jquery.min.js"></script> --%>
+<script type="text/javascript" src="${baseUrl}/plugin/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${baseUrl}//plugin/jquery-easyui-1.5.3/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="${baseUrl}/js/util.js"></script>
+<!-- 导入插件 end -->
+
 
 
 </head>
@@ -26,7 +43,9 @@
 
 		<!-- 北部 start -->
 		<div data-options="region:'north'" style="height: 80px;">
-			<div id="north_panel" class="easyui-panel" data-options="fit:true" style="overflow: hidden;"></div>
+			<div id="north_panel" class="easyui-panel" data-options="fit:true" style="overflow: hidden;">
+				<%@include file="./north.jsp"%>
+			</div>
 		</div>
 		<!-- 北部 end -->
 
@@ -35,9 +54,11 @@
 		<!-- 南部 end -->
 
 		<!-- 东部 start -->
-		<div data-options="region:'east',split:true" title="East"
+		<div data-options="region:'east',split:true" title="其他"
 			style="width: 250px;">
-			<div id="east_panel" class="easyui-panel" data-options="fit:true""></div>	
+			<div id="east_panel" class="easyui-panel" data-options="fit:true">
+				<%@include file="./east.jsp"%>
+			</div>	
 		</div>
 		<!-- 东部 start -->
 
@@ -45,7 +66,9 @@
 		<!-- 西部start -->
 		<div data-options="region:'west',split:true" title="菜单"
 			style="width: 250px;">
-			<div id="west_panel" class="easyui-panel" data-options="fit:true"></div>
+			<div id="west_panel" class="easyui-panel" data-options="fit:true">
+				<%@include file="./west.jsp"%>
+			</div>
 		</div>
 		<!-- 西部 end -->
 
@@ -53,14 +76,14 @@
 		<div
 			data-options="region:'center'"
 			style="height: 100%;">
-			<div id="center_panel" class="easyui-panel" data-options="fit:true"></div>	
+			<div id="center_panel" class="easyui-panel" data-options="fit:true">
+				<%@include file="./center.jsp"%>
+			</div>	
 		</div>
 		<!-- 中部end -->
 	</div>
 	<!-- 登录弹框 start -->
-	<div id="login_dialog" style="overflow: hidden;">
-		
-	</div>
+	<%@include file="./login.jsp"%>
 	<!-- 登录弹框 end -->
 	
 	
@@ -70,12 +93,30 @@
 
 
 
-<!-- 导入js start -->
-<%@include file="./js.jsp" %>
-<!-- 导入js start -->
 
+
+
+
+<!-- 设置js使用的变量 start -->
+<script type="text/javascript" >
+	/*在线用户的usernmae*/
+	var onlineUsername = '${sessionScope.onlineUser.username}';
+	/*在线用户的theme*/
+	var onlineUserTheme = '${sessionScope.onlineUser.theme}';
+	/*默认theme*/
+	var defaultTheme = '${defaultTheme}';
+</script>
+<!-- 设置js使用的变量 end -->
+
+<!-- 导入js开始 start -->
+<script type="text/javascript" src="${baseUrl}/js/center.js"></script>
+<script type="text/javascript" src="${baseUrl}/js/center_index.js"></script>
+<script type="text/javascript" src="${baseUrl}/js/east.js"></script>
+<script type="text/javascript" src="${baseUrl}/js/login.js"></script>
+<script type="text/javascript" src="${baseUrl}/js/north.js"></script>
+<script type="text/javascript" src="${baseUrl}/js/west.js"></script>
 <script type="text/javascript" src="${baseUrl}/js/index.js"></script>
 
-
+<!-- 导入js开始 end -->
 
 </html>

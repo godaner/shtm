@@ -6,6 +6,7 @@
  * 变量申明
  */
 var tabs;
+var center_index_panel;
 $(function(){
 	
 	initCenterVar();
@@ -19,17 +20,33 @@ $(function(){
  */
 function initCenterVar(){
 	tabs = $("#tabs");
+	center_index_panel = $("#center_index_panel");
 }
 /**
  * 加载界面
  */
 function loadCenterUI(){
+	/**
+	 * 初始化tabs
+	 */
 	tabs.tabs({    
 	    border:false,    
 	    onSelect:function(title){    
 	        /*alert(title+' is selected'); */   
 	    }    
 	});  
+	
+	/**
+	 * 加载中部首页内容
+	 */
+	center_index_panel.panel({
+		fit : true,
+		border : false,
+		href : getWebProjectName() + '/view/center_index.jsp',
+		onLoad : function() {
+			
+		}
+	});
 
 }
 /**

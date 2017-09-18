@@ -1,7 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shtm.manage.mapper.CustomUsersMapper">
-	<select id="selectUsersDatagrid" parameterType="com.shtm.manage.po.CustomUsers" resultType="com.shtm.manage.po.CustomUsers">
-		SELECT * FROM Users
+	<select id="selectUsersDatagrid" parameterType="com.shtm.manage.po.UsersReceiver" resultType="com.shtm.po.Users">
+		select u1.*
+		from
+				(
+					SELECT u0.*,rownum as n
+					FROM 
+		      (
+		             SELECT u2.*
+		             FROM users u2
+		             WHERE u2.id LIKE '%${id}%' 
+		             AND u2.EMAIL LIKE '%${email}%' 
+		             AND u2.username LIKE '%${username}%' 
+		             AND u2.sex = #{sex} 
+		             AND u2.DESCRIPTION LIKE '%${description}%' 
+		             AND u2.status = #{status}
+		             ORDER BY u2.#{sort} #{order}
+		      ) u0
+					WHERE &lt;=#{end}
+				) u1
+		where u1.n &gt;= #{start}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</select>
+	<select id="selectUsersNum" parameterType="com.shtm.manage.po.UsersReceiver"
+		resultType="int">
+		SELECT count(u2.*)
+		FROM users u2
+		WHERE u2.id LIKE '%${id}%'
+		AND u2.EMAIL LIKE '%${email}%'
+		AND u2.username LIKE '%${username}%'
+		AND u2.sex = #{sex}
+		AND u2.DESCRIPTION LIKE '%${description}%'
+		AND u2.status = #{status}
+		ORDER BY u2.#{sort} #{order}
 	</select>
 </mapper>

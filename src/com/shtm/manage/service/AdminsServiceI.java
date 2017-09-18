@@ -1,6 +1,7 @@
 package com.shtm.manage.service;
 
-import com.shtm.manage.po.CustomAdmins;
+import com.shtm.manage.po.AdminsReceiver;
+import com.shtm.po.Admins;
 
 /**
  * Title:UsersServiceI
@@ -23,7 +24,7 @@ public interface AdminsServiceI {
 	 * @return 返回数据库的记录
 	 * @throws Exception
 	 */
-	public CustomAdmins login(CustomAdmins po) throws Exception;
+	public Admins login(AdminsReceiver po) throws Exception;
 	
 	/**
 	 * 
@@ -37,5 +38,5 @@ public interface AdminsServiceI {
 	 * @param po
 	 * @throws Exception
 	 */
-	public void updateTheme(CustomAdmins po)throws Exception;
+	public void updateTheme(AdminsReceiver po)throws Exception;
 }

@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
-import com.shtm.manage.po.CustomAdmins;
+import com.shtm.manage.po.AdminsReceiver;
+import com.shtm.manage.po.AdminsReplier;
 import com.shtm.manage.service.AdminsServiceI;
+import com.shtm.po.Admins;
 
 /**
  * Title:AdminsController
@@ -59,8 +61,8 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 	 * @return
 	 */
 	@RequestMapping("login")
-	public @ResponseBody CustomAdmins login(@RequestBody CustomAdmins po) {
-		
+	public @ResponseBody AdminsReplier login(@RequestBody AdminsReceiver receiver) {
+		AdminsReplier replier = new AdminsReplier();
 		try{
 			
 			/**
@@ -79,27 +81,28 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 					"验证码错误");*/
 			
 			//---start,模拟用户信息,用于测试
-			po.setUsername("123");
-			po.setPassword("123");
+			receiver.setUsername("123");
+			receiver.setPassword("123");
 			
 			//---end
 			
 			/**
 			 * 执行业务
 			 */
-			po = service.login(po);
+			Admins admin = service.login(receiver);
 			
 			//设置到session
-			setSessionAttr(FILED_ONLINE_ADMIN, po);
+			setSessionAttr(FILED_ONLINE_ADMIN, admin);
 			
-			po.setResult(RESULT.TRUE);
-			po.setMsg("登录成功");
+			replier = (AdminsReplier) admin;
+			replier.setResult(RESULT.TRUE);
+			replier.setMsg("登录成功");
 		}catch(Exception e){
 			e.printStackTrace();
-			po.setResult(RESULT.FALSE);
-			po.setMsg(e.getMessage());
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
 		}
-		return po;
+		return replier;
 	}
 	
 	
@@ -115,26 +118,26 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 	 * @throws IOException 
 	 */
 	@RequestMapping("/logout")
-	public @ResponseBody CustomAdmins logout() throws IOException{
+	public @ResponseBody AdminsReplier logout() throws IOException{
 		
-		CustomAdmins po = new CustomAdmins();
+		AdminsReplier replier = new AdminsReplier();
 		try {
 			removeSessionAttr(FILED_ONLINE_ADMIN);
 			
 			getSession().invalidate();
 
-			po.setResult(RESULT.TRUE);
+			replier.setResult(RESULT.TRUE);
 			
-			po.setMsg("注销成功");
+			replier.setMsg("注销成功");
 		} catch (Exception e) {
 			e.printStackTrace();
-			po.setResult(RESULT.FALSE);
+			replier.setResult(RESULT.FALSE);
 			
-			po.setMsg("注销失败");
+			replier.setMsg("注销失败");
 		}
 		
 		
-		return po;
+		return replier;
 	}
 	/**
 	 * Title:
@@ -148,34 +151,36 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 	 * @throws IOException
 	 */
 	@RequestMapping("/updateTheme")
-	public @ResponseBody CustomAdmins updateTheme(@RequestBody CustomAdmins po) throws IOException{
+	public @ResponseBody AdminsReplier updateTheme(@RequestBody AdminsReceiver receiver) throws IOException{
+		
+		AdminsReplier replier = new AdminsReplier();
 		
 		try {
 			//获取id
-			CustomAdmins onlineAdmin = getSessionAttr(FILED_ONLINE_ADMIN);
+			Admins onlineAdmin = getSessionAttr(FILED_ONLINE_ADMIN);
 			
-			po.setId(onlineAdmin.getId());
+			receiver.setId(onlineAdmin.getId());
 			
 			//更新
-			service.updateTheme(po);
+			service.updateTheme(receiver);
 			
 			//更新session
 			
-			onlineAdmin.setTheme(po.getTheme());
+			onlineAdmin.setTheme(receiver.getTheme());
 			
 			setSessionAttr(FILED_ONLINE_ADMIN, onlineAdmin);
 			
-			po.setResult(RESULT.TRUE);
+			replier.setResult(RESULT.TRUE);
 			
-			po.setMsg("主题同步成功");
+			replier.setMsg("主题同步成功");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			po.setResult(RESULT.FALSE);
-			po.setMsg("主题同步失败");
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg("主题同步失败");
 		}
 		
 		
-		return po;
+		return replier;
 	}
 }

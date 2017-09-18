@@ -29,12 +29,14 @@ function loadWestUI(){
 	    url:getWebProjectName()+'/permissions/selectPermissionsByPid.action',
 	    onClick: function(node){
 	    	//添加选项卡到index.jsp的tabs
-	    	var url = getWebProjectName()+node.attributes.url;
+	    	var url = node.attributes.url;
 	    	var title = node.text;
-	    	if(url == null || url == undefined){
+	    	if(url == null || url == undefined || url==""){
 	    		return ;
 	    	}
-	    	
+	    	//加上项目名
+	    	url = getWebProjectName()+url;
+	    	//添加选项卡
 			addTab(title,url);
 		},    
 	    loadFilter: function(data){    

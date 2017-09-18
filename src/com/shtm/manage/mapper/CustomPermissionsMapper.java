@@ -2,7 +2,7 @@ package com.shtm.manage.mapper;
 
 import java.util.List;
 
-import com.shtm.manage.po.CustomPermissions;
+import com.shtm.manage.po.PermissionsReplier;
 
 
 /**
@@ -27,5 +27,5 @@ public interface CustomPermissionsMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	List<CustomPermissions> selectPermissionsByPid(String pid)throws Exception;
+	List<PermissionsReplier> selectPermissionsByPid(String pid)throws Exception;
 }

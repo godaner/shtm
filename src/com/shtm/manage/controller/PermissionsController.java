@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
-import com.shtm.manage.po.CustomPermissions;
+import com.shtm.manage.po.PermissionsReplier;
 import com.shtm.manage.service.PermissionsServiceI;
 
 /**
@@ -34,13 +34,13 @@ public class PermissionsController extends BaseController<PermissionsServiceI> {
 	 * @return
 	 */
 	@RequestMapping("/selectPermissionsByPid")
-	public @ResponseBody CustomPermissions selectPermissionsByPid(String id){
+	public @ResponseBody PermissionsReplier selectPermissionsByPid(String id){
 		
-		CustomPermissions per = new CustomPermissions();
+		PermissionsReplier per = new PermissionsReplier();
 		
 		try {
 			
-			List<CustomPermissions> pers = service.selectPermissionsByPid(id);
+			List<PermissionsReplier> pers = service.selectPermissionsByPid(id);
 			
 			per.setDatagrid(pers);
 			

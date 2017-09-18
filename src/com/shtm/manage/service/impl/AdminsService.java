@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shtm.manage.mapper.CustomAdminsMapper;
-import com.shtm.manage.po.CustomAdmins;
+import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.service.AdminsServiceI;
 import com.shtm.mapper.AdminsMapper;
 import com.shtm.po.Admins;
@@ -31,9 +31,9 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	private AdminsMapper adminsMapper;
 	
 	@Override
-	public CustomAdmins login(CustomAdmins po) throws Exception {
+	public Admins login(AdminsReceiver receiver) throws Exception {
 		
-		Admins dbAD = customAdminsMapper.selectAdminByUsername((String) po.getUsername());
+		Admins dbAD = customAdminsMapper.selectAdminByUsername((String) receiver.getUsername());
 		
 		//验证用户是否存在
 		eject(dbAD == null, "用户不存在");
@@ -41,7 +41,7 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		//验证密码
 		String salt = (String) dbAD.getSalt();
 		
-		String formPW = (String) po.getPassword();
+		String formPW = (String) receiver.getPassword();
 		
 		String md5PW = md5(formPW+salt);
 		
@@ -52,12 +52,12 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		
 		dbAD.setSalt("");
 		
-		return (CustomAdmins) dbAD;
+		return dbAD;
 		
 	}
 
 	@Override
-	public void updateTheme(CustomAdmins po) throws Exception {
+	public void updateTheme(AdminsReceiver receiver) throws Exception {
 		
 		
 		//设置Example
@@ -65,13 +65,13 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		
 		Criteria cc = ae.createCriteria();
 		
-		cc.andIdEqualTo(po.getId());
+		cc.andIdEqualTo(receiver.getId());
 		
 		//设置要更新的字段
-		po.setId(null);
+		receiver.setId(null);
 		
 		//执行更新
-		adminsMapper.updateByExampleSelective(po,ae );
+		adminsMapper.updateByExampleSelective(receiver,ae );
 		
 	}
 
