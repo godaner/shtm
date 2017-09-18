@@ -9,13 +9,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
 import com.shtm.manage.po.CustomAdmins;
-import com.shtm.manage.po.JsonResult;
 import com.shtm.manage.service.AdminsServiceI;
 
 /**
- * Title:UsersController
+ * Title:AdminsController
  * <p>
- * Description:用户controller
+ * Description:管理员controller
  * <p>
  * @author Kor_Zhang
  * @date 2017年9月15日 上午10:37:56
@@ -23,7 +22,7 @@ import com.shtm.manage.service.AdminsServiceI;
  */
 @RequestMapping("/admins")
 @Controller
-public class AdminsController extends BaseController<JsonResult,AdminsServiceI>{
+public class AdminsController extends BaseController<AdminsServiceI>{
 	
 	
 	/**

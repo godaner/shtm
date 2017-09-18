@@ -8,65 +8,46 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import com.shtm.manage.po.JsonResult;
 import com.shtm.util.Static;
 import com.shtm.util.Util;
-
 
 /**
  * Title:BaseController
  * <p>
  * Description:基础控制器;<br/>
- * 	自动注入事务;<br/>
- * 	自动生成返回对象;<br/>
+ * 自动注入事务;<br/>
  * <p>
+ * 
  * @author Kor_Zhang
  * @date 2017年9月17日 下午1:30:30
  * @version 1.0
- * @param <J>	返回json数据的对象
- * @param <S>	事务对象
- * @param <D>
+ * @param <S>
+ *            事务对象
  */
-public class BaseController<J extends JsonResult, S> extends Util implements Static{
-	
-	/**
-	 * 自动注入json返回结果
-	 */
-	protected JsonResult jsonResult;
-	
-	@Autowired
-	public void setResult(JsonResult jsonResult){
-		this.jsonResult = jsonResult;
-	}
-	
-	
-	
+public class BaseController<S> extends Util implements Static {
+
 	/**
 	 * 自动注入service
 	 */
 	protected S service;
-	
+
 	@Autowired
-	public void setS(S service){
+	public void setS(S service) {
 		this.service = service;
 	}
-	
-	
-	
+
 	/**
 	 * 设置req和res,方便使用
 	 */
 	protected HttpServletRequest req;
 	protected HttpServletResponse res;
+
 	@ModelAttribute
-	protected void initHttpAPI(HttpServletRequest req,HttpServletResponse res){
+	protected void initHttpAPI(HttpServletRequest req, HttpServletResponse res) {
 		this.req = req;
 		this.res = res;
 	}
-	
-	
-	
-	
+
 	/**
 	 * 设置session的参数
 	 * 
@@ -91,7 +72,7 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 	 * @param name
 	 * @return
 	 */
-	public  <T> T getSessionAttr(String name) {
+	public <T> T getSessionAttr(String name) {
 
 		try {
 			return (T) getSession().getAttribute(name);
@@ -101,13 +82,14 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 		}
 
 	}
+
 	/**
 	 * 去除session的参数
 	 * 
 	 * @param name
 	 * @return
 	 */
-	public  Boolean removeSessionAttr(String name) {
+	public Boolean removeSessionAttr(String name) {
 
 		try {
 			getSession().removeAttribute(name);
@@ -118,6 +100,7 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 		}
 
 	}
+
 	/**
 	 * 设置request的参数
 	 * 
@@ -125,7 +108,7 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 	 * @param o
 	 * @return
 	 */
-	public  Boolean setRequestAttr(String name, Object o) {
+	public Boolean setRequestAttr(String name, Object o) {
 		try {
 			getRequest().setAttribute(name, o);
 		} catch (Exception e) {
@@ -142,7 +125,7 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 	 * @param name
 	 * @return
 	 */
-	public  <T> T getRequestAttr(String name) {
+	public <T> T getRequestAttr(String name) {
 
 		try {
 			return (T) getRequest().getAttribute(name);
@@ -152,13 +135,14 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 		}
 
 	}
+
 	/**
 	 * 获取request的请求参数
 	 * 
 	 * @param name
 	 * @return
 	 */
-	public  <T> T getRequestParam(String name) {
+	public <T> T getRequestParam(String name) {
 
 		try {
 			return (T) getRequest().getParameter(name);
@@ -168,13 +152,14 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 		}
 
 	}
+
 	/**
 	 * 去除request的参数
 	 * 
 	 * @param name
 	 * @return
 	 */
-	public  Boolean removeRequestAttr(String name) {
+	public Boolean removeRequestAttr(String name) {
 
 		try {
 			getRequest().removeAttribute(name);
@@ -193,7 +178,7 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 	 * @param o
 	 * @return
 	 */
-	public  Boolean setApplicationAttr(String name, Object o) {
+	public Boolean setApplicationAttr(String name, Object o) {
 		try {
 			getApplication().setAttribute(name, o);
 		} catch (Exception e) {
@@ -210,7 +195,7 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 	 * @param name
 	 * @return
 	 */
-	public  <T> T getApplicationAttr(String name) {
+	public <T> T getApplicationAttr(String name) {
 
 		try {
 			return (T) getApplication().getAttribute(name);
@@ -220,12 +205,14 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 		}
 
 	}
+
 	/**
 	 * 去除Application的参数
+	 * 
 	 * @param name
 	 * @return
 	 */
-	public  Boolean removeApplicationAttr(String name) {
+	public Boolean removeApplicationAttr(String name) {
 
 		try {
 			getApplication().removeAttribute(name);
@@ -236,13 +223,13 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 		}
 
 	}
-	
+
 	/**
 	 * 获取session
 	 * 
 	 * @return
 	 */
-	public  HttpSession getSession() {
+	public HttpSession getSession() {
 		try {
 			return req.getSession();
 		} catch (Exception e) {
@@ -256,7 +243,7 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 	 * 
 	 * @return
 	 */
-	public  HttpServletRequest getRequest() {
+	public HttpServletRequest getRequest() {
 		try {
 			return req;
 		} catch (Exception e) {
@@ -270,7 +257,7 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 	 * 
 	 * @return
 	 */
-	public  HttpServletResponse getResponse() {
+	public HttpServletResponse getResponse() {
 		try {
 			return res;
 		} catch (Exception e) {
@@ -284,7 +271,7 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 	 * 
 	 * @return
 	 */
-	public  ServletContext getApplication() {
+	public ServletContext getApplication() {
 		try {
 			return req.getServletContext();
 		} catch (Exception e) {
@@ -292,6 +279,5 @@ public class BaseController<J extends JsonResult, S> extends Util implements Sta
 			return null;
 		}
 	}
-	
-	
+
 }

@@ -19,15 +19,16 @@ var login_dialog;
 var login_dialog_closed = true
 $(function() {
 
+	
+	initIndexVar();
+	
+	loadIndexUI();
+	
 	//加载页面时第一个执行的方法;这个方法的执行顺序是由index.js的拜访顺序决定的;
 	onLoadPage();
 	
-	initIndexVar();
-
-	loadIndexUI();
-
-	
 });
+
 /**
  * 加载页面时第一个执行的方法;
  */
@@ -41,11 +42,9 @@ function onLoadPage(){
 		//在线
 		
 		//加载主题
-		pro.show("正在加载页面");
-		setTimeout(function(){
-			setLocalTheme(onlineUserTheme);
-			pro.close();
-		}, 1000);
+		setLocalTheme(onlineUserTheme);
+		
+		
 	}
 	
 	

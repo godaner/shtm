@@ -17,10 +17,10 @@ import com.shtm.util.Static;
 @Component
 public class CustomAdmins extends Admins implements Static{
 	//操作结果
-	private Integer result = RESULT.FALSE;
+	private Integer result;
 
 	//返回信息
-	private String msg = "未知信息";
+	private String msg;
 	
 	//验证码
 	private String verifyCode;

@@ -3,13 +3,11 @@ package com.shtm.manage.controller;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
 import com.shtm.manage.po.CustomPermissions;
-import com.shtm.manage.po.JsonResult;
 import com.shtm.manage.service.PermissionsServiceI;
 
 /**
@@ -23,7 +21,7 @@ import com.shtm.manage.service.PermissionsServiceI;
  */
 @RequestMapping("/permissions")
 @Controller
-public class PermissionsController extends BaseController<JsonResult,PermissionsServiceI> {
+public class PermissionsController extends BaseController<PermissionsServiceI> {
 	
 	/**
 	 * Title:selectPermissionsByPid
@@ -36,23 +34,25 @@ public class PermissionsController extends BaseController<JsonResult,Permissions
 	 * @return
 	 */
 	@RequestMapping("/selectPermissionsByPid")
-	public @ResponseBody JsonResult selectPermissionsByPid(String id){
+	public @ResponseBody CustomPermissions selectPermissionsByPid(String id){
+		
+		CustomPermissions per = new CustomPermissions();
 		
 		try {
 			
 			List<CustomPermissions> pers = service.selectPermissionsByPid(id);
 			
-			jsonResult.setDatagrid(pers);
+			per.setDatagrid(pers);
 			
-			jsonResult.setMsg("获取权限成功");
-			jsonResult.setResult(RESULT.TRUE);
+			per.setMsg("获取权限成功");
+			per.setResult(RESULT.TRUE);
 		} catch (Exception e) {
 			e.printStackTrace();
-			jsonResult.setMsg(e.getMessage());
-			jsonResult.setResult(RESULT.FALSE);
+			per.setMsg(e.getMessage());
+			per.setResult(RESULT.FALSE);
 		}
 		
-		return jsonResult;
+		return per;
 	}
 }
 

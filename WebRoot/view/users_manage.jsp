@@ -4,6 +4,9 @@
 
 <div id="users_manage_content" class="easyui-panel" data-options="fit:true">
 
+	<table id="users_datagrid" class="easyui-datagrid">  
+		 
+	</table>
 
 </div>
 <script type="text/javascript" src="${baseUrl}/js/users_manage.js"></script>
