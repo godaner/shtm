@@ -35,7 +35,9 @@
 </div>
 
 <!-- 属性表格 start -->
-<table id="editUserWindow" style="width:300px"></table>  
+<div id="editUserDialog">
+	<table id="editUserPG" style="width:300px"></table>  
+</div>
 <!-- 属性表格 end -->
 
 <script type="text/javascript" src="${baseUrl}/js/users_manage.js"></script>

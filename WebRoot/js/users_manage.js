@@ -7,7 +7,10 @@
  */
 var users_datagrid;
 var usersSearchForm;
-var editUserWindow;
+//用户属性表格
+var editUserPG;
+//用户信息编辑弹窗
+var editUserDialog;
 $(function(){
 	
 	initUsersManageVar();
@@ -22,7 +25,8 @@ $(function(){
 function initUsersManageVar(){
 	users_datagrid = $("#users_datagrid");
 	usersSearchForm = $("#usersSearchForm");
-	editUserWindow = $("#editUserWindow");
+	editUserPG = $("#editUserPG");
+	editUserDialog = $("#editUserDialog");
 }
 /**
  * 加载界面
@@ -40,6 +44,9 @@ function loadUsersManageUI(){
 	    fit: true,
 	    sortName : 'registtime',
 	    sortOrder : 'asc', //降序
+	    singleSelect:true,
+		checkOnSelect:true,
+		selectOncheck:true,
 	    columns:[[      
 	    	{
 	    		field:'headimg',title:'头像',
@@ -159,14 +166,91 @@ function editUser(){
 		return ;
 	}
 	
-	//选择了行
-	c(row);
-	editUserWindow.propertygrid({    
-	       
-	    showGroup: true,    
-	    scrollbarSize: 0    
-	});  
+	//转化数据格式,放入propertygrid
+	var rows = [];
+	for (name in row)
+	{
+		var value = row[name];
+		var o = {};
+		
+		if(name == "headimg"){
+			continue;
+		}else if(name == "id"){
+			o = {"name":name,"value":value};
+		}else if(name == "email"){
+			o = {"name":name,"value":value,"editor":{
+				"type":"textbox",    
+		        "options":{    
+		            "validType":"email",
+		            "required":true
+		            	
+		        }    
 
+			}};
+		}else if(name == "sex"){
+			value = value==1?"男":value==0?"女":"未设置";
+			o = {"name":name,"value":value,"editor":{
+				"type":"combobox",
+				"options":{
+					"editable":false,
+					"data": [
+	 				         	{
+									"id" : '1',
+									"text" : '男'
+								},
+								{
+									"id" : '0',
+									"text" : '女'
+								},
+								{
+									"id" : '-1',
+									"text" : '未选择'
+								}
+							]
+				}
+				
+  
+			}};
+		}else if(name == "birthday"){
+			o = {"name":name,"value":value,"editor":{
+				"type":"datebox",    
+		        "options":{    
+		        	"editable":false
+		        }    
+
+			}};
+		}else {
+			o = {"name":name,"value":value,"editor":"text"};
+		}
+		
+		
+		
+		
+		rows.push(o);
+		
+
+	}  
+	//propertygrid数据
+	var data = {"rows":rows};
+	
+	editUserDialog.dialog({
+		resizable : true,
+		modal : true,
+		closed : false,
+		width : 500,
+		height : 400
+	});
+	editUserPG.propertygrid({    
+	       
+	    showGroup: true,  
+	    fit:true,
+	    scrollbarSize: 0,
+	    showGroup:false,
+	    data:data
+	    
+	});  
+	
+	
 	
 	
 }
