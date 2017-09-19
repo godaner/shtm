@@ -166,19 +166,23 @@ function editUser(){
 		return ;
 	}
 	
+	
 	//转化数据格式,放入propertygrid
 	var rows = [];
+	
 	for (name in row)
 	{
+		
 		var value = row[name];
+
 		var o = {};
 		
 		if(name == "headimg"){
 			continue;
 		}else if(name == "id"){
-			o = {"name":name,"value":value};
+			o = {"name":"id","value":value};
 		}else if(name == "email"){
-			o = {"name":name,"value":value,"editor":{
+			o = {"name":"邮箱","value":value,"editor":{
 				"type":"textbox",    
 		        "options":{    
 		            "validType":"email",
@@ -189,33 +193,65 @@ function editUser(){
 			}};
 		}else if(name == "sex"){
 			value = value==1?"男":value==0?"女":"未设置";
-			o = {"name":name,"value":value,"editor":{
+			o = {"name":"性别","value":value,"editor":{
 				"type":"combobox",
 				"options":{
 					"editable":false,
-					"data": [
-	 				         	{
-									"id" : '1',
-									"text" : '男'
-								},
-								{
-									"id" : '0',
-									"text" : '女'
-								},
-								{
-									"id" : '-1',
-									"text" : '未选择'
-								}
-							]
+					"data":[{"value":1,"text":"男"},{"value":0,"text":"女"},{"value":-1,"text":"未设置"}]
+				}
+				
+  
+			}};
+		}else if(name == "status"){
+			value = value==1?"激活":value==0?"冻结":value;
+			o = {"name":"状态","value":value,"editor":{
+				"type":"combobox",
+				"options":{
+					"editable":false,
+					"data":[{"value":1,"text":"激活"},{"value":0,"text":"冻结"}]
 				}
 				
   
 			}};
 		}else if(name == "birthday"){
-			o = {"name":name,"value":value,"editor":{
+			if(!isEmpty(value)){
+				value = new Date(value).format("yyyy-MM-dd");
+			}
+			o = {"name":"生日","value":value,"editor":{
 				"type":"datebox",    
 		        "options":{    
 		        	"editable":false
+		        }    
+
+			}};
+		}else if(name == "description"){
+			o = {"name":"介绍","value":value,"editor":{
+				"type":"textbox",    
+		        "options":{    
+		        	"multiline":true
+		        }    
+
+			}};
+		}else if(name == "registtime"){
+			
+			value = new Date(value).format("yyyy-MM-dd HH:mm:ss");
+			
+			o = {"name":"注册","value":value,"editor":{
+				"type":"datetimebox",    
+		        "options":{    
+		        	"editable":false
+		        }    
+
+			}};
+		}else if(name == "score"){
+			
+			o = {"name":"积分","value":value,"editor":{
+				"type":"textbox",    
+		        "options":{    
+		        	"validType":"numberbox",
+		            "required":true,
+		            "min":0,  
+		            "precision":0
 		        }    
 
 			}};
@@ -233,21 +269,18 @@ function editUser(){
 	//propertygrid数据
 	var data = {"rows":rows};
 	
-	editUserDialog.dialog({
+	editUserDialog.dialog({   
+	    title:"属性编辑",
 		resizable : true,
 		modal : true,
 		closed : false,
-		width : 500,
-		height : 400
+		borer:false
 	});
-	editUserPG.propertygrid({    
-	       
-	    showGroup: true,  
-	    fit:true,
+	editUserPG.propertygrid({ 
 	    scrollbarSize: 0,
 	    showGroup:false,
+		borer:false,
 	    data:data
-	    
 	});  
 	
 	

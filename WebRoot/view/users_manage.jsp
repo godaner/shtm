@@ -35,8 +35,12 @@
 </div>
 
 <!-- 属性表格 start -->
-<div id="editUserDialog">
-	<table id="editUserPG" style="width:300px"></table>  
+<div id="editUserDialog" style="width:500px;">
+	<table id="editUserPG" style="width:calc( 100% - 20px );"></table>  
+	<!-- 修改按钮 -->
+	<div style="width:100%;margin:20px 0px;text-align: center;">
+		<a id="submitEditBtn" href="#" class="easyui-linkbutton" data-options="">提交修改</a>
+	</div>
 </div>
 <!-- 属性表格 end -->
 
