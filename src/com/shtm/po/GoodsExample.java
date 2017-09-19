@@ -765,6 +765,126 @@ public class GoodsExample {
             addCriterion("BUYER not between", value1, value2, "buyer");
             return (Criteria) this;
         }
+
+        public Criteria andBrowseNumberIsNull() {
+            addCriterion("BROWSE_NUMBER is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowseNumberIsNotNull() {
+            addCriterion("BROWSE_NUMBER is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowseNumberEqualTo(BigDecimal value) {
+            addCriterion("BROWSE_NUMBER =", value, "browseNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowseNumberNotEqualTo(BigDecimal value) {
+            addCriterion("BROWSE_NUMBER <>", value, "browseNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowseNumberGreaterThan(BigDecimal value) {
+            addCriterion("BROWSE_NUMBER >", value, "browseNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowseNumberGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("BROWSE_NUMBER >=", value, "browseNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowseNumberLessThan(BigDecimal value) {
+            addCriterion("BROWSE_NUMBER <", value, "browseNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowseNumberLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("BROWSE_NUMBER <=", value, "browseNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowseNumberIn(List<BigDecimal> values) {
+            addCriterion("BROWSE_NUMBER in", values, "browseNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowseNumberNotIn(List<BigDecimal> values) {
+            addCriterion("BROWSE_NUMBER not in", values, "browseNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowseNumberBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("BROWSE_NUMBER between", value1, value2, "browseNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowseNumberNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("BROWSE_NUMBER not between", value1, value2, "browseNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastUpdateTimeIsNull() {
+            addCriterion("LAST_UPDATE_TIME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastUpdateTimeIsNotNull() {
+            addCriterion("LAST_UPDATE_TIME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastUpdateTimeEqualTo(Date value) {
+            addCriterion("LAST_UPDATE_TIME =", value, "lastUpdateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastUpdateTimeNotEqualTo(Date value) {
+            addCriterion("LAST_UPDATE_TIME <>", value, "lastUpdateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastUpdateTimeGreaterThan(Date value) {
+            addCriterion("LAST_UPDATE_TIME >", value, "lastUpdateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastUpdateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("LAST_UPDATE_TIME >=", value, "lastUpdateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastUpdateTimeLessThan(Date value) {
+            addCriterion("LAST_UPDATE_TIME <", value, "lastUpdateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastUpdateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("LAST_UPDATE_TIME <=", value, "lastUpdateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastUpdateTimeIn(List<Date> values) {
+            addCriterion("LAST_UPDATE_TIME in", values, "lastUpdateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastUpdateTimeNotIn(List<Date> values) {
+            addCriterion("LAST_UPDATE_TIME not in", values, "lastUpdateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastUpdateTimeBetween(Date value1, Date value2) {
+            addCriterion("LAST_UPDATE_TIME between", value1, value2, "lastUpdateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastUpdateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("LAST_UPDATE_TIME not between", value1, value2, "lastUpdateTime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -1,35 +1,65 @@
-/**
- * 注入对象属性到easyui的form的id为标准的input域;<br/>
- */
-$.fn.writeEasyuiForm = function (obj){
-	var form = $(this);
-	for(name in obj){
+
+$.fn.clearForm = function (){
+	var inputs = form.find('.input');
+	for(i = 0;i<inputs.length;i++){
+		var input = $(inputs[i]);
+		var name = input.attr('id');
 		var value = obj[name];
-		//先检测id
-		var e = form.find('input[id='+name+']');
-		if(!isEmpty(e)){
-			e.textbox('setText',value);
-			e.textbox('setValue',value);
+		c(name);
+		c(value);
+		if(!isEmpty(value)){
+			try{
+				input.textbox('setValue',value);
+			}catch(e){
+				c(e);
+			}
 			
+			try{
+				input.combobox('setValue',value);
+			}catch(e){
+				c(e);
+			}
 		}
-		
 	}
 }
 /**
- * 读取以id为标准读取easyui的textbox,combobox作为表单参数;
+ * 注入对象属性到easyui的form的input域;<br/>
+ * easyui的input域的id为作为obj的name;
+ */
+$.fn.writeEasyuiForm = function (obj){
+	var form = $(this);
+
+	var inputs = form.find('.input');
+	for(i = 0;i<inputs.length;i++){
+		var input = $(inputs[i]);
+		var name = input.attr('id');
+		var value = obj[name];
+		c("----------");
+		c(name);
+		c(value);
+		try{
+			input.textbox('setValue',value);
+		}catch(e){
+			//c(e);
+		}
+		
+		try{
+			input.combobox('setValue',value);
+		}catch(e){
+			//c(e);
+		}
+	}
+	
+	
+}
+/**
+ * 读取class為input的easyui的textbox,combobox作为表单参数;
+ * <br/>包含class为combo的easyui的select;<br/>
+ * easyui的input域的id为作为obj的name;
  */
 $.fn.readEasyuiForm = function (){
 	var formParam = "";
-	var inputs = $(this).find(".easyui-textbox");
-	var coms = $(this).find(".easyui-combobox");
-//	var numbers = $(this).find(".easyui-numberbox");
-//	var dates = $(this).find(".easyui-datebox");
-//	var dts = $(this).find(".easyui-datetimebox");
-
-	inputs.push(coms);
-//	inputs.push(numbers);
-//	inputs.push(dates);
-//	inputs.push(dts);
+	var inputs = $(this).find(".input");
 	
 	for(var i = 0;i<inputs.length;i++){
 		var input = $(inputs[i]);

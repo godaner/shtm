@@ -26,6 +26,10 @@ public class Goods {
 
     private String buyer;
 
+    private BigDecimal browseNumber;
+
+    private Date lastUpdateTime;
+
     public String getId() {
         return id;
     }
@@ -112,5 +116,21 @@ public class Goods {
 
     public void setBuyer(String buyer) {
         this.buyer = buyer;
+    }
+
+    public BigDecimal getBrowseNumber() {
+        return browseNumber;
+    }
+
+    public void setBrowseNumber(BigDecimal browseNumber) {
+        this.browseNumber = browseNumber;
+    }
+
+    public Date getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Date lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 }

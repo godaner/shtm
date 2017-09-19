@@ -154,6 +154,7 @@ function loadUsersManageUI(){
 	        	title:'生日',
 	    		sortable : true,
 	        	formatter: function(value,row,index){
+	        		c(value);
 	        		if(!isEmpty(value)){
 		        		value = new Date(value).format("yyyy-MM-dd");
 	        		}else{
@@ -168,7 +169,7 @@ function loadUsersManageUI(){
 	        	title:'介绍',
 	    		sortable : true,
 				formatter: function(value,row,index){
-					if(value.length>15){
+					if(!isEmpty(value) && value.length>15){
 						return value.substring(0,15)+"...";
 					}
 					return value;
@@ -246,8 +247,8 @@ function editUser(){
 	//注入普通参数(input)
 	editUserForm.writeEasyuiForm(row);
 	//注入select
-	sexInput.combobox("setValue",row.sex);
-	statusInput.combobox("setValue",row.status);
+//	sexInput.combobox("setValue",row.sex);
+//	statusInput.combobox("setValue",row.status);
 	
 }
 
@@ -255,6 +256,10 @@ function editUser(){
  * 提交用户修改后的信息
  */
 function submitUserEdit(){
+
+	//关闭信息编辑
+	editUserDialog.dialog('close');
+	
 	//转化form表单的easyui的input域为表单参数
 	var params = editUserForm.readEasyuiForm();
 	
@@ -263,12 +268,35 @@ function submitUserEdit(){
 
 	c(url);
 	
+	//请求更新
 	ajax.send(url, function(data){
+		//提示信息
 		showMsg(data.msg);
+
+		if(data.result == 1){
+			//更新成功
+			
+			//刷新表格
+			users_datagrid.datagrid("reload");
+			
+		}else{
+			//失敗
+			//打開信息编辑
+			editUserDialog.dialog('open');
+		}
 	}, function(){
+		//打開信息编辑
+		editUserDialog.dialog('open');
 		
 	});
 
+}
+/**
+ * 重置用戶信息
+ */
+function resetUser(){
+	
+	editUser();
 }
 /**
  * 按条件搜索users

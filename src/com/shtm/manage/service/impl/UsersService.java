@@ -60,12 +60,12 @@ public class UsersService extends BaseService implements UsersServiceI {
 			receiver.setPassword(null);
 		}
 		
-		if(receiver.getPassword() != fPW){
+		if(receiver.getPassword() != null){
 			
 			//验证新密码格式
 			eject(receiver.getPassword().matches(REG.PASSWORD), "密码格式错误");
 			Users dbUser = usersMapper.selectByPrimaryKey(receiver.getId());
-			receiver.setPassword(md5(fPW + dbUser.getSalt()));
+			receiver.setPassword(md5(receiver.getPassword() + dbUser.getSalt()));
 			
 		}
 		
