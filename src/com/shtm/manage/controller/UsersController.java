@@ -34,7 +34,7 @@ public class UsersController extends BaseController<UsersServiceI>{
 	 * @return
 	 */
 	@RequestMapping("/selectUsersDatagrid")
-	public @ResponseBody UsersReplier selectUsersDatagrid(UsersReceiver receiver){
+	public @ResponseBody UsersReplier selectUsersDatagrid(UsersReceiver receiver) throws Exception{
 		UsersReplier replier = new UsersReplier();
 		try {
 			replier = service.selectUsersDatagrid(receiver);
@@ -66,7 +66,7 @@ public class UsersController extends BaseController<UsersServiceI>{
 	 * @return
 	 */
 	@RequestMapping("/selectUserByPK")
-	public @ResponseBody UsersReplier selectUserByPK(String id){
+	public @ResponseBody UsersReplier selectUserByPK(String id) throws Exception{
 		UsersReplier replier = new UsersReplier();
 		try {
 			replier = service.selectUserByPK(id);
@@ -84,5 +84,37 @@ public class UsersController extends BaseController<UsersServiceI>{
 		}
 		return replier;
 		
+	}
+	
+	
+	
+	/**
+	 * Title:updateUser
+	 * <p>
+	 * Description:根据id更新user;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月19日 下午4:38:54
+	 * @version 1.0
+	 * @return
+	 */
+	@RequestMapping("/updateUser")
+	public @ResponseBody UsersReplier updateUser(UsersReceiver receiver) throws Exception{
+		UsersReplier replier = new UsersReplier();
+		try {
+			service.updateUser(receiver);
+			
+			replier.setMsg("修改用户成功");
+			
+			replier.setResult(RESULT.TRUE);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			replier.setMsg(e.getMessage());
+			
+			replier.setResult(RESULT.FALSE);
+		}
+		return replier;
 	}
 }

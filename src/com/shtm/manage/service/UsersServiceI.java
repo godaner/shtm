@@ -42,5 +42,18 @@ public interface UsersServiceI {
 	 * @return
 	 * @throws Exception
 	 */
-	UsersReplier selectUserByPK(String id) throws Exception;
+	public UsersReplier selectUserByPK(String id) throws Exception;
+
+	/**
+	 * Title:updateUser
+	 * <p>
+	 * Description:更新用户;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月19日 下午4:40:45
+	 * @version 1.0
+	 * @return
+	 * @throws Exception
+	 */
+	public void updateUser(UsersReceiver receiver) throws Exception;
 }

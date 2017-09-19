@@ -58,7 +58,12 @@ function loadWestUI(){
 		    	});
 				
 			}
+	    },
+	    onDblClick:function(node){
+	    	menutree.tree("expandAll",node.target);
+	    	
 	    }
+	    
 
 
 	});  

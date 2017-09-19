@@ -1,11 +1,53 @@
+/**
+ * 注入对象属性到easyui的form的id为标准的input域;<br/>
+ */
+$.fn.writeEasyuiForm = function (obj){
+	var form = $(this);
+	for(name in obj){
+		var value = obj[name];
+		//先检测id
+		var e = form.find('input[id='+name+']');
+		if(!isEmpty(e)){
+			e.textbox('setText',value);
+			e.textbox('setValue',value);
+			
+		}
+		
+	}
+}
+/**
+ * 读取以id为标准读取easyui的textbox,combobox作为表单参数;
+ */
+$.fn.readEasyuiForm = function (){
+	var formParam = "";
+	var inputs = $(this).find(".easyui-textbox");
+	var coms = $(this).find(".easyui-combobox");
+//	var numbers = $(this).find(".easyui-numberbox");
+//	var dates = $(this).find(".easyui-datebox");
+//	var dts = $(this).find(".easyui-datetimebox");
+
+	inputs.push(coms);
+//	inputs.push(numbers);
+//	inputs.push(dates);
+//	inputs.push(dts);
+	
+	for(var i = 0;i<inputs.length;i++){
+		var input = $(inputs[i]);
+		var name = input.attr('id');
+		var value = input.textbox('getValue');
+		formParam = formParam + name +"="+value+"&";
+		
+	}
+	return formParam;
+}
 
 /**
- * 验证str是否为空;<br/>
+ * 验证obj是否为空;<br/>
  * 即value == null || value==undefined || value==""
- * @param str
+ * @param obj
  */
-function isEmpty(str){
-	return str == null || str==undefined || str=="";
+function isEmpty(obj){
+	return obj == null || obj==undefined || obj=="";
 }
 
 // 对Date的扩展，将 Date 转化为指定格式的String  

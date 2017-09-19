@@ -11,6 +11,18 @@ var usersSearchForm;
 var editUserPG;
 //用户信息编辑弹窗
 var editUserDialog;
+//编辑表单
+var editUserForm;
+//sex
+var sexInput;
+//status
+var statusInput;
+//birthday
+var birthday;
+//datebox的buttons
+var buttons;
+//保存当前编辑的用户的信息
+var currtEditDatagridRow;
 $(function(){
 	
 	initUsersManageVar();
@@ -27,11 +39,48 @@ function initUsersManageVar(){
 	usersSearchForm = $("#usersSearchForm");
 	editUserPG = $("#editUserPG");
 	editUserDialog = $("#editUserDialog");
+	editUserForm = $("#editUserForm");
+	
+	//sex
+	sexInput = $("#sex");
+	//status
+	statusInput = $("#status");
+	
+	birthday = $("#birthday");
+	
+	//设置按钮
+	birthday.datebox({
+	});
+	
+	//设置清空按钮
+	var buttons = $.extend([], $.fn.datebox.defaults.buttons);
+	buttons.splice(1, 0, {
+		text: '清空',
+		handler: function(target){
+			birthday.datebox('setText','');
+		}
+	});
+	//设置按钮
+	birthday.datebox({
+		buttons: buttons
+	});
+
+	
 }
 /**
  * 加载界面
  */
 function loadUsersManageUI(){
+	//修改user信息窗口
+	editUserDialog.dialog({   
+	    title:"属性编辑",
+		resizable : true,
+		modal : true,
+		closed : true,
+		borer:false
+	});
+	
+	
 	//加载users的datagrid
 	users_datagrid.datagrid({    
 	    url:getWebProjectName()+"/users/selectUsersDatagrid.action",
@@ -78,11 +127,11 @@ function loadUsersManageUI(){
 					return "******";
 				}
 	        },    
-	        {
+	        /*{
 	        	field:'salt',
 	        	title:'盐',
 	    		sortable : true
-	        },    
+	        },*/    
 	        {
 	        	field:'sex',
 	        	title:'性别',
@@ -105,7 +154,12 @@ function loadUsersManageUI(){
 	        	title:'生日',
 	    		sortable : true,
 	        	formatter: function(value,row,index){
-					return new Date(value).toLocaleDateString();
+	        		if(!isEmpty(value)){
+		        		value = new Date(value).format("yyyy-MM-dd");
+	        		}else{
+	        			value="未设置";
+	        		}
+					return value;
 				}
 	        	
 	        },    
@@ -132,7 +186,7 @@ function loadUsersManageUI(){
 	    		sortable : true,
 				formatter: function(value,row,index){
 					
-					return new Date(value).toLocaleTimeString();
+					return new Date(value).format("yyyy-MM-dd HH:mm:ss");
 				}
 	        },     
 	        {
@@ -155,137 +209,66 @@ function loadUsersManageUI(){
 
 }
 
+
+/**
+ * 删除用户
+ */
+function deleteUser(){
+	
+}
+
+
 /**
  * 编辑users
  */
 function editUser(){
 	//获取datagrid当前选择行
 	var row = users_datagrid.datagrid('getSelected');
-	if(row == null){
+	if(isEmpty(row)){
 		showMsg("请先选择行");
 		return ;
 	}
+	//保存当前操作的用户的行
+	currtEditDatagridRow = row;
+	
+	//打开信息编辑
+	editUserDialog.dialog('open');
+	
+	//修改格式
+	row.registtime = new Date(row.registtime).format("yyyy-MM-dd HH:mm:ss");
+	
+	if(!isEmpty(row.birthday)){
+		row.birthday = new Date(row.birthday).format("yyyy-MM-dd");
+	}else{
+		row.birthday = "";
+	}
+	row.password = "";
+	//注入普通参数(input)
+	editUserForm.writeEasyuiForm(row);
+	//注入select
+	sexInput.combobox("setValue",row.sex);
+	statusInput.combobox("setValue",row.status);
+	
+}
+
+/**
+ * 提交用户修改后的信息
+ */
+function submitUserEdit(){
+	//转化form表单的easyui的input域为表单参数
+	var params = editUserForm.readEasyuiForm();
 	
 	
-	//转化数据格式,放入propertygrid
-	var rows = [];
+	var url = "/users/updateUser.action?"+params;
+
+	c(url);
 	
-	for (name in row)
-	{
+	ajax.send(url, function(data){
+		showMsg(data.msg);
+	}, function(){
 		
-		var value = row[name];
-
-		var o = {};
-		
-		if(name == "headimg"){
-			continue;
-		}else if(name == "id"){
-			o = {"name":"id","value":value};
-		}else if(name == "email"){
-			o = {"name":"邮箱","value":value,"editor":{
-				"type":"textbox",    
-		        "options":{    
-		            "validType":"email",
-		            "required":true
-		            	
-		        }    
-
-			}};
-		}else if(name == "sex"){
-			value = value==1?"男":value==0?"女":"未设置";
-			o = {"name":"性别","value":value,"editor":{
-				"type":"combobox",
-				"options":{
-					"editable":false,
-					"data":[{"value":1,"text":"男"},{"value":0,"text":"女"},{"value":-1,"text":"未设置"}]
-				}
-				
-  
-			}};
-		}else if(name == "status"){
-			value = value==1?"激活":value==0?"冻结":value;
-			o = {"name":"状态","value":value,"editor":{
-				"type":"combobox",
-				"options":{
-					"editable":false,
-					"data":[{"value":1,"text":"激活"},{"value":0,"text":"冻结"}]
-				}
-				
-  
-			}};
-		}else if(name == "birthday"){
-			if(!isEmpty(value)){
-				value = new Date(value).format("yyyy-MM-dd");
-			}
-			o = {"name":"生日","value":value,"editor":{
-				"type":"datebox",    
-		        "options":{    
-		        	"editable":false
-		        }    
-
-			}};
-		}else if(name == "description"){
-			o = {"name":"介绍","value":value,"editor":{
-				"type":"textbox",    
-		        "options":{    
-		        	"multiline":true
-		        }    
-
-			}};
-		}else if(name == "registtime"){
-			
-			value = new Date(value).format("yyyy-MM-dd HH:mm:ss");
-			
-			o = {"name":"注册","value":value,"editor":{
-				"type":"datetimebox",    
-		        "options":{    
-		        	"editable":false
-		        }    
-
-			}};
-		}else if(name == "score"){
-			
-			o = {"name":"积分","value":value,"editor":{
-				"type":"textbox",    
-		        "options":{    
-		        	"validType":"numberbox",
-		            "required":true,
-		            "min":0,  
-		            "precision":0
-		        }    
-
-			}};
-		}else {
-			o = {"name":name,"value":value,"editor":"text"};
-		}
-		
-		
-		
-		
-		rows.push(o);
-		
-
-	}  
-	//propertygrid数据
-	var data = {"rows":rows};
-	
-	editUserDialog.dialog({   
-	    title:"属性编辑",
-		resizable : true,
-		modal : true,
-		closed : false,
-		borer:false
 	});
-	editUserPG.propertygrid({ 
-	    scrollbarSize: 0,
-	    showGroup:false,
-		borer:false,
-	    data:data
-	});  
-	
-	
-	
-	
+
 }
 /**
  * 按条件搜索users
