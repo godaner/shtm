@@ -104,7 +104,7 @@ function loadUsersManageUI(){
 					if(isEmpty(value)){
 						value = "";
 					}
-					var img = "<img style='width:100px;' src ='"+getWebProjectName()+"/users/getHeadImg.action?headimg="+value+"&t="+new Date().getTime()+"'/>";
+					var img = "<img style='width:80px;' src ='"+getWebProjectName()+"/users/getHeadImg.action?headimg="+value+"&size=80&t="+new Date().getTime()+"'/>";
 					return img;
 				}
     		},  
@@ -234,6 +234,10 @@ function editUser(){
 		return ;
 	}
 	
+	//清空旧的文本记录
+	editUserForm.clearEasyuiForm();
+	
+	
 	//保存当前操作的用户的行
 	currtEditDatagridRow = row;
 	
@@ -242,6 +246,7 @@ function editUser(){
 	
 	//修改格式
 	row.registtime = new Date(row.registtime).format("yyyy-MM-dd HH:mm:ss");
+	
 	
 	if(!isEmpty(row.birthday)){
 		row.birthday = new Date(row.birthday).format("yyyy-MM-dd");
@@ -298,7 +303,16 @@ function submitUserEdit(){
 				//打開信息编辑
 				editUserDialog.dialog('open');
 			}
-	    }    
+	    } ,
+	    onLoadError:function(){
+	    	//失敗
+			//提示信息
+			showMsg(data.msg);
+	    	//关闭进度条
+	    	pro.close();
+			//打開信息编辑
+			editUserDialog.dialog('open');
+	    }
 	});  
 
 	

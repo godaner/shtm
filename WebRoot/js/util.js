@@ -1,3 +1,33 @@
+/**
+ * 清空easyui中的class為input的输入域记录;<br/>
+ * 包含textbox,combobox,filebox<br/>
+ */
+$.fn.clearEasyuiForm = function (){
+	var form = $(this);
+
+	var inputs = form.find('.input');
+	for(i = 0;i<inputs.length;i++){
+		var input = $(inputs[i]);
+		/*c("----------");
+		c(name);
+		c(value);*/
+//		c(input);
+		try{
+			input.textbox('setValue',"");
+		}catch(e){
+			//c(e);
+		}
+		
+		try{
+			input.combobox('setValue',"");
+		}catch(e){
+			//c(e);
+		}
+	}
+	
+	
+}
+
 
 /**
  * 注入对象属性到easyui的form的class為input的input域;<br/>

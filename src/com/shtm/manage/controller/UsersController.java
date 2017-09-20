@@ -104,11 +104,9 @@ public class UsersController extends BaseController<UsersServiceI>{
 	 * @return
 	 */
 	@RequestMapping("/updateUser")
-	public @ResponseBody UsersReplier updateUser(MultipartFile file,UsersReceiver receiver) throws Exception{
+	public @ResponseBody UsersReplier updateUser(UsersReceiver receiver) throws Exception{
 		UsersReplier replier = new UsersReplier();
 		try {
-			
-			receiver.setFile(file);
 			
 			service.updateUser(receiver);
 			
@@ -136,17 +134,21 @@ public class UsersController extends BaseController<UsersServiceI>{
 	 * @return
 	 */
 	@RequestMapping("/getHeadImg")
-	public void getHeadImg(String headimg) throws Exception{
+	public void getHeadImg(String headimg,String size) throws Exception{
 		if(headimg == null || headimg.trim().isEmpty()){//没有头像文件名,请求默认图片
 			headimg = "default.png";
 		}
 		
-		String filePath = (String) getValue(CONFIG.FILED_SRC_USERS_HEADIMGS)+headimg;
+		String filePath = (String) getValue(CONFIG.FILED_SRC_USERS_HEADIMGS)+size+"_"+headimg;
 		
 		File f = new File(filePath);
 		
+		if(!f.exists()){
+			headimg = "default.png";
+			filePath = (String) getValue(CONFIG.FILED_SRC_USERS_HEADIMGS)+headimg;
+			f = new File(filePath);
+		}
 		//返回文件
-		info(f.getAbsoluteFile());
 		writeFileToOS(f, getResponse().getOutputStream());
 	}
 }

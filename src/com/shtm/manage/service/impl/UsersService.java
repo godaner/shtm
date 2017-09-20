@@ -82,40 +82,38 @@ public class UsersService extends BaseService implements UsersServiceI {
 
 		//头像
 		MultipartFile sourceFile = receiver.getFile();
-		File targetFile = null;
-		if(sourceFile != null && !sourceFile.isEmpty()){
+		String path = null;
+		String fileName = null;
+		if(sourceFile != null){
 			
-			String suffix = getFileNameExt(sourceFile.getName());
+			String suffix = getFileNameExt(sourceFile.getOriginalFilename());
 			
 			if(suffix.equals("png")){}
 			
-			String fileName = userId+"."+suffix;
+			fileName = userId+"."+suffix;
 			
-			String path = getValue(CONFIG.FILED_SRC_USERS_HEADIMGS)+fileName;
-			
-			targetFile = new File(path);
+			path = (String) getValue(CONFIG.FILED_SRC_USERS_HEADIMGS);
 			
 			//设置文件名
 			receiver.setHeadimg(fileName);
 
-			//写入磁盘
-			sourceFile.transferTo(targetFile);
 		}
 		
 		try{
 			//更新数据库
 			usersMapper.updateByPrimaryKeySelective(receiver);
+			
+			
+			//压缩图片到磁盘
+			writeFileWithCompress(multipartFile2File(sourceFile), 
+					(String) getValue(CONFIG.FILED_USERS_HEADINGS_SIZES), 
+					path, fileName);
+			
+			
 		}catch(Exception e){
 			e.printStackTrace();
-			
-			deleteFile(targetFile);
-			
 			throw e;
 		}
-		
-		
-		
-		
 		
 		
 	}
