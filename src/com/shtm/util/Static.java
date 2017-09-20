@@ -18,15 +18,38 @@ public interface Static {
 	 * request中存放在线用户的信息的字段
 	 */
 	public static final String FILED_ONLINE_ADMIN = "onlineUser";
-	/**
-	 * 存放网站地址
-	 */
-	public final static String FIELD_WEB_ADDR = "webaddr";
 	
 	/**
 	 * 登录验证码字段
 	 */
 	public final static String FILED_LOGIN_VERIFYCODE = "loginVerifyCode";
+	
+	/**
+	 * Title:CONFIG
+	 * <p>
+	 * Description:condig文件中的key常量字段;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月20日 上午7:57:57
+	 * @version 1.0
+	 */
+	public interface CONFIG{
+		/**
+		 * 存放网站地址字段
+		 */
+		static final String FIELD_WEB_ADDR = "config.webaddr";
+		/**
+		 * 用户头像资源存放路径
+		 * 
+		 */
+		static final String FILED_SRC_USERS_HEADIMGS = "config.src.users.heaimgs";
+		/**
+		 * 商品图片资源存放路径
+		 * 
+		 */
+		static final String FILED_SRC_GOODS_IMGS = "config.src.goods.imgs";
+	}
+	
 	
 	/**
 	 * ajax返回的操作结果代号的字段

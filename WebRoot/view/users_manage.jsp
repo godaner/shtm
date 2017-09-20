@@ -36,8 +36,18 @@
 
 <!-- 属性表格 start -->
 <div id="editUserDialog" style="display: none;width:450px;">
-	<form id="editUserForm">
+	<form id="editUserForm" enctype="multipart/form-data" method="post">
 		<table id="editUserTable">
+			<tr>
+				<td>
+					修改头像
+				</td>
+				<td>
+					<!-- <input type="file" id="file" name="file" style="width:100%"> -->
+					<input id="file" name="file" class="easyui-filebox" data-options="buttonText: '选择图片', buttonAlign: 'right' "  style="width:100%"> 
+				</td>
+			</tr>
+		
 			<tr>
 				<td>
 					<label>主键</label> 

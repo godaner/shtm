@@ -1,30 +1,8 @@
 
-$.fn.clearForm = function (){
-	var inputs = form.find('.input');
-	for(i = 0;i<inputs.length;i++){
-		var input = $(inputs[i]);
-		var name = input.attr('id');
-		var value = obj[name];
-		c(name);
-		c(value);
-		if(!isEmpty(value)){
-			try{
-				input.textbox('setValue',value);
-			}catch(e){
-				c(e);
-			}
-			
-			try{
-				input.combobox('setValue',value);
-			}catch(e){
-				c(e);
-			}
-		}
-	}
-}
 /**
- * 注入对象属性到easyui的form的input域;<br/>
- * easyui的input域的id为作为obj的name;
+ * 注入对象属性到easyui的form的class為input的input域;<br/>
+ * easyui的input域的id与obj的name需要一致;<br/>
+ * 包含textbox,combobox<br/>
  */
 $.fn.writeEasyuiForm = function (obj){
 	var form = $(this);
@@ -34,9 +12,9 @@ $.fn.writeEasyuiForm = function (obj){
 		var input = $(inputs[i]);
 		var name = input.attr('id');
 		var value = obj[name];
-		c("----------");
+		/*c("----------");
 		c(name);
-		c(value);
+		c(value);*/
 		try{
 			input.textbox('setValue',value);
 		}catch(e){
@@ -53,9 +31,9 @@ $.fn.writeEasyuiForm = function (obj){
 	
 }
 /**
- * 读取class為input的easyui的textbox,combobox作为表单参数;
- * <br/>包含class为combo的easyui的select;<br/>
- * easyui的input域的id为作为obj的name;
+ * 读取class為input的easyui的textbox,combobox作为表单参数;<br/>
+ * easyui的input域的id与obj的name需要一致;<br/>
+ * 包含textbox,combobox<br/>
  */
 $.fn.readEasyuiForm = function (){
 	var formParam = "";

@@ -101,7 +101,11 @@ function loadUsersManageUI(){
 	    		field:'headimg',title:'头像',
 	    		sortable : true,
 				formatter: function(value,row,index){
-					return value;
+					if(isEmpty(value)){
+						value = "";
+					}
+					var img = "<img style='width:100px;' src ='"+getWebProjectName()+"/users/getHeadImg.action?headimg="+value+"&t="+new Date().getTime()+"'/>";
+					return img;
 				}
     		},  
 	        {
@@ -154,7 +158,7 @@ function loadUsersManageUI(){
 	        	title:'生日',
 	    		sortable : true,
 	        	formatter: function(value,row,index){
-	        		c(value);
+//	        		c(value);
 	        		if(!isEmpty(value)){
 		        		value = new Date(value).format("yyyy-MM-dd");
 	        		}else{
@@ -229,6 +233,7 @@ function editUser(){
 		showMsg("请先选择行");
 		return ;
 	}
+	
 	//保存当前操作的用户的行
 	currtEditDatagridRow = row;
 	
@@ -257,6 +262,54 @@ function editUser(){
  */
 function submitUserEdit(){
 
+	//提示信息
+
+	pro.show("正在修改");
+
+	//关闭信息编辑
+	editUserDialog.dialog('close');
+	
+	
+	editUserForm.form('submit', {    
+	    url:getWebProjectName()+"/users/updateUser.action",    
+	    ajax:true,
+	    iframe:false,
+	    onSubmit: function(){   
+	    	if(!editUserForm.form('validate')){
+	    		return false;
+	    	}
+	    },    
+	    success:function(data){ 
+//	    	c(data);
+	    	data = JSON.parse(data);
+	    	
+	    	pro.close();
+			//提示信息
+			showMsg(data.msg);
+
+			if(data.result == 1){
+				//更新成功
+				
+				//刷新表格
+				users_datagrid.datagrid("reload");
+				
+			}else{
+				//失敗
+				//打開信息编辑
+				editUserDialog.dialog('open');
+			}
+	    }    
+	});  
+
+	
+	/*//验证表单
+	if(!editUserForm.form('validate')){
+		return ;
+	}
+	//提示信息
+
+	pro.show("正在修改");
+
 	//关闭信息编辑
 	editUserDialog.dialog('close');
 	
@@ -266,10 +319,12 @@ function submitUserEdit(){
 	
 	var url = "/users/updateUser.action?"+params;
 
-	c(url);
+//	c(url);
 	
 	//请求更新
 	ajax.send(url, function(data){
+		
+		pro.close();
 		//提示信息
 		showMsg(data.msg);
 
@@ -285,10 +340,14 @@ function submitUserEdit(){
 			editUserDialog.dialog('open');
 		}
 	}, function(){
+		//提示信息
+		showMsg("修改失败");
+
+		pro.close();
+		
 		//打開信息编辑
 		editUserDialog.dialog('open');
-		
-	});
+	});*/
 
 }
 /**

@@ -16,6 +16,7 @@ public class DateConverter implements Converter<String, Date> {
 		} catch (ParseException e) {
 			e.printStackTrace();
 			try {
+				//2017-09-15 10:18:09
 				d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(source);
 			} catch (ParseException e1) {
 				e.printStackTrace();

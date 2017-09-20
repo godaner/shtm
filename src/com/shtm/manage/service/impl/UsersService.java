@@ -1,7 +1,10 @@
 package com.shtm.manage.service.impl;
 
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.shtm.manage.mapper.CustomUsersMapper;
 import com.shtm.manage.po.UsersReceiver;
@@ -10,6 +13,7 @@ import com.shtm.manage.service.UsersServiceI;
 import com.shtm.mapper.UsersMapper;
 import com.shtm.po.Users;
 import com.shtm.service.impl.BaseService;
+import com.shtm.util.Static.CONFIG;
 import com.shtm.util.Static.REG;
 
 /**
@@ -55,6 +59,11 @@ public class UsersService extends BaseService implements UsersServiceI {
 	@Override
 	public void updateUser(UsersReceiver receiver) throws Exception {
 		String fPW = receiver.getPassword();
+		
+		Users dbUser = usersMapper.selectByPrimaryKey(receiver.getId());;
+		
+		String userId = dbUser.getId();
+		
 		//判断,设置password
 		if(fPW != null && fPW.trim().equals("")){
 			receiver.setPassword(null);
@@ -64,12 +73,51 @@ public class UsersService extends BaseService implements UsersServiceI {
 			
 			//验证新密码格式
 			eject(receiver.getPassword().matches(REG.PASSWORD), "密码格式错误");
-			Users dbUser = usersMapper.selectByPrimaryKey(receiver.getId());
+			
+			
 			receiver.setPassword(md5(receiver.getPassword() + dbUser.getSalt()));
+		
 			
 		}
+
+		//头像
+		MultipartFile sourceFile = receiver.getFile();
+		File targetFile = null;
+		if(sourceFile != null && !sourceFile.isEmpty()){
+			
+			String suffix = getFileNameExt(sourceFile.getName());
+			
+			if(suffix.equals("png")){}
+			
+			String fileName = userId+"."+suffix;
+			
+			String path = getValue(CONFIG.FILED_SRC_USERS_HEADIMGS)+fileName;
+			
+			targetFile = new File(path);
+			
+			//设置文件名
+			receiver.setHeadimg(fileName);
+
+			//写入磁盘
+			sourceFile.transferTo(targetFile);
+		}
 		
-		usersMapper.updateByPrimaryKeySelective(receiver);
+		try{
+			//更新数据库
+			usersMapper.updateByPrimaryKeySelective(receiver);
+		}catch(Exception e){
+			e.printStackTrace();
+			
+			deleteFile(targetFile);
+			
+			throw e;
+		}
+		
+		
+		
+		
+		
+		
 	}
 	
 }

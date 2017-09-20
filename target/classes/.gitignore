@@ -1,0 +1,7 @@
+/com/
+/config.properties
+/db.properties
+/email.properties
+/log4j.properties
+/mybatis/
+/spring/

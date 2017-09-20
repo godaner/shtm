@@ -14,6 +14,7 @@
     <result column="SCORE" jdbcType="DECIMAL" property="score" />
     <result column="REGISTTIME" jdbcType="TIMESTAMP" property="registtime" />
     <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="MONEY" jdbcType="DECIMAL" property="money" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List">
     ID, USERNAME, EMAIL, PASSWORD, SALT, HEADIMG, SEX, BIRTHDAY, DESCRIPTION, SCORE, 
-    REGISTTIME, STATUS
+    REGISTTIME, STATUS, MONEY
   </sql>
   <select id="selectByExample" parameterType="com.shtm.po.UsersExample" resultMap="BaseResultMap">
     select
@@ -111,13 +112,13 @@
     insert into USERS (ID, USERNAME, EMAIL, 
       PASSWORD, SALT, HEADIMG, 
       SEX, BIRTHDAY, DESCRIPTION, 
-      SCORE, REGISTTIME, STATUS
-      )
+      SCORE, REGISTTIME, STATUS, 
+      MONEY)
     values (#{id,jdbcType=OTHER}, #{username,jdbcType=OTHER}, #{email,jdbcType=OTHER}, 
       #{password,jdbcType=OTHER}, #{salt,jdbcType=OTHER}, #{headimg,jdbcType=OTHER}, 
       #{sex,jdbcType=DECIMAL}, #{birthday,jdbcType=TIMESTAMP}, #{description,jdbcType=OTHER}, 
-      #{score,jdbcType=DECIMAL}, #{registtime,jdbcType=TIMESTAMP}, #{status,jdbcType=DECIMAL}
-      )
+      #{score,jdbcType=DECIMAL}, #{registtime,jdbcType=TIMESTAMP}, #{status,jdbcType=DECIMAL}, 
+      #{money,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.shtm.po.Users">
     insert into USERS
@@ -158,6 +159,9 @@
       <if test="status != null">
         STATUS,
       </if>
+      <if test="money != null">
+        MONEY,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -195,6 +199,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -243,6 +250,9 @@
       <if test="record.status != null">
         STATUS = #{record.status,jdbcType=DECIMAL},
       </if>
+      <if test="record.money != null">
+        MONEY = #{record.money,jdbcType=DECIMAL},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -261,7 +271,8 @@
       DESCRIPTION = #{record.description,jdbcType=OTHER},
       SCORE = #{record.score,jdbcType=DECIMAL},
       REGISTTIME = #{record.registtime,jdbcType=TIMESTAMP},
-      STATUS = #{record.status,jdbcType=DECIMAL}
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      MONEY = #{record.money,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -302,6 +313,9 @@
       <if test="status != null">
         STATUS = #{status,jdbcType=DECIMAL},
       </if>
+      <if test="money != null">
+        MONEY = #{money,jdbcType=DECIMAL},
+      </if>
     </set>
     where ID = #{id,jdbcType=OTHER}
   </update>
@@ -317,7 +331,8 @@
       DESCRIPTION = #{description,jdbcType=OTHER},
       SCORE = #{score,jdbcType=DECIMAL},
       REGISTTIME = #{registtime,jdbcType=TIMESTAMP},
-      STATUS = #{status,jdbcType=DECIMAL}
+      STATUS = #{status,jdbcType=DECIMAL},
+      MONEY = #{money,jdbcType=DECIMAL}
     where ID = #{id,jdbcType=OTHER}
   </update>
 </mapper>

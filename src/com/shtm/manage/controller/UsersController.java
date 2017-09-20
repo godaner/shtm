@@ -1,8 +1,13 @@
 package com.shtm.manage.controller;
 
+import java.io.File;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.shtm.controller.BaseController;
 import com.shtm.manage.po.UsersReceiver;
@@ -99,9 +104,12 @@ public class UsersController extends BaseController<UsersServiceI>{
 	 * @return
 	 */
 	@RequestMapping("/updateUser")
-	public @ResponseBody UsersReplier updateUser(UsersReceiver receiver) throws Exception{
+	public @ResponseBody UsersReplier updateUser(MultipartFile file,UsersReceiver receiver) throws Exception{
 		UsersReplier replier = new UsersReplier();
 		try {
+			
+			receiver.setFile(file);
+			
 			service.updateUser(receiver);
 			
 			replier.setMsg("修改用户成功");
@@ -116,5 +124,29 @@ public class UsersController extends BaseController<UsersServiceI>{
 			replier.setResult(RESULT.FALSE);
 		}
 		return replier;
+	}
+	/**
+	 * Title:updateUser
+	 * <p>
+	 * Description:根据id更新user;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月19日 下午4:38:54
+	 * @version 1.0
+	 * @return
+	 */
+	@RequestMapping("/getHeadImg")
+	public void getHeadImg(String headimg) throws Exception{
+		if(headimg == null || headimg.trim().isEmpty()){//没有头像文件名,请求默认图片
+			headimg = "default.png";
+		}
+		
+		String filePath = (String) getValue(CONFIG.FILED_SRC_USERS_HEADIMGS)+headimg;
+		
+		File f = new File(filePath);
+		
+		//返回文件
+		info(f.getAbsoluteFile());
+		writeFileToOS(f, getResponse().getOutputStream());
 	}
 }

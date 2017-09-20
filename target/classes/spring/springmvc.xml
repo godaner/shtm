@@ -108,5 +108,20 @@
     
     
     
+    <!-- *********配置文件上传 start********* -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置文件上传最大尺寸为5m -->
+		<property name="maxUploadSize">
+			<value>5242880</value>
+		</property>
+	</bean>
+    <!-- *********配置文件上传 end********* -->
+    
+    
+    
+    
+    
+    
 	<!-- *******************配置spring对控制层的管理 end******************* -->  
 </beans>  

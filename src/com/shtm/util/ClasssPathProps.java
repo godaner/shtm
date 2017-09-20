@@ -61,7 +61,7 @@ public class ClasssPathProps {
 	public static void main(String[] args) {
 		ClasssPathProps.loadProps();
 
-		System.out.println(ClasssPathProps.getValue(Static.FIELD_WEB_ADDR));
+		System.out.println(ClasssPathProps.getValue(Static.CONFIG.FIELD_WEB_ADDR));
 		;
 
 		System.out.println(ClasssPathProps.getValue("db.url"));
