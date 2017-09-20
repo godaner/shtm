@@ -5,22 +5,23 @@
 <!-- 工具栏 start -->
 <div id="c_i_tb" style="display: none;">
 	<form id="usersSearchForm">
-		<input name="id" class="easyui-textbox" data-options="prompt:'id'" style="width:100px">
-		<input name="username" class="easyui-textbox" data-options="prompt:'用户名'" style="width:100px"> 
-		<input name="email" class="easyui-textbox" data-options="prompt:'邮箱'" style="width:100px"> 
-		<select name="sex" class="easyui-combobox" style="width:100px;" data-options="editable:false">   
+		<input name="id" class="easyui-textbox input" data-options="prompt:'id'" style="width:100px">
+		<input name="username" class="easyui-textbox input" data-options="prompt:'用户名'" style="width:100px"> 
+		<input name="email" class="easyui-textbox input" data-options="prompt:'邮箱'" style="width:100px"> 
+		<select name="sex" class="easyui-combobox input" style="width:100px;" data-options="editable:false">   
 		    <option value="">不选择</option>   
 		    <option value="1">男</option> 
 		    <option value="0">女</option>    
 		    <option value="-1">未设置</option>  
 		</select>
-		<input name="description" class="easyui-textbox" data-options="prompt:'介绍'" style="width:100px"> 
-		<select name="status" class="easyui-combobox" style="width:100px;" data-options="editable:false">   
+		<input name="description" class="easyui-textbox input" data-options="prompt:'介绍'" style="width:100px"> 
+		<select name="status" class="easyui-combobox input" style="width:100px;" data-options="editable:false">   
 		    <option value="">不选择</option>   
 		    <option value="1">激活</option> 
 		    <option value="0">冻结</option>    
 		</select>       
 		<a href="javascript:searchUsers();" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
+		<a href="javascript:clearSearch();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">清空条件</a>
 		|
 		<a href="javascript:editUser();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
 	</form>

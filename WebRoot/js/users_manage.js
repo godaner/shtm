@@ -85,10 +85,9 @@ function loadUsersManageUI(){
 	users_datagrid.datagrid({    
 	    url:getWebProjectName()+"/users/selectUsersDatagrid.action",
 	    toolbar:"#c_i_tb",
-	    autoRowHeight:true,
-	    fitColumns:true,
 	    pagination:true,
 	    striped:true,
+	    fitColumns:true,
 	    pageList: [5 , 10, 20, 30, 40, 50],
 	    fit: true,
 	    sortName : 'registtime',
@@ -100,6 +99,7 @@ function loadUsersManageUI(){
 	    	{
 	    		field:'headimg',title:'头像',
 	    		sortable : true,
+    			width:80,
 				formatter: function(value,row,index){
 					if(isEmpty(value)){
 						value = "";
@@ -111,17 +111,19 @@ function loadUsersManageUI(){
 	        {
     			field:'id',
     			title:'id',
-    			width:100,
+    			width:270,
 	    		sortable : true
     		},    
 	        {
     			field:'username',
     			title:'名称',
+    			width:100,
 	    		sortable : true
     		},    
 	        {
     			field:'email',
     			title:'邮箱',
+    			width:100,
 	    		sortable : true
     		},    
 	        {
@@ -172,6 +174,7 @@ function loadUsersManageUI(){
 	        {
 	        	field:'description',
 	        	title:'介绍',
+    			width:300,
 	    		sortable : true,
 				formatter: function(value,row,index){
 					if(!isEmpty(value) && value.length>15){
@@ -371,4 +374,11 @@ function searchUsers(){
 	var searchConditions = usersSearchForm.serializeObject();
 	
 	users_datagrid.datagrid('load',searchConditions);
+}
+
+function clearSearch(){
+	//清空条件
+	usersSearchForm.clearEasyuiForm();
+	//重新加载数据
+	users_datagrid.datagrid('load',{});
 }
