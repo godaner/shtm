@@ -111,6 +111,7 @@ function loadUsersManageUI(){
 	        {
     			field:'id',
     			title:'id',
+    			width:100,
 	    		sortable : true
     		},    
 	        {

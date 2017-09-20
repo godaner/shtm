@@ -2,6 +2,7 @@ package com.shtm.manage.controller;
 
 import java.io.IOException;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import com.shtm.po.Admins;
  * @version 1.0
  */
 @RequestMapping("/admins")
+@Scope("prototype")
 @Controller
 public class AdminsController extends BaseController<AdminsServiceI>{
 	

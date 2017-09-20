@@ -1,5 +1,6 @@
 package com.shtm.manage.service.impl;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,9 +152,11 @@ public class UsersService extends BaseService implements UsersServiceI {
 			//更新数据库
 			usersMapper.updateByPrimaryKeySelective(receiver);
 			
-			
-			//压缩图片到磁盘
-			writeFileWithCompress(multipartFile2File(sourceFile), 
+			//保存原图
+			File targetFile = new File(path+fileName);
+			sourceFile.transferTo(targetFile);
+			//压缩原图到磁盘
+			writeFileWithCompress(targetFile, 
 					(String) getValue(CONFIG.FILED_USERS_HEADINGS_SIZES), 
 					path, fileName);
 			

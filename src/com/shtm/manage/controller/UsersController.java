@@ -2,6 +2,7 @@ package com.shtm.manage.controller;
 
 import java.io.File;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,8 +22,11 @@ import com.shtm.manage.service.UsersServiceI;
  * @version 1.0
  */
 @RequestMapping("/users")
+@Scope("prototype")
 @Controller
 public class UsersController extends BaseController<UsersServiceI>{
+	
+	
 	/**
 	 * Title:
 	 * <p>
@@ -132,22 +136,35 @@ public class UsersController extends BaseController<UsersServiceI>{
 	 */
 	@RequestMapping("/getHeadImg")
 	public void getHeadImg(String headimg,String size) throws Exception{
-		if(headimg == null || headimg.trim().isEmpty()){//没有头像文件名,请求默认图片
+
+		
+		try {
+			
+			eject(size == null || size.trim().isEmpty(),"用户头像的size没有指定");
+			
+
+			eject(headimg == null || size.trim().isEmpty(),"用户头像的headimgs没有指定");
+			
+			//找不到指定的图片
+			String path = getValue(CONFIG.FILED_SRC_USERS_HEADIMGS)+size+"_"+headimg;
+			
+			//如果文件不存在
+			eject(!new File(path).exists());
+			
+			//返回头像
+			writeFileToOS(path, getResponse().getOutputStream());
+			
+		} catch (Exception e) {
+			//返回默认图片
+			size = "200";
 			headimg = "default.png";
+			String path = getValue(CONFIG.FILED_SRC_USERS_HEADIMGS)+size+"_"+headimg;
+			writeFileToOS(path, getResponse().getOutputStream());
 		}
 		
-		String filePath = (String) getValue(CONFIG.FILED_SRC_USERS_HEADIMGS)+size+"_"+headimg;
 		
-		File f = new File(filePath);
-		
-		if(!f.exists()){
-			headimg = "default.png";
-			filePath = (String) getValue(CONFIG.FILED_SRC_USERS_HEADIMGS)+headimg;
-			f = new File(filePath);
-		}
-		//返回文件
-		writeFileToOS(f, getResponse().getOutputStream());
 	}
+	
 	
 	
 	/**
