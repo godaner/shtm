@@ -1,4 +1,14 @@
 /**
+ * 确认对话框
+ * @param msg
+ * @param callFun
+ */
+function confirm(msg,callFun){
+	$.messager.confirm('确认', msg, callFun);
+}
+
+
+/**
  * 清空easyui中的class為input的输入域记录;<br/>
  * 包含textbox,combobox,filebox<br/>
  */
@@ -224,6 +234,9 @@ var ajax = {
 	 *            连接服务器失败回调方法
 	 */
 	sendJson : function(url, jsObjectOrJsonStr,success,error) {
+		//显示进度条
+		pro.show("正在操作,请稍等");
+		
 		//假设jsObjectOrJsonStr是json字符
 		var jsonStr = jsObjectOrJsonStr;
 		//如果jsObjectOrJsonStr是js对象,转化为json字符串
@@ -241,13 +254,15 @@ var ajax = {
 			dataType : "json",
 			data : jsonStr,
 			success : function(data, textStatus) {
-				
 				//回调
 				if(success){
 					success(data, textStatus);
 				}
+				//关闭进度条
+				pro.close();
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				
 				showMsg("连接服务器失败,请稍后尝试");
 				c("ajax失败:");
 				c(XMLHttpRequest);
@@ -257,6 +272,8 @@ var ajax = {
 				if(error){
 					error(XMLHttpRequest, textStatus, errorThrown);
 				}
+				//关闭进度条
+				pro.close();
 			}
 		});
 	},

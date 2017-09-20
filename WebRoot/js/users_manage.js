@@ -234,12 +234,14 @@ function editUser(){
 		return ;
 	}
 	
+	//保存当前操作的用户的行
+	currtEditDatagridRow = row;
+	
 	//清空旧的文本记录
 	editUserForm.clearEasyuiForm();
 	
 	
-	//保存当前操作的用户的行
-	currtEditDatagridRow = row;
+	
 	
 	//打开信息编辑
 	editUserDialog.dialog('open');
@@ -254,11 +256,8 @@ function editUser(){
 		row.birthday = "";
 	}
 	row.password = "";
-	//注入普通参数(input)
+	//注入对象的name与form的id对应的表单对象
 	editUserForm.writeEasyuiForm(row);
-	//注入select
-//	sexInput.combobox("setValue",row.sex);
-//	statusInput.combobox("setValue",row.status);
 	
 }
 
@@ -316,52 +315,7 @@ function submitUserEdit(){
 	});  
 
 	
-	/*//验证表单
-	if(!editUserForm.form('validate')){
-		return ;
-	}
-	//提示信息
-
-	pro.show("正在修改");
-
-	//关闭信息编辑
-	editUserDialog.dialog('close');
 	
-	//转化form表单的easyui的input域为表单参数
-	var params = editUserForm.readEasyuiForm();
-	
-	
-	var url = "/users/updateUser.action?"+params;
-
-//	c(url);
-	
-	//请求更新
-	ajax.send(url, function(data){
-		
-		pro.close();
-		//提示信息
-		showMsg(data.msg);
-
-		if(data.result == 1){
-			//更新成功
-			
-			//刷新表格
-			users_datagrid.datagrid("reload");
-			
-		}else{
-			//失敗
-			//打開信息编辑
-			editUserDialog.dialog('open');
-		}
-	}, function(){
-		//提示信息
-		showMsg("修改失败");
-
-		pro.close();
-		
-		//打開信息编辑
-		editUserDialog.dialog('open');
-	});*/
 
 }
 /**
@@ -370,7 +324,44 @@ function submitUserEdit(){
 function resetUser(){
 	
 	editUser();
+	
+	showMsg("重置成功");
 }
+
+/**
+ * 删除用户
+ */
+function deleteUser(){
+	//确认删除?
+	confirm("确认删除"+currtEditDatagridRow.username+"?",function(r){
+		if(r){
+			//进度条
+			
+			
+			var id = currtEditDatagridRow.id;
+			
+			
+			var url = "/users/deleteUser.action?id="+id;
+			ajax.send(url, function(data){
+				//显示信息
+				showMsg(data.msg);
+				
+				//关闭信息编辑
+				editUserDialog.dialog('close');
+				
+				//刷新表格
+				users_datagrid.datagrid("reload");
+				
+			}, function(){
+				
+			});
+		}
+	});
+	
+	
+	
+}
+
 /**
  * 按条件搜索users
  */

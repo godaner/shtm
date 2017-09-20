@@ -44,7 +44,7 @@
 				</td>
 				<td>
 					<!-- <input type="file" id="file" name="file" style="width:100%"> -->
-					<input id="file" name="file" class="easyui-filebox input" data-options="buttonText: '选择图片', buttonAlign: 'right' "  style="width:100%"> 
+					<input id="file" name="file" class="easyui-filebox input" data-options="accept:'image/jpeg,image/gif,image/jpg',prompt:'默认为原图片',buttonText: '选择图片', buttonAlign: 'right' "  style="width:100%"> 
 				</td>
 			</tr>
 		

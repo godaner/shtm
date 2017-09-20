@@ -4,7 +4,7 @@
 	
 	<sql id="selectUsersConditions">
 		<where>
-			1=1
+			STATUS != -1
 			<if test="id !=null and id!=''">
 				AND id LIKE '%${id}%'
 			</if>
@@ -23,6 +23,7 @@
 			<if test="status !=null and status!=''">
 				AND status = #{status}
 			</if>
+			
 		</where>
 	</sql>
 	

@@ -1,6 +1,6 @@
 package com.shtm.manage.service.impl;
 
-import java.io.File;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +12,12 @@ import com.shtm.manage.po.UsersReplier;
 import com.shtm.manage.service.UsersServiceI;
 import com.shtm.mapper.UsersMapper;
 import com.shtm.po.Users;
+import com.shtm.po.UsersExample;
+import com.shtm.po.UsersExample.Criteria;
 import com.shtm.service.impl.BaseService;
 import com.shtm.util.Static.CONFIG;
 import com.shtm.util.Static.REG;
+import com.shtm.util.Static.USERS_STATUS;
 
 /**
  * 
@@ -58,11 +61,42 @@ public class UsersService extends BaseService implements UsersServiceI {
 
 	@Override
 	public void updateUser(UsersReceiver receiver) throws Exception {
-		String fPW = receiver.getPassword();
 		
 		Users dbUser = usersMapper.selectByPrimaryKey(receiver.getId());;
 		
 		String userId = dbUser.getId();
+		
+		/**
+		 * 头像
+		 */
+		MultipartFile sourceFile = receiver.getFile();
+		String path = null;
+		String fileName = null;
+		if(sourceFile != null && !sourceFile.isEmpty()){
+			
+			String suffix = getFileNameExt(sourceFile.getOriginalFilename());
+			
+			//驗證圖片格式
+			String accept = getValue(CONFIG.FILED_USERS_HEADINGS_TYPES).toString().toLowerCase();
+			eject(accept.indexOf(suffix.toLowerCase())<0, 
+					"圖片格式不正確,隻允許"+accept);
+			
+			//文件名a.jpg
+			fileName = userId+"."+suffix;
+			
+			path = (String) getValue(CONFIG.FILED_SRC_USERS_HEADIMGS);
+			
+			//设置文件名
+			receiver.setHeadimg(fileName);
+
+		}
+		
+		/**
+		 * 驗證密碼
+		 */
+		
+		String fPW = receiver.getPassword();
+		
 		
 		//判断,设置password
 		if(fPW != null && fPW.trim().equals("")){
@@ -80,24 +114,38 @@ public class UsersService extends BaseService implements UsersServiceI {
 			
 		}
 
-		//头像
-		MultipartFile sourceFile = receiver.getFile();
-		String path = null;
-		String fileName = null;
-		if(sourceFile != null){
+		
+		
+		/**
+		 * 验证username
+		 */
+		UsersExample ue = new UsersExample();
+		Criteria c = null;
+		List<Users> dbUsers = null;
+		//如果修改了用户名
+		if(!dbUser.getUsername().equals(receiver.getUsername())){
+			c = ue.createCriteria();
+			c.andUsernameEqualTo(receiver.getUsername());
 			
-			String suffix = getFileNameExt(sourceFile.getOriginalFilename());
+			dbUsers = usersMapper.selectByExample(ue);
 			
-			if(suffix.equals("png")){}
-			
-			fileName = userId+"."+suffix;
-			
-			path = (String) getValue(CONFIG.FILED_SRC_USERS_HEADIMGS);
-			
-			//设置文件名
-			receiver.setHeadimg(fileName);
-
+			eject(dbUsers.size() > 0, "该用户名已存在");
 		}
+		
+		
+		/**
+		 * 验证email
+		 */
+		if(!dbUser.getEmail().equals(receiver.getEmail())){
+			c = ue.createCriteria();
+			
+			c.andEmailEqualTo(receiver.getEmail());
+			
+			dbUsers = usersMapper.selectByExample(ue);
+			
+			eject(dbUsers.size() > 0, "该邮箱已存在");
+		}
+		
 		
 		try{
 			//更新数据库
@@ -116,6 +164,14 @@ public class UsersService extends BaseService implements UsersServiceI {
 		}
 		
 		
+	}
+
+	@Override
+	public void deleteUser(String id) throws Exception {
+		Users u = new Users();
+		u.setId(id);
+		u.setStatus(USERS_STATUS.DELETE);
+		usersMapper.updateByPrimaryKeySelective(u);
 	}
 	
 }

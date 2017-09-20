@@ -57,8 +57,15 @@ public interface Static {
 		 * 商品图片尺寸版本字段
 		 */
 		static final String FILED_GOODS_IMGS_SIZES = "config.goods.imgs.sizes";
+		/**
+		 * 用户头像圖片類型字段
+		 */
+		static final String FILED_USERS_HEADINGS_TYPES = "config.users.headimgs.types";
+		/**
+		 * 商品图片類型字段
+		 */
+		static final String FILED_GOODS_IMGS_TYPES = "config.goods.imgs.types";
 	}
-	
 	
 	/**
 	 * ajax返回的操作结果代号的字段
@@ -112,4 +119,23 @@ public interface Static {
 		//邮编
 		String POST_CODE = "^[1-9]\\d{5}$";
 	}
+	
+	/**
+	 * Title:USERS_STATUS
+	 * <p>
+	 * Description:用户状态<br/>
+	 * 状态:1为激活，,0为冻结,-1为删除 ,-2为注册未激活<br/>
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月20日 下午4:58:39
+	 * @version 1.0
+	 */
+	public interface USERS_STATUS{
+		static final Short ACTIVITY = 1;
+		static final Short FROZEN = 0;
+		static final Short UNACTIVITY = -2;
+		static final Short DELETE = -1;
+	}
+	
+	
 }

@@ -56,4 +56,17 @@ public interface UsersServiceI {
 	 * @throws Exception
 	 */
 	public void updateUser(UsersReceiver receiver) throws Exception;
+
+	/**
+	 * Title:deleteUser
+	 * <p>
+	 * Description:删除用户
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月20日 下午4:56:46
+	 * @version 1.0
+	 * @param id
+	 * @throws Exception
+	 */
+	public void deleteUser(String id)throws Exception;
 }

@@ -4,10 +4,7 @@ import java.io.File;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.shtm.controller.BaseController;
 import com.shtm.manage.po.UsersReceiver;
@@ -124,9 +121,9 @@ public class UsersController extends BaseController<UsersServiceI>{
 		return replier;
 	}
 	/**
-	 * Title:updateUser
+	 * Title:getHeadImg
 	 * <p>
-	 * Description:根据id更新user;
+	 * Description:根据headimg和图片尺寸获取图片;
 	 * <p>
 	 * @author Kor_Zhang
 	 * @date 2017年9月19日 下午4:38:54
@@ -150,5 +147,40 @@ public class UsersController extends BaseController<UsersServiceI>{
 		}
 		//返回文件
 		writeFileToOS(f, getResponse().getOutputStream());
+	}
+	
+	
+	/**
+	 * Title:deleteUser
+	 * <p>
+	 * Description:删除用户
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月20日 下午4:54:57
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("deleteUser")
+	public @ResponseBody UsersReplier deleteUser(String id) throws Exception{
+		
+		
+		UsersReplier replier = new UsersReplier();
+		try {
+			
+			service.deleteUser(id);
+			
+			replier.setMsg("删除用户成功");
+			
+			replier.setResult(RESULT.TRUE);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			replier.setMsg(e.getMessage());
+			
+			replier.setResult(RESULT.FALSE);
+		}
+		return replier;
 	}
 }
