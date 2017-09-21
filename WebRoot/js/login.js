@@ -102,14 +102,22 @@ function initLoginLis() {
 		
 		loginDialog.close();
 		pro.show("正在登录");
+		
+		//获取登录信息
+		var visitInfo = getVisitInfo();
 		//执行ajax
-		var url = "/admins/login.action";
+		var url = "/admins/login.action?"+visitInfo;
 
-		var formObject = loginForm.serializeObject();
 
-		ajax.sendForm(url, formObject, function(data) {
+		var formParams = loginForm.serializeParams();
+
+		url = url + "&" + formParams;
+		
+
+		c(url);
+		
+		ajax.send(url, function(data) {
 			//连接服务器成功
-
 			//调用util.js的方法
 			showMsg(data.msg);
 

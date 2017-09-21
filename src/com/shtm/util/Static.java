@@ -25,6 +25,22 @@ public interface Static {
 	public final static String FILED_LOGIN_VERIFYCODE = "loginVerifyCode";
 	
 	/**
+	 * 
+	 * Title:ADMINS_LOGIN_LOG_RESULT
+	 * <p>
+	 * Description:管理员登陆记录表的状态
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月21日 上午8:34:28
+	 * @version 1.0
+	 */
+	public interface ADMINS_LOGIN_LOG_RESULT{
+		static final Short FAILURE = 0;
+		static final Short SUCCESS = 1;
+	}
+	
+	
+	/**
 	 * Title:CONFIG
 	 * <p>
 	 * Description:condig文件中的key常量字段;

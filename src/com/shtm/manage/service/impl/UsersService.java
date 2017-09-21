@@ -68,7 +68,74 @@ public class UsersService extends BaseService implements UsersServiceI {
 		String userId = dbUser.getId();
 		
 		/**
-		 * 头像
+		 * 验证username格式
+		 */
+		eject(!receiver.getUsername().matches(REG.USERNAME), "用户名格式错误,要求:开头为字母的[_-,数字,字母]的5-20组合");
+		
+		/**
+		 * 验证email格式
+		 */
+		eject(!receiver.getEmail().matches(REG.EMAIL), "邮箱格式错误");
+		
+
+		/**
+		 * 验证密码格式
+		 */
+		
+		String fPW = receiver.getPassword();
+		
+		
+		//判断,设置password
+		if(fPW != null && fPW.trim().equals("")){
+			receiver.setPassword(null);
+		}
+		
+		if(receiver.getPassword() != null){
+			
+			//验证新密码格式
+			eject(!receiver.getPassword().matches(REG.PASSWORD), "密码格式错误,要求:开头为字母的字母数字5-12组合");
+			
+			
+			receiver.setPassword(md5(receiver.getPassword() + dbUser.getSalt()));
+		
+			
+		}
+
+		
+		
+		/**
+		 * 验证username是否存在
+		 */
+		UsersExample ue = new UsersExample();
+		Criteria c = null;
+		List<Users> dbUsers = null;
+		//如果修改了用户名
+		if(!dbUser.getUsername().equals(receiver.getUsername())){
+			c = ue.createCriteria();
+			c.andUsernameEqualTo(receiver.getUsername());
+			
+			dbUsers = usersMapper.selectByExample(ue);
+			
+			eject(dbUsers.size() > 0, "该用户名已存在");
+		}
+		
+		
+		/**
+		 * 验证email是否存在
+		 */
+		if(!dbUser.getEmail().equals(receiver.getEmail())){
+			c = ue.createCriteria();
+			
+			c.andEmailEqualTo(receiver.getEmail());
+			
+			dbUsers = usersMapper.selectByExample(ue);
+			
+			eject(dbUsers.size() > 0, "该邮箱已存在");
+		}
+		
+
+		/**
+		 * 验证是否上传头像
 		 */
 		MultipartFile sourceFile = receiver.getFile();
 		String path = null;
@@ -92,73 +159,26 @@ public class UsersService extends BaseService implements UsersServiceI {
 
 		}
 		
-		/**
-		 * 驗證密碼
-		 */
-		
-		String fPW = receiver.getPassword();
-		
-		
-		//判断,设置password
-		if(fPW != null && fPW.trim().equals("")){
-			receiver.setPassword(null);
-		}
-		
-		if(receiver.getPassword() != null){
-			
-			//验证新密码格式
-			eject(receiver.getPassword().matches(REG.PASSWORD), "密码格式错误");
-			
-			
-			receiver.setPassword(md5(receiver.getPassword() + dbUser.getSalt()));
-		
-			
-		}
-
-		
-		
-		/**
-		 * 验证username
-		 */
-		UsersExample ue = new UsersExample();
-		Criteria c = null;
-		List<Users> dbUsers = null;
-		//如果修改了用户名
-		if(!dbUser.getUsername().equals(receiver.getUsername())){
-			c = ue.createCriteria();
-			c.andUsernameEqualTo(receiver.getUsername());
-			
-			dbUsers = usersMapper.selectByExample(ue);
-			
-			eject(dbUsers.size() > 0, "该用户名已存在");
-		}
-		
-		
-		/**
-		 * 验证email
-		 */
-		if(!dbUser.getEmail().equals(receiver.getEmail())){
-			c = ue.createCriteria();
-			
-			c.andEmailEqualTo(receiver.getEmail());
-			
-			dbUsers = usersMapper.selectByExample(ue);
-			
-			eject(dbUsers.size() > 0, "该邮箱已存在");
-		}
-		
 		
 		try{
-			//更新数据库
+			/**
+			 * 更新数据库
+			 */
 			usersMapper.updateByPrimaryKeySelective(receiver);
 			
-			//保存原图
-			File targetFile = new File(path+fileName);
-			sourceFile.transferTo(targetFile);
-			//压缩原图到磁盘
-			writeFileWithCompress(targetFile, 
-					(String) getValue(CONFIG.FILED_USERS_HEADINGS_SIZES), 
-					path, fileName);
+			
+			/**
+			 * 保存图片
+			 */
+			if(sourceFile != null && !sourceFile.isEmpty()){
+				//保存原图
+				File targetFile = new File(path+fileName);
+				sourceFile.transferTo(targetFile);
+				//压缩原图到磁盘
+				writeFileWithCompress(targetFile, 
+						(String) getValue(CONFIG.FILED_USERS_HEADINGS_SIZES), 
+						path, fileName);
+			}
 			
 			
 		}catch(Exception e){

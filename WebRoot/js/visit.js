@@ -3,14 +3,14 @@ var visitID;
 
 //creatReq("http://localhost:8080/users/info.action");
 
+
+
+
 /**
  * 发送信息到服务器;
  * @param url	http://localhost:8080/users/info.action
  */
 function creatReq(url) {
-
-    // 获取当前网站的更目录，这比较重要，全局通用的保证
-    var path = getRootPath();
     // 后台处理的文件地址，注意，必须把这个文件的前台页面大部分清空，只留下第一行
     /*var url = path + "";*/
 
@@ -21,30 +21,47 @@ function creatReq(url) {
         req = new ActiveXObject("Microsoft.XMLHttp");
     }
     if (req) {
-        // 获取当前的网址
-        var link = window.location.href;
-        // 获取上页地址
-        var oldlink = document.referrer;
-        // 获取当前访问页的标题
-        var titleName = document.title;
-        // 屏幕分辨率
-        var screen = window.screen.width + "*" + window.screen.height;    
-        // 异步请求发送
-        /*url =  url + "?ip="+ip+"page=" + escape(link) + "&oldlink=" + escape(oldlink) + "&title=" + escape(titleName) + "&sys=" + getSysInfo() + "&s=" + screen + "&b=" + GetBrowserType() + " " + GetBrowserVersion() + "&c=" + remote_ip_info.cuntry +"&p=" + remote_ip_info.province + "&c=" + remote_ip_info.city + "&k=" + GetKeyword(oldlink);*/
-        /*var returnCitySN = {"cip": "180.120.216.21", "cid": "320600", "cname": "江苏省南通市"};*/
-        /*var remote_ip_info = {"ret":1,"start":-1,"end":-1,"country":"\u4e2d\u56fd","province":"\u6c5f\u82cf","city":"\u5357\u901a","district":"","isp":"","type":"","desc":""};*/
-        url =  url + "?ip="+returnCitySN.cip+"&page=" + escape(link) + "&oldlink=" + escape(oldlink) + "&title=" + escape(titleName) + "&sys=" + getSysInfo() + "&s=" + screen + "&b=" + GetBrowserType() + " " + GetBrowserVersion() + "&c=" + remote_ip_info.country +"&p=" + remote_ip_info.province + "&ci=" + remote_ip_info.city + "&k=" + GetKeyword(oldlink);
-        req.open("GET",url, true);
+        url = url+"?"+getVisitInfo();
         c(url);
+        req.open("GET",url, true);
         req.onreadystatechange = callback; // 制定回调函数
         req.send(null); 
     }
 }
-
-// 获取当前网站的更目录，这比较重要，全局通用的保证
-function getRootPath() {
-    return window.location.protocol + "//" + window.location.host + "/";
+/**
+ * 獲取拜访记录參數
+ * @param prefix如    admins.
+ * @returns {String}
+ */
+function getVisitInfo(){
+	// 获取当前的网址
+    var link = window.location.href;
+    // 获取上页地址
+    var oldlink = document.referrer;
+    // 获取当前访问页的标题
+    var titleName = document.title;
+    // 屏幕分辨率
+    var screen = window.screen.width + "*" + window.screen.height;    
+    // 异步请求发送
+    /*url =  url + "?ip="+ip+"page=" + escape(link) + "&oldlink=" + escape(oldlink) + "&title=" + escape(titleName) + "&sys=" + getSysInfo() + "&s=" + screen + "&b=" + GetBrowserType() + " " + GetBrowserVersion() + "&c=" + remote_ip_info.cuntry +"&p=" + remote_ip_info.province + "&c=" + remote_ip_info.city + "&k=" + GetKeyword(oldlink);*/
+    /*var returnCitySN = {"cip": "180.120.216.21", "cid": "320600", "cname": "江苏省南通市"};*/
+    /*var remote_ip_info = {"ret":1,"start":-1,"end":-1,"country":"\u4e2d\u56fd","province":"\u6c5f\u82cf","city":"\u5357\u901a","district":"","isp":"","type":"","desc":""};*/
+    return "ip="+returnCitySN.cip+
+    "&page=" + escape(link) + 
+    "&oldlink=" + escape(oldlink) + 
+    "&title=" + escape(titleName) + 
+    "&system=" + getSysInfo() + 
+    "&dpi=" + screen + 
+    "&browser=" + GetBrowserType() + " " + GetBrowserVersion() + 
+    "&country=" + remote_ip_info.country +
+    "&province=" + remote_ip_info.province + 
+    "&city=" + remote_ip_info.city + 
+    "&keyword=" + GetKeyword(oldlink);
+    
 }
+
+
+
 
 
 // 获取来自搜索引擎的关键词

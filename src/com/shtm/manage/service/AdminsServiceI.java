@@ -1,5 +1,6 @@
 package com.shtm.manage.service;
 
+import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.po.Admins;
 
@@ -16,15 +17,16 @@ public interface AdminsServiceI {
 	/**
 	 * Title:login
 	 * <p>
-	 * Description:登录
+	 * Description:登录,并且记录
 	 * <p>
 	 * @author Kor_Zhang
 	 * @date 2017年9月15日 上午10:44:14
 	 * @version 1.0
+	 * @param adminsLoginLogReceiver 
 	 * @return 返回数据库的记录
 	 * @throws Exception
 	 */
-	public Admins login(AdminsReceiver po) throws Exception;
+	public Admins login(AdminsReceiver po, AdminsLoginLogReceiver adminsLoginLogReceiver) throws Exception;
 	
 	/**
 	 * 
@@ -39,4 +41,5 @@ public interface AdminsServiceI {
 	 * @throws Exception
 	 */
 	public void updateTheme(AdminsReceiver po)throws Exception;
+
 }

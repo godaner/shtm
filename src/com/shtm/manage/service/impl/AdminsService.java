@@ -1,16 +1,21 @@
 package com.shtm.manage.service.impl;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shtm.manage.mapper.CustomAdminsMapper;
+import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.service.AdminsServiceI;
+import com.shtm.mapper.AdminsLoginLogMapper;
 import com.shtm.mapper.AdminsMapper;
 import com.shtm.po.Admins;
 import com.shtm.po.AdminsExample;
 import com.shtm.po.AdminsExample.Criteria;
 import com.shtm.service.impl.BaseService;
+import com.shtm.util.Static.ADMINS_LOGIN_LOG_RESULT;
 
 /**
  * Title:AdminsService
@@ -30,13 +35,30 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	@Autowired
 	private AdminsMapper adminsMapper;
 	
+
+	@Autowired
+	private AdminsLoginLogMapper adminsLoginLogMapper;
+	
 	@Override
-	public Admins login(AdminsReceiver receiver) throws Exception {
+	public Admins login(AdminsReceiver receiver,AdminsLoginLogReceiver adminsLoginLogReceiver) throws Exception {
 		
 		Admins dbAD = customAdminsMapper.selectAdminByUsername((String) receiver.getUsername());
 		
+		//设置参数
+		adminsLoginLogReceiver.setTime(new Date());
+		adminsLoginLogReceiver.setId(uuid());
+		adminsLoginLogReceiver.setLoginAdmin(dbAD.getId());
 		//验证用户是否存在
-		eject(dbAD == null, "用户不存在");
+		eject(dbAD == null, "用户不存在",new EjectCallFun() {
+			
+			@Override
+			public void ejectCallFun(Boolean r) {
+				if(r){
+					adminsLoginLogReceiver.setResult(ADMINS_LOGIN_LOG_RESULT.FAILURE);
+					adminsLoginLogMapper.insert(adminsLoginLogReceiver);
+				}
+			}
+		});
 		
 		//验证密码
 		String salt = (String) dbAD.getSalt();
@@ -45,12 +67,25 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		
 		String md5PW = md5(formPW+salt);
 		
-		eject(!dbAD.getPassword().equals(md5PW), "密码错误");
+		eject(!dbAD.getPassword().equals(md5PW), "密码错误",new EjectCallFun() {
+			
+			@Override
+			public void ejectCallFun(Boolean r) {
+				if(r){
+					adminsLoginLogReceiver.setResult(ADMINS_LOGIN_LOG_RESULT.FAILURE);
+					adminsLoginLogMapper.insert(adminsLoginLogReceiver);
+				}
+			}
+		});
 		
 		//屏蔽关键信息
 		dbAD.setPassword("");
 		
 		dbAD.setSalt("");
+		
+		//登录成功
+		adminsLoginLogReceiver.setResult(ADMINS_LOGIN_LOG_RESULT.SUCCESS);
+		adminsLoginLogMapper.insert(adminsLoginLogReceiver);
 		
 		return dbAD;
 		
@@ -74,5 +109,6 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		adminsMapper.updateByExampleSelective(receiver,ae );
 		
 	}
+
 
 }

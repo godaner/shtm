@@ -46,7 +46,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
  * @see ClasssPathProps
  */
 public class Util extends ClasssPathProps {
-
+	
 	/**
 	 * 日志打印
 	 */
@@ -149,7 +149,52 @@ public class Util extends ClasssPathProps {
 	public static String uuid() {
 		return UUID.randomUUID().toString();
 	}
-
+	/**
+	 * 
+	 * Title:EjectCallFun
+	 * <p>
+	 * Description:eject执行完成后的回调函数
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月21日 上午8:24:27
+	 * @version 1.0
+	 */
+	public interface EjectCallFun{
+		/**
+		 * 
+		 * Title:
+		 * <p>
+		 * Description:eject执行完成后的回调函数
+		 * <p>
+		 * @author Kor_Zhang
+		 * @date 2017年9月21日 上午8:26:40
+		 * @version 1.0
+		 * @param r	表达式的结果
+		 * @return
+		 */
+		void ejectCallFun(Boolean r);
+	}
+	/**
+	 * Title:如果表达式成立,抛出一个不含错误信息的异常,eject执行完成后的回调函数;
+	 * <p>
+	 * Description:
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月20日 下午6:34:14
+	 * @version 1.0
+	 * @param expr	表达式
+	 * @param msg	抛出消息
+	 * @throws Exception
+	 */
+	public static void eject(Boolean expr,String msg,EjectCallFun ejectCallFun) throws Exception {
+		try{
+			eject(expr, msg);
+		}catch(Exception e){
+			throw e;
+		}finally{
+			ejectCallFun.ejectCallFun(expr);
+		}
+	}
 	/**
 	 * Title:如果表达式成立,抛出一个不含错误信息的异常;
 	 * <p>

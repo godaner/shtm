@@ -7,7 +7,7 @@
  */
 
 $(function() {
-	creatReq("http://localhost:8080/users/info.action");
+//	creatReq("http://localhost:8080/users/info.action");
 
 	
 	initIndexVar();

@@ -1,3 +1,6 @@
+
+
+
 /**
  * 确认对话框
  * @param msg
@@ -135,7 +138,27 @@ $.fn.serializeObject = function() {
 	});
 	return o;
 };
+/**
+ * 获取表单参数
+ */
+$.fn.serializeParams = function() {
 
+	var params = "";
+	
+	var obj = this.serializeObject();
+	
+	
+	for(var name in obj){
+		var value = obj[name];
+		if(isEmpty(params)){
+			params = params + name+"=" + value;
+		}else{
+			params = params +"&"+ name+"="+ value;
+		}
+	}
+	
+	return params;
+};
 /**
  * 右下角提示信息
  * 

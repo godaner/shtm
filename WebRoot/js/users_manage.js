@@ -88,18 +88,26 @@ function loadUsersManageUI(){
 	    pagination:true,
 	    striped:true,
 	    fitColumns:true,
-	    pageList: [5 , 10, 20, 30, 40, 50],
 	    fit: true,
-	    sortName : 'registtime',
-	    sortOrder : 'asc', //降序
+	    pageList: [5 , 10, 20, 30, 40, 50],
 	    singleSelect:true,
 		checkOnSelect:true,
 		selectOncheck:true,
-	    columns:[[      
+	    sortName : 'registtime',
+	    sortOrder : 'asc', //降序
+		hideColumn:[[
+			{
+				field:'id',
+				title:'id'/*,
+				width:270,
+				sortable : true*/
+			}
+		             ]],
+		columns:[[      
 	    	{
-	    		field:'headimg',title:'头像',
+	    		field:'headimg',
+	    		title:'头像',
 	    		sortable : true,
-    			width:80,
 				formatter: function(value,row,index){
 					if(isEmpty(value)){
 						value = "";
@@ -109,21 +117,13 @@ function loadUsersManageUI(){
 				}
     		},  
 	        {
-    			field:'id',
-    			title:'id',
-    			width:270,
-	    		sortable : true
-    		},    
-	        {
     			field:'username',
     			title:'名称',
-    			width:100,
 	    		sortable : true
     		},    
 	        {
     			field:'email',
     			title:'邮箱',
-    			width:100,
 	    		sortable : true
     		},    
 	        {
@@ -174,13 +174,14 @@ function loadUsersManageUI(){
 	        {
 	        	field:'description',
 	        	title:'介绍',
-    			width:300,
 	    		sortable : true,
 				formatter: function(value,row,index){
-					if(!isEmpty(value) && value.length>15){
-						return value.substring(0,15)+"...";
+					var len = 15;
+					var v = value;
+					if(!isEmpty(value) && value.length>len){
+						 v = value.substring(0,len)+"...";
 					}
-					return value;
+					return "<span title='"+value+"'>"+v+"</span>";
 				}
 	        	
 	        },     

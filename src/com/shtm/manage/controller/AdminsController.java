@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
+import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
 import com.shtm.manage.service.AdminsServiceI;
 import com.shtm.po.Admins;
+import com.shtm.po.AdminsLoginLog;
 
 /**
  * Title:AdminsController
@@ -63,7 +65,7 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 	 * @return
 	 */
 	@RequestMapping("login")
-	public @ResponseBody AdminsReplier login(@RequestBody AdminsReceiver receiver) {
+	public @ResponseBody AdminsReplier login(AdminsReceiver receiver,AdminsLoginLogReceiver adminsLoginLogReceiver) {
 		AdminsReplier replier = new AdminsReplier();
 		try{
 			
@@ -91,7 +93,7 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 			/**
 			 * 执行业务
 			 */
-			Admins admin = service.login(receiver);
+			Admins admin = service.login(receiver,adminsLoginLogReceiver);
 			
 			//设置到session
 			setSessionAttr(FILED_ONLINE_ADMIN, admin);
@@ -185,4 +187,5 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 		
 		return replier;
 	}
+
 }

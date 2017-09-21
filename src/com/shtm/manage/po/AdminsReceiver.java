@@ -17,8 +17,7 @@ public class AdminsReceiver extends Admins implements Static{
 	//验证码
 	private String verifyCode;
 	
-	
-	
+
 	public String getVerifyCode() {
 		return verifyCode;
 	}
