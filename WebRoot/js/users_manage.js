@@ -8,11 +8,15 @@
 var users_datagrid;
 var usersSearchForm;
 //用户属性表格
-var editUserPG;
+//var editUserPG;
 //用户信息编辑弹窗
 var editUserDialog;
 //编辑表单
 var editUserForm;
+//新增用户表单
+var insertUserForm;
+//新增用户的弹窗
+var insertUserDialog;
 //sex
 var sexInput;
 //status
@@ -40,6 +44,9 @@ function initUsersManageVar(){
 	editUserPG = $("#editUserPG");
 	editUserDialog = $("#editUserDialog");
 	editUserForm = $("#editUserForm");
+
+	insertUserDialog = $("#insertUserDialog");
+	insertUserForm = $("#insertUserForm");
 	
 	//sex
 	sexInput = $("#sex");
@@ -52,7 +59,7 @@ function initUsersManageVar(){
 	birthday.datebox({
 	});
 	
-	//设置清空按钮
+	//设置datebox清空按钮
 	var buttons = $.extend([], $.fn.datebox.defaults.buttons);
 	buttons.splice(1, 0, {
 		text: '清空',
@@ -60,7 +67,7 @@ function initUsersManageVar(){
 			birthday.datebox('setText','');
 		}
 	});
-	//设置按钮
+	//设置datebox按钮
 	birthday.datebox({
 		buttons: buttons
 	});
@@ -71,6 +78,16 @@ function initUsersManageVar(){
  * 加载界面
  */
 function loadUsersManageUI(){
+	
+	
+	//新增user信息窗口
+	insertUserDialog.dialog({   
+	    title:"新增用户",
+		resizable : true,
+		modal : true,
+		closed : true,
+		borer:false
+	});
 	//修改user信息窗口
 	editUserDialog.dialog({   
 	    title:"属性编辑",
@@ -79,7 +96,6 @@ function loadUsersManageUI(){
 		closed : true,
 		borer:false
 	});
-	
 	
 	//加载users的datagrid
 	users_datagrid.datagrid({    
@@ -229,7 +245,7 @@ function deleteUser(){
 
 
 /**
- * 编辑users
+ * 编辑users,弹出编辑框
  */
 function editUser(){
 	//获取datagrid当前选择行
@@ -272,12 +288,7 @@ function editUser(){
 function submitUserEdit(){
 
 	//提示信息
-
 	pro.show("正在修改");
-
-	//关闭信息编辑
-	editUserDialog.dialog('close');
-	
 	
 	editUserForm.form('submit', {    
 	    url:getWebProjectName()+"/users/updateUser.action",    
@@ -285,8 +296,11 @@ function submitUserEdit(){
 	    iframe:false,
 	    onSubmit: function(){   
 	    	if(!editUserForm.form('validate')){
+	    		pro.close();
 	    		return false;
 	    	}
+	    	//关闭信息编辑
+	    	editUserDialog.dialog('close');
 	    },    
 	    success:function(data){ 
 //	    	c(data);
@@ -383,3 +397,76 @@ function clearSearch(){
 	//重新加载数据
 	users_datagrid.datagrid('load',{});
 }
+
+
+/********************************添加用户****************************/
+
+/**
+ * 新增users,弹出新增框
+ */
+function insertUser(){
+
+	//清空旧的文本记录
+	insertUserForm.clearEasyuiForm();
+	
+	
+	insertUserDialog.dialog('open');
+	
+	
+}
+
+
+/**
+ * 新增用户
+ */
+function submitNewUser(){
+
+	
+	insertUserForm.form('submit', {    
+	    url:getWebProjectName()+"/users/insertUser.action",    
+	    ajax:true,
+	    iframe:false,
+	    onSubmit: function(){   
+	    	if(!insertUserForm.form('validate')){
+	    		
+	    		return false;
+	    	}
+	    	//关闭信息编辑
+	    	insertUserDialog.dialog('close');
+	    },    
+	    success:function(data){ 
+//	    	c(data);
+	    	data = JSON.parse(data);
+	    	
+	    	pro.close();
+			//提示信息
+			showMsg(data.msg);
+
+			if(data.result == 1){
+				//更新成功
+				
+				//刷新表格
+				users_datagrid.datagrid("reload");
+				
+			}else{
+				//失敗
+				//打開信息编辑
+				insertUserDialog.dialog('open');
+			}
+	    } ,
+	    onLoadError:function(){
+	    	//失敗
+			//提示信息
+			showMsg(data.msg);
+	    	//关闭进度条
+	    	pro.close();
+			//打開信息编辑
+	    	insertUserDialog.dialog('open');
+	    }
+	});  
+
+	
+	
+
+}
+

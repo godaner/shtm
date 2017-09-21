@@ -69,4 +69,16 @@ public interface UsersServiceI {
 	 * @throws Exception
 	 */
 	public void deleteUser(String id)throws Exception;
+	/**
+	 * 
+	 * Title:insertUser
+	 * <p>
+	 * Description:添加用户
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月21日 上午11:58:38
+	 * @version 1.0
+	 * @param receiver
+	 */
+	public void insertUser(UsersReceiver receiver)throws Exception;
 }

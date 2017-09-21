@@ -1,3 +1,4 @@
+
 #editUserTable{
 	width:70%;
 	margin-left: 15%;
@@ -6,12 +7,22 @@
 #editUserTable{
 	border-spacing: 10px;
 }
-#editUserTable tr>td:first-child{
-	width:15%;
+
+
+
+
+
+#insertUserTable{
+	width:70%;
+	margin-left: 15%;
 }
-#editUserTable tr>td:last-child{{
-	width:85%;
+#insertUserTable{
+	border-spacing: 10px;
 }
+
+
+
+
 
 
 

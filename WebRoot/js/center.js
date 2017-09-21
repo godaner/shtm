@@ -7,6 +7,8 @@
  */
 var tabs;
 var center_index_panel;
+//当前显示的tab的title
+var selectTabTitle;
 $(function(){
 	
 	initCenterVar();
@@ -30,9 +32,15 @@ function loadCenterUI(){
 	 * 初始化tabs
 	 */
 	tabs.tabs({    
-	    border:false,    
+	    border:false,  
+	    tools: [{
+            iconCls: 'icon-mini-refresh',
+            handler: function () {
+                refreshTab(selectTabTitle);//刷新当前指定tab
+            }
+        }],
 	    onSelect:function(title){    
-	        /*alert(title+' is selected'); */   
+	        selectTabTitle = title;
 	    }    
 	});  
 	
@@ -47,6 +55,16 @@ function loadCenterUI(){
 			
 		}
 	});
+
+}
+/**
+ * 刷新指定title的tab
+ * @param title
+ */
+function refreshTab(title) {
+    var tab = tabs.tabs('getSelected');  // 获取选择的面板
+    var url = tab.panel('options').href;//获取当前tab的url
+    tab.panel('refresh', url);
 
 }
 /**
@@ -66,4 +84,5 @@ function addTab(title, url){
 		});
 	}
 }
+
 

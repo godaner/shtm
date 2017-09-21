@@ -1241,3 +1241,9 @@
 [DEBUG][2017-09-21 08:08:48,652][org.mybatis.generator.internal.db.DatabaseIntrospector]Found column "CITY", data type 1111, in table "SHT.ADMINS_LOGIN_LOG"
 [DEBUG][2017-09-21 08:08:48,653][org.mybatis.generator.internal.db.DatabaseIntrospector]Found column "TIME", data type 93, in table "SHT.ADMINS_LOGIN_LOG"
 [DEBUG][2017-09-21 08:08:48,653][org.mybatis.generator.internal.db.DatabaseIntrospector]Found column "RESULT", data type 3, in table "SHT.ADMINS_LOGIN_LOG"
+[INFO][2017-09-21 20:18:35,547][com.shtm.util.Util]com.shtm.po.Users@1b604f19
+[INFO][2017-09-21 20:18:35,549][com.shtm.util.Util]com.shtm.po.Users@1b604f19
+[INFO][2017-09-21 20:18:52,458][com.shtm.util.Util]
+[INFO][2017-09-21 20:18:52,464][com.shtm.util.Util]
+[INFO][2017-09-21 20:19:10,748][com.shtm.util.Util]
+[INFO][2017-09-21 20:19:10,750][com.shtm.util.Util]

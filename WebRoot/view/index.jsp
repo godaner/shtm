@@ -26,12 +26,13 @@
 
 
 <!-- 导入插件 start -->
-<script type="text/javascript" src="${baseUrl}/plugin/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/plugin/jquery-3.2.1.min.js"></script>
 <%-- <script type="text/javascript"
 	src="${baseUrl}/plugin/jquery-easyui-1.5.3/jquery.min.js"></script> --%>
-<script type="text/javascript" src="${baseUrl}/plugin/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="${baseUrl}//plugin/jquery-easyui-1.5.3/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="${baseUrl}/js/util.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/plugin/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/plugin/jquery-easyui-1.5.3/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/plugin/cropper/js/imagecropper.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/util.js"></script>
 <!-- 导入插件 end -->
 
 
@@ -109,13 +110,13 @@
 <!-- 设置js使用的变量 end -->
 
 <!-- 导入js开始 start -->
-<script type="text/javascript" src="${baseUrl}/js/center.js"></script>
-<script type="text/javascript" src="${baseUrl}/js/center_index.js"></script>
-<script type="text/javascript" src="${baseUrl}/js/east.js"></script>
-<script type="text/javascript" src="${baseUrl}/js/login.js"></script>
-<script type="text/javascript" src="${baseUrl}/js/north.js"></script>
-<script type="text/javascript" src="${baseUrl}/js/west.js"></script>
-<script type="text/javascript" src="${baseUrl}/js/index.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/center.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/center_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/east.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/login.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/north.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/west.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/index.js"></script>
 <!-- 
 	获取地理位置 
 	var remote_ip_info = {"ret":1,"start":-1,"end":-1,"country":"\u4e2d\u56fd","province":"\u6c5f\u82cf","city":"\u5357\u901a","district":"","isp":"","type":"","desc":""};

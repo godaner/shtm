@@ -164,7 +164,41 @@ public class UsersController extends BaseController<UsersServiceI>{
 		
 		
 	}
-	
+	/**
+	 * 
+	 * Title:insertUser
+	 * <p>
+	 * Description:添加用户
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月21日 上午11:58:03
+	 * @version 1.0
+	 * @param receiver
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("insertUser")
+	public @ResponseBody UsersReplier insertUser(UsersReceiver receiver) throws Exception{
+		
+		
+		UsersReplier replier = new UsersReplier();
+		try {
+			
+			service.insertUser(receiver);
+			
+			replier.setMsg("添加用户成功");
+			
+			replier.setResult(RESULT.TRUE);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			replier.setMsg(e.getMessage());
+			
+			replier.setResult(RESULT.FALSE);
+		}
+		return replier;
+	}
 	
 	
 	/**
