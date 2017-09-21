@@ -127,6 +127,8 @@
 				<td colspan="2" align="center">
 					<!-- 新增按钮 -->
 					<a id="submitInsertBtn" style="color:green;" href="javascript:submitNewUser();" class="easyui-linkbutton" data-options="">新增</a>
+					<!-- 清空按钮 -->
+					<a style="color:red;" href="javascript:clearInsertUserForm();" class="easyui-linkbutton" data-options="">清空</a>
 				</td>
 			</tr>
 		</table> 

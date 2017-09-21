@@ -67,52 +67,70 @@ public class UsersService extends BaseService implements UsersServiceI {
 	public void updateUser(UsersReceiver receiver) throws Exception {
 
 		Users dbUser = usersMapper.selectByPrimaryKey(receiver.getId());
-		;
 
+		if (dbUser == null) {//用户已被删除
+			return;
+		}
+		if (dbUser.getStatus() == USERS_STATUS.DELETE) {//用户已被删除
+			return;
+		}
+		
 		String userId = dbUser.getId();
 
 		/**
-		 * 验证username格式
+		 * 验证username
 		 */
-		eject(!receiver.getUsername().matches(REG.USERNAME),
+		String username = receiver.getUsername();
+		//验证否空
+		eject(username == null || username.trim().isEmpty(),"用户名不能为空");
+		
+		//验证格式
+		username = username.toLowerCase();
+		
+		eject(!username.matches(REG.USERNAME),
 				"用户名格式错误,要求:开头为字母的[_-,数字,字母]的5-20组合");
 
 		/**
 		 * 验证email格式
 		 */
-		eject(!receiver.getEmail().matches(REG.EMAIL), "邮箱格式错误");
+		String email = receiver.getEmail();
+		//验证否空
+		eject(email == null || email.trim().isEmpty(),"邮箱不能为空");
+		//验证格式
+		email = email.toLowerCase();
+		
+		eject(!email.matches(REG.EMAIL), "邮箱格式错误");
 
 		/**
 		 * 验证密码格式
 		 */
 
-		String fPW = receiver.getPassword();
+		String password = receiver.getPassword();
 
-		// 判断,设置password
-		if (fPW != null && fPW.trim().equals("")) {
+		// 判断管理员是否更新了密码
+		if (password != null && password.trim().equals("")) {
 			receiver.setPassword(null);
-		}
-
-		if (receiver.getPassword() != null) {
-
+		}else{
 			// 验证新密码格式
-			eject(!receiver.getPassword().matches(REG.PASSWORD),
+			eject(!password.matches(REG.PASSWORD),
 					"密码格式错误,要求:开头为字母的字母数字5-12组合");
 
-			receiver.setPassword(md5(receiver.getPassword() + dbUser.getSalt()));
-
+			receiver.setPassword(md5(password + dbUser.getSalt()));
 		}
+		
+		
 
 		/**
-		 * 验证username是否存在
+		 * 验证username是否已存在
 		 */
-		UsersExample ue = new UsersExample();
+		UsersExample ue = null;
 		Criteria c = null;
 		List<Users> dbUsers = null;
 		// 如果修改了用户名
-		if (!dbUser.getUsername().equals(receiver.getUsername())) {
+		if (!dbUser.getUsername().toLowerCase().equals(username)) {
+			ue = new UsersExample();
 			c = ue.createCriteria();
-			c.andUsernameEqualTo(receiver.getUsername());
+			c.andUsernameEqualTo(username.toLowerCase()).andStatusNotEqualTo(USERS_STATUS.DELETE);
 
 			dbUsers = usersMapper.selectByExample(ue);
 
@@ -120,12 +138,13 @@ public class UsersService extends BaseService implements UsersServiceI {
 		}
 
 		/**
-		 * 验证email是否存在
+		 * 验证email是否已存在
 		 */
-		if (!dbUser.getEmail().equals(receiver.getEmail())) {
+		if (!dbUser.getEmail().toLowerCase().equals(email)) {
+			ue = new UsersExample();
 			c = ue.createCriteria();
 
-			c.andEmailEqualTo(receiver.getEmail());
+			c.andEmailEqualTo(email).andStatusNotEqualTo(USERS_STATUS.DELETE);
 
 			dbUsers = usersMapper.selectByExample(ue);
 
@@ -187,8 +206,10 @@ public class UsersService extends BaseService implements UsersServiceI {
 	@Override
 	public void deleteUser(String id) throws Exception {
 		Users u1 = usersMapper.selectByPrimaryKey(id);
-		//判斷是否已經被刪除
-		if(u1.getStatus().equals(USERS_STATUS.DELETE)){
+		if (u1 == null) {//用户已被删除
+			return;
+		}
+		if (u1.getStatus() == USERS_STATUS.DELETE) {//用户已被删除
 			return;
 		}
 		
@@ -196,9 +217,9 @@ public class UsersService extends BaseService implements UsersServiceI {
 		u0.setId(id);
 		u0.setStatus(USERS_STATUS.DELETE);
 		//防止管理員修改其他用戶信息成被刪除記錄的username或者email失敗(username和email有唯一約束)
-		u0.setEmail("0_"+u1.getEmail());
+		u0.setEmail(uuid()+"_"+u1.getEmail().toLowerCase());
 		
-		u0.setUsername("0_"+u1.getUsername());
+		u0.setUsername(uuid()+"_"+u1.getUsername().toLowerCase());
 		
 		usersMapper.updateByPrimaryKeySelective(u0);
 	}
@@ -215,6 +236,8 @@ public class UsersService extends BaseService implements UsersServiceI {
 		//非空验证
 		eject(username == null || username.trim().isEmpty(),"邮箱不能为空");
 		//格式验证
+		username = username.toLowerCase();
+		
 		eject(!username.matches(REG.USERNAME),
 				"用户名格式错误,要求:开头为字母的[_-,数字,字母]的5-20组合");
 		
@@ -226,22 +249,24 @@ public class UsersService extends BaseService implements UsersServiceI {
 		//非空验证
 		eject(email == null || email.trim().isEmpty(),"邮箱不能为空");
 		//格式验证
+		email = email.toLowerCase();
+		
 		eject(!email.matches(REG.EMAIL), "邮箱格式错误");
 
 		/**
 		 * 验证密码
 		 */
 
-		String fPW = receiver.getPassword();
+		String password = receiver.getPassword();
 		//非空验证
-		eject(fPW == null || fPW.trim().isEmpty(),"密码不能为空");
+		eject(password == null || password.trim().isEmpty(),"密码不能为空");
 
 		//格式验证
-		eject(!receiver.getPassword().matches(REG.PASSWORD),
+		eject(!password.matches(REG.PASSWORD),
 				"密码格式错误,要求:开头为字母的字母数字5-12组合");
 
 		//密码验证通过,进行加密
-		receiver.setPassword(md5(receiver.getPassword() + receiver.getEmail()));
+		receiver.setPassword(md5(password + email));
 
 		
 
@@ -253,7 +278,7 @@ public class UsersService extends BaseService implements UsersServiceI {
 		UsersExample ue = new UsersExample();
 		Criteria c = null;
 		c = ue.createCriteria();
-		c.andUsernameEqualTo(receiver.getUsername()).andStatusNotEqualTo(USERS_STATUS.DELETE);
+		c.andUsernameEqualTo(username).andStatusNotEqualTo(USERS_STATUS.DELETE);
 
 		dbUsers = usersMapper.selectByExample(ue);
 
@@ -262,9 +287,11 @@ public class UsersService extends BaseService implements UsersServiceI {
 		/**
 		 * 验证email是否存在
 		 */
+		ue = new UsersExample();
+		
 		c = ue.createCriteria();
 
-		c.andEmailEqualTo(receiver.getEmail()).andStatusNotEqualTo(USERS_STATUS.DELETE);
+		c.andEmailEqualTo(email).andStatusNotEqualTo(USERS_STATUS.DELETE);
 
 		dbUsers = usersMapper.selectByExample(ue);
 
@@ -308,7 +335,6 @@ public class UsersService extends BaseService implements UsersServiceI {
 			receiver.setId(uuid);
 			
 			receiver.setMoney(0d);
-			
 			
 			usersMapper.insert(receiver);
 

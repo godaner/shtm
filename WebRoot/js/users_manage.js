@@ -406,9 +406,6 @@ function clearSearch(){
  */
 function insertUser(){
 
-	//清空旧的文本记录
-	insertUserForm.clearEasyuiForm();
-	
 	
 	insertUserDialog.dialog('open');
 	
@@ -468,5 +465,14 @@ function submitNewUser(){
 	
 	
 
+}
+
+/**
+ * 清空旧的文本记录
+ */
+function clearInsertUserForm(){
+	//清空旧的文本记录
+	insertUserForm.clearEasyuiForm();
+	
 }
 
