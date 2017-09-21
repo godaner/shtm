@@ -1,6 +1,7 @@
 package com.shtm.manage.service.impl;
 
 import java.io.File;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -302,17 +303,14 @@ public class UsersService extends BaseService implements UsersServiceI {
 			 * 保存到数据库
 			 */
 			
-			receiver.setRegisttime(new Date());
+			receiver.setRegisttime(timestamp());
 			
 			receiver.setId(uuid);
 			
 			receiver.setMoney(0d);
 			
-			Users u = ((Users)receiver);
 			
-			u = null2Empty(u);
-			
-			usersMapper.insert(u);
+			usersMapper.insert(receiver);
 
 			/**
 			 * 保存图片

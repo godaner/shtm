@@ -82,6 +82,16 @@ public class UsersReceiver extends Users {
 	public void setSort(String sort) {
 		this.sort = sort;
 	}
+	@Override
+	public String toString() {
+		return "UsersReceiver [order=" + order + ", sort=" + sort + ", page="
+				+ page + ", rows=" + rows + ", start=" + start + ", end=" + end
+				+ ", file=" + file + ", getFile()=" + getFile()
+				+ ", getStart()=" + getStart() + ", getEnd()=" + getEnd()
+				+ ", getPage()=" + getPage() + ", getRows()=" + getRows()
+				+ ", getOrder()=" + getOrder() + ", getSort()=" + getSort()
+				+ "]";
+	}
 	
-
+	
 }

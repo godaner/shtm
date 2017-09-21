@@ -110,7 +110,7 @@ function loadUsersManageUI(){
 		checkOnSelect:true,
 		selectOncheck:true,
 	    sortName : 'registtime',
-	    sortOrder : 'asc', //降序
+	    sortOrder : 'desc', //降序
 		hideColumn:[[
 			{
 				field:'id',
