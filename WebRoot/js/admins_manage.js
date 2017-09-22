@@ -111,7 +111,7 @@ function loadAdminsManageUI(){
 	    singleSelect:true,
 		checkOnSelect:true,
 		selectOncheck:true,
-	    sortName : 'registtime',
+	    sortName : 'createtime',
 	    sortOrder : 'desc', //降序
 		hideColumn:[[
 			{

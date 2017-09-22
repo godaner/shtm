@@ -104,9 +104,9 @@ function initLoginLis() {
 		pro.show("正在登录");
 		
 		//获取登录信息
-		var visitInfo = getVisitInfo();
+		var loginInfo = getLoginInfo();
 		//执行ajax
-		var url = "/admins/login.action?"+visitInfo;
+		var url = "/admins/login.action?"+loginInfo;
 
 
 		var formParams = loginForm.serializeParams();
@@ -114,7 +114,7 @@ function initLoginLis() {
 		url = url + "&" + formParams;
 		
 
-		c(url);
+//		c(url);
 		
 		ajax.send(url, function(data) {
 			//连接服务器成功

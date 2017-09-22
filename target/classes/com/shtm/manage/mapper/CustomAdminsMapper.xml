@@ -4,4 +4,51 @@
 	<select id="selectAdminByUsername" parameterType="string" resultType="com.shtm.manage.po.AdminsReplier">
 		SELECT * FROM ADMINS WHERE ADMINS.USERNAME = #{USERNAME}
 	</select>
+	
+	
+	
+	<sql id="selectAdminsConditions">
+		<where>
+			STATUS != -1
+			<if test="id !=null and id!=''">
+				AND id LIKE '%${id}%'
+			</if>
+			<if test="username !=null and username!=''">
+				AND username LIKE '%${username}%'
+			</if>
+			<if test="email !=null and email!=''">
+				AND email LIKE '%${email}%'
+			</if>
+			<if test="status !=null and status!=''">
+				AND status = #{status}
+			</if>
+			
+		</where>
+	</sql>
+	
+	<select id="selectAdminsDatagrid" parameterType="com.shtm.manage.po.AdminsReceiver" resultType="com.shtm.po.Admins">
+	select u1.*
+	from
+	(
+		SELECT u0.*,rownum as n
+		FROM
+		(
+			SELECT *
+			FROM admins
+			<include refid="selectAdminsConditions"></include>
+			ORDER BY ${sort} ${order}
+		) u0
+		WHERE rownum &lt;=#{end}
+	) u1
+	where u1.n &gt;= #{start}
+		
+	</select>
+	<select id="selectAdminsNum" parameterType="com.shtm.manage.po.AdminsReceiver"
+		resultType="int">
+		SELECT count(*)
+		FROM admins 
+		<include refid="selectAdminsConditions"></include>
+		
+	</select>
+	
 </mapper>

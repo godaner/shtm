@@ -199,7 +199,8 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 	 * @param receiver
 	 * @return
 	 */
-	public @ResponseBody AdminsReplier selectAdminsDatagrid(AdminsReceiver receiver){
+	@RequestMapping("/selectAdminsDatagrid")
+	public @ResponseBody AdminsReplier selectAdminsDatagrid(AdminsReceiver receiver) throws Exception{
 		
 		AdminsReplier replier = new AdminsReplier();
 		

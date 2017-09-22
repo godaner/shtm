@@ -1,7 +1,6 @@
 package com.shtm.manage.po;
 
 import com.shtm.po.Admins;
-import com.shtm.util.Static;
 
 /**
  * Title:CustomAdmins
@@ -13,7 +12,7 @@ import com.shtm.util.Static;
  * @date 2017年9月15日 上午11:11:14
  * @version 1.0
  */
-public class AdminsReceiver extends Admins implements Static {
+public class AdminsReceiver extends Admins {
 
 	// 验证码
 	private String verifyCode;

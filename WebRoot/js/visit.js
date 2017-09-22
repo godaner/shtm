@@ -29,11 +29,10 @@ function creatReq(url) {
     }
 }
 /**
- * 獲取拜访记录參數
- * @param prefix如    admins.
+ * 获取管理员登录信息
  * @returns {String}
  */
-function getVisitInfo(){
+function getLoginInfo(){
 	// 获取当前的网址
     var link = window.location.href;
     // 获取上页地址
@@ -43,10 +42,7 @@ function getVisitInfo(){
     // 屏幕分辨率
     var screen = window.screen.width + "*" + window.screen.height;    
     // 异步请求发送
-    /*url =  url + "?ip="+ip+"page=" + escape(link) + "&oldlink=" + escape(oldlink) + "&title=" + escape(titleName) + "&sys=" + getSysInfo() + "&s=" + screen + "&b=" + GetBrowserType() + " " + GetBrowserVersion() + "&c=" + remote_ip_info.cuntry +"&p=" + remote_ip_info.province + "&c=" + remote_ip_info.city + "&k=" + GetKeyword(oldlink);*/
-    /*var returnCitySN = {"cip": "180.120.216.21", "cid": "320600", "cname": "江苏省南通市"};*/
-    /*var remote_ip_info = {"ret":1,"start":-1,"end":-1,"country":"\u4e2d\u56fd","province":"\u6c5f\u82cf","city":"\u5357\u901a","district":"","isp":"","type":"","desc":""};*/
-    return "ip="+returnCitySN.cip+
+    /*return "ip="+returnCitySN.cip+
     "&page=" + escape(link) + 
     "&oldlink=" + escape(oldlink) + 
     "&title=" + escape(titleName) + 
@@ -56,7 +52,14 @@ function getVisitInfo(){
     "&country=" + remote_ip_info.country +
     "&province=" + remote_ip_info.province + 
     "&city=" + remote_ip_info.city + 
-    "&keyword=" + GetKeyword(oldlink);
+    "&keyword=" + GetKeyword(oldlink);*/
+    return "ip="+returnCitySN.cip+
+    "&system=" + getSysInfo() + 
+    "&dpi=" + screen + 
+    "&browser=" + GetBrowserType() + " " + GetBrowserVersion() + 
+    "&country=" + remote_ip_info.country +
+    "&province=" + remote_ip_info.province + 
+    "&city=" + remote_ip_info.city;
     
 }
 

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.shtm.po.Admins;
 import com.shtm.po.Users;
-import com.shtm.util.Static;
 
 /**
  * Title:CustomAdmins
@@ -16,7 +15,7 @@ import com.shtm.util.Static;
  * @date 2017年9月15日 上午11:11:14
  * @version 1.0
  */
-public class AdminsReplier extends Admins implements Static {
+public class AdminsReplier extends Admins{
 	// 操作结果
 	private Integer result;
 

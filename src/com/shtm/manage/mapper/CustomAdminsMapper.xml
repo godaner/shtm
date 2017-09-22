@@ -4,10 +4,6 @@
 	<select id="selectAdminByUsername" parameterType="string" resultType="com.shtm.manage.po.AdminsReplier">
 		SELECT * FROM ADMINS WHERE ADMINS.USERNAME = #{USERNAME}
 	</select>
-	<select id="selectAdminsNum" parameterType="string" resultType="com.shtm.manage.po.AdminsReplier">
-		SELECT * FROM ADMINS WHERE ADMINS.USERNAME = #{USERNAME}
-	</select>
-	
 	
 	
 	
