@@ -20,6 +20,7 @@ import com.shtm.po.AdminsExample;
 import com.shtm.po.AdminsExample.Criteria;
 import com.shtm.service.impl.BaseService;
 import com.shtm.util.Static.ADMINS_LOGIN_LOG_RESULT;
+import com.shtm.util.Static.ADMINS_STATUS;
 import com.shtm.util.Static.CONFIG;
 import com.shtm.util.Static.REG;
 
@@ -146,6 +147,8 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		//格式验证
 		eject(!email.matches(REG.EMAIL),"邮箱格式错误");
 		
+		receiver.setEmail(email.toLowerCase());
+		
 		/**
 		 * 设置属性
 		 */
@@ -153,6 +156,10 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		receiver.setCreatetime(timestamp());
 		
 		receiver.setCreator(id);
+		
+		receiver.setId(uuid());
+		
+		receiver.setSalt(email);
 		
 		adminsMapper.insert(receiver);
 	}

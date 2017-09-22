@@ -138,7 +138,7 @@ public interface Static {
 	public interface REG{
 		
 		//邮箱
-		String EMAIL = "/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$/";
+		String EMAIL = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+$";
 		
 		//密码
 		String PASSWORD = "^[a-zA-Z]\\w{4,12}$";

@@ -118,7 +118,7 @@ public class UsersController extends BaseController<UsersServiceI>{
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			replier.setMsg("更新失败");
+			replier.setMsg(e.getMessage());
 			
 			replier.setResult(RESULT.FALSE);
 		}
