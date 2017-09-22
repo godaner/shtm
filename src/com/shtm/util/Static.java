@@ -85,6 +85,16 @@ public interface Static {
 		 * 用户默认头像字段
 		 */
 		static final String FILED_USERS_HEADIMGS_DEFAULT = "config.users.headimgs.default";
+		
+		/**
+		 * 用户头像圖片上传大小字段
+		 */
+		static final String FILED_USERS_HEADIMGS_MAXSIZE = "config.users.headimgs.maxsize";
+		/**
+		 * 商品图片上传大小字段
+		 */
+		static final String FILED_GOODS_IMGS_MAXSIZE = "config.goods.imgs.maxsize";
+		
 	}
 	
 	/**
@@ -131,10 +141,10 @@ public interface Static {
 		String EMAIL = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+$";
 		
 		//密码
-		String PASSWORD = "^[a-zA-Z]\\w{5,12}$";
+		String PASSWORD = "^[a-zA-Z]\\w{4,12}$";
 		
 		//用户名
-		String USERNAME = "^[A-Za-z][A-Za-z1-9_-]{5,20}$";
+		String USERNAME = "^[A-Za-z][A-Za-z1-9_-]{4,20}$";
 		
 		//邮编
 		String POST_CODE = "^[1-9]\\d{5}$";

@@ -27,6 +27,8 @@ var birthday;
 var buttons;
 //保存当前编辑的用户的信息
 var currtEditDatagridRow;
+//请求的用户头像的尺寸
+var headimgSize = 60;
 $(function(){
 	
 	initUsersManageVar();
@@ -128,7 +130,7 @@ function loadUsersManageUI(){
 					if(isEmpty(value)){
 						value = "";
 					}
-					var img = "<img style='width:80px;' src ='"+getWebProjectName()+"/users/getHeadImg.action?headimg="+value+"&size=80&t="+new Date().getTime()+"'/>";
+					var img = "<img style='width:"+headimgSize+"px;' src ='"+getWebProjectName()+"/users/getHeadImg.action?headimg="+value+"&size="+headimgSize+"&t="+new Date().getTime()+"'/>";
 					return img;
 				}
     		},  
@@ -194,7 +196,12 @@ function loadUsersManageUI(){
 				formatter: function(value,row,index){
 					var len = 15;
 					var v = value;
-					if(!isEmpty(value) && value.length>len){
+					
+					if(isEmpty(value)){
+						return "";
+					}
+					
+					if(value.length>len){
 						 v = value.substring(0,len)+"...";
 					}
 					return "<span title='"+value+"'>"+v+"</span>";

@@ -98,7 +98,7 @@ $.fn.readEasyuiForm = function (){
  * @param obj
  */
 function isEmpty(obj){
-	return obj == null || obj==undefined || obj=="";
+	return obj == null || obj==undefined || obj=="" || obj=="null";
 }
 
 // 对Date的扩展，将 Date 转化为指定格式的String  

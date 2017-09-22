@@ -90,6 +90,9 @@ public class UsersService extends BaseService implements UsersServiceI {
 		eject(!username.matches(REG.USERNAME),
 				"用户名格式错误,要求:开头为字母的[_-,数字,字母]的5-20组合");
 
+		//設置username小写
+		receiver.setUsername(username);
+
 		/**
 		 * 验证email格式
 		 */
@@ -101,6 +104,9 @@ public class UsersService extends BaseService implements UsersServiceI {
 		
 		eject(!email.matches(REG.EMAIL), "邮箱格式错误");
 
+		//設置email小写
+		receiver.setEmail(email);
+		
 		/**
 		 * 验证密码格式
 		 */
@@ -240,6 +246,9 @@ public class UsersService extends BaseService implements UsersServiceI {
 		
 		eject(!username.matches(REG.USERNAME),
 				"用户名格式错误,要求:开头为字母的[_-,数字,字母]的5-20组合");
+
+		//設置username小写
+		receiver.setUsername(username);
 		
 
 		/**
@@ -252,6 +261,9 @@ public class UsersService extends BaseService implements UsersServiceI {
 		email = email.toLowerCase();
 		
 		eject(!email.matches(REG.EMAIL), "邮箱格式错误");
+		
+		//設置email小写
+		receiver.setEmail(email);
 
 		/**
 		 * 验证密码
