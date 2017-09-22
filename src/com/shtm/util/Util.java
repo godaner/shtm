@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
@@ -31,12 +30,10 @@ import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
-import com.shtm.manage.po.UsersReceiver;
-import com.shtm.po.Users;
-
 
 /**
  * Title:Util
@@ -50,7 +47,7 @@ import com.shtm.po.Users;
  * @see ClasssPathProps
  */
 public class Util extends ClasssPathProps {
-	
+
 	/**
 	 * 日志打印
 	 */
@@ -65,95 +62,145 @@ public class Util extends ClasssPathProps {
 	 * 验证码生成工具
 	 */
 	public final static ValidateCode vc = new ValidateCode(160, 40, 5, 150);
+
+	/**
+	 * Title:getErrors
+	 * <p>
+	 * Description:获取hibernate-validator的错误信息;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月22日 下午8:15:21
+	 * @version 1.0
+	 * @param result
+	 * @return
+	 */
+	public static Map<String, String> getErrors(BindingResult result) {
+		Map<String, String> map = new HashMap<String, String>();
+		List<FieldError> list = result.getFieldErrors();
+		for (FieldError error : list) {
+			System.out.println("error.getField():" + error.getField());
+			System.out.println("error.getDefaultMessage():"
+					+ error.getDefaultMessage());
+
+			map.put(error.getField(), error.getDefaultMessage());
+		}
+		return map;
+	}
 	
-	
-	
+	/**
+	 * Title:getError
+	 * <p>
+	 * Description:如果hibernate-validator验证有错误信息,那么抛出携带错误信息的异常;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月22日 下午8:15:21
+	 * @version 1.0
+	 * @param result
+	 * @return
+	 * @throws Exception 
+	 */
+	public static void validate(BindingResult result) throws Exception {
+		List<FieldError> list = result.getFieldErrors();
+		for (FieldError error : list) {
+			eject(error.getDefaultMessage());
+		}
+	}
+
 	/**
 	 * Title:timestamp
 	 * <p>
 	 * Description:返回当前时间的Timestamp
 	 * <p>
+	 * 
 	 * @author Kor_Zhang
 	 * @date 2017年9月21日 下午10:46:06
 	 * @version 1.0
 	 * @return
 	 */
-	public static Timestamp timestamp(){
+	public static Timestamp timestamp() {
 		return new Timestamp(new Date().getTime());
 	}
-	
-	
+
 	/**
 	 * 
 	 * Title:compressImg
 	 * <p>
 	 * Description:按比例缩放图片;
 	 * <p>
+	 * 
 	 * @author Kor_Zhang
 	 * @date 2017年9月20日 下午1:54:30
 	 * @version 1.0
-	 * @param source	待压缩图片;
-	 * @param scale	缩放比例:double类型;宽高同时缩放;1.0代表原比例;
-	 * @param os	压缩后的图片;
+	 * @param source
+	 *            待压缩图片;
+	 * @param scale
+	 *            缩放比例:double类型;宽高同时缩放;1.0代表原比例;
+	 * @param os
+	 *            压缩后的图片;
 	 */
-	public void compressImg(File source,File target,Double scale){
+	public void compressImg(File source, File target, Double scale) {
 		try {
 			Thumbnails.of(source).scale(scale).toFile(target);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	/**
 	 * Title:compressImg
 	 * <p>
 	 * Description:压缩图片;遵循原图宽高比例
 	 * <p>
+	 * 
 	 * @author Kor_Zhang
 	 * @date 2017年9月20日 下午2:00:17
 	 * @version 1.0
-	 * @param source	待压缩图片;
-	 * @param target	压缩后的图片;
-	 * @param width		压缩后的宽;
+	 * @param source
+	 *            待压缩图片;
+	 * @param target
+	 *            压缩后的图片;
+	 * @param width
+	 *            压缩后的宽;
 	 */
-	public void compressImg(File source,File target,Integer width){
+	public void compressImg(File source, File target, Integer width) {
 		try {
-			Thumbnails.of(source).width(width)   
-		    .keepAspectRatio(true).toFile(target);
+			Thumbnails.of(source).width(width).keepAspectRatio(true)
+					.toFile(target);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
 
 	/**
 	 * Title:info
 	 * <p>
 	 * Description:利用log4j的info输出信息
 	 * <p>
+	 * 
 	 * @author Kor_Zhang
 	 * @date 2017年9月15日 上午10:14:17
 	 * @version 1.0
 	 * @param message
 	 */
-	public static void info(Object message){
+	public static void info(Object message) {
 		logger.info(message);
 	}
+
 	/**
 	 * Title:debug
 	 * <p>
 	 * Description:利用log4j的debug输出信息
 	 * <p>
+	 * 
 	 * @author Kor_Zhang
 	 * @date 2017年9月15日 上午10:14:17
 	 * @version 1.0
 	 * @param message
 	 */
-	public static void debug(Object message){
+	public static void debug(Object message) {
 		logger.debug(message);
 	}
-	
+
 	/**
 	 * Title:uuid
 	 * <p>
@@ -168,57 +215,68 @@ public class Util extends ClasssPathProps {
 	public static String uuid() {
 		return UUID.randomUUID().toString();
 	}
+
 	/**
 	 * 
 	 * Title:EjectCallFun
 	 * <p>
 	 * Description:eject执行完成后的回调函数
 	 * <p>
+	 * 
 	 * @author Kor_Zhang
 	 * @date 2017年9月21日 上午8:24:27
 	 * @version 1.0
 	 */
-	public interface EjectCallFun{
+	public interface EjectCallFun {
 		/**
 		 * 
 		 * Title:
 		 * <p>
 		 * Description:eject执行完成后的回调函数
 		 * <p>
+		 * 
 		 * @author Kor_Zhang
 		 * @date 2017年9月21日 上午8:26:40
 		 * @version 1.0
-		 * @param r	表达式的结果
+		 * @param r
+		 *            表达式的结果
 		 * @return
 		 */
 		void ejectCallFun(Boolean r);
 	}
+
 	/**
 	 * Title:如果表达式成立,抛出一个不含错误信息的异常,eject执行完成后的回调函数;
 	 * <p>
 	 * Description:
 	 * <p>
+	 * 
 	 * @author Kor_Zhang
 	 * @date 2017年9月20日 下午6:34:14
 	 * @version 1.0
-	 * @param expr	表达式
-	 * @param msg	抛出消息
+	 * @param expr
+	 *            表达式
+	 * @param msg
+	 *            抛出消息
 	 * @throws Exception
 	 */
-	public static void eject(Boolean expr,String msg,EjectCallFun ejectCallFun) throws Exception {
-		try{
+	public static void eject(Boolean expr, String msg, EjectCallFun ejectCallFun)
+			throws Exception {
+		try {
 			eject(expr, msg);
-		}catch(Exception e){
+		} catch (Exception e) {
 			throw e;
-		}finally{
+		} finally {
 			ejectCallFun.ejectCallFun(expr);
 		}
 	}
+
 	/**
 	 * Title:如果表达式成立,抛出一个不含错误信息的异常;
 	 * <p>
 	 * Description:
 	 * <p>
+	 * 
 	 * @author Kor_Zhang
 	 * @date 2017年9月20日 下午6:34:14
 	 * @version 1.0
@@ -231,7 +289,7 @@ public class Util extends ClasssPathProps {
 			throw new Exception("");
 		}
 	}
-	
+
 	/**
 	 * Title:如果表达式成立,抛出一个含错误信息的异常;
 	 * <p>
@@ -280,80 +338,77 @@ public class Util extends ClasssPathProps {
 		throw new Exception(msg);
 	}
 
-	
-	
 	/**
 	 * Title:writeFileToOS
 	 * <p>
 	 * Description:将文件写入输出流
 	 * <p>
+	 * 
 	 * @author Kor_Zhang
 	 * @date 2017年9月20日 上午10:29:56
 	 * @version 1.0
 	 * @param os
 	 */
-	public static void writeFileToOS(String filePath,OutputStream os){
-		
+	public static void writeFileToOS(String filePath, OutputStream os) {
+
 		writeFileToOS(new File(filePath), os);
-		
+
 	}
-	
+
 	/**
 	 * Title:writeFileToOS
 	 * <p>
 	 * Description:将文件写入输出流
 	 * <p>
+	 * 
 	 * @author Kor_Zhang
 	 * @date 2017年9月20日 上午10:29:56
 	 * @version 1.0
 	 * @param os
 	 */
-	public static void writeFileToOS(File file,OutputStream os){
-		
+	public static void writeFileToOS(File file, OutputStream os) {
+
 		FileInputStream in = null;
-		
+
 		byte[] bytes = new byte[1024];
-		
+
 		int len = 0;
-		
+
 		try {
-			
+
 			in = new FileInputStream(file);
 
 			while ((len = in.read(bytes)) != -1) {
 				os.write(bytes, 0, len);
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			closeStream(in, os);
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * 
 	 * Title:multipartFile2File
 	 * <p>
 	 * Description:获取multipartFile2File中的file
 	 * <p>
+	 * 
 	 * @author Kor_Zhang
 	 * @date 2017年9月20日 下午2:58:59
 	 * @version 1.0
 	 * @param file
 	 * @return
 	 */
-	public File multipartFile2File(MultipartFile file){
-		CommonsMultipartFile cf= (CommonsMultipartFile)file; //这个myfile是MultipartFile的
-	    DiskFileItem fi = (DiskFileItem)cf.getFileItem(); 
-	    return fi.getStoreLocation(); 
+	public File multipartFile2File(MultipartFile file) {
+		CommonsMultipartFile cf = (CommonsMultipartFile) file; // 这个myfile是MultipartFile的
+		DiskFileItem fi = (DiskFileItem) cf.getFileItem();
+		return fi.getStoreLocation();
 	}
-	
-	
-	
-	
+
 	/**
 	 * Title:
 	 * <p>
@@ -361,13 +416,18 @@ public class Util extends ClasssPathProps {
 	 * 宽高比在压缩的过程中不变;<br/>
 	 * 如果源文件名为:a.png,压缩后根据版本会产生名为40_a.png,80_a.png,200_a.png的多个文件;
 	 * <p>
+	 * 
 	 * @author Kor_Zhang
 	 * @date 2017年9月20日 下午2:28:11
 	 * @version 1.0
-	 * @param sourceFile	待压缩文件;
-	 * @param versions	压缩版本:40,80,200;宽分别为40,80,200的图片;宽高比不变;
-	 * @param savePath	文件保存路径,如:d:\floder\
-	 * @param fileName	文件名,如:a.jpg
+	 * @param sourceFile
+	 *            待压缩文件;
+	 * @param versions
+	 *            压缩版本:40,80,200;宽分别为40,80,200的图片;宽高比不变;
+	 * @param savePath
+	 *            文件保存路径,如:d:\floder\
+	 * @param fileName
+	 *            文件名,如:a.jpg
 	 */
 	public void writeFileWithCompress(File sourceFile, String versions,
 			String savePath, String fileName) {
@@ -382,6 +442,7 @@ public class Util extends ClasssPathProps {
 		}
 
 	}
+
 	/**
 	 * 写入文件到本地磁盘
 	 * 

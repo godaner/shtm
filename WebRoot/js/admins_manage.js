@@ -99,6 +99,18 @@ function loadAdminsManageUI(){
 		borer:false
 	});
 	
+	
+	/*id	1
+	username	123
+	password	4297f44b13955235245b2497399d7a93
+	salt	123
+	status	1
+	createtime	1505441889000
+	creator	null
+	theme	bootstrap
+	email	null*/
+	
+	
 	//加载admins的datagrid
 	admins_datagrid.datagrid({    
 	    url:getWebProjectName()+"/admins/selectAdminsDatagrid.action",
@@ -114,28 +126,17 @@ function loadAdminsManageUI(){
 	    sortName : 'createtime',
 	    sortOrder : 'desc', //降序
 		hideColumn:[[
+			
+		             ]],
+		columns:[[ 
 			{
 				field:'id',
 				title:'id'/*,
 				width:270,
 				sortable : true*/
-			}
-		             ]],
-		columns:[[      
-	    	{
-	    		field:'headimg',
-	    		title:'头像',
-	    		sortable : true,
-				formatter: function(value,row,index){
-					if(isEmpty(value)){
-						value = "";
-					}
-					var img = "<img style='width:"+headimgSize+"px;' src ='"+getWebProjectName()+"/admins/getHeadImg.action?headimg="+value+"&size="+headimgSize+"&t="+new Date().getTime()+"'/>";
-					return img;
-				}
-    		},  
+			},
 	        {
-    			field:'adminname',
+    			field:'username',
     			title:'名称',
 	    		sortable : true
     		},    
@@ -158,69 +159,18 @@ function loadAdminsManageUI(){
 	    		sortable : true
 	        },*/    
 	        {
-	        	field:'sex',
-	        	title:'性别',
-	    		sortable : true,
-				formatter: function(value,row,index){
-					if(value == 1){
-						return "男";
-					}
-					if(value == 0){
-						return "女";
-					}
-					if(value == -1){
-						return "未设置";
-					}
-					return value;
-				}
-	        },   
-	        {
-	        	field:'birthday',
-	        	title:'生日',
-	    		sortable : true,
-	        	formatter: function(value,row,index){
-//	        		c(value);
-	        		if(!isEmpty(value)){
-		        		value = new Date(value).format("yyyy-MM-dd");
-	        		}else{
-	        			value="未设置";
-	        		}
-					return value;
-				}
-	        	
-	        },    
-	        {
-	        	field:'description',
-	        	title:'介绍',
-	    		sortable : true,
-				formatter: function(value,row,index){
-					var len = 15;
-					var v = value;
-					
-					if(isEmpty(value)){
-						return "";
-					}
-					
-					if(value.length>len){
-						 v = value.substring(0,len)+"...";
-					}
-					return "<span title='"+value+"'>"+v+"</span>";
-				}
-	        	
-	        },     
-	        {
-	        	field:'score',
-	        	title:'积分',
+	        	field:'creator',
+	        	title:'创建者',
 	    		sortable : true
-	        },     
+	        },
 	        {
-	        	field:'money',
-	        	title:'余额',
+	        	field:'theme',
+	        	title:'主题',
 	    		sortable : true
-	        },     
+	        },
 	        {
-	        	field:'registtime',
-	        	title:'注册时间',
+	        	field:'createtime',
+	        	title:'创建时间',
 	    		sortable : true,
 				formatter: function(value,row,index){
 					

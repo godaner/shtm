@@ -81,7 +81,7 @@
         	<columnOverride column="status" javaType="java.lang.Short" jdbcType="SMALLINT"/>
         	<columnOverride column="money" javaType="java.lang.Double" jdbcType="DOUBLE"/>
         	
-        </table> -->
+        </table> 
         <table schema="sht" tableName="admins">
         	<columnOverride column="id" javaType="java.lang.String" jdbcType="CHAR" />
         	<columnOverride column="username" javaType="java.lang.String"  jdbcType="CHAR"/>
@@ -93,9 +93,18 @@
         	<columnOverride column="theme" javaType="java.lang.String" jdbcType="CHAR"/>
         	<columnOverride column="creator" javaType="java.lang.String" jdbcType="CHAR"/>
         </table>
+        <table schema="sht" tableName="clazzs">
+        	<columnOverride column="id" javaType="java.lang.String" jdbcType="CHAR" />
+        	<columnOverride column="text" javaType="java.lang.String"  jdbcType="CHAR"/>
+        	<columnOverride column="num" javaType="java.lang.Double"  jdbcType="DOUBLE"/>
+        </table>
         
-        
-        
+        -->
+        <table schema="sht" tableName="clazzs">
+        	<columnOverride column="id" javaType="java.lang.String" jdbcType="CHAR" />
+        	<columnOverride column="text" javaType="java.lang.String"  jdbcType="CHAR"/>
+        	<columnOverride column="num" javaType="java.lang.Double"  jdbcType="DOUBLE"/>
+        </table>
         <!-- <table schema="" tableName="sys_user"></table>
         <table schema="" tableName="sys_role"></table>
         <table schema="" tableName="sys_permission"></table>

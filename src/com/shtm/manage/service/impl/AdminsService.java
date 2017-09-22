@@ -2,8 +2,11 @@ package com.shtm.manage.service.impl;
 
 import java.util.Date;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import com.shtm.manage.mapper.CustomAdminsMapper;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
@@ -17,6 +20,8 @@ import com.shtm.po.AdminsExample;
 import com.shtm.po.AdminsExample.Criteria;
 import com.shtm.service.impl.BaseService;
 import com.shtm.util.Static.ADMINS_LOGIN_LOG_RESULT;
+import com.shtm.util.Static.CONFIG;
+import com.shtm.util.Static.REG;
 
 /**
  * Title:AdminsService
@@ -125,6 +130,31 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		replier.setTotal(totalNum);
 
 		return replier;
+	}
+
+	@Override
+	public void insertAdmin(String id,AdminsReceiver receiver) throws Exception {
+
+		/**
+		 * 验证邮箱
+		 */
+		String email = receiver.getEmail();
+		
+		//非空验证
+		eject(email == null || email.trim().isEmpty() , "邮箱不能为空");
+		
+		//格式验证
+		eject(!email.matches(REG.EMAIL),"邮箱格式错误");
+		
+		/**
+		 * 设置属性
+		 */
+		
+		receiver.setCreatetime(timestamp());
+		
+		receiver.setCreator(id);
+		
+		adminsMapper.insert(receiver);
 	}
 
 

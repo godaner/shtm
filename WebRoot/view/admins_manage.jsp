@@ -6,15 +6,17 @@
 <div id="admins_dg_tb" style="display: none;">
 	<form id="adminsSearchForm">
 		<input name="id" class="easyui-textbox input" data-options="prompt:'id'" style="width:100px">
-		<input name="adminname" class="easyui-textbox input" data-options="prompt:'管理员名'" style="width:100px"> 
+		<input name="username" class="easyui-textbox input" data-options="prompt:'管理员名'" style="width:100px"> 
 		<input name="email" class="easyui-textbox input" data-options="prompt:'邮箱'" style="width:100px"> 
-		<select name="sex" class="easyui-combobox input" style="width:100px;" data-options="editable:false">   
+		<select name="theme" class="easyui-combobox input" style="width:100px;" data-options="editable:false">   
 		    <option value="">不选择</option>   
-		    <option value="1">男</option> 
-		    <option value="0">女</option>    
-		    <option value="-1">未设置</option>  
+		    <option value="black">black</option> 
+		    <option value="bootstrap">bootstrap</option> 
+		    <option value="default">default</option> 
+		    <option value="gray">gray</option> 
+		    <option value="material">material</option> 
+		    <option value="metro">metro</option> 
 		</select>
-		<input name="description" class="easyui-textbox input" data-options="prompt:'介绍'" style="width:100px"> 
 		<select name="status" class="easyui-combobox input" style="width:100px;" data-options="editable:false">   
 		    <option value="">不选择</option>   
 		    <option value="1">激活</option> 
@@ -38,12 +40,12 @@
 </div>
 
 <!-- 管理员属性编辑弹窗 start -->
-<%-- <%@include file="./admins_manage_edit_dialog.jsp" %> --%>
+<%@include file="./admins_manage_edit_dialog.jsp" %>
 <!-- 管理员属性编辑弹窗 end -->
 
 
 <!-- 新增管理员弹窗 start -->
-<%-- <%@include file="./admins_manage_insert_dialog.jsp" %> --%>
+<%@include file="./admins_manage_insert_dialog.jsp" %>
 <!-- 新增管理员弹窗 end -->
 
 

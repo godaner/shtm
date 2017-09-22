@@ -2,23 +2,37 @@ package com.shtm.po;
 
 import java.sql.Timestamp;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.shtm.manage.groups.AdminsGroups.InsertAdminGroups;
+import com.shtm.util.Static;
+
 public class Admins {
+	
     private String id;
-
+	
+	@Pattern(regexp=Static.REG.USERNAME,message="{admins.username.reg.error}",groups={InsertAdminGroups.class})
     private String username;
-
+	
+	@Pattern(regexp=Static.REG.PASSWORD,message="{admins.password.reg.error}",groups={InsertAdminGroups.class})
     private String password;
-
+	
     private String salt;
 
+    @NotNull(message="{admins.status.notnull.error}",groups={InsertAdminGroups.class})
     private Short status;
 
     private Timestamp createtime;
 
     private String creator;
 
+	@NotBlank(message="{admins.theme.notnull.error}",groups={InsertAdminGroups.class})
     private String theme;
 
+	@Pattern(regexp=Static.REG.EMAIL,message="{admins.email.reg.error}",groups={InsertAdminGroups.class})
     private String email;
 
     public String getId() {

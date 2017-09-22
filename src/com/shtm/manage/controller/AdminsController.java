@@ -4,11 +4,14 @@ import java.io.IOException;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
+import com.shtm.manage.groups.AdminsGroups.InsertAdminGroups;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
@@ -206,7 +209,7 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 		
 		try {
 			
-			service.selectAdminsDatagrid(receiver);
+			replier = service.selectAdminsDatagrid(receiver);
 			
 			replier.setResult(RESULT.TRUE);
 			
@@ -224,5 +227,52 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 		
 	}
 	
+	
+	/**
+	 * Title:insertAdmin
+	 * <p>
+	 * Description:添加一个admin
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月22日 下午4:18:56
+	 * @version 1.0
+	 * @param receiver
+	 * @return
+	 */
+	@RequestMapping("/insertAdmin")
+	public @ResponseBody AdminsReplier insertAdmin(@Validated(value={InsertAdminGroups.class}) AdminsReceiver receiver,
+			BindingResult result){
+		AdminsReplier replier = new AdminsReplier();
+		
+		try {
+			
+			//验证信息
+			validate(result);
+			
+			/**
+			 * 获取在线的管理员
+			 */
+			Admins ad = getSessionAttr(FILED_ONLINE_ADMIN);
+			
+			eject(ad == null, "您已离线");
+			
+			/**
+			 * 执行业务
+			 */
+			service.insertAdmin(ad.getId(),receiver);
+			
+			replier.setResult(RESULT.TRUE);
+			
+			replier.setMsg("添加成功");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+		
+		
+		return replier;
+	}
 	
 }

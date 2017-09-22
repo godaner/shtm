@@ -55,6 +55,20 @@ public interface AdminsServiceI {
 	 * @return
 	 * @throws Exception
 	 */
-	public AdminsReplier selectAdminsDatagrid(AdminsReceiver receiver)throws Exception;
+	public AdminsReplier selectAdminsDatagrid(AdminsReceiver receiver) throws Exception;
+
+	/**
+	 * Title:insertAdmin
+	 * <p>
+	 * Description:添加一个admin
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月22日 下午4:19:34
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	public void insertAdmin(String id,AdminsReceiver receiver) throws Exception;
+
 
 }

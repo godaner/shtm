@@ -138,7 +138,7 @@ public interface Static {
 	public interface REG{
 		
 		//邮箱
-		String EMAIL = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+$";
+		String EMAIL = "/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$/";
 		
 		//密码
 		String PASSWORD = "^[a-zA-Z]\\w{4,12}$";
@@ -149,7 +149,9 @@ public interface Static {
 		//邮编
 		String POST_CODE = "^[1-9]\\d{5}$";
 	}
-	
+	public static void main(String[] args) {
+		System.out.println("1138829222@qq.com".matches(REG.EMAIL));
+	}
 	/**
 	 * Title:USERS_STATUS
 	 * <p>
@@ -214,5 +216,22 @@ public interface Static {
 		 * 管理员取消发布的商品
 		 */
 		static final Short ADMIN_CANCEL = -4;
+	}
+	
+	
+	/**
+	 * Title:ADMINS_STATUS
+	 * <p>
+	 * Description:管理员状态<br/>
+	 * 状态;1为激活,0为冻结,-1为删除
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月22日 下午3:06:57
+	 * @version 1.0
+	 */
+	public interface ADMINS_STATUS{
+		static final Short ACTIVITY = 1;
+		static final Short FROZEN = 0;
+		static final Short DELETE = -1;
 	}
 }

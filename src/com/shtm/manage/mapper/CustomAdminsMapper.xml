@@ -19,8 +19,14 @@
 			<if test="email !=null and email!=''">
 				AND email LIKE '%${email}%'
 			</if>
+			<if test="creator !=null and creator!=''">
+				AND creator = #{creator}
+			</if>
 			<if test="status !=null and status!=''">
 				AND status = #{status}
+			</if>
+			<if test="theme !=null and theme!=''">
+				AND theme = #{theme}
 			</if>
 			
 		</where>

@@ -13,7 +13,7 @@
 	</organization>
 
 	<!-- 属性配置 start -->
-	<properties>    
+	<properties>
 		<version_spring>3.1.2.RELEASE</version_spring>
 		<version_strus2>2.3.4.1</version_strus2>
 	</properties>
@@ -105,10 +105,26 @@
 		</dependency>
 		<!-- spring end -->
 
-
+		<!-- hibernate validator start -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>4.3.2.Final</version>
+		</dependency>
+		<dependency>
+    		<groupId>javax.validation</groupId>
+		    <artifactId>validation-api</artifactId>
+		    <version>2.0.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>3.1.0.GA</version>
+		</dependency>
+		<!-- hibernate validator end -->
 
 		<!-- 其他 jar start -->
-		
+
 		<!-- 处理slf4j-log4j的冲突 -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -150,7 +166,7 @@
 			<version>1.9.13</version>
 		</dependency>
 		<!-- springmvc json交互功能所需jar end -->
-		
+
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
@@ -204,7 +220,7 @@
 			<artifactId>jsp-api</artifactId>
 			<version>2.2.1-b03</version>
 			<scope>provided</scope>
-		</dependency> 
+		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
@@ -216,12 +232,12 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
-		<!-- 邮件 end --> 
-		<!-- 图片压缩 start --> 
+		<!-- 邮件 end -->
+		<!-- 图片压缩 start -->
 		<dependency>
-		   <groupId>net.coobird</groupId>
-		   <artifactId>thumbnailator</artifactId>
-		   <version>0.4.8</version>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.8</version>
 		</dependency>
 		<!-- 图片压缩 end -->
 		<!-- 其他 jar end -->

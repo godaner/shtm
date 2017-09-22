@@ -3,7 +3,6 @@ package com.shtm.manage.po;
 import java.util.List;
 
 import com.shtm.po.Admins;
-import com.shtm.po.Users;
 
 /**
  * Title:CustomAdmins
@@ -39,16 +38,16 @@ public class AdminsReplier extends Admins{
 	}
 
 	// 返回数据
-	private List<Users> rows;
+	private List<Admins> rows;
 
 	// 记录总数
 	private Integer total;
 
-	public List<Users> getRows() {
+	public List<Admins> getRows() {
 		return rows;
 	}
 
-	public void setRows(List<Users> rows) {
+	public void setRows(List<Admins> rows) {
 		this.rows = rows;
 	}
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
-import com.shtm.po.Users;
+import com.shtm.po.Admins;
 
 
 /**
@@ -43,7 +43,7 @@ public interface CustomAdminsMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	List<Users> selectAdminsDatagrid(AdminsReceiver receiver) throws Exception;
+	List<Admins> selectAdminsDatagrid(AdminsReceiver receiver) throws Exception;
 
 	/**
 	 * Title:
