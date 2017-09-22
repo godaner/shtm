@@ -118,7 +118,7 @@ public class UsersController extends BaseController<UsersServiceI>{
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			replier.setMsg(e.getMessage());
+			replier.setMsg("更新失败");
 			
 			replier.setResult(RESULT.FALSE);
 		}
@@ -192,8 +192,8 @@ public class UsersController extends BaseController<UsersServiceI>{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			
-			replier.setMsg(e.getMessage());
+
+			replier.setMsg("添加失败");
 			
 			replier.setResult(RESULT.FALSE);
 		}
@@ -227,8 +227,8 @@ public class UsersController extends BaseController<UsersServiceI>{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			
-			replier.setMsg(e.getMessage());
+
+			replier.setMsg("删除失败");
 			
 			replier.setResult(RESULT.FALSE);
 		}

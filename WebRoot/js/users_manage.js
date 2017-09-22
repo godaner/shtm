@@ -214,6 +214,11 @@ function loadUsersManageUI(){
 	    		sortable : true
 	        },     
 	        {
+	        	field:'money',
+	        	title:'余额',
+	    		sortable : true
+	        },     
+	        {
 	        	field:'registtime',
 	        	title:'注册时间',
 	    		sortable : true,

@@ -101,7 +101,15 @@
 					<label>积分</label> 
 				</td>
 				<td>
-					<input id="score" name="score" class="easyui-numberbox input" data-options="required:true,min:0,precision:0" style="width:100%"> 
+					<input id="score" name="score" class="easyui-numberbox input" data-options="required:true,min:0,max:999999999,precision:0" style="width:100%"> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>余额</label> 
+				</td>
+				<td>
+					<input id="money" name="money" class="easyui-numberbox input" data-options="required:true,min:0,max:999999999,precision:2" style="width:100%"> 
 				</td>
 			</tr>
 			<tr>
