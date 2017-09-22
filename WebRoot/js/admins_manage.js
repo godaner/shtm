@@ -1,22 +1,22 @@
 /**
- * users_manage界面的js
+ * admins_manage界面的js
  */
 
 /**
  * 变量申明
  */
-var users_datagrid;
-var usersSearchForm;
-//用户属性表格
-//var editUserPG;
-//用户信息编辑弹窗
-var editUserDialog;
+var admins_datagrid;
+var adminsSearchForm;
+//管理员属性表格
+//var editAdminPG;
+//管理员信息编辑弹窗
+var editAdminDialog;
 //编辑表单
-var editUserForm;
-//新增用户表单
-var insertUserForm;
-//新增用户的弹窗
-var insertUserDialog;
+var editAdminForm;
+//新增管理员表单
+var insertAdminForm;
+//新增管理员的弹窗
+var insertAdminDialog;
 //sex
 var sexInput;
 //status
@@ -25,30 +25,30 @@ var statusInput;
 var birthday;
 //datebox的buttons
 var buttons;
-//保存当前编辑的用户的信息
+//保存当前编辑的管理员的信息
 var currtEditDatagridRow;
-//请求的用户头像的尺寸
+//请求的管理员头像的尺寸
 var headimgSize = 60;
 $(function(){
 	
-	initUsersManageVar();
+	initAdminsManageVar();
 	
-	loadUsersManageUI();
+	loadAdminsManageUI();
 	
 });
 
 /**
  * 初始化变量
  */
-function initUsersManageVar(){
-	users_datagrid = $("#users_datagrid");
-	usersSearchForm = $("#usersSearchForm");
-	editUserPG = $("#editUserPG");
-	editUserDialog = $("#editUserDialog");
-	editUserForm = $("#editUserForm");
+function initAdminsManageVar(){
+	admins_datagrid = $("#admins_datagrid");
+	adminsSearchForm = $("#adminsSearchForm");
+	editAdminPG = $("#editAdminPG");
+	editAdminDialog = $("#editAdminDialog");
+	editAdminForm = $("#editAdminForm");
 
-	insertUserDialog = $("#insertUserDialog");
-	insertUserForm = $("#insertUserForm");
+	insertAdminDialog = $("#insertAdminDialog");
+	insertAdminForm = $("#insertAdminForm");
 	
 	//sex
 	sexInput = $("#sex");
@@ -79,19 +79,19 @@ function initUsersManageVar(){
 /**
  * 加载界面
  */
-function loadUsersManageUI(){
+function loadAdminsManageUI(){
 	
 	
-	//新增user信息窗口
-	insertUserDialog.dialog({   
-	    title:"新增用户",
+	//新增admin信息窗口
+	insertAdminDialog.dialog({   
+	    title:"新增管理员",
 		resizable : true,
 		modal : true,
 		closed : true,
 		borer:false
 	});
-	//修改user信息窗口
-	editUserDialog.dialog({   
+	//修改admin信息窗口
+	editAdminDialog.dialog({   
 	    title:"属性编辑",
 		resizable : true,
 		modal : true,
@@ -99,10 +99,10 @@ function loadUsersManageUI(){
 		borer:false
 	});
 	
-	//加载users的datagrid
-	users_datagrid.datagrid({    
-	    url:getWebProjectName()+"/users/selectUsersDatagrid.action",
-	    toolbar:"#users_dg_tb",
+	//加载admins的datagrid
+	admins_datagrid.datagrid({    
+	    url:getWebProjectName()+"/admins/selectAdminsDatagrid.action",
+	    toolbar:"#admins_dg_tb",
 	    pagination:true,
 	    striped:true,
 	    fitColumns:true,
@@ -114,7 +114,12 @@ function loadUsersManageUI(){
 	    sortName : 'registtime',
 	    sortOrder : 'desc', //降序
 		hideColumn:[[
-			
+			{
+				field:'id',
+				title:'id'/*,
+				width:270,
+				sortable : true*/
+			}
 		             ]],
 		columns:[[      
 	    	{
@@ -125,18 +130,12 @@ function loadUsersManageUI(){
 					if(isEmpty(value)){
 						value = "";
 					}
-					var img = "<img style='width:"+headimgSize+"px;' src ='"+getWebProjectName()+"/users/getHeadImg.action?headimg="+value+"&size="+headimgSize+"&t="+new Date().getTime()+"'/>";
+					var img = "<img style='width:"+headimgSize+"px;' src ='"+getWebProjectName()+"/admins/getHeadImg.action?headimg="+value+"&size="+headimgSize+"&t="+new Date().getTime()+"'/>";
 					return img;
 				}
     		},  
-    		{
-				field:'id',
-				title:'主键'/*,
-				width:270,
-				sortable : true*/
-			},
 	        {
-    			field:'username',
+    			field:'adminname',
     			title:'名称',
 	    		sortable : true
     		},    
@@ -250,35 +249,35 @@ function loadUsersManageUI(){
 
 
 /**
- * 删除用户
+ * 删除管理员
  */
-function deleteUser(){
+function deleteAdmin(){
 	
 }
 
 
 /**
- * 编辑users,弹出编辑框
+ * 编辑admins,弹出编辑框
  */
-function editUser(){
+function editAdmin(){
 	//获取datagrid当前选择行
-	var row = users_datagrid.datagrid('getSelected');
+	var row = admins_datagrid.datagrid('getSelected');
 	if(isEmpty(row)){
 		showMsg("请先选择行");
 		return ;
 	}
 	
-	//保存当前操作的用户的行
+	//保存当前操作的管理员的行
 	currtEditDatagridRow = row;
 	
 	//清空旧的文本记录
-	editUserForm.clearEasyuiForm();
+	editAdminForm.clearEasyuiForm();
 	
 	
 	
 	
 	//打开信息编辑
-	editUserDialog.dialog('open');
+	editAdminDialog.dialog('open');
 	
 	//修改格式
 	row.registtime = new Date(row.registtime).format("yyyy-MM-dd HH:mm:ss");
@@ -291,29 +290,29 @@ function editUser(){
 	}
 	row.password = "";
 	//注入对象的name与form的id对应的表单对象
-	editUserForm.writeEasyuiForm(row);
+	editAdminForm.writeEasyuiForm(row);
 	
 }
 
 /**
- * 提交用户修改后的信息
+ * 提交管理员修改后的信息
  */
-function submitUserEdit(){
+function submitAdminEdit(){
 
 	//提示信息
 	pro.show("正在修改");
 	
-	editUserForm.form('submit', {    
-	    url:getWebProjectName()+"/users/updateUser.action",    
+	editAdminForm.form('submit', {    
+	    url:getWebProjectName()+"/admins/updateAdmin.action",    
 	    ajax:true,
 	    iframe:false,
 	    onSubmit: function(){   
-	    	if(!editUserForm.form('validate')){
+	    	if(!editAdminForm.form('validate')){
 	    		pro.close();
 	    		return false;
 	    	}
 	    	//关闭信息编辑
-	    	editUserDialog.dialog('close');
+	    	editAdminDialog.dialog('close');
 	    },    
 	    success:function(data){ 
 //	    	c(data);
@@ -327,12 +326,12 @@ function submitUserEdit(){
 				//更新成功
 				
 				//刷新表格
-				users_datagrid.datagrid("reload");
+				admins_datagrid.datagrid("reload");
 				
 			}else{
 				//失敗
 				//打開信息编辑
-				editUserDialog.dialog('open');
+				editAdminDialog.dialog('open');
 			}
 	    } ,
 	    onLoadError:function(){
@@ -342,7 +341,7 @@ function submitUserEdit(){
 	    	//关闭进度条
 	    	pro.close();
 			//打開信息编辑
-			editUserDialog.dialog('open');
+			editAdminDialog.dialog('open');
 	    }
 	});  
 
@@ -353,19 +352,19 @@ function submitUserEdit(){
 /**
  * 重置用戶信息
  */
-function resetUser(){
+function resetAdmin(){
 	
-	editUser();
+	editAdmin();
 	
 	showMsg("重置成功");
 }
 
 /**
- * 删除用户
+ * 删除管理员
  */
-function deleteUser(){
+function deleteAdmin(){
 	//确认删除?
-	confirm("确认删除"+currtEditDatagridRow.username+"?",function(r){
+	confirm("确认删除"+currtEditDatagridRow.adminname+"?",function(r){
 		if(r){
 			//进度条
 			
@@ -373,16 +372,16 @@ function deleteUser(){
 			var id = currtEditDatagridRow.id;
 			
 			
-			var url = "/users/deleteUser.action?id="+id;
+			var url = "/admins/deleteAdmin.action?id="+id;
 			ajax.send(url, function(data){
 				//显示信息
 				showMsg(data.msg);
 				
 				//关闭信息编辑
-				editUserDialog.dialog('close');
+				editAdminDialog.dialog('close');
 				
 				//刷新表格
-				users_datagrid.datagrid("reload");
+				admins_datagrid.datagrid("reload");
 				
 			}, function(){
 				
@@ -395,54 +394,54 @@ function deleteUser(){
 }
 
 /**
- * 按条件搜索users
+ * 按条件搜索admins
  */
-function searchUsers(){
+function searchAdmins(){
 	//form转js对象
-	var searchConditions = usersSearchForm.serializeObject();
+	var searchConditions = adminsSearchForm.serializeObject();
 	
-	users_datagrid.datagrid('load',searchConditions);
+	admins_datagrid.datagrid('load',searchConditions);
 }
 
-function clearUserSearch(){
+function clearAdminSearch(){
 	//清空条件
-	usersSearchForm.clearEasyuiForm();
+	adminsSearchForm.clearEasyuiForm();
 	//重新加载数据
-	users_datagrid.datagrid('load',{});
+	admins_datagrid.datagrid('load',{});
 }
 
 
-/********************************添加用户****************************/
+/********************************添加管理员****************************/
 
 /**
- * 新增users,弹出新增框
+ * 新增admins,弹出新增框
  */
-function insertUser(){
+function insertAdmin(){
 
 	
-	insertUserDialog.dialog('open');
+	insertAdminDialog.dialog('open');
 	
 	
 }
 
 
 /**
- * 新增用户
+ * 新增管理员
  */
-function submitNewUser(){
+function submitNewAdmin(){
 
 	
-	insertUserForm.form('submit', {    
-	    url:getWebProjectName()+"/users/insertUser.action",    
+	insertAdminForm.form('submit', {    
+	    url:getWebProjectName()+"/admins/insertAdmin.action",    
 	    ajax:true,
 	    iframe:false,
 	    onSubmit: function(){   
-	    	if(!insertUserForm.form('validate')){
+	    	if(!insertAdminForm.form('validate')){
 	    		
 	    		return false;
 	    	}
 	    	//关闭信息编辑
-	    	insertUserDialog.dialog('close');
+	    	insertAdminDialog.dialog('close');
 	    },    
 	    success:function(data){ 
 //	    	c(data);
@@ -456,12 +455,12 @@ function submitNewUser(){
 				//更新成功
 				
 				//刷新表格
-				users_datagrid.datagrid("reload");
+				admins_datagrid.datagrid("reload");
 				
 			}else{
 				//失敗
 				//打開信息编辑
-				insertUserDialog.dialog('open');
+				insertAdminDialog.dialog('open');
 			}
 	    } ,
 	    onLoadError:function(){
@@ -471,7 +470,7 @@ function submitNewUser(){
 	    	//关闭进度条
 	    	pro.close();
 			//打開信息编辑
-	    	insertUserDialog.dialog('open');
+	    	insertAdminDialog.dialog('open');
 	    }
 	});  
 
@@ -483,9 +482,9 @@ function submitNewUser(){
 /**
  * 清空旧的文本记录
  */
-function clearInsertUserForm(){
+function clearInsertAdminForm(){
 	//清空旧的文本记录
-	insertUserForm.clearEasyuiForm();
+	insertAdminForm.clearEasyuiForm();
 	
 }
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.shtm.manage.mapper.CustomAdminsMapper;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsReceiver;
+import com.shtm.manage.po.AdminsReplier;
 import com.shtm.manage.service.AdminsServiceI;
 import com.shtm.mapper.AdminsLoginLogMapper;
 import com.shtm.mapper.AdminsMapper;
@@ -108,6 +109,22 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		//执行更新
 		adminsMapper.updateByExampleSelective(receiver,ae );
 		
+	}
+
+	@Override
+	public AdminsReplier selectAdminsDatagrid(AdminsReceiver receiver)
+			throws Exception {
+		AdminsReplier replier = new AdminsReplier();
+
+		// 查询
+		replier.setRows(customAdminsMapper.selectAdminsDatagrid(receiver));
+
+		// 设置记录总数
+		Integer totalNum = customAdminsMapper.selectAdminsNum(receiver);
+
+		replier.setTotal(totalNum);
+
+		return replier;
 	}
 
 

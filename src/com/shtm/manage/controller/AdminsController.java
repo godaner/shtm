@@ -14,7 +14,6 @@ import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
 import com.shtm.manage.service.AdminsServiceI;
 import com.shtm.po.Admins;
-import com.shtm.po.AdminsLoginLog;
 
 /**
  * Title:AdminsController
@@ -188,4 +187,41 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 		return replier;
 	}
 
+	
+	/**
+	 * Title:selectAdminsDatagrid
+	 * <p>
+	 * Description:
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月22日 下午1:52:10
+	 * @version 1.0
+	 * @param receiver
+	 * @return
+	 */
+	public @ResponseBody AdminsReplier selectAdminsDatagrid(AdminsReceiver receiver){
+		
+		AdminsReplier replier = new AdminsReplier();
+		
+		try {
+			
+			service.selectAdminsDatagrid(receiver);
+			
+			replier.setResult(RESULT.TRUE);
+			
+			replier.setMsg("获取列表成功");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg("获取列表失败");
+		}
+		
+		
+		return replier;
+		
+		
+	}
+	
+	
 }

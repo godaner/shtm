@@ -19,7 +19,7 @@ public interface UsersServiceI {
 	/**
 	 * Title:selectUsersDatagrid
 	 * <p>
-	 * Description:分页查询用户
+	 * Description:通过组合条件查询分页数据
 	 * <p>
 	 * @author Kor_Zhang
 	 * @date 2017年9月18日 下午3:45:01

@@ -34,6 +34,7 @@ function loadWestUI(){
 	    	if(url == null || url == undefined || url==""){
 	    		return ;
 	    	}
+	    	c(url);
 	    	//加上项目名
 	    	url = getWebProjectName()+url;
 	    	//添加选项卡

@@ -44,19 +44,6 @@
 	) u1
 	where u1.n &gt;= #{start}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	</select>
 	<select id="selectUsersNum" parameterType="com.shtm.manage.po.UsersReceiver"
 		resultType="int">

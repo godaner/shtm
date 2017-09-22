@@ -2,6 +2,7 @@ package com.shtm.manage.service;
 
 import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsReceiver;
+import com.shtm.manage.po.AdminsReplier;
 import com.shtm.po.Admins;
 
 /**
@@ -41,5 +42,19 @@ public interface AdminsServiceI {
 	 * @throws Exception
 	 */
 	public void updateTheme(AdminsReceiver po)throws Exception;
+
+	/**
+	 * Title:selectAdminsDatagrid
+	 * <p>
+	 * Description:通过组合条件查询分页数据
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月22日 下午2:10:57
+	 * @version 1.0
+	 * @param receiver
+	 * @return
+	 * @throws Exception
+	 */
+	public AdminsReplier selectAdminsDatagrid(AdminsReceiver receiver)throws Exception;
 
 }

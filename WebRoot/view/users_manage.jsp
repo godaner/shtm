@@ -3,7 +3,7 @@
 <%@include file="./base.jsp"%>
 <link rel="stylesheet" type="text/css" href="${baseUrl}/css/users_manage.css">
 <!-- 工具栏 start -->
-<div id="c_i_tb" style="display: none;">
+<div id="users_dg_tb" style="display: none;">
 	<form id="usersSearchForm">
 		<input name="id" class="easyui-textbox input" data-options="prompt:'id'" style="width:100px">
 		<input name="username" class="easyui-textbox input" data-options="prompt:'用户名'" style="width:100px"> 
@@ -21,7 +21,7 @@
 		    <option value="0">冻结</option>    
 		</select>       
 		<a href="javascript:searchUsers();" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
-		<a href="javascript:clearSearch();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">清空条件</a>
+		<a href="javascript:clearUserSearch();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">清空条件</a>
 		|
 		<a href="javascript:editUser();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
 		|
