@@ -215,7 +215,12 @@ public interface Static {
 		/**
 		 * 管理员取消发布的商品
 		 */
-		static final Short ADMIN_CANCEL = -4;
+		static final Short ADMIN_CANCEL = -4;/**
+		 * 管理员删除发布的商品
+		 */
+		static final Short ADMIN_DELETE = -5;
+		
+		
 	}
 	
 	

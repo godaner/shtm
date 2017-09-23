@@ -21,17 +21,6 @@ public interface GoodsGroups {
 	 * @version 1.0
 	 */
 	public interface UpdateGoodsGroups{};
-	
-	/**
-	 * Title:InsertGoodsGroups
-	 * <p>
-	 * Description:插入goods所使用的验证组;
-	 * <p>
-	 * @author Kor_Zhang
-	 * @date 2017年9月23日 下午2:19:51
-	 * @version 1.0
-	 */
-	public interface InsertGoodsGroups{};
 
 	/**
 	 * Title:DeleteGoodsGroups
