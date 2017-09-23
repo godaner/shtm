@@ -2,11 +2,8 @@ package com.shtm.manage.service.impl;
 
 import java.util.Date;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import com.shtm.manage.mapper.CustomAdminsMapper;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
@@ -21,8 +18,6 @@ import com.shtm.po.AdminsExample.Criteria;
 import com.shtm.service.impl.BaseService;
 import com.shtm.util.Static.ADMINS_LOGIN_LOG_RESULT;
 import com.shtm.util.Static.ADMINS_STATUS;
-import com.shtm.util.Static.CONFIG;
-import com.shtm.util.Static.REG;
 
 /**
  * Title:AdminsService
@@ -137,17 +132,10 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	public void insertAdmin(String id,AdminsReceiver receiver) throws Exception {
 
 		/**
-		 * 验证邮箱
+		 * 小寫郵箱和用戶名
 		 */
-		String email = receiver.getEmail();
-		
-		//非空验证
-		eject(email == null || email.trim().isEmpty() , "邮箱不能为空");
-		
-		//格式验证
-		eject(!email.matches(REG.EMAIL),"邮箱格式错误");
-		
-		receiver.setEmail(email.toLowerCase());
+		receiver.setEmail(receiver.getEmail());
+		receiver.setUsername(receiver.getUsername());
 		
 		/**
 		 * 设置属性
@@ -159,9 +147,58 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		
 		receiver.setId(uuid());
 		
-		receiver.setSalt(email);
+		receiver.setSalt(receiver.getUsername());
 		
 		adminsMapper.insert(receiver);
+	}
+
+	@Override
+	public void deleteAdmin(AdminsReceiver receiver) throws Exception {
+		
+		Admins ad = adminsMapper.selectByPrimaryKey(receiver.getId());
+		
+		
+		if(ad == null || ad.getStatus() == ADMINS_STATUS.DELETE){
+			//如果已被刪除
+			return ;
+		}
+		
+		//標志位刪除
+		Admins newAd = new Admins();
+		
+		newAd.setId(receiver.getId());
+		
+		newAd.setUsername(uuid()+"_"+ad.getUsername());
+		
+		newAd.setStatus(ADMINS_STATUS.DELETE);
+		
+		adminsMapper.updateByPrimaryKeySelective(newAd);
+		
+	}
+
+	@Override
+	public void updateAdmin(AdminsReceiver receiver) throws Exception {
+		/**
+		 * 判断password是否需要更新
+		 */
+		String password = receiver.getPassword();
+		if (password != null && !password.isEmpty()) {
+			//如果有更新情况,加密密码
+			receiver.setPassword(md5(receiver.getEmail()+receiver.getPassword()));
+		}
+		if(password.trim().equals("")){
+			receiver.setPassword(null);
+		}
+		/**
+		 * 禁止前台更新某些字段
+		 */
+		receiver.setCreator(null);
+		
+		receiver.setCreatetime(null);
+		
+		//更新
+		adminsMapper.updateByPrimaryKeySelective(receiver);
+		
 	}
 
 

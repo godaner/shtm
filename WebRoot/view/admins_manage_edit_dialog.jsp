@@ -4,22 +4,22 @@
 <div id="editAdminDialog" style="display: none;width:450px;">
 	<form id="editAdminForm" enctype="multipart/form-data" method="post">
 		<table id="editAdminTable">
-			<tr>
+			<!-- <tr>
 				<td>
-					修改头像
+					选择头像
 				</td>
 				<td>
-					<!-- <input type="file" id="file" name="file" style="width:100%"> -->
-					<input id="file" name="file" class="easyui-filebox input" data-options="accept:'image/jpeg,image/gif,image/jpg',prompt:'默认为原图片',buttonText: '选择图片', buttonAlign: 'right' "  style="width:100%"> 
+					<input type="file" id="file" name="file" style="width:100%">
+					<input id="file" name="file" class="easyui-filebox input" data-options="accept:'image/jpeg,image/gif,image/jpg',prompt:'请选择图片',buttonText: '选择图片', buttonAlign: 'right' "  style="width:100%"> 
 				</td>
-			</tr>
+			</tr> -->
 		
 			<tr>
 				<td>
 					<label>主键</label> 
 				</td>
 				<td>
-					<input id="id" name="id" class="easyui-textbox input" data-options="editable:false" style="width:100%"> 
+					<input id="id" name="id" class="easyui-textbox input" data-options="prompt:'请选择图片',editable:false" style="width:100%"> 
 				</td>
 			</tr>
 			<tr>
@@ -27,7 +27,7 @@
 					<label>名称</label> 
 				</td>
 				<td>
-					<input id="username" name="username" class="easyui-textbox input" data-options="required:true" style="width:100%"> 
+					<input id="username" name="username" class="easyui-textbox input" data-options="prompt:'请输入用户名',required:true" style="width:100%"> 
 				</td>
 			</tr>
 			<tr>
@@ -35,7 +35,7 @@
 					<label>邮箱</label> 
 				</td>
 				<td>
-					<input id="email" name="email" class="easyui-textbox input" data-options="required:true,validType:'email'" style="width:100%"> 
+					<input id="email" name="email" class="easyui-textbox input" data-options="prompt:'请输入邮箱',required:true,validType:'email'" style="width:100%"> 
 				</td>
 			</tr>
 			<tr>
@@ -56,68 +56,19 @@
 			</tr> -->
 			<tr>
 				<td>
-					<label>性别</label> 
+					<label>主题</label> 
 				</td>
 				<td>
-					<!-- <input id="sex" name="sex" class="easyui-combobox" style="width:100%"
-    				data-options="valueField:'id',textField:'text',data:[
-    					{    
-						    'id':1,    
-						    'text':'男'   
-						},{    
-						    'id':0,    
-						    'text':'女'   
-						},{    
-						    'id':-1,    
-						    'text':'未设置',    
-						}]  " />   -->
 					
-					<select id="sex" name="sex" class="easyui-combobox input" data-options="required:true,editable:false" style="width:100%">   
-					    <option value="-1">未设置</option>   
-					    <option value="1">男</option>   
-					    <option value="0">女</option>   
+					<select id="theme" name="theme" class="easyui-combobox input" data-options="required:true,editable:false" style="width:100%">   
+					    <option value="default">default</option> 
+					    <option value="black">black</option> 
+					    <option value="bootstrap">bootstrap</option> 
+					    <option value="gray">gray</option> 
+					    <option value="material">material</option> 
+					    <option value="metro">metro</option> 
 					</select>  
 					
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>生日</label> 
-				</td>
-				<td>
-					<input id="birthday" name="birthday" class="easyui-datebox input" data-options="editable:false" style="width:100%"> 
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>介绍</label> 
-				</td>
-				<td>
-					<input id="description" name="description" class="easyui-textbox input" data-options="multiline:true" style="width:100%;height:80px;"> 
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>积分</label> 
-				</td>
-				<td>
-					<input id="score" name="score" class="easyui-numberbox input" data-options="required:true,min:0,max:999999999,precision:0" style="width:100%"> 
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>余额</label> 
-				</td>
-				<td>
-					<input id="money" name="money" class="easyui-numberbox input" data-options="required:true,min:0,max:999999999,precision:2" style="width:100%"> 
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>注册时间</label> 
-				</td>
-				<td>
-					<input id="registtime" name="registtime" class="easyui-textbox input" data-options="required:true,editable:false" style="width:100%"> 
 				</td>
 			</tr>
 			<tr>
@@ -127,18 +78,26 @@
 				<td>
 					<select id="status" name="status" class="easyui-combobox input" data-options="required:true,editable:false" style="width:100%">   
 					    <option value="1">激活</option>   
-					    <option value="0">冻结</option>   
+					    <option selected="selected" value="0">冻结</option>   
 					</select>  
 				</td>
 			</tr>
 			<tr>
+				<td>
+					<label>創建时间</label> 
+				</td>
+				<td>
+					<input id="createtime" name="createtime" class="easyui-textbox input" data-options="required:true,editable:false" style="width:100%"> 
+				</td>
+			</tr>
+			<tr>
 				<td colspan="2" align="center">
-					<!-- 修改按钮 -->
-					<a id="submitEditBtn" style="color:green;" href="javascript:submitAdminEdit();" class="easyui-linkbutton" data-options="">修改</a>
+					<!-- 編輯按钮 -->
+					<a id="submitEditBtn" style="color:green;" href="javascript:submitAdminEdit();" class="easyui-linkbutton" data-options="">同步</a>
 					<!-- 删除按钮 -->
 					<a id="deleteBtn" style="color:red;" href="javascript:deleteAdmin();" class="easyui-linkbutton" data-options="">删除</a>
 					<!-- 重置按钮 -->
-					<a id="deleteBtn" href="javascript:resetAdmin();" class="easyui-linkbutton" data-options="">重置</a>
+					<a style="color:red;" href="javascript:resetAdmin();" class="easyui-linkbutton" data-options="">重置</a>
 				</td>
 			</tr>
 		</table> 

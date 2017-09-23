@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
+import com.shtm.manage.groups.AdminsGroups.DeleteAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.InsertAdminGroups;
+import com.shtm.manage.groups.AdminsGroups.UpdateAdminGroups;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
@@ -246,15 +248,16 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 		
 		try {
 			
-			//验证信息
-			validate(result);
+			//獲取验证信息
+			getError(result);
 			
 			/**
 			 * 获取在线的管理员
 			 */
 			Admins ad = getSessionAttr(FILED_ONLINE_ADMIN);
 			
-			eject(ad == null, "您已离线");
+			//假設在綫用戶為1,123,123
+			ad.setId("1");
 			
 			/**
 			 * 执行业务
@@ -264,6 +267,71 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 			replier.setResult(RESULT.TRUE);
 			
 			replier.setMsg("添加成功");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+		
+		
+		return replier;
+	}
+	@RequestMapping("/updateAdmin")
+	public @ResponseBody AdminsReplier updateAdmin(@Validated(value={UpdateAdminGroups.class}) AdminsReceiver receiver,
+			BindingResult result){
+		AdminsReplier replier = new AdminsReplier();
+		
+		try {
+			
+			//獲取验证信息
+			getError(result);
+			
+			
+			/**
+			 * 执行业务
+			 */
+			service.updateAdmin(receiver);
+			
+			replier.setResult(RESULT.TRUE);
+			
+			replier.setMsg("修改成功");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+		
+		
+		return replier;
+	}
+	
+	/**
+	 * Title:deleteAdmin
+	 * <p>
+	 * Description:刪除管理員
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月23日 上午8:22:14
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/deleteAdmin")
+	public @ResponseBody AdminsReplier deleteAdmin(@Validated(value={DeleteAdminGroups.class}) AdminsReceiver receiver,
+			BindingResult result) throws Exception{
+		AdminsReplier replier = new AdminsReplier();
+		try {
+			
+			getError(result);
+			
+			service.deleteAdmin(receiver);
+			
+			replier.setResult(RESULT.TRUE);
+			
+			replier.setMsg("刪除成功");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

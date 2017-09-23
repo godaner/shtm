@@ -70,5 +70,31 @@ public interface AdminsServiceI {
 	 */
 	public void insertAdmin(String id,AdminsReceiver receiver) throws Exception;
 
+	/**
+	 * Title:deleteAdmin
+	 * <p>
+	 * Description:刪除管理員
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月23日 上午8:23:20
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	public void deleteAdmin(AdminsReceiver receiver) throws Exception;
+
+	/**
+	 * Title:updateAdmin
+	 * <p>
+	 * Description:更新admin
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月23日 上午8:52:46
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	public void updateAdmin(AdminsReceiver receiver) throws Exception;
+
 
 }

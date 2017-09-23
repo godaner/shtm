@@ -22,7 +22,7 @@
 			<if test="creator !=null and creator!=''">
 				AND creator = #{creator}
 			</if>
-			<if test="status !=null and status!=''">
+			<if test="status !=null">
 				AND status = #{status}
 			</if>
 			<if test="theme !=null and theme!=''">

@@ -20,4 +20,26 @@ public interface AdminsGroups {
 	 * @version 1.0
 	 */
 	public interface InsertAdminGroups{};
+	
+	/**
+	 * Title:UpdateAdminGroups
+	 * <p>
+	 * Description:更新管理员的验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月23日 上午8:42:11
+	 * @version 1.0
+	 */
+	public interface UpdateAdminGroups{};
+	
+	/**
+	 * Title:DeleteAdminGroups
+	 * <p>
+	 * Description:管理员删除的验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月23日 上午8:45:38
+	 * @version 1.0
+	 */
+	public interface DeleteAdminGroups{};
 }

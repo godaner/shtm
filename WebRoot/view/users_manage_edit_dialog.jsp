@@ -134,7 +134,7 @@
 			<tr>
 				<td colspan="2" align="center">
 					<!-- 修改按钮 -->
-					<a id="submitEditBtn" style="color:green;" href="javascript:submitUserEdit();" class="easyui-linkbutton" data-options="">修改</a>
+					<a id="submitEditBtn" style="color:green;" href="javascript:submitUserEdit();" class="easyui-linkbutton" data-options="">同步</a>
 					<!-- 删除按钮 -->
 					<a id="deleteBtn" style="color:red;" href="javascript:deleteUser();" class="easyui-linkbutton" data-options="">删除</a>
 					<!-- 重置按钮 -->

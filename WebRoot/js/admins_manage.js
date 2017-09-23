@@ -230,15 +230,10 @@ function editAdmin(){
 	editAdminDialog.dialog('open');
 	
 	//修改格式
-	row.registtime = new Date(row.registtime).format("yyyy-MM-dd HH:mm:ss");
+	row.createtime = new Date(row.createtime).format("yyyy-MM-dd HH:mm:ss");
 	
-	
-	if(!isEmpty(row.birthday)){
-		row.birthday = new Date(row.birthday).format("yyyy-MM-dd");
-	}else{
-		row.birthday = "";
-	}
 	row.password = "";
+	
 	//注入对象的name与form的id对应的表单对象
 	editAdminForm.writeEasyuiForm(row);
 	
@@ -314,7 +309,7 @@ function resetAdmin(){
  */
 function deleteAdmin(){
 	//确认删除?
-	confirm("确认删除"+currtEditDatagridRow.adminname+"?",function(r){
+	confirm("确认删除"+currtEditDatagridRow.username+"?",function(r){
 		if(r){
 			//进度条
 			

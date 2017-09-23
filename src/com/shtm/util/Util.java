@@ -99,7 +99,7 @@ public class Util extends ClasssPathProps {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static void validate(BindingResult result) throws Exception {
+	public static void getError(BindingResult result) throws Exception {
 		List<FieldError> list = result.getFieldErrors();
 		for (FieldError error : list) {
 			eject(error.getDefaultMessage());

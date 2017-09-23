@@ -7,32 +7,36 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.shtm.manage.groups.AdminsGroups.DeleteAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.InsertAdminGroups;
+import com.shtm.manage.groups.AdminsGroups.UpdateAdminGroups;
 import com.shtm.util.Static;
 
 public class Admins {
 	
+	@NotBlank(message="{admins.id.notblank.error}",groups={UpdateAdminGroups.class,DeleteAdminGroups.class})
     private String id;
 	
-	@Pattern(regexp=Static.REG.USERNAME,message="{admins.username.reg.error}",groups={InsertAdminGroups.class})
+	@Pattern(regexp=Static.REG.USERNAME,message="{admins.username.reg.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class})
     private String username;
+	
 	
 	@Pattern(regexp=Static.REG.PASSWORD,message="{admins.password.reg.error}",groups={InsertAdminGroups.class})
     private String password;
 	
     private String salt;
 
-    @NotNull(message="{admins.status.notnull.error}",groups={InsertAdminGroups.class})
+    @NotNull(message="{admins.status.notnull.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class})
     private Short status;
 
     private Timestamp createtime;
 
     private String creator;
 
-	@NotBlank(message="{admins.theme.notnull.error}",groups={InsertAdminGroups.class})
+	@NotBlank(message="{admins.theme.notnull.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class})
     private String theme;
 
-	@Pattern(regexp=Static.REG.EMAIL,message="{admins.email.reg.error}",groups={InsertAdminGroups.class})
+	@Pattern(regexp=Static.REG.EMAIL,message="{admins.email.reg.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class})
     private String email;
 
     public String getId() {

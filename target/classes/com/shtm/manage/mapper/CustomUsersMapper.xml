@@ -14,13 +14,13 @@
 			<if test="email !=null and email!=''">
 				AND email LIKE '%${email}%'
 			</if>
-			<if test="sex !=null and sex!=''">
+			<if test="sex !=null">
 				AND sex = #{sex}
 			</if>
 			<if test="description !=null and description!=''">
 				AND DESCRIPTION LIKE '%${description}%'
 			</if>
-			<if test="status !=null and status!=''">
+			<if test="status !=null">
 				AND status = #{status}
 			</if>
 			
