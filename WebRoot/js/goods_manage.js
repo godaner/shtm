@@ -241,13 +241,19 @@ function loadGoodsManageUI(){
 	    		sortable : true
     		},    
 	        {
-    			field:'browseNumber',
+    			field:'browsenumber',
     			title:'浏览次数',
 	    		sortable : true
     		},    
 	        {
-    			field:'lastUpdateTime',
+    			field:'lastupdatetime',
     			title:'最后一次被用户更新时间',
+    			formatter: function(value,row,index){
+	    			if(!isEmpty(value)){
+	    				return new Date(value).format("yyyy-MM-dd HH:mm:ss")
+	    			}
+	    			return value;
+	    		},
 	    		sortable : true
     		},    
 	        {
