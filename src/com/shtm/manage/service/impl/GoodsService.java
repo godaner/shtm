@@ -1,8 +1,13 @@
 package com.shtm.manage.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shtm.manage.mapper.CustomGoodsMapper;
+import com.shtm.manage.po.GoodsReceiver;
+import com.shtm.manage.po.GoodsReplier;
 import com.shtm.manage.service.GoodsServiceI;
+import com.shtm.mapper.GoodsMapper;
 
 /**
  * Title:GoodsService
@@ -15,5 +20,29 @@ import com.shtm.manage.service.GoodsServiceI;
  */
 @Service
 public class GoodsService implements GoodsServiceI {
+
+	@Autowired
+	private GoodsMapper goodsMapper;
+	
+	@Autowired
+	private CustomGoodsMapper customGoodsMapper;
+	
+	@Override
+	public GoodsReplier selectGoodsDatagrid(GoodsReceiver receiver)
+			throws Exception {
+		
+		GoodsReplier replier = new GoodsReplier();
+
+		// 查询
+		replier.setRows(customGoodsMapper.selectGoodsDatagrid(receiver));
+
+		// 设置记录总数
+		Integer totalNum = customGoodsMapper.selectGoodsNum(receiver);
+
+		replier.setTotal(totalNum);
+
+		return replier;
+		
+	}
 
 }

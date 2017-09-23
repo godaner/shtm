@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shtm.manage.mapper.CustomGoodsMapper">
+	<sql id="selectGoodsConditions">
+		<where>
+			STATUS != -5
+			<if test="id !=null and id!=''">
+				AND id LIKE '%${id}%'
+			</if>
+			
+			
+		</where>
+	</sql>
+	
+	
+	
+	<select id="selectGoodsDatagrid" parameterType="com.shtm.manage.po.GoodsReceiver" resultType="com.shtm.manage.po.GoodsReplier">
+		
+		SELECT G2.*,u0.USERNAME AS ownerName,u1.USERNAME AS buyerName
+		FROM 
+		       (
+		          SELECT G1.*,ROWNUM AS N
+		          FROM
+		               (
+		                  SELECT *
+		                  FROM GOODS
+		                  <include refid="selectGoodsConditions"></include>
+		               ) G1
+		          
+		          WHERE ROWNUM &lt;=#{end}
+		       ) G2,users u0,users u1
+		WHERE G2.N &gt;= #{start} AND g2.owner = u0.ID(+) AND g2.buyer=u1.ID(+)
+		
+	
+	</select>
+	
+	<select id="selectGoodsNum" parameterType="com.shtm.manage.po.GoodsReceiver"
+		resultType="int">
+		SELECT count(*)
+		FROM goods 
+		<include refid="selectGoodsConditions"></include>
+		
+	</select>
+	
 	
 	
 </mapper>

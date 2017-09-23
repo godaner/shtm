@@ -1,7 +1,7 @@
 package com.shtm.po;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Goods {
     private String id;
@@ -10,17 +10,17 @@ public class Goods {
 
     private String description;
 
-    private BigDecimal sprice;
+    private Double sprice;
 
-    private BigDecimal price;
+    private Double price;
 
     private Short condition;
 
-    private BigDecimal region;
+    private Double region;
 
     private Short status;
 
-    private Date createtime;
+    private Timestamp createtime;
 
     private String owner;
 
@@ -28,14 +28,18 @@ public class Goods {
 
     private BigDecimal browseNumber;
 
-    private Date lastUpdateTime;
+    private Timestamp lastUpdateTime;
+
+    private Timestamp buytime;
+
+    private Timestamp finishtime;
 
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
     }
 
     public String getTitle() {
@@ -43,7 +47,7 @@ public class Goods {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title == null ? null : title.trim();
     }
 
     public String getDescription() {
@@ -51,22 +55,22 @@ public class Goods {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = description == null ? null : description.trim();
     }
 
-    public BigDecimal getSprice() {
+    public Double getSprice() {
         return sprice;
     }
 
-    public void setSprice(BigDecimal sprice) {
+    public void setSprice(Double sprice) {
         this.sprice = sprice;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -78,11 +82,11 @@ public class Goods {
         this.condition = condition;
     }
 
-    public BigDecimal getRegion() {
+    public Double getRegion() {
         return region;
     }
 
-    public void setRegion(BigDecimal region) {
+    public void setRegion(Double region) {
         this.region = region;
     }
 
@@ -94,11 +98,11 @@ public class Goods {
         this.status = status;
     }
 
-    public Date getCreatetime() {
+    public Timestamp getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(Date createtime) {
+    public void setCreatetime(Timestamp createtime) {
         this.createtime = createtime;
     }
 
@@ -107,7 +111,7 @@ public class Goods {
     }
 
     public void setOwner(String owner) {
-        this.owner = owner;
+        this.owner = owner == null ? null : owner.trim();
     }
 
     public String getBuyer() {
@@ -115,7 +119,7 @@ public class Goods {
     }
 
     public void setBuyer(String buyer) {
-        this.buyer = buyer;
+        this.buyer = buyer == null ? null : buyer.trim();
     }
 
     public BigDecimal getBrowseNumber() {
@@ -126,11 +130,27 @@ public class Goods {
         this.browseNumber = browseNumber;
     }
 
-    public Date getLastUpdateTime() {
+    public Timestamp getLastUpdateTime() {
         return lastUpdateTime;
     }
 
-    public void setLastUpdateTime(Date lastUpdateTime) {
+    public void setLastUpdateTime(Timestamp lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public Timestamp getBuytime() {
+        return buytime;
+    }
+
+    public void setBuytime(Timestamp buytime) {
+        this.buytime = buytime;
+    }
+
+    public Timestamp getFinishtime() {
+        return finishtime;
+    }
+
+    public void setFinishtime(Timestamp finishtime) {
+        this.finishtime = finishtime;
     }
 }
