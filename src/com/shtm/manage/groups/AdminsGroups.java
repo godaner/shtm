@@ -42,4 +42,16 @@ public interface AdminsGroups {
 	 * @version 1.0
 	 */
 	public interface DeleteAdminGroups{};
+	
+	/**
+	 * 
+	 * Title:SelectAdminGroups
+	 * <p>
+	 * Description:按id查询单个用户的验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月23日 上午10:58:43
+	 * @version 1.0
+	 */
+	public interface SelectAdminGroups{};
 }

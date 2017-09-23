@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.shtm.controller.BaseController;
 import com.shtm.manage.groups.AdminsGroups.DeleteAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.InsertAdminGroups;
+import com.shtm.manage.groups.AdminsGroups.SelectAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.UpdateAdminGroups;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsReceiver;
@@ -34,6 +35,35 @@ import com.shtm.po.Admins;
 @Controller
 public class AdminsController extends BaseController<AdminsServiceI>{
 	
+	/**
+	 * Title:selectAdmin
+	 * <p>
+	 * Description:获取指定id的admin
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月23日 上午10:57:37
+	 * @version 1.0
+	 * @param receiver
+	 * @return
+	 */
+	@RequestMapping("/selectAdmin")
+	public @ResponseBody AdminsReplier selectAdmin(@Validated(value={SelectAdminGroups.class}) AdminsReceiver receiver,
+			BindingResult result) throws Exception{
+		AdminsReplier replier = new AdminsReplier();		
+		try {
+			getError(result);
+			
+			replier = service.selectAdmin(receiver.getId());
+			
+			replier.setResult(RESULT.TRUE);
+			replier.setMsg("获取成功");
+		}catch(Exception e){
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+		return replier;
+	}
 	
 	/**
 	 * Title:verifyCode

@@ -59,4 +59,17 @@ public class AdminsReplier extends Admins{
 		this.total = total;
 	}
 	
+	private String creatorName;
+
+	
+	//创建者的name
+	public String getCreatorName() {
+		return creatorName;
+	}
+
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
+	}
+	
+	
 }

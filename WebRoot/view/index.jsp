@@ -87,7 +87,9 @@
 	<%@include file="./login.jsp"%>
 	<!-- 登录弹框 end -->
 	
-	
+	<!-- 管理员信息弹框 start -->
+	<%@include file="./admins_info_dialog.jsp"%>
+	<!-- 管理员信息弹框 end -->
 	
 </body>
 
@@ -116,6 +118,7 @@
 <script type="text/javascript" charset="utf-8" src="${baseUrl}/js/login.js"></script>
 <script type="text/javascript" charset="utf-8" src="${baseUrl}/js/north.js"></script>
 <script type="text/javascript" charset="utf-8" src="${baseUrl}/js/west.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/admins_info_dialog.js"></script>
 <script type="text/javascript" charset="utf-8" src="${baseUrl}/js/index.js"></script>
 <!-- 获取登录信息的js start -->
 <%@include file="./login_recored.jsp" %>

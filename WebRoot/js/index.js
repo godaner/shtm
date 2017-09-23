@@ -29,3 +29,17 @@ function initIndexVar() {
 function loadIndexUI() {
 
 }
+
+/**
+ * 显示指定id的admin
+ * @param adminId
+ */
+function showAdmin(adminId){
+	var url = "/admins/selectAdmin.action?id="+adminId;
+	ajax.send(url, function(data){
+		
+	}, function(){
+		
+	});
+}
+

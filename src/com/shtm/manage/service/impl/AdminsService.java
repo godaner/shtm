@@ -2,6 +2,7 @@ package com.shtm.manage.service.impl;
 
 import java.util.Date;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -199,6 +200,22 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		//更新
 		adminsMapper.updateByPrimaryKeySelective(receiver);
 		
+	}
+
+	@Override
+	public AdminsReplier selectAdmin(String id) throws Exception {
+		
+		AdminsReplier replier = customAdminsMapper.selectAdmin(id);
+		
+		//判读用户是否存在
+		eject(replier == null, "该用户已不存在");
+		
+		//屏蔽属性
+		replier.setPassword("");
+		
+		replier.setSalt("");
+		
+		return replier;
 	}
 
 

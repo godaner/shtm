@@ -283,6 +283,12 @@ var ajax = {
 				}
 				//关闭进度条
 				pro.close();
+				
+				//显示信息
+				if(!isEmpty(data.msg)){
+					showMsg(data.msg);
+				}
+				
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				

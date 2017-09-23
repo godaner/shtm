@@ -126,7 +126,10 @@ function loadAdminsManageUI(){
 	    sortName : 'createtime',
 	    sortOrder : 'desc', //降序
 		hideColumn:[[
-			
+			{
+				field:'creator',
+				title:'创建者id'
+			}
 		             ]],
 		columns:[[ 
 			{
@@ -159,9 +162,16 @@ function loadAdminsManageUI(){
 	    		sortable : true
 	        },*/    
 	        {
-	        	field:'creator',
+	        	field:'creatorName',
 	        	title:'创建者',
-	    		sortable : true
+	    		sortable : true,
+				formatter: function(value,row,index){
+					
+					if(!isEmpty(value)){
+						return "<a href=javascript:showAdmin('"+row.creator+"');>"+value+"</a>"
+					}
+					return "";
+				}
 	        },
 	        {
 	        	field:'theme',

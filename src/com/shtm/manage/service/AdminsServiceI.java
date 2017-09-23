@@ -96,5 +96,18 @@ public interface AdminsServiceI {
 	 */
 	public void updateAdmin(AdminsReceiver receiver) throws Exception;
 
+	/**
+	 * Title:selectAdmin
+	 * <p>
+	 * Description:通过id查询一个admin
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月23日 上午11:02:09
+	 * @version 1.0
+	 * @param id
+	 * @throws Exception
+	 */
+	public AdminsReplier selectAdmin(String id) throws Exception;
+
 
 }

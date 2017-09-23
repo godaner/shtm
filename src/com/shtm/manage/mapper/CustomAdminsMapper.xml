@@ -32,8 +32,10 @@
 		</where>
 	</sql>
 	
-	<select id="selectAdminsDatagrid" parameterType="com.shtm.manage.po.AdminsReceiver" resultType="com.shtm.po.Admins">
-	select u1.*
+	
+	
+	<select id="selectAdminsDatagrid" parameterType="com.shtm.manage.po.AdminsReceiver" resultType="com.shtm.manage.po.AdminsReplier">
+	select u1.*,u2.id as creator,u2.username as creatorName
 	from
 	(
 		SELECT u0.*,rownum as n
@@ -45,8 +47,8 @@
 			ORDER BY ${sort} ${order}
 		) u0
 		WHERE rownum &lt;=#{end}
-	) u1
-	where u1.n &gt;= #{start}
+	) u1,admins u2
+	where u1.n &gt;= #{start} AND u1.creator = u2.id(+)
 		
 	</select>
 	<select id="selectAdminsNum" parameterType="com.shtm.manage.po.AdminsReceiver"
@@ -56,5 +58,17 @@
 		<include refid="selectAdminsConditions"></include>
 		
 	</select>
+	
+	
+	
+	
+	
+	
+	<select id="selectAdmin" parameterType="string" resultType="com.shtm.manage.po.AdminsReplier">
+		select a0.* ,a1.id AS creator,a1.USERNAME AS creatorName
+		from admins a0,admins a1
+		where a0.id =#{id}  AND a0.creator = a1.ID(+)
+	</select>
+	
 	
 </mapper>

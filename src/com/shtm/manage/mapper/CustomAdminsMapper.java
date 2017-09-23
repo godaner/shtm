@@ -48,7 +48,7 @@ public interface CustomAdminsMapper {
 	/**
 	 * Title:
 	 * <p>
-	 * Description:
+	 * Description:获取组合条件的记录数量;
 	 * <p>
 	 * @author Kor_Zhang
 	 * @date 2017年9月22日 下午2:17:36
@@ -58,4 +58,18 @@ public interface CustomAdminsMapper {
 	 * @throws Exception
 	 */
 	Integer selectAdminsNum(AdminsReceiver receiver) throws Exception;
+
+	/**
+	 * Title:selectAdmin
+	 * <p>
+	 * Description:获取指定id的相关信息;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月23日 上午11:18:28
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	AdminsReplier selectAdmin(String id) throws Exception;
 }
