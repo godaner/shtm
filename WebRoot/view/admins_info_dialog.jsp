@@ -4,56 +4,98 @@
 <%@include file="./base.jsp"%>
 <link rel="stylesheet" type="text/css" href="${baseUrl}/css/admins_info_dialog.css">
 
-<div id="admins_info_dialog" class="easyui-dialog">
+<!-- 这里不要指定其为 class="easyui-dialog",不然会有闪屏现象 -->
+<div id="admins_info_dialog">
 
 	<form id="admins_info_form" method="post">
-		<table>
-			<tr>
-				<td>用户名:
-				
+		<table id="admins_info_table">
+			
+			<!-- <tr>
+				<td>
+					选择头像
 				</td>
-				<!-- required:true, 临时去除,便于测试 -->
-				<td><input name="username" 
-					autocomplete="off" disableautocomplete="true"
-					class="easyui-textbox" 
-					data-options="iconCls:'',
-					prompt:'账户',
-					
-					missingMessage:'请输入账户'" /></td>
-			</tr>
+				<td>
+					<input type="file" id="file" name="file" style="width:100%">
+					<input id="file" name="file" class="easyui-filebox input" data-options="accept:'image/jpeg,image/gif,image/jpg',prompt:'请选择图片',buttonText: '选择图片', buttonAlign: 'right' "  style="width:100%"> 
+				</td>
+			</tr> -->
+		
+			<!-- <tr>
+				<td>
+					<label>主键</label> 
+				</td>
+				<td>
+					<input id="id" name="id" class="easyui-textbox input" data-options="prompt:'请选择图片',editable:false" style="width:100%"> 
+				</td>
+			</tr> -->
 			<tr>
-				<td>密码:</td>
-				<td><input name="password"
-					autocomplete="off" disableautocomplete="true"
-					class="easyui-passwordbox" 
-					data-options="iconCls:'',
-					prompt:'密码',
-					
-					missingMessage:'请输入密码'" /></td>
-			</tr>
-			<tr>
-				<td>验证码:</td>
-				<td><img style="cursor: pointer;" alt="点击获取验证码"
-					id="verifyCodeImg" src="${baseUrl}/admins/verifyCode.action">
-	
+				<td>
+					<label>名称</label> 
+				</td>
+				<td>
+					<input id="username" name="username" class="easyui-textbox input" data-options="editable:false" style="width:100%"> 
 				</td>
 			</tr>
 			<tr>
-				<td>输入验证码:</td>
-				<td><input name="verifyCode"
-					autocomplete="off" disableautocomplete="true"
-					class="easyui-textbox" 
-					data-options="iconCls:'',
-					prompt:'验证码',
+				<td>
+					<label>邮箱</label> 
+				</td>
+				<td>
+					<input id="email" name="email" class="easyui-textbox input" data-options="editable:false" style="width:100%"> 
+				</td>
+			</tr>
+			<!-- <tr>
+				<td>
+					<label>密码</label> 
+				</td>
+				<td>
+					<input id="password" name="password" class="easyui-textbox input" data-options="prompt:'默认为原密码'" style="width:100%"> 
+				</td>
+			</tr> -->
+			<!-- <tr>
+				<td>
+					<label>盐</label> 
+				</td>
+				<td>
+					<input id="salt" name="salt" class="easyui-textbox" data-options="" style="width:100%"> 
+				</td>
+			</tr> -->
+			<tr>
+				<td>
+					<label>主题</label> 
+				</td>
+				<td>
 					
-					missingMessage:'请输入验证码'" /></td>
+					<input id="theme" name="theme" class="easyui-textbox input" data-options="editable:false" style="width:100%">
+					
+				</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center">
-					<input type="button" id="loginBtn"
-					class="easyui-linkbutton" value="登录"
-					data-options="width:60,height:35" /></td>
+			
+				<td>
+					<label>状态</label> 
+				</td>
+				<td>
+					<input id="status" name="status" class="easyui-textbox input" data-options="editable:false" style="width:100%">
+				</td>
 			</tr>
+			<tr>
+				<td>
+					<label>创建者</label> 
+				</td>
+				<td>
+					<input id="creatorName" name="creatorName" class="easyui-textbox input" data-options="editable:false" style="width:100%"> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>創建时间</label> 
+				</td>
+				<td>
+					<input id="createtime" name="createtime" class="easyui-textbox input" data-options="editable:false" style="width:100%"> 
+				</td>
+			</tr>
+			
 		</table>
 	</form>
 </div>

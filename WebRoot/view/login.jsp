@@ -3,11 +3,11 @@
 	
 <%@include file="./base.jsp"%>
 <link rel="stylesheet" type="text/css" href="${baseUrl}/css/login.css">
-
-<div id="login_dialog" class="easyui-dialog">
+<!-- 这里不要指定其为 class="easyui-dialog",不然会有闪屏现象 -->
+<div id="login_dialog">
 
 	<form id="loginForm" method="post">
-		<table>
+		<table id="logintable">
 			<tr>
 				<td>用户名:
 				

@@ -7,6 +7,7 @@
  */
 var admins_info_dialog;
 var adminsInfoDialog;
+var admins_info_form;
 $(function() {
 
 	initAdminsInfoDialogVar();
@@ -27,14 +28,19 @@ function initAdminsInfoDialogVar() {
 
 	admins_info_dialog = $("#admins_info_dialog");
 	
-	
+	admins_info_form = $("#admins_info_form");
 	
 	//初始化loginDialog
 	adminsInfoDialog = {
 		/**
-		 * 显示登录弹窗
+		 * 显示登录弹窗,传入要显示的数据对象(js对象)
 		 */
-		show : function() {
+		show : function(title,formDataObj) {
+			admins_info_form.writeEasyuiForm(formDataObj);
+			
+			
+			admins_info_dialog.dialog({title:title});
+			
 			admins_info_dialog.dialog('open');
 		},
 		/**
@@ -54,10 +60,9 @@ function loadAdminsInfoDialogUI() {
 	 */
 	admins_info_dialog.dialog({
 		title : '管理员信息',
-		width : 320,
-		height : 285,
 		closed : true,
-		closable : false,
+		closable : true,
+		resizable:true,
 		cache : true,
 		modal : true,
 		onLoad : function() {
