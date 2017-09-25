@@ -2,7 +2,6 @@ package com.shtm.manage.po;
 
 import java.util.List;
 
-import com.shtm.po.Admins;
 import com.shtm.po.Goods;
 
 /**
@@ -64,9 +63,12 @@ public class GoodsReplier extends Goods {
 	/**
 	 * 数据库查询的字段
 	 */
+	//保存数据库查出的用户名
 	private String buyerName;
+	//保存数据库查出的用户名
 	private String ownerName;
-
+	//保存数据库查出地址:省-市-县
+	private String regionDetail;
 	public String getBuyerName() {
 		return buyerName;
 	}
@@ -81,6 +83,14 @@ public class GoodsReplier extends Goods {
 
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
+	}
+
+	public String getRegionDetail() {
+		return regionDetail;
+	}
+
+	public void setRegionDetail(String regionDetail) {
+		this.regionDetail = regionDetail;
 	}
 	
 	

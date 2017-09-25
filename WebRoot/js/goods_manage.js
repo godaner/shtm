@@ -142,13 +142,22 @@ function loadGoodsManageUI(){
 				width:270,
 				sortable : true*/
 			},
+    		{
+    			field:'status',
+    			title:'状态',
+	    		sortable : true,
+				formatter: function(value,row,index){
+					
+					return statusCode2String(value);
+				}
+    		},
 	        {
     			field:'title',
     			title:'名称',
 	    		sortable : true
     		},
     		{
-    			field:'descrition',
+    			field:'description',
     			title:'描述',
 	    		sortable : true
     		},
@@ -168,56 +177,9 @@ function loadGoodsManageUI(){
 	    		sortable : true
     		},
     		{
-    			field:'region',
+    			field:'regionDetail',
     			title:'地区',
 	    		sortable : true
-    		},
-    		{
-    			field:'status',
-    			title:'状态',
-	    		sortable : true,
-				formatter: function(value,row,index){
-					/*状态:2为已发货，
-					 * 1为购买了且待发货，,
-					 * 0为创建且待购买,
-					 * -1为买家收货后交易正常结束，
-					 * -2为卖家取消了出售本商品，
-					 * -3是用户取消购买本商品，
-					 * -4管理员取消发布的商品,
-					 * -5为管理员删除了商品*/
-					var s = value;
-					
-					switch (value) {
-					case 1:
-						s = "购买了且待发货";
-						break;
-					case 2:
-						s = "购买了且待发货";
-						break;
-					case 0:
-						s = "创建待购买";
-						break;
-					case -1:
-						s = "买家收货后交易正常结束";
-						break;
-					case -2:
-						s = "卖家取消了出售本商品";
-						break;
-					case -3:
-						s = "用户取消购买本商品";
-						break;
-					case -4:
-						s = "管理员取消发布的商品";
-						break;
-					case -5:
-						s = "管理员删除了商品";
-						break;
-					default:
-						break;
-					}
-					
-					return s;
-				}
     		},    
 	        {
     			field:'createtime',
@@ -296,21 +258,40 @@ function editGood(){
 	//保存当前操作的管理员的行
 	currtEditDatagridRow = row;
 	
-	//清空旧的文本记录
+	/**
+	 * 清空旧的文本记录
+	 */
 	editGoodForm.clearEasyuiForm();
 	
 	
 	
 	
-	//打开信息编辑
+	/**
+	 * 打开信息编辑
+	 */
 	editGoodDialog.dialog('open');
 	
-	//修改格式
-	row.createtime = new Date(row.createtime).format("yyyy-MM-dd HH:mm:ss");
+	/**
+	 * 修改格式
+	 */
+	//格式化日期
+	row.createtime = timeFormatter.formatTime(row.createtime);
+	row.lastupdatetime = timeFormatter.formatTime(row.lastupdatetime);
+	row.buytime = timeFormatter.formatTime(row.buytime);
+	row.finishtime = timeFormatter.formatTime(row.finishtime);
 	
-	row.password = "";
+	//获取省-市-县
+	var regions = row.regionDetail.split("-");
+	row.province = regions[0];
+	row.city = regions[1];
+	row.county = regions[2];
 	
-	//注入对象的name与form的id对应的表单对象
+	//状态文字匹配
+	row.status = statusCode2String(row.status);
+	
+	/**
+	 * 注入对象的name与form的id对应的表单对象
+	 */
 	editGoodForm.writeEasyuiForm(row);
 	
 }
@@ -509,3 +490,48 @@ function clearInsertGoodForm(){
 	
 }
 
+/**
+ * 转化状态码为状态字符
+ */
+function statusCode2String(statusCode){
+	
+	/*状态:2为已发货，
+	 * 1为购买了且待发货，,
+	 * 0为创建且待购买,
+	 * -1为买家收货后交易正常结束，
+	 * -2为卖家取消了出售本商品，
+	 * -3是用户取消购买本商品，
+	 * -4管理员取消发布的商品,
+	 * -5为管理员删除了商品*/
+	var s = statusCode;
+	switch (statusCode) {
+		case 1:
+			s = "购买了且待发货";
+			break;
+		case 2:
+			s = "购买了且待发货";
+			break;
+		case 0:
+			s = "创建待购买";
+			break;
+		case -1:
+			s = "买家收货后交易正常结束";
+			break;
+		case -2:
+			s = "卖家取消了出售本商品";
+			break;
+		case -3:
+			s = "用户取消购买本商品";
+			break;
+		case -4:
+			s = "管理员取消发布的商品";
+			break;
+		case -5:
+			s = "管理员删除了商品";
+			break;
+		default:
+			break;
+	}
+	
+	return s;
+}

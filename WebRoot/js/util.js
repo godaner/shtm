@@ -121,6 +121,36 @@ Date.prototype.format = function (fmt) { //author: meizz
 }  
 
 /**
+ * 时间格式化
+ */
+var timeFormatter = {
+		/**
+		 * 将long型的date格式化为指定格式
+		 */
+		formatDate:function (longDate,pattern){
+			if(isEmpty(pattern)){
+				pattern = "yyyy-MM-dd"
+			}
+			if(isEmpty(longDate)){
+				return "";
+			}
+			return new Date(longDate).format(pattern);
+		},
+		/**
+		 * 将long型的time格式化为指定格式
+		 */
+		formatTime:function (longTime,pattern){
+			if(isEmpty(pattern)){
+				pattern = "yyyy-MM-dd HH:mm:ss"
+			}
+			if(isEmpty(longTime)){
+				return "";
+			}
+			return new Date(longTime).format(pattern);
+		}
+}
+
+/**
  * 表单转json
  */
 $.fn.serializeObject = function() {

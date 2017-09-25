@@ -7,7 +7,9 @@
 #editGoodTable{
 	border-spacing: 10px;
 }
-
+#editGoodTable td:nth-child(1){
+	width:30%;
+}
 
 
 
@@ -19,6 +21,9 @@
 #insertGoodTable{
 	border-spacing: 10px;
 }
+
+
+
 
 
 
