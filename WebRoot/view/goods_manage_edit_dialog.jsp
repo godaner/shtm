@@ -110,9 +110,30 @@
 				</td>
 				
 				<td>
-					<!-- 去除name,不上传status -->
-					<input id="status" class="easyui-textbox input" data-options="required:true,editable:false" style="width:100%">
+					<!-- <input id="status" class="easyui-textbox input" data-options="required:true,editable:false" style="width:100%"> -->
 					
+					<!-- 选项在js中添加 -->
+					<select id="status" name="status" class="easyui-combobox " style="width:100%;" data-options="required:true,editable:false">
+						<!-- 状态:,
+						-6:待审核状态,(不可以被显示,不可以购买)
+						0:审核通过,(可以被显示,可以购买)
+						1:购买了且待发货,
+						2:已发货,
+						-1:买家收货后交易正常结束,
+						-2:卖家取消了出售本商品,
+						-3:买家取消购买本商品,
+						-5:管理员删除本商品 -->
+			
+						<!-- <option value="">状态</option>  -->   
+					    <!-- <option value="-6">待审核状态</option>  
+					    <option value="0">审核通过</option>   --> 
+					    <!-- <option value="1">购买了且待发货</option> -->    
+					    <!-- <option value="2">已发货</option>     -->
+					    <!-- <option value="-1">买家收货后交易正常结束</option> -->    
+					    <!-- <option value="-2">卖家取消了出售本商品</option>     -->
+					    <!-- <option value="-3">买家取消购买本商品</option> -->     
+					    <!-- <option value="-5">管理员删除本商品</option> -->     
+					</select>       
 				
 				</td>
 			</tr>
@@ -176,8 +197,6 @@
 				<td colspan="2" align="center">
 					<!-- 編輯按钮 -->
 					<a id="submitEditBtn" style="color:green;" href="javascript:submitGoodEdit();" class="easyui-linkbutton" data-options="">同步</a>
-					<!-- 取消发布按钮 -->
-					<a id="cancelBtn" style="color:red;" href="javascript:cancelGood();" class="easyui-linkbutton" data-options="">取消发布</a>
 					<!-- 删除按钮 -->
 					<a id="deleteBtn" style="color:red;" href="javascript:deleteGood();" class="easyui-linkbutton" data-options="">删除</a>
 					<!-- 重置按钮 -->

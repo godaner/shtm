@@ -9,11 +9,10 @@ import org.hibernate.validator.constraints.Range;
 
 import com.shtm.manage.groups.GoodsGroups.DeleteGoodsGroups;
 import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
-import com.shtm.manage.groups.GoodsGroups.CancelGoodsGroups;
 
 public class Goods {
 	
-	@NotBlank(message="{goods.id.notblank.error}",groups={UpdateGoodGroups.class,DeleteGoodsGroups.class,CancelGoodsGroups.class})
+	@NotBlank(message="{goods.id.notblank.error}",groups={UpdateGoodGroups.class,DeleteGoodsGroups.class})
     private String id;
 
 	@NotBlank(message="{goods.title.notblank.error}",groups={UpdateGoodGroups.class})
@@ -37,7 +36,7 @@ public class Goods {
 	@NotNull(message="{goods.region.notblank.error}",groups={UpdateGoodGroups.class})
     private Double region;
 
-	@NotNull(message="{goods.status.notblank.error}",groups={CancelGoodsGroups.class})
+	@NotNull(message="{goods.status.notnull.error}",groups={UpdateGoodGroups.class})
     private Short status;
 
     private Timestamp createtime;

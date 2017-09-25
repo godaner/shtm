@@ -22,16 +22,6 @@ public interface GoodsGroups {
 	 */
 	public interface UpdateGoodGroups{};
 	
-	/**
-	 * Title:UpdateGoodStatusGroups
-	 * <p>
-	 * Description:更新goods状态所使用的验证组;
-	 * <p>
-	 * @author Kor_Zhang
-	 * @date 2017年9月25日 下午8:16:12
-	 * @version 1.0
-	 */
-	public interface CancelGoodsGroups{};
 
 	/**
 	 * Title:DeleteGoodsGroups

@@ -33,6 +33,7 @@ $.fn.clearEasyuiForm = function (){
 		
 		try{
 			input.combobox('setValue',"");
+			
 		}catch(e){
 			//c(e);
 		}
@@ -65,7 +66,8 @@ $.fn.writeEasyuiForm = function (obj){
 		}
 		
 		try{
-			input.combobox('setValue',value);
+//			input.combobox('setValue',value);
+//			input.combobox('loadData',[]);
 		}catch(e){
 			//c(e);
 		}

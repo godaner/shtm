@@ -50,6 +50,20 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 
 	@Override
 	public void updateGood(GoodsReceiver receiver) throws Exception {
+		//判斷商品狀態
+		Goods dbGood = goodsMapper.selectByPrimaryKey(receiver.getId());
+		//判断是否存在
+		eject(dbGood == null || dbGood.getStatus() == GOODS_STAUS.ADMIN_DELETE, "该商品已不存在");
+		
+		Short oldStatus = dbGood.getStatus();
+		Short newStatus = receiver.getStatus();
+		
+		if(oldStatus != newStatus){//如果更新了状态
+			//旧状态只能为"待审核"和"审核通过"
+			eject(oldStatus != GOODS_STAUS.WAIT_TO_PASS && oldStatus != GOODS_STAUS.PASS_SUCCESS ,"当前状态不允许更新");
+			
+		}
+		
 		
 		//禁止更新字段
 		receiver.setBrowsenumber(null);
@@ -58,7 +72,6 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		receiver.setCreatetime(null);
 		receiver.setFinishtime(null);
 		receiver.setOwner(null);
-		receiver.setStatus(null);
 		//設置字段
 		receiver.setLastupdatetime(timestamp());
 		
@@ -78,6 +91,11 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 
 	@Override
 	public void deleteGood(GoodsReceiver receiver) throws Exception {
+		
+		Goods dbGood = goodsMapper.selectByPrimaryKey(receiver.getId());
+		
+		eject(dbGood == null || dbGood.getStatus() == GOODS_STAUS.ADMIN_DELETE, "该用户已不存在");
+		
 		Goods g = new Goods();
 		
 		g.setId(receiver.getId());

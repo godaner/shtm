@@ -24,6 +24,8 @@ var province;
 var city;
 var county;
 var region;
+
+var goodsStatus;
 $(function(){
 	
 	initGoodsManageVar();
@@ -52,7 +54,7 @@ function initGoodsManageVar(){
 	
 	region = $("#region");
 	
-	
+	goodsStatus = editGoodForm.find("#status");
 }
 /**
  * 加载界面
@@ -260,15 +262,24 @@ function editGood(){
 	row.city = regions[1];
 	row.county = regions[2];
 	
-	//状态文字匹配
-	row.status = statusCode2String(row.status);
-	
+	/**
+	 * 转化状态
+	 */
+	var statusCode = row.status;
+	var statusStr = statusCode2String(statusCode);
+	row.status = statusStr;
 	/**
 	 * 注入对象的name与form的id对应的表单对象
 	 */
 	editGoodForm.writeEasyuiForm(row);
 	
+	/**
+	 * 设置状态选择框
+	 */
+	buildStatusCombobox({"text":statusStr,"value":statusCode});
 
+	
+	
 	/**
 	 * 设置地区选择框
 	 */
@@ -348,9 +359,43 @@ function editGood(){
 	});
 	
 	
-	
 }
 
+/**
+ * 构建状态选择下拉框
+ * @param combo
+ * @param itemObj
+ */
+function buildStatusCombobox(newItemObj){
+	
+	/*<option value="-6">待审核状态</option>  
+    <option value="0">审核通过</option>*/
+	var data = [{"text":"待审核状态","value":"-6"},
+	            {"text":"审核通过","value":"0"}]; 
+
+	/*goodsStatus.combobox("loadData", []);*/
+	var append = true;
+	for (var i = 0; i < data.length; i++) {
+		var d = data[i];
+		if(d.text == newItemObj.text){
+			append = false;
+			break;
+		}
+		
+	}
+	if(append){
+		data.push(newItemObj);
+	}
+	goodsStatus.combobox({ 
+		valueField: 'value',
+		textField: 'text',
+		data:data
+	});
+	/*
+	goodsStatus.combobox("loadData", data);*/
+	goodsStatus.combobox("select",newItemObj.value);
+	
+}
 /**
  * 轉化,加載combobox數據
  */
@@ -445,36 +490,7 @@ function resetGood(){
 	
 	showMsg("重置成功");
 }
-/**
- * 取消商品的发布状态
- */
-function cancelGood(){
-	//确认删除?
-	confirm("确认取消商品 "+currtEditDatagridRow.title+" 发布状态?",function(r){
-		if(r){
-			//进度条
-			
-			
-			var id = currtEditDatagridRow.id;
-			
-			
-			var url = "/goods/cancelGood.action?id="+id;
-			ajax.send(url, function(data){
-				//显示信息
-				showMsg(data.msg);
-				
-				//关闭信息编辑
-				editGoodDialog.dialog('close');
-				
-				//刷新表格
-				goods_datagrid.datagrid("reload");
-				
-			}, function(){
-				
-			});
-		}
-	});
-}
+
 /**
  * 删除商品
  */
@@ -609,40 +625,31 @@ function clearInsertGoodForm(){
  */
 function statusCode2String(statusCode){
 	
-	/*状态:2为已发货，
-	 * 1为购买了且待发货，,
-	 * 0为创建且待购买,
-	 * -1为买家收货后交易正常结束，
-	 * -2为卖家取消了出售本商品，
-	 * -3是用户取消购买本商品，
-	 * -4商品取消发布的商品,
-	 * -5为商品删除了商品*/
+	/*状态:,
+	-6:待审核状态,(不可以被显示,不可以购买)
+	0:审核通过,(可以被显示,可以购买)
+	1:购买了且待发货,
+	2:已发货,
+	-1:买家收货后交易正常结束,
+	-5:管理员删除本商品*/
 	var s = statusCode;
 	switch (statusCode) {
+		case -6:
+			s = "待审核状态";
+			break;
+		case 0:
+			s = "审核通过";
+			break;
 		case 1:
 			s = "购买了且待发货";
 			break;
 		case 2:
-			s = "购买了且待发货";
-			break;
-		case 0:
-			s = "创建待购买";
+			s = "已发货";
 			break;
 		case -1:
 			s = "买家收货后交易正常结束";
 			break;
-		case -2:
-			s = "卖家取消了出售本商品";
-			break;
-		case -3:
-			s = "用户取消购买本商品";
-			break;
-		case -4:
-			s = "管理员取消发布的商品";
-			break;
-		case -5:
-			s = "管理员删除了商品";
-			break;
+			
 		default:
 			break;
 	}
