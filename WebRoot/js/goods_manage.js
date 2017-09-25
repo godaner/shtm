@@ -23,6 +23,7 @@ var currtEditDatagridRow;
 var province;
 var city;
 var county;
+var region;
 $(function(){
 	
 	initGoodsManageVar();
@@ -49,7 +50,7 @@ function initGoodsManageVar(){
 	city = $("#city");
 	county = $("#county");
 	
-	
+	region = $("#region");
 	
 	
 }
@@ -290,101 +291,115 @@ function editGood(){
 
 	var pid = "1";
 	var url = '/region/selectRegionByPid.action';
-	
-	ajax.sendSync(url+"?pid="+pid, function(data){
+
+	//設置province
+	ajax.send(url+"?pid="+pid, function(data){
 		
-		setRegionsToCombox(province,data);
-		
-		/*//加载市
 		province.combobox({ 
 			valueField: 'value',
 			textField: 'text',
-		    onSelect:function(record){
-		    	c(record);
-		    },
-		    data:data
-		}); */
+		    onSelect:function(r){
+		    	//onSelect
+				pid = r.value;
+				ajax.send(url+"?pid="+pid, function(data){
+					
+					loadComboboxData(city,data);
+					
+					city.combobox('select', city.combobox("getData")[0].value);  
+				});
+		    }
+		});
 		
-		province.combobox("select",row.province);
+		loadComboboxData(province,data);
+		
+		var provinceId = findValueByText(province,row.province);
+		province.combobox("setValue",provinceId);
+
 		
 	});
 	
+	//設置city
 	pid = province.combobox("getValue");
-	c(pid);
-	/*
-	ajax.sendSync(url+"?pid="+pid, function(data){
+	ajax.send(url+"?pid="+pid, function(data){
 			
-		setRegionsToCombox(city,data);
-		
 		city.combobox({ 
 			valueField: 'value',
 			textField: 'text',
-		    onSelect:function(record){
-		    	c(record);
+		    onSelect:function(r){
+		    	//onSelect
+				pid = r.value;
+				ajax.send(url+"?pid="+pid, function(data){
+					
+					loadComboboxData(county,data);
+					
+					county.combobox('select', county.combobox("getData")[0].value);  
+				});
 		    }
-		});  
+		});
 		
 		
-	});*/
-	/*ajax.sendSync(url+"?pid=1", function(data){
 		
-		setRegionsToCombox(province,data);
+		loadComboboxData(city,data);
 		
-		province.combobox({ 
-		    onSelect:function(record){
-		    	ajax.sendSync(url+"?pid="+record.text, function(data){
-		    		setRegionsToCombox(city,data);
-		    	});
+		var cityId = findValueByText(city,row.city);
+		city.combobox("setValue",cityId);
+		
+	});
+	//設置county
+	pid = city.combobox("getValue");
+	ajax.send(url+"?pid="+pid, function(data){
+		
+		county.combobox({ 
+			valueField: 'value',
+			textField: 'text',
+		    onSelect:function(r){
+		    	region.val(r.value);
 		    }
-		});  
+		});	
 		
 		
-	});*/
-	
-	
-}
-/*
-function updateCity(pid){
-	ajax.sendSync(url+"?pid=1", function(data){
+		loadComboboxData(county,data);
 		
-		setRegionsToCombox(province,data);
+		var countyId = findValueByText(county,row.county);
+		county.combobox("setValue",countyId);
 		
-		province.combobox({ 
-		    onSelect:function(record){
-		    	ajax.sendSync(url+"?pid="+record.text, function(data){
-		    		setRegionsToCombox(city,data);
-		    	});
-		    }
-		});  
+		
 		
 		
 	});
-}*/
+	
+	
+}
 
 /**
- * 设置参数到指定的combox
+ * 轉化加載combobox數據
  */
-function setRegionsToCombox(combox,data){
+function loadComboboxData(combox,data,onSelect){
 	var regions = data.childs;
 	var data = [];
 	for ( var i in regions) {
 		var region = regions[i];
 		data.push({"text":region.name,"value":region.id});
 	}
-	combox.combobox({ 
-		valueField: 'value',
-		textField: 'text',
-	    data:data,
-	    onChange:function(newValue,oldValue){
-	    	c(newValue);
-	    	c(oldValue);
-	    },
-	    onSelect:function(r){
-	    	c(r);
-	    }
-	}); 
+	combox.combobox("loadData", data);
 }
-
+/**
+ * 比較text獲取value
+ * @param combobox
+ * @param text
+ * @returns
+ */
+function findValueByText(combo,text){
+	var data = combo.combobox("getData");
+	for ( var i in data) {
+		var t = data[i].text;
+		var v = data[i].value;
+		if(t == text){
+			return v;
+		}
+	}
+	return "";
+}
 /**
  * 提交管理员修改后的信息
  */
@@ -392,6 +407,7 @@ function submitGoodEdit(){
 
 	//提示信息
 	pro.show("正在修改");
+	
 	
 	editGoodForm.form('submit', {    
 	    url:getWebProjectName()+"/goods/updateGood.action",    
@@ -515,10 +531,10 @@ function insertGood(){
 	
 }
 
-
-/**
+/*
+*//**
  * 新增管理员
- */
+ *//*
 function submitNewGood(){
 
 	
@@ -568,7 +584,7 @@ function submitNewGood(){
 	
 	
 
-}
+}*/
 
 /**
  * 清空旧的文本记录

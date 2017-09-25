@@ -46,4 +46,22 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		
 	}
 
+	@Override
+	public void updateGood(GoodsReceiver receiver) throws Exception {
+		
+		//禁止更新字段
+		receiver.setBrowsenumber(null);
+		receiver.setBuyer(null);
+		receiver.setBuytime(null);
+		receiver.setCreatetime(null);
+		receiver.setFinishtime(null);
+		receiver.setOwner(null);
+		receiver.setStatus(null);
+		//設置字段
+		receiver.setLastupdatetime(timestamp());
+		
+		goodsMapper.updateByPrimaryKeySelective(receiver);
+		
+	}
+
 }

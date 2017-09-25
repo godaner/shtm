@@ -19,7 +19,7 @@
 					<label>主键</label> 
 				</td>
 				<td>
-					<input id="id" name="id" class="easyui-textbox input" data-options="prompt:'请选择图片',editable:false" style="width:100%"> 
+					<input id="id" name="id" class="easyui-textbox input" data-options="required:true,prompt:'请选择图片',editable:false" style="width:100%"> 
 				</td>
 			</tr>
 			<tr>
@@ -27,7 +27,7 @@
 					<label>标题</label> 
 				</td>
 				<td>
-					<input id="title" name="title" class="easyui-textbox input" data-options="prompt:'标题'" style="width:100%"> 
+					<input id="title" name="title" class="easyui-textbox input" data-options="required:true,prompt:'标题'" style="width:100%"> 
 				</td>
 			</tr>
 			
@@ -37,7 +37,7 @@
 					<label>描述</label> 
 				</td>
 				<td>
-					<input id="description" name="description" class="easyui-textbox input" data-options="prompt:'描述',multiline:true" style="width:100%;height:100px;"> 
+					<input id="description" name="description" class="easyui-textbox input" data-options="required:true,prompt:'描述',multiline:true" style="width:100%;height:100px;"> 
 				</td>
 			</tr>
 			
@@ -86,23 +86,23 @@
 				
 				<td>
 				
-					<select id="province" name="province" class="easyui-combobox " style="width:100%;" data-options="editable:false">   
+					<select id="province" name="province" class="easyui-combobox " style="width:100%;" data-options="required:true,editable:false">   
 					</select>
 					<br/>
 					<br/>
 					
-					<select id="city" name="city" class="easyui-combobox " style="width:100%;" data-options="editable:false">   
+					<select id="city" name="city" class="easyui-combobox " style="width:100%;" data-options="required:true,editable:false">   
 					     
 					    
 					</select>
 					<br/>
 					<br/>
-					<select id="county" name="county" class="easyui-combobox " style="width:100%;" data-options="editable:false">   
+					<select id="county" name="county" class="easyui-combobox " style="width:100%;" data-options="required:true,editable:false">   
 					     
 					    
 					</select>
+					<input type="hidden" id="region" name="region" value="">
 					
-				
 				</td>
 			</tr>
 			<tr>
@@ -111,7 +111,7 @@
 				</td>
 				
 				<td>
-					<input id="status" name="status" class="easyui-textbox input" data-options="required:true,editable:false" style="width:100%">
+					<input id="status" class="easyui-textbox input" data-options="required:true,editable:false" style="width:100%">
 				
 				</td>
 			</tr>

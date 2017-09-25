@@ -28,4 +28,17 @@ public interface GoodsServiceI {
 	 */
 	GoodsReplier selectGoodsDatagrid(GoodsReceiver receiver) throws Exception;
 
+	/**
+	 * Title:updateGood
+	 * <p>
+	 * Description:更新商品;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月25日 下午6:55:15
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	void updateGood(GoodsReceiver receiver) throws Exception;
+
 }
