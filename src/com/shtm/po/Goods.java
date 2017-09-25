@@ -2,8 +2,6 @@ package com.shtm.po;
 
 import java.sql.Timestamp;
 
-import javax.validation.constraints.Min;
-
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
@@ -28,6 +26,7 @@ public class Goods {
 	@Range(min=0,max = (long) Double.MAX_VALUE,message="{goods.price.range.error}",groups={UpdateGoodsGroups.class})
     private Double price;
 
+	@Range(min=0,max = 9,message="{goods.condition.range.error}",groups={UpdateGoodsGroups.class})
 	@NotBlank(message="{goods.condition.notblank.error}",groups={UpdateGoodsGroups.class})
     private Short condition;
 

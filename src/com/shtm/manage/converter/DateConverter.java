@@ -10,22 +10,17 @@ public class DateConverter implements Converter<String, Date> {
 
 	@Override
 	public Date convert(String source) {
-		Date d = new Date();
+		
+		if(source == null || source.isEmpty()){
+			return new Date();
+		}
+		
+		Date d = null;
 		try {
-			d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").parse(source);
+			d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(source);
 		} catch (ParseException e) {
 			e.printStackTrace();
-			try {
-				//2017-09-15 10:18:09
-				d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(source);
-			} catch (ParseException e1) {
-				e.printStackTrace();
-				try {
-					d = new SimpleDateFormat("yyyy-MM-dd").parse(source);
-				} catch (ParseException e2) {
-					e.printStackTrace();
-				}
-			}
+			d = new Date();
 		}
 		return d;
 	}

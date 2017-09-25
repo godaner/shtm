@@ -293,15 +293,47 @@ function editGood(){
 	var url = '/region/selectRegionByPid.action';
 
 	//設置province
-	ajax.send(url+"?pid="+pid, function(data){
+	/**
+	 * 加载省
+	 */
+	ajax.sendSync(url+"?pid="+pid, function(data){
 		
 		province.combobox({ 
 			valueField: 'value',
 			textField: 'text',
 		    onSelect:function(r){
 		    	//onSelect
-				pid = r.value;
-				ajax.send(url+"?pid="+pid, function(data){
+		    	/**
+		    	 * 当省变化时,加载市
+		    	 */
+		    	var pid = r.value;
+				ajax.sendSync(url+"?pid="+pid, function(data){
+					city.combobox({ 
+						valueField: 'value',
+						textField: 'text',
+					    onSelect:function(r){
+					    	//onSelect
+					    	/**
+					    	 * 当市变化时,加载县
+					    	 */
+							var pid = r.value;
+							ajax.sendSync(url+"?pid="+pid, function(data){
+								county.combobox({ 
+									valueField: 'value',
+									textField: 'text',
+								    onSelect:function(r){
+								    	region.val(r.value);
+								    }
+								});	
+								
+								
+								loadComboboxData(county,data);
+								
+								county.combobox('select', county.combobox("getData")[0].value);  
+							});
+					    }
+					});
+					
 					
 					loadComboboxData(city,data);
 					
@@ -313,66 +345,19 @@ function editGood(){
 		loadComboboxData(province,data);
 		
 		var provinceId = findValueByText(province,row.province);
+
+		//select
 		province.combobox("setValue",provinceId);
 
 		
 	});
 	
-	//設置city
-	pid = province.combobox("getValue");
-	ajax.send(url+"?pid="+pid, function(data){
-			
-		city.combobox({ 
-			valueField: 'value',
-			textField: 'text',
-		    onSelect:function(r){
-		    	//onSelect
-				pid = r.value;
-				ajax.send(url+"?pid="+pid, function(data){
-					
-					loadComboboxData(county,data);
-					
-					county.combobox('select', county.combobox("getData")[0].value);  
-				});
-		    }
-		});
-		
-		
-		
-		loadComboboxData(city,data);
-		
-		var cityId = findValueByText(city,row.city);
-		city.combobox("setValue",cityId);
-		
-	});
-	//設置county
-	pid = city.combobox("getValue");
-	ajax.send(url+"?pid="+pid, function(data){
-		
-		county.combobox({ 
-			valueField: 'value',
-			textField: 'text',
-		    onSelect:function(r){
-		    	region.val(r.value);
-		    }
-		});	
-		
-		
-		loadComboboxData(county,data);
-		
-		var countyId = findValueByText(county,row.county);
-		county.combobox("setValue",countyId);
-		
-		
-		
-		
-	});
 	
 	
 }
 
 /**
- * 轉化加載combobox數據
+ * 轉化,加載combobox數據
  */
 function loadComboboxData(combox,data,onSelect){
 	var regions = data.childs;

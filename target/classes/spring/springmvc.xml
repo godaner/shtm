@@ -117,6 +117,7 @@
 		<property name="converters">
 			<list>
 				<bean class="com.shtm.manage.converter.DateConverter"></bean>
+				<bean class="com.shtm.manage.converter.TimeConverter"></bean>
 			</list>
 		</property>
 	

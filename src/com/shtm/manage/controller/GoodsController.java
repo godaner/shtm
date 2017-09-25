@@ -2,10 +2,13 @@ package com.shtm.manage.controller;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
+import com.shtm.manage.groups.GoodsGroups.UpdateGoodsGroups;
 import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 import com.shtm.manage.service.GoodsServiceI;
@@ -75,12 +78,15 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @throws Exception
 	 */
 	@RequestMapping("/updateGood")
-	public @ResponseBody GoodsReplier updateGood(GoodsReceiver receiver)
+	public @ResponseBody GoodsReplier updateGood(@Validated(value={UpdateGoodsGroups.class}) GoodsReceiver receiver,
+			BindingResult result)
 			throws Exception {
 		GoodsReplier replier = new GoodsReplier();
 
 		try {
-
+			
+			getError(result);
+			
 			service.updateGood(receiver);
 
 			replier.setResult(RESULT.TRUE);
