@@ -1,85 +1,83 @@
 package com.shtm.po;
 
-import java.math.BigDecimal;
-
 public class Region {
-    private BigDecimal regionId;
+    private Integer id;
 
-    private String regionCode;
+    private String code;
 
-    private String regionName;
+    private String name;
 
-    private BigDecimal parentId;
+    private Integer pid;
 
-    private BigDecimal regionLevel;
+    private Integer leve;
 
-    private BigDecimal regionOrder;
+    private Integer orde;
 
-    private String regionNameEn;
+    private String enname;
 
-    private String regionShortnameEn;
+    private String enshortname;
 
-    public BigDecimal getRegionId() {
-        return regionId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setRegionId(BigDecimal regionId) {
-        this.regionId = regionId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getRegionCode() {
-        return regionCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setRegionCode(String regionCode) {
-        this.regionCode = regionCode == null ? null : regionCode.trim();
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
     }
 
-    public String getRegionName() {
-        return regionName;
+    public String getName() {
+        return name;
     }
 
-    public void setRegionName(String regionName) {
-        this.regionName = regionName == null ? null : regionName.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
-    public BigDecimal getParentId() {
-        return parentId;
+    public Integer getPid() {
+        return pid;
     }
 
-    public void setParentId(BigDecimal parentId) {
-        this.parentId = parentId;
+    public void setPid(Integer pid) {
+        this.pid = pid;
     }
 
-    public BigDecimal getRegionLevel() {
-        return regionLevel;
+    public Integer getLeve() {
+        return leve;
     }
 
-    public void setRegionLevel(BigDecimal regionLevel) {
-        this.regionLevel = regionLevel;
+    public void setLeve(Integer leve) {
+        this.leve = leve;
     }
 
-    public BigDecimal getRegionOrder() {
-        return regionOrder;
+    public Integer getOrde() {
+        return orde;
     }
 
-    public void setRegionOrder(BigDecimal regionOrder) {
-        this.regionOrder = regionOrder;
+    public void setOrde(Integer orde) {
+        this.orde = orde;
     }
 
-    public String getRegionNameEn() {
-        return regionNameEn;
+    public String getEnname() {
+        return enname;
     }
 
-    public void setRegionNameEn(String regionNameEn) {
-        this.regionNameEn = regionNameEn == null ? null : regionNameEn.trim();
+    public void setEnname(String enname) {
+        this.enname = enname == null ? null : enname.trim();
     }
 
-    public String getRegionShortnameEn() {
-        return regionShortnameEn;
+    public String getEnshortname() {
+        return enshortname;
     }
 
-    public void setRegionShortnameEn(String regionShortnameEn) {
-        this.regionShortnameEn = regionShortnameEn == null ? null : regionShortnameEn.trim();
+    public void setEnshortname(String enshortname) {
+        this.enshortname = enshortname == null ? null : enshortname.trim();
     }
 }
