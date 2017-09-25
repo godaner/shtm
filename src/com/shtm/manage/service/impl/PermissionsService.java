@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.shtm.manage.mapper.CustomPermissionsMapper;
 import com.shtm.manage.po.PermissionsReplier;
 import com.shtm.manage.service.PermissionsServiceI;
+import com.shtm.service.impl.BaseService;
 
 /**
  * Title:PermissionsService
@@ -19,7 +20,7 @@ import com.shtm.manage.service.PermissionsServiceI;
  * @version 1.0
  */
 @Service
-public class PermissionsService implements PermissionsServiceI{
+public class PermissionsService extends BaseService implements PermissionsServiceI{
 	@Autowired
 	private CustomPermissionsMapper customPermissionsMapper;
 	

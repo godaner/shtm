@@ -17,18 +17,12 @@ var editGoodForm;
 var insertGoodForm;
 //新增管理员的弹窗
 var insertGoodDialog;
-//sex
-var sexInput;
-//status
-var statusInput;
-//birthday
-var birthday;
-//datebox的buttons
-var buttons;
 //保存当前编辑的管理员的信息
 var currtEditDatagridRow;
-//请求的管理员头像的尺寸
-var headimgSize = 60;
+//地址
+var province;
+var city;
+var county;
 $(function(){
 	
 	initGoodsManageVar();
@@ -50,30 +44,13 @@ function initGoodsManageVar(){
 	insertGoodDialog = $("#insertGoodDialog");
 	insertGoodForm = $("#insertGoodForm");
 	
-	//sex
-	sexInput = $("#sex");
-	//status
-	statusInput = $("#status");
 	
-	birthday = $("#birthday");
+	province = $("#province");
+	city = $("#city");
+	county = $("#county");
 	
-	//设置按钮
-	birthday.datebox({
-	});
 	
-	//设置datebox清空按钮
-	var buttons = $.extend([], $.fn.datebox.defaults.buttons);
-	buttons.splice(1, 0, {
-		text: '清空',
-		handler: function(target){
-			birthday.datebox('setText','');
-		}
-	});
-	//设置datebox按钮
-	birthday.datebox({
-		buttons: buttons
-	});
-
+	
 	
 }
 /**
@@ -258,6 +235,7 @@ function editGood(){
 	//保存当前操作的管理员的行
 	currtEditDatagridRow = row;
 	
+
 	/**
 	 * 清空旧的文本记录
 	 */
@@ -294,6 +272,117 @@ function editGood(){
 	 */
 	editGoodForm.writeEasyuiForm(row);
 	
+
+	/**
+	 * 设置地区选择框
+	 */
+	/*data: [{
+		label: 'java',
+		value: 'Java'
+	},{
+		label: 'perl',
+		value: 'Perl'
+	},{
+		label: 'ruby',
+		value: 'Ruby'
+	}]*/
+	
+
+	var pid = "1";
+	var url = '/region/selectRegionByPid.action';
+	
+	ajax.sendSync(url+"?pid="+pid, function(data){
+		
+		setRegionsToCombox(province,data);
+		
+		/*//加载市
+		province.combobox({ 
+			valueField: 'value',
+			textField: 'text',
+		    onSelect:function(record){
+		    	c(record);
+		    },
+		    data:data
+		}); */
+		
+		province.combobox("select",row.province);
+		
+	});
+	
+	pid = province.combobox("getValue");
+	c(pid);
+	/*
+	ajax.sendSync(url+"?pid="+pid, function(data){
+			
+		setRegionsToCombox(city,data);
+		
+		city.combobox({ 
+			valueField: 'value',
+			textField: 'text',
+		    onSelect:function(record){
+		    	c(record);
+		    }
+		});  
+		
+		
+	});*/
+	/*ajax.sendSync(url+"?pid=1", function(data){
+		
+		setRegionsToCombox(province,data);
+		
+		province.combobox({ 
+		    onSelect:function(record){
+		    	ajax.sendSync(url+"?pid="+record.text, function(data){
+		    		setRegionsToCombox(city,data);
+		    	});
+		    }
+		});  
+		
+		
+	});*/
+	
+	
+}
+/*
+function updateCity(pid){
+	ajax.sendSync(url+"?pid=1", function(data){
+		
+		setRegionsToCombox(province,data);
+		
+		province.combobox({ 
+		    onSelect:function(record){
+		    	ajax.sendSync(url+"?pid="+record.text, function(data){
+		    		setRegionsToCombox(city,data);
+		    	});
+		    }
+		});  
+		
+		
+	});
+}*/
+
+/**
+ * 设置参数到指定的combox
+ */
+function setRegionsToCombox(combox,data){
+	var regions = data.childs;
+	var data = [];
+	for ( var i in regions) {
+		var region = regions[i];
+		data.push({"text":region.name,"value":region.id});
+	}
+	combox.combobox({ 
+		valueField: 'value',
+		textField: 'text',
+	    data:data,
+	    onChange:function(newValue,oldValue){
+	    	c(newValue);
+	    	c(oldValue);
+	    },
+	    onSelect:function(r){
+	    	c(r);
+	    }
+	}); 
 }
 
 /**

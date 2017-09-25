@@ -2,19 +2,36 @@ package com.shtm.po;
 
 import java.sql.Timestamp;
 
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
+
+import com.shtm.manage.groups.GoodsGroups.UpdateGoodsGroups;
+
 public class Goods {
+	
+	@NotBlank(message="{goods.id.notblank.error}",groups={UpdateGoodsGroups.class})
     private String id;
 
+	@NotBlank(message="{goods.title.notblank.error}",groups={UpdateGoodsGroups.class})
     private String title;
-
+	
+	@NotBlank(message="{goods.description.notblank.error}",groups={UpdateGoodsGroups.class})
     private String description;
 
+	@NotBlank(message="{goods.sprice.notblank.error}",groups={UpdateGoodsGroups.class})
+	@Range(min=0,max = (long) Double.MAX_VALUE,message="{goods.sprice.range.error}",groups={UpdateGoodsGroups.class})
     private Double sprice;
 
+	@NotBlank(message="{goods.price.notblank.error}",groups={UpdateGoodsGroups.class})
+	@Range(min=0,max = (long) Double.MAX_VALUE,message="{goods.price.range.error}",groups={UpdateGoodsGroups.class})
     private Double price;
 
+	@NotBlank(message="{goods.condition.notblank.error}",groups={UpdateGoodsGroups.class})
     private Short condition;
 
+	@NotBlank(message="{goods.region.notblank.error}",groups={UpdateGoodsGroups.class})
     private Double region;
 
     private Short status;

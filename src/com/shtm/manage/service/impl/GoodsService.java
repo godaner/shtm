@@ -8,6 +8,7 @@ import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 import com.shtm.manage.service.GoodsServiceI;
 import com.shtm.mapper.GoodsMapper;
+import com.shtm.service.impl.BaseService;
 
 /**
  * Title:GoodsService
@@ -19,7 +20,7 @@ import com.shtm.mapper.GoodsMapper;
  * @version 1.0
  */
 @Service
-public class GoodsService implements GoodsServiceI {
+public class GoodsService extends BaseService implements GoodsServiceI {
 
 	@Autowired
 	private GoodsMapper goodsMapper;

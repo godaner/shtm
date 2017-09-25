@@ -1,12 +1,17 @@
 package com.shtm.po;
 
+import javax.validation.constraints.NotNull;
+
+import com.shtm.manage.groups.RegionGroups.SelectRegionByPidGroups;
+
 public class Region {
     private Integer id;
 
     private String code;
 
     private String name;
-
+    
+    @NotNull(message="{region.pid.notnull.error}",groups={SelectRegionByPidGroups.class})
     private Integer pid;
 
     private Integer leve;

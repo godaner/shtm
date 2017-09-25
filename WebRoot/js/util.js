@@ -271,7 +271,15 @@ var ajax = {
 
 		this.sendJson(url, {}, success,error);
 	},
-
+	/**
+	 * 发送一个同步的请求
+	 * @param url
+	 * @param success
+	 * @param error
+	 */
+	sendSync:function(url, success,error){
+		this.s(url, undefined,success,error,false);
+	},
 	/**
 	 * 发送一个携带参数的ajax异步请求
 	 * 
@@ -287,19 +295,33 @@ var ajax = {
 	 *            连接服务器失败回调方法
 	 */
 	sendJson : function(url, jsObjectOrJsonStr,success,error) {
+		this.s(url, jsObjectOrJsonStr,success,error,true);
+	},
+	/**
+	 * 发送ajax请求,可能是异步,可能是同步
+	 * @param url
+	 * @param jsObjectOrJsonStr
+	 * @param success
+	 * @param error
+	 * @param async
+	 */
+	s : function(url, jsObjectOrJsonStr,success,error,async){
 		//显示进度条
 		pro.show("正在操作,请稍等");
 		
-		//假设jsObjectOrJsonStr是json字符
-		var jsonStr = jsObjectOrJsonStr;
-		//如果jsObjectOrJsonStr是js对象,转化为json字符串
-		if(typeof jsObjectOrJsonStr == "object"){
-			jsonStr = JSON.stringify(jsObjectOrJsonStr);
-		}
 
+		//假设jsObjectOrJsonStr是json字符
+		var jsonStr = "";
+		if(!isEmpty(jsObjectOrJsonStr)){
+			//如果jsObjectOrJsonStr是js对象,转化为json字符串
+			if(typeof jsObjectOrJsonStr == "object"){
+				jsonStr = JSON.stringify(jsObjectOrJsonStr);
+			}
+		}
 		// 发送登陆请求
 		$.ajax({
 			type : "POST",
+			async:async,
 			url : getWebProjectName() + url,
 			/*重点*/
 			contentType : "application/json;charset=utf-8",

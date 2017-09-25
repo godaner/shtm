@@ -86,18 +86,18 @@
 				
 				<td>
 				
-					<select id="province" name="province" class="easyui-combobox input" style="width:100%;" data-options="editable:false">   
+					<select id="province" name="province" class="easyui-combobox " style="width:100%;" data-options="editable:false">   
 					</select>
 					<br/>
 					<br/>
 					
-					<select id="city" name="city" class="easyui-combobox input" style="width:100%;" data-options="editable:false">   
+					<select id="city" name="city" class="easyui-combobox " style="width:100%;" data-options="editable:false">   
 					     
 					    
 					</select>
 					<br/>
 					<br/>
-					<select id="county" name="county" class="easyui-combobox input" style="width:100%;" data-options="editable:false">   
+					<select id="county" name="county" class="easyui-combobox " style="width:100%;" data-options="editable:false">   
 					     
 					    
 					</select>
