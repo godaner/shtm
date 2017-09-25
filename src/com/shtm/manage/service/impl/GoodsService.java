@@ -8,7 +8,9 @@ import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 import com.shtm.manage.service.GoodsServiceI;
 import com.shtm.mapper.GoodsMapper;
+import com.shtm.po.Goods;
 import com.shtm.service.impl.BaseService;
+import com.shtm.util.Static.GOODS_STAUS;
 
 /**
  * Title:GoodsService
@@ -61,6 +63,28 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		receiver.setLastupdatetime(timestamp());
 		
 		goodsMapper.updateByPrimaryKeySelective(receiver);
+		
+	}
+
+	@Override
+	public void cancelGood(GoodsReceiver receiver) throws Exception {
+		Goods dbGood = goodsMapper.selectByPrimaryKey(receiver.getId());
+		
+		
+		
+		
+		
+	}
+
+	@Override
+	public void deleteGood(GoodsReceiver receiver) throws Exception {
+		Goods g = new Goods();
+		
+		g.setId(receiver.getId());
+		
+		g.setStatus(GOODS_STAUS.ADMIN_DELETE);
+		
+		goodsMapper.updateByPrimaryKeySelective(g);
 		
 	}
 

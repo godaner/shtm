@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
-import com.shtm.manage.groups.GoodsGroups.UpdateGoodsGroups;
+import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
+import com.shtm.manage.groups.GoodsGroups.CancelGoodsGroups;
 import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 import com.shtm.manage.service.GoodsServiceI;
@@ -64,11 +65,48 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 		return replier;
 
 	}
-
+	
+	
 	/**
 	 * Title:
 	 * <p>
-	 * Description:更新商品
+	 * Description:取消商品发布状态
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月25日 下午6:54:30
+	 * @version 1.0
+	 * @param receiver
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/cancelGood")
+	public @ResponseBody GoodsReplier cancelGood(@Validated(value={CancelGoodsGroups.class}) GoodsReceiver receiver,
+			BindingResult result)
+			throws Exception {
+		GoodsReplier replier = new GoodsReplier();
+
+		try {
+			
+			getError(result);
+			
+			service.cancelGood(receiver);
+
+			replier.setResult(RESULT.TRUE);
+
+			replier.setMsg("更新成功");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+
+		return replier;
+	}
+	/**
+	 * Title:
+	 * <p>
+	 * Description:更新商品基本信息
 	 * <p>
 	 * @author Kor_Zhang
 	 * @date 2017年9月25日 下午6:54:30
@@ -78,7 +116,7 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @throws Exception
 	 */
 	@RequestMapping("/updateGood")
-	public @ResponseBody GoodsReplier updateGood(@Validated(value={UpdateGoodsGroups.class}) GoodsReceiver receiver,
+	public @ResponseBody GoodsReplier updateGood(@Validated(value={UpdateGoodGroups.class}) GoodsReceiver receiver,
 			BindingResult result)
 			throws Exception {
 		GoodsReplier replier = new GoodsReplier();
@@ -92,6 +130,44 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 			replier.setResult(RESULT.TRUE);
 
 			replier.setMsg("更新成功");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+
+		return replier;
+	}
+	/**
+	 * 
+	 * Title:deleteGood
+	 * <p>
+	 * Description:删除指定id的商品
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月25日 下午8:19:19
+	 * @version 1.0
+	 * @param receiver
+	 * @param result
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/deleteGood")
+	public @ResponseBody GoodsReplier deleteGood(@Validated(value={UpdateGoodGroups.class}) GoodsReceiver receiver,
+			BindingResult result)
+			throws Exception {
+		GoodsReplier replier = new GoodsReplier();
+
+		try {
+			
+			getError(result);
+			
+			service.deleteGood(receiver);
+
+			replier.setResult(RESULT.TRUE);
+
+			replier.setMsg("删除成功");
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -14,13 +14,24 @@ public interface GoodsGroups {
 	/**
 	 * Title:UpdateGoodsGroups
 	 * <p>
-	 * Description:更新goods所使用的验证组;
+	 * Description:更新goods基本信息所使用的验证组;
 	 * <p>
 	 * @author Kor_Zhang
 	 * @date 2017年9月23日 下午2:17:12
 	 * @version 1.0
 	 */
-	public interface UpdateGoodsGroups{};
+	public interface UpdateGoodGroups{};
+	
+	/**
+	 * Title:UpdateGoodStatusGroups
+	 * <p>
+	 * Description:更新goods状态所使用的验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月25日 下午8:16:12
+	 * @version 1.0
+	 */
+	public interface CancelGoodsGroups{};
 
 	/**
 	 * Title:DeleteGoodsGroups

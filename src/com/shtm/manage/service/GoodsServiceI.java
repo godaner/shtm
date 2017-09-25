@@ -31,7 +31,7 @@ public interface GoodsServiceI {
 	/**
 	 * Title:updateGood
 	 * <p>
-	 * Description:更新商品;
+	 * Description:更新商品基本信息;
 	 * <p>
 	 * @author Kor_Zhang
 	 * @date 2017年9月25日 下午6:55:15
@@ -40,5 +40,31 @@ public interface GoodsServiceI {
 	 * @throws Exception
 	 */
 	void updateGood(GoodsReceiver receiver) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:取消商品发布状态
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月25日 下午8:18:26
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	void cancelGood(GoodsReceiver receiver)throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:删除指定id的商品
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月25日 下午8:20:09
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	void deleteGood(GoodsReceiver receiver) throws Exception;
 
 }

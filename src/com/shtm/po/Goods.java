@@ -2,37 +2,42 @@ package com.shtm.po;
 
 import java.sql.Timestamp;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
-import com.shtm.manage.groups.GoodsGroups.UpdateGoodsGroups;
+import com.shtm.manage.groups.GoodsGroups.DeleteGoodsGroups;
+import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
+import com.shtm.manage.groups.GoodsGroups.CancelGoodsGroups;
 
 public class Goods {
 	
-	@NotBlank(message="{goods.id.notblank.error}",groups={UpdateGoodsGroups.class})
+	@NotBlank(message="{goods.id.notblank.error}",groups={UpdateGoodGroups.class,DeleteGoodsGroups.class,CancelGoodsGroups.class})
     private String id;
 
-	@NotBlank(message="{goods.title.notblank.error}",groups={UpdateGoodsGroups.class})
+	@NotBlank(message="{goods.title.notblank.error}",groups={UpdateGoodGroups.class})
     private String title;
 	
-	@NotBlank(message="{goods.description.notblank.error}",groups={UpdateGoodsGroups.class})
+	@NotBlank(message="{goods.description.notblank.error}",groups={UpdateGoodGroups.class})
     private String description;
 
-	@NotBlank(message="{goods.sprice.notblank.error}",groups={UpdateGoodsGroups.class})
-	@Range(min=0,max = (long) Double.MAX_VALUE,message="{goods.sprice.range.error}",groups={UpdateGoodsGroups.class})
+	@NotNull(message="{goods.sprice.notnull.error}",groups={UpdateGoodGroups.class})
+	@Range(min=0,max = (long) Double.MAX_VALUE,message="{goods.sprice.range.error}",groups={UpdateGoodGroups.class})
     private Double sprice;
 
-	@NotBlank(message="{goods.price.notblank.error}",groups={UpdateGoodsGroups.class})
-	@Range(min=0,max = (long) Double.MAX_VALUE,message="{goods.price.range.error}",groups={UpdateGoodsGroups.class})
+	@NotNull(message="{goods.price.notnull.error}",groups={UpdateGoodGroups.class})
+	@Range(min=0,max = (long) Double.MAX_VALUE,message="{goods.price.range.error}",groups={UpdateGoodGroups.class})
     private Double price;
 
-	@Range(min=0,max = 9,message="{goods.condition.range.error}",groups={UpdateGoodsGroups.class})
-	@NotBlank(message="{goods.condition.notblank.error}",groups={UpdateGoodsGroups.class})
+	@NotNull(message="{goods.condition.notblank.error}",groups={UpdateGoodGroups.class})
+	@Range(min=0,max = 9,message="{goods.condition.range.error}",groups={UpdateGoodGroups.class})
     private Short condition;
 
-	@NotBlank(message="{goods.region.notblank.error}",groups={UpdateGoodsGroups.class})
+	@NotNull(message="{goods.region.notblank.error}",groups={UpdateGoodGroups.class})
     private Double region;
 
+	@NotNull(message="{goods.status.notblank.error}",groups={CancelGoodsGroups.class})
     private Short status;
 
     private Timestamp createtime;

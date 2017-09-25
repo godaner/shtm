@@ -74,7 +74,6 @@
 					    <option value="7">7</option> 
 					    <option value="8">8</option> 
 					    <option value="9">9</option> 
-					    <option value="10">10</option> 
 					</select>
 				
 				</td>
@@ -111,7 +110,9 @@
 				</td>
 				
 				<td>
+					<!-- 去除name,不上传status -->
 					<input id="status" class="easyui-textbox input" data-options="required:true,editable:false" style="width:100%">
+					
 				
 				</td>
 			</tr>

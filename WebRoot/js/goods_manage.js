@@ -7,17 +7,17 @@
  */
 var goods_datagrid;
 var goodsSearchForm;
-//管理员属性表格
+//商品属性表格
 //var editGoodPG;
-//管理员信息编辑弹窗
+//商品信息编辑弹窗
 var editGoodDialog;
 //编辑表单
 var editGoodForm;
-//新增管理员表单
+//新增商品表单
 var insertGoodForm;
-//新增管理员的弹窗
+//新增商品的弹窗
 var insertGoodDialog;
-//保存当前编辑的管理员的信息
+//保存当前编辑的商品的信息
 var currtEditDatagridRow;
 //地址
 var province;
@@ -62,7 +62,7 @@ function loadGoodsManageUI(){
 	
 	//新增good信息窗口
 	insertGoodDialog.dialog({   
-	    title:"新增管理员",
+	    title:"新增商品",
 		resizable : true,
 		modal : true,
 		closed : true,
@@ -214,12 +214,7 @@ function loadGoodsManageUI(){
 }
 
 
-/**
- * 删除管理员
- */
-function deleteGood(){
-	
-}
+
 
 
 /**
@@ -233,7 +228,7 @@ function editGood(){
 		return ;
 	}
 	
-	//保存当前操作的管理员的行
+	//保存当前操作的商品的行
 	currtEditDatagridRow = row;
 	
 
@@ -386,7 +381,7 @@ function findValueByText(combo,text){
 	return "";
 }
 /**
- * 提交管理员修改后的信息
+ * 提交商品修改后的信息
  */
 function submitGoodEdit(){
 
@@ -450,13 +445,42 @@ function resetGood(){
 	
 	showMsg("重置成功");
 }
-
 /**
- * 删除管理员
+ * 取消商品的发布状态
+ */
+function cancelGood(){
+	//确认删除?
+	confirm("确认取消商品 "+currtEditDatagridRow.title+" 发布状态?",function(r){
+		if(r){
+			//进度条
+			
+			
+			var id = currtEditDatagridRow.id;
+			
+			
+			var url = "/goods/cancelGood.action?id="+id;
+			ajax.send(url, function(data){
+				//显示信息
+				showMsg(data.msg);
+				
+				//关闭信息编辑
+				editGoodDialog.dialog('close');
+				
+				//刷新表格
+				goods_datagrid.datagrid("reload");
+				
+			}, function(){
+				
+			});
+		}
+	});
+}
+/**
+ * 删除商品
  */
 function deleteGood(){
 	//确认删除?
-	confirm("确认删除"+currtEditDatagridRow.username+"?",function(r){
+	confirm("确认删除 "+currtEditDatagridRow.title+" ?",function(r){
 		if(r){
 			//进度条
 			
@@ -503,7 +527,7 @@ function clearGoodSearch(){
 }
 
 
-/********************************添加管理员****************************/
+/********************************添加商品****************************/
 
 /**
  * 新增goods,弹出新增框
@@ -518,7 +542,7 @@ function insertGood(){
 
 /*
 *//**
- * 新增管理员
+ * 新增商品
  *//*
 function submitNewGood(){
 
@@ -591,8 +615,8 @@ function statusCode2String(statusCode){
 	 * -1为买家收货后交易正常结束，
 	 * -2为卖家取消了出售本商品，
 	 * -3是用户取消购买本商品，
-	 * -4管理员取消发布的商品,
-	 * -5为管理员删除了商品*/
+	 * -4商品取消发布的商品,
+	 * -5为商品删除了商品*/
 	var s = statusCode;
 	switch (statusCode) {
 		case 1:
