@@ -69,6 +69,17 @@ public class GoodsReplier extends Goods {
 	private String ownerName;
 	//保存数据库查出地址:省-市-县
 	private String regionDetail;
+	//保存数据库查出的商品類型:類型1-类型2
+	private String clazzsDetail;
+	
+	public String getClazzsDetail() {
+		return clazzsDetail;
+	}
+
+	public void setClazzsDetail(String clazzsDetail) {
+		this.clazzsDetail = clazzsDetail;
+	}
+
 	public String getBuyerName() {
 		return buyerName;
 	}

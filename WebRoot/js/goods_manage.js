@@ -165,7 +165,12 @@ function loadGoodsManageUI(){
     			field:'regionDetail',
     			title:'地区',
 	    		sortable : true
-    		},    
+    		}, 
+    		{
+    			field:'clazzsDetail',
+    			title:'類型',
+	    		sortable : true
+    		}, 
 	        {
     			field:'createtime',
     			title:'创建时间',
