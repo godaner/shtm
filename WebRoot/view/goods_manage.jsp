@@ -32,9 +32,9 @@
 			<option value="">状态</option>    
 		    <option value="-6">待审核状态</option>  
 		    <option value="0">审核通过</option>   
-		    <option value="1">购买了且待发货</option>    
+		    <option value="1">待发货</option>    
 		    <option value="2">已发货</option>    
-		    <option value="-1">买家收货后交易正常结束</option>    
+		    <option value="-1">交易结束</option>    
 		    <!-- <option value="-5">管理员删除本商品</option>  -->    
 		</select>       
 		<a href="javascript:searchGoods();" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>

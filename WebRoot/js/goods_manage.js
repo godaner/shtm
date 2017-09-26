@@ -107,6 +107,12 @@ function loadGoodsManageUI(){
 	    sortOrder : 'desc', //降序
 		hideColumn:[[
 			{
+				field:'id',
+				title:'id'/*,
+				width:270,
+				sortable : true*/
+			},
+			{
 				field:'buyer',
 				title:'购买者id'
 			},
@@ -116,12 +122,7 @@ function loadGoodsManageUI(){
 			}
 		             ]],
 		columns:[[ 
-			{
-				field:'id',
-				title:'id'/*,
-				width:270,
-				sortable : true*/
-			},
+			
     		{
     			field:'status',
     			title:'状态',
@@ -641,13 +642,13 @@ function statusCode2String(statusCode){
 			s = "审核通过";
 			break;
 		case 1:
-			s = "购买了且待发货";
+			s = "待发货";
 			break;
 		case 2:
 			s = "已发货";
 			break;
 		case -1:
-			s = "买家收货后交易正常结束";
+			s = "交易结束";
 			break;
 			
 		default:
