@@ -121,27 +121,31 @@ function loadGoodsManageUI(){
 				title:'发布者id'
 			}
 		             ]],
-		columns:[[ 
-			
-    		{
-    			field:'status',
-    			title:'状态',
-	    		sortable : true,
+		frozenColumns:[[
+			{
+				field:'status',
+				title:'状态',
+				sortable : true,
 				formatter: function(value,row,index){
 					
 					return statusCode2String(value);
 				}
-    		},
-	        {
-    			field:'title',
-    			title:'名称',
-	    		sortable : true
-    		},
-    		{
-    			field:'description',
-    			title:'描述',
-	    		sortable : true
-    		},
+			},
+			{
+				field:'title',
+				title:'名称',
+				sortable : true
+			},
+			{
+				field:'description',
+				title:'描述',
+				sortable : true
+			}
+		                
+		                ]],
+		columns:[[ 
+			
+    		
     		{
     			field:'sprice',
     			title:'原价',
@@ -336,7 +340,9 @@ function editGood(){
 								
 								loadComboboxData(county,data);
 								
-								county.combobox('select', county.combobox("getData")[0].value);  
+								var countyId = findValueByText(county,row.county);
+								
+								county.combobox('select', countyId);  
 							});
 					    }
 					});
@@ -344,7 +350,9 @@ function editGood(){
 					
 					loadComboboxData(city,data);
 					
-					city.combobox('select', city.combobox("getData")[0].value);  
+					var cityId = findValueByText(city,row.city);
+					
+					city.combobox('select', cityId);  
 				});
 		    }
 		});
@@ -371,7 +379,7 @@ function buildStatusCombobox(newItemObj){
 	
 	/*<option value="-6">待审核状态</option>  
     <option value="0">审核通过</option>*/
-	var data = [{"text":"待审核状态","value":"-6"},
+	var data = [{"text":"待审核","value":"-6"},
 	            {"text":"审核通过","value":"0"}]; 
 
 	/*goodsStatus.combobox("loadData", []);*/
@@ -636,7 +644,7 @@ function statusCode2String(statusCode){
 	var s = statusCode;
 	switch (statusCode) {
 		case -6:
-			s = "待审核状态";
+			s = "待审核";
 			break;
 		case 0:
 			s = "审核通过";

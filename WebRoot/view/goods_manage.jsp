@@ -30,7 +30,7 @@
 			-5:管理员删除本商品 -->
 
 			<option value="">状态</option>    
-		    <option value="-6">待审核状态</option>  
+		    <option value="-6">待审核</option>  
 		    <option value="0">审核通过</option>   
 		    <option value="1">待发货</option>    
 		    <option value="2">已发货</option>    

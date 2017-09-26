@@ -37,7 +37,7 @@
 					<label>描述</label> 
 				</td>
 				<td>
-					<input id="description" name="description" class="easyui-textbox input" data-options="required:true,prompt:'描述',multiline:true" style="width:100%;height:100px;"> 
+					<input id="description" name="description" class="easyui-textbox input" data-options="required:true,prompt:'描述',multiline:true" style="width:100%;height:60px;"> 
 				</td>
 			</tr>
 			
@@ -88,13 +88,11 @@
 					<select id="province" name="province" class="easyui-combobox " style="width:100%;" data-options="required:true,editable:false">   
 					</select>
 					<br/>
-					<br/>
 					
 					<select id="city" name="city" class="easyui-combobox " style="width:100%;" data-options="required:true,editable:false">   
 					     
 					    
 					</select>
-					<br/>
 					<br/>
 					<select id="county" name="county" class="easyui-combobox " style="width:100%;" data-options="required:true,editable:false">   
 					     
