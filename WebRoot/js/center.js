@@ -68,21 +68,32 @@ function refreshTab(title) {
 
 }
 /**
+ * 用户传递tab间的参数
+ */
+var tabParams;
+/**
  * 添加选项卡
  * @param title	标题
  * @param url	地址
+ * @param params	tab间传递的参数
  */
-function addTab(title, url){
+function addTab(title, url,params){
+	
 	if (tabs.tabs('exists', title)){
 		tabs.tabs('select', title);
 	} else {
+		//设置参数
+		tabParams = params;
+//		c(tabParams);
 		/*var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';*/
 		tabs.tabs('add',{
 			title:title,
 			href:url,
-			closable:true
+			closable:true,
 		});
+		
 	}
+	
 }
 
 

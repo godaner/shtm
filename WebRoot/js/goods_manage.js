@@ -1,6 +1,7 @@
-/**
- * goods_manage界面的js
- */
+
+
+
+
 
 /**
  * 变量申明
@@ -28,8 +29,8 @@ var region;
 var goodsStatus;
 //儲存clazz多選框的td
 var clazzsTd;
-//每次请求都必须携带的参数,可能是userid(来自users_manage.js的参数)
-var goods_datagrid_queryParams;
+var goodSearchConditionId;
+/* 只负责初始化调用 */
 $(function(){
 	
 	initGoodsManageVar();
@@ -37,7 +38,6 @@ $(function(){
 	loadGoodsManageUI();
 	
 });
-
 /**
  * 初始化变量
  */
@@ -61,12 +61,25 @@ function initGoodsManageVar(){
 	goodsStatus = editGoodForm.find("#status");
 	
 	clazzsTd = $("#clazzsTd");
+	
+	goodSearchConditionId = goodsSearchForm.find("#id");
 }
 /**
  * 加载界面
  */
 function loadGoodsManageUI(){
 	
+	
+	/*if(!isEmpty(tabParams)){
+		if(!isEmpty(tabParams['buyer'])){
+			goodSearchConditionId.textbox("setValue",tabParams['buyer']);
+			
+		}
+		if(!isEmpty(tabParams['owner'])){
+			goodSearchConditionId.textbox("setValue",tabParams['owner']);
+			
+		}
+	}*/
 	
 	//新增good信息窗口
 	insertGoodDialog.dialog({   
@@ -95,13 +108,13 @@ function loadGoodsManageUI(){
 	creator	null
 	theme	bootstrap
 	email	null*/
-	
+
 	
 	//加载goods的datagrid
 	goods_datagrid.datagrid({    
 	    url:getWebProjectName()+"/goods/selectGoodsDatagrid.action",
 	    toolbar:"#goods_dg_tb",
-	    queryParams:goods_datagrid_queryParams,
+	    queryParams:tabParams,
 	    pagination:true,
 	    striped:true,
 	    fitColumns:true,
@@ -586,11 +599,11 @@ function deleteGood(){
 function searchGoods(){
 	//form转js对象
 	var searchConditions = goodsSearchForm.serializeObject();
-	//合并参数
+	/*//合并参数
 	for ( var name in goods_datagrid_queryParams) {
 		var value = goods_datagrid_queryParams[name];
 		searchConditions[name] = value;
-	}
+	}*/
 	
 	goods_datagrid.datagrid('load',searchConditions);
 }
@@ -599,7 +612,7 @@ function clearGoodSearch(){
 	//清空条件
 	goodsSearchForm.clearEasyuiForm();
 	//重新加载数据
-	goods_datagrid.datagrid('load',goods_datagrid_queryParams);
+	goods_datagrid.datagrid('load',{});
 }
 
 

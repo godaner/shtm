@@ -29,6 +29,8 @@ var buttons;
 var currtEditDatagridRow;
 //请求的用户头像的尺寸
 var headimgSize = 60;
+//查看用户商品的tab的title
+var users_goods_tab_title = "商品管理";
 $(function(){
 	
 	initUsersManageVar();
@@ -285,24 +287,45 @@ function loadUsersManageUI(){
  * @param ownerId
  */
 function checkSellGoods(ownerId,username){
-	var title = username+" 出售的商品";
-	//设置goods_manage.js中的调用参数goods_datagrid_queryParams
-	goods_datagrid_queryParams = {"owner":ownerId};
+
 	
-	addTab(title,getWebProjectName()+"/view/goods_manage.jsp");
-	tabs.tabs("select",title);
+	
+	confirm("确认查询 "+username+" 的商品出售信息?", function(r){
+		if(r){
+			
+			tabs.tabs("close",users_goods_tab_title);
+			
+			var params = {"owner":ownerId};
+			
+			addTab(users_goods_tab_title,getWebProjectName()+"/view/goods_manage.jsp",params);
+			
+		}
+	});
+	
+	
 }
 /**
  * 通过出售者id查询其购买的商品,并且在tab打开goods_manage.jsp页面显示
  * @param ownerId
  */
 function checkBuyGoods(buyerId,username){
-	var title = username+" 购买的商品";
-	//设置goods_manage.js中的调用参数goods_datagrid_queryParams
-	goods_datagrid_queryParams = {"buyer":buyerId};
+
+	confirm("确认查询 "+username+" 的商品购买信息?", function(r){
+		if(r){
+			
+			tabs.tabs("close",users_goods_tab_title);
+
+			var params = {"buyer":buyerId};
+			
+			addTab(users_goods_tab_title,getWebProjectName()+"/view/goods_manage.jsp",params);
+			
+
+		}
+	});
 	
-	addTab(title,getWebProjectName()+"/view/goods_manage.jsp");
-	tabs.tabs("select",title);
+	
+
+	
 }
 
 

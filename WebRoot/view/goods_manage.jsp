@@ -5,7 +5,7 @@
 <!-- 工具栏 start -->
 <div id="goods_dg_tb" style="display: none;">
 	<form id="goodsSearchForm">
-		<input name="id" class="easyui-textbox input" data-options="prompt:'id'" style="width:100px">
+		<input id="id" name="id" class="easyui-textbox input" data-options="prompt:'id'" style="width:100px">
 		<input name="title" class="easyui-textbox input" data-options="prompt:'标题'" style="width:100px"> 
 		<input name="description" class="easyui-textbox input" data-options="prompt:'描述'" style="width:100px"> 
 		<select name="condition" class="easyui-combobox input" style="width:100px;" data-options="editable:false">   
@@ -54,14 +54,13 @@
 
 </div>
 
-<!-- 管理员属性编辑弹窗 start -->
+<!-- goods属性编辑弹窗 start -->
 <%@include file="./goods_manage_edit_dialog.jsp" %>
-<!-- 管理员属性编辑弹窗 end -->
+<!-- goods属性编辑弹窗 end -->
 
 
-<!-- 新增管理员弹窗 start -->
-<%-- <%@include file="./goods_manage_insert_dialog.jsp" %> --%>
-<!-- 新增管理员弹窗 end -->
 
-
-<script type="text/javascript" src="${baseUrl}/js/goods_manage.js"></script>
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/goods_manage.js"></script>
+<script>
+	
+</script>

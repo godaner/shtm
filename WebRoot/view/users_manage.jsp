@@ -46,6 +46,5 @@
 <%@include file="./users_manage_insert_dialog.jsp" %>
 <!-- 新增用户弹窗 end -->
 
+<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/users_manage.js"></script>
 
-
-<script type="text/javascript" src="${baseUrl}/js/users_manage.js"></script>
