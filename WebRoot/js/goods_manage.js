@@ -26,6 +26,8 @@ var county;
 var region;
 
 var goodsStatus;
+//儲存clazz多選框的td
+var clazzsTd;
 $(function(){
 	
 	initGoodsManageVar();
@@ -55,6 +57,8 @@ function initGoodsManageVar(){
 	region = $("#region");
 	
 	goodsStatus = editGoodForm.find("#status");
+	
+	clazzsTd = $("#clazzsTd");
 }
 /**
  * 加载界面
@@ -372,6 +376,15 @@ function editGood(){
 		
 	});
 	
+	/**
+	 * 加載類型信息
+	 */
+	url = "/clazzs/selectClazzs.action";
+	ajax.sendSync(url, function(data){
+		c(data);
+		clazzsTd;
+	});
+	
 	
 }
 
@@ -570,60 +583,6 @@ function insertGood(){
 	
 }
 
-/*
-*//**
- * 新增商品
- *//*
-function submitNewGood(){
-
-	
-	insertGoodForm.form('submit', {    
-	    url:getWebProjectName()+"/goods/insertGood.action",    
-	    ajax:true,
-	    iframe:false,
-	    onSubmit: function(){   
-	    	if(!insertGoodForm.form('validate')){
-	    		
-	    		return false;
-	    	}
-	    	//关闭信息编辑
-	    	insertGoodDialog.dialog('close');
-	    },    
-	    success:function(data){ 
-//	    	c(data);
-	    	data = JSON.parse(data);
-	    	
-	    	pro.close();
-			//提示信息
-			showMsg(data.msg);
-
-			if(data.result == 1){
-				//更新成功
-				
-				//刷新表格
-				goods_datagrid.datagrid("reload");
-				
-			}else{
-				//失敗
-				//打開信息编辑
-				insertGoodDialog.dialog('open');
-			}
-	    } ,
-	    onLoadError:function(){
-	    	//失敗
-			//提示信息
-			showMsg(data.msg);
-	    	//关闭进度条
-	    	pro.close();
-			//打開信息编辑
-	    	insertGoodDialog.dialog('open');
-	    }
-	});  
-
-	
-	
-
-}*/
 
 /**
  * 清空旧的文本记录

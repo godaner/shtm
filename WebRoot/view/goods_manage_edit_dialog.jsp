@@ -87,19 +87,26 @@
 				
 					<select id="province" name="province" class="easyui-combobox " style="width:100%;" data-options="required:true,editable:false">   
 					</select>
-					<br/>
 					
 					<select id="city" name="city" class="easyui-combobox " style="width:100%;" data-options="required:true,editable:false">   
 					     
 					    
 					</select>
-					<br/>
 					<select id="county" name="county" class="easyui-combobox " style="width:100%;" data-options="required:true,editable:false">   
 					     
 					    
 					</select>
 					<input type="hidden" id="region" name="region" value="">
 					
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>類型</label> 
+				</td>
+				
+				<td id="clazzsTd">
+										
 				</td>
 			</tr>
 			<tr>
