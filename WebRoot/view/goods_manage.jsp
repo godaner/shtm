@@ -20,7 +20,7 @@
 		    <option value="8">8</option> 
 		    <option value="9">9</option> 
 		</select>
-		<select name="status" class="easyui-combobox input" style="width:200px;" data-options="editable:false">
+		<select name="status" class="easyui-combobox input" style="width:100px;" data-options="editable:false">
 			<!-- 状态:,
 			-6:待审核状态,(不可以被显示,不可以购买)
 			0:审核通过,(可以被显示,可以购买)

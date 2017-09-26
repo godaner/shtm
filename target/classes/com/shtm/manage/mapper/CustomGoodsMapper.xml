@@ -19,6 +19,12 @@
 			<if test="status !=null and status!=''">
 				AND status = #{status}
 			</if>
+			<if test="owner !=null and owner!=''">
+				AND owner = #{owner}
+			</if>
+			<if test="buyer !=null and buyer!=''">
+				AND buyer = #{buyer}
+			</if>
 		</where>
 	</sql>
 	

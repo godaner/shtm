@@ -29,6 +29,39 @@ import com.shtm.manage.service.GoodsServiceI;
 @Controller
 public class GoodsController extends BaseController<GoodsServiceI> {
 
+	
+	/**
+	 * Title:selectGoodsByPK
+	 * <p>
+	 * Description:通过主键查询goods
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月26日 下午4:16:12
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/selectGoodsByPK")
+	public @ResponseBody GoodsReplier selectGoodsByPK(String id){
+		GoodsReplier replier = new GoodsReplier();
+
+		try {
+
+			replier = service.selectGoodsByPK(id);
+
+			replier.setResult(RESULT.TRUE);
+
+			replier.setMsg("获取成功");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+
+		return replier;
+	}
+	
 	/**
 	 * Title:selectGoodsDatagrid
 	 * <p>

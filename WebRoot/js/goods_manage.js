@@ -28,6 +28,8 @@ var region;
 var goodsStatus;
 //儲存clazz多選框的td
 var clazzsTd;
+//每次请求都必须携带的参数,可能是userid(来自users_manage.js的参数)
+var goods_datagrid_queryParams;
 $(function(){
 	
 	initGoodsManageVar();
@@ -99,6 +101,7 @@ function loadGoodsManageUI(){
 	goods_datagrid.datagrid({    
 	    url:getWebProjectName()+"/goods/selectGoodsDatagrid.action",
 	    toolbar:"#goods_dg_tb",
+	    queryParams:goods_datagrid_queryParams,
 	    pagination:true,
 	    striped:true,
 	    fitColumns:true,
@@ -244,6 +247,7 @@ function editGood(){
 		return ;
 	}
 	
+	
 	//保存当前操作的商品的行
 	currtEditDatagridRow = row;
 	
@@ -379,14 +383,38 @@ function editGood(){
 	/**
 	 * 加載類型信息
 	 */
-	url = "/clazzs/selectClazzs.action";
-	ajax.sendSync(url, function(data){
-		c(data);
-		clazzsTd;
+	url0 = "/clazzs/selectClazzs.action";
+	ajax.sendSync(url0, function(data){
+		//清除缓存
+		clazzsTd.html("");
+		var rows = data.rows;
+		for ( var i in rows) {
+			var r = rows[i];
+			var input = "<label><input type='checkbox' name='clazzs' value='"+r.id+"'/>"+r.text+"</label>";
+			clazzsTd.append(input);
+		}
+		;
+	});
+	/**
+	 * 选中checkbox
+	 */
+
+	var clazzs = undefined;
+	if(!isEmpty(row.clazzsDetail)){
+		clazzs = row.clazzsDetail.split('-');
+	}
+	clazzsTd.find('label').each(function (index, dom) {
+		//写入代码
+		var label = $(dom);
+		var text = $(dom).text();
+		if(contain(clazzs, text)){
+			label.find('input').attr("checked",'checked');
+		}
 	});
 	
-	
 }
+
+
 
 /**
  * 构建状态选择下拉框
@@ -558,6 +586,11 @@ function deleteGood(){
 function searchGoods(){
 	//form转js对象
 	var searchConditions = goodsSearchForm.serializeObject();
+	//合并参数
+	for ( var name in goods_datagrid_queryParams) {
+		var value = goods_datagrid_queryParams[name];
+		searchConditions[name] = value;
+	}
 	
 	goods_datagrid.datagrid('load',searchConditions);
 }
@@ -566,7 +599,7 @@ function clearGoodSearch(){
 	//清空条件
 	goodsSearchForm.clearEasyuiForm();
 	//重新加载数据
-	goods_datagrid.datagrid('load',{});
+	goods_datagrid.datagrid('load',goods_datagrid_queryParams);
 }
 
 

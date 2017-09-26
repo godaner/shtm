@@ -57,6 +57,7 @@ function initUsersManageVar(){
 	
 	birthday = $("#birthday");
 	
+	
 	//设置按钮
 	birthday.datebox({
 	});
@@ -80,6 +81,7 @@ function initUsersManageVar(){
  * 加载界面
  */
 function loadUsersManageUI(){
+	
 	
 	
 	//新增user信息窗口
@@ -114,8 +116,28 @@ function loadUsersManageUI(){
 	    sortName : 'registtime',
 	    sortOrder : 'desc', //降序
 		hideColumn:[[
-			
+			{
+				field:'id',
+				title:'主键'/*,
+				width:270,
+				sortable : true*/
+			},{
+				field:'sellNumber',
+				title:'主键'/*,
+				width:270,
+				sortable : true*/
+			}
+			,{
+				field:'buyNumber',
+				title:'主键'/*,
+				width:270,
+				sortable : true*/
+			}
 		             ]],
+		frozenColumns:[[
+		                
+		                
+		                ]],
 		columns:[[      
 	    	{
 	    		field:'headimg',
@@ -129,12 +151,7 @@ function loadUsersManageUI(){
 					return img;
 				}
     		},  
-    		{
-				field:'id',
-				title:'主键'/*,
-				width:270,
-				sortable : true*/
-			},
+    		
 	        {
     			field:'username',
     			title:'名称',
@@ -144,7 +161,23 @@ function loadUsersManageUI(){
     			field:'email',
     			title:'邮箱',
 	    		sortable : true
-    		},    
+    		},
+	        {
+	        	field:'id',
+	        	title:'查看商品',
+	    		sortable : true,
+				formatter: function(value,row,index){
+//					c(value);
+					var sellNumber = row.sellNumber;
+					var buyNumber = row.buyNumber;
+					var username = row.username;
+					var a = "<a style='color:red;' href=javascript:checkBuyGoods(\'"+value+"\',\'"+username+"\');>查看购买("+buyNumber+")</a>"
+					a = a + "   ";
+					a = a + "<a style='color:red;' href=javascript:checkSellGoods(\'"+value+"\',\'"+username+"\');>查看出售("+sellNumber+")</a>"
+					return a;
+				}
+	        	
+	        },    
 	        {
 	        	field:'password',
 	        	title:'密码',
@@ -241,12 +274,37 @@ function loadUsersManageUI(){
 					}
 					return value;
 				}
-	        }      
+	        }
 	    ]]    
 	});  
 
 
 }
+/**
+ * 通过出售者id查询其出售额商品
+ * @param ownerId
+ */
+function checkSellGoods(ownerId,username){
+	var title = username+" 出售的商品";
+	//设置goods_manage.js中的调用参数goods_datagrid_queryParams
+	goods_datagrid_queryParams = {"owner":ownerId};
+	
+	addTab(title,getWebProjectName()+"/view/goods_manage.jsp");
+	tabs.tabs("select",title);
+}
+/**
+ * 通过出售者id查询其购买的商品,并且在tab打开goods_manage.jsp页面显示
+ * @param ownerId
+ */
+function checkBuyGoods(buyerId,username){
+	var title = username+" 购买的商品";
+	//设置goods_manage.js中的调用参数goods_datagrid_queryParams
+	goods_datagrid_queryParams = {"buyer":buyerId};
+	
+	addTab(title,getWebProjectName()+"/view/goods_manage.jsp");
+	tabs.tabs("select",title);
+}
+
 
 
 /**

@@ -1,5 +1,6 @@
 package com.shtm.manage.service.impl;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,9 +8,14 @@ import com.shtm.manage.mapper.CustomGoodsMapper;
 import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 import com.shtm.manage.service.GoodsServiceI;
+import com.shtm.mapper.GoodsClazzsMapper;
 import com.shtm.mapper.GoodsMapper;
 import com.shtm.po.Goods;
+import com.shtm.po.GoodsClazzs;
+import com.shtm.po.GoodsClazzsExample;
+import com.shtm.po.GoodsClazzsExample.Criteria;
 import com.shtm.service.impl.BaseService;
+import com.shtm.util.Static.CONFIG;
 import com.shtm.util.Static.GOODS_STAUS;
 
 /**
@@ -26,6 +32,9 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 
 	@Autowired
 	private GoodsMapper goodsMapper;
+	
+	@Autowired
+	private GoodsClazzsMapper goodsClazzsMapper;
 	
 	@Autowired
 	private CustomGoodsMapper customGoodsMapper;
@@ -75,19 +84,36 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		//設置字段
 		receiver.setLastupdatetime(timestamp());
 		
+		
+		
+		
+		//更新goods
 		goodsMapper.updateByPrimaryKeySelective(receiver);
+		
+		
+		/**
+		 * 更新clazzs
+		 */
+		//删除clazzs
+		GoodsClazzsExample example = new GoodsClazzsExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andGoodsEqualTo(receiver.getId());
+		goodsClazzsMapper.deleteByExample(example);
+		
+		//添加clazzs
+		for (String clz : receiver.getClazzs()) {
+			if(clz == null){
+				continue;
+			}
+			GoodsClazzs gc = new GoodsClazzs();
+			gc.setId(uuid());
+			gc.setGoods(receiver.getId());
+			gc.setClazz(clz);
+			goodsClazzsMapper.insert(gc);
+		}
 		
 	}
 
-	@Override
-	public void cancelGood(GoodsReceiver receiver) throws Exception {
-		Goods dbGood = goodsMapper.selectByPrimaryKey(receiver.getId());
-		
-		
-		
-		
-		
-	}
 
 	@Override
 	public void deleteGood(GoodsReceiver receiver) throws Exception {
@@ -104,6 +130,19 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		
 		goodsMapper.updateByPrimaryKeySelective(g);
 		
+	}
+
+	@Override
+	public GoodsReplier selectGoodsByPK(String id) throws Exception {
+		
+		Goods g = goodsMapper.selectByPrimaryKey(id);
+		
+		GoodsReplier replier = new GoodsReplier();
+		
+		
+		BeanUtils.copyProperties(g, replier);
+		
+		return replier;
 	}
 
 }

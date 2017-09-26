@@ -38,16 +38,16 @@ public class UsersReplier extends Users {
 	}
 
 	// 返回数据
-	private List<Users> rows;
+	private List<UsersReplier> rows;
 
 	// 记录总数
 	private Integer total;
 
-	public List<Users> getRows() {
+	public List<UsersReplier> getRows() {
 		return rows;
 	}
 
-	public void setRows(List<Users> rows) {
+	public void setRows(List<UsersReplier> rows) {
 		this.rows = rows;
 	}
 
@@ -58,5 +58,24 @@ public class UsersReplier extends Users {
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
+	//用户发布,购买商品数量
+	private Integer buyNumber;
+	private Integer sellNumber;
 
+	public Integer getBuyNumber() {
+		return buyNumber;
+	}
+
+	public void setBuyNumber(Integer buyNumber) {
+		this.buyNumber = buyNumber;
+	}
+
+	public Integer getSellNumber() {
+		return sellNumber;
+	}
+
+	public void setSellNumber(Integer sellNumber) {
+		this.sellNumber = sellNumber;
+	}
+	
 }

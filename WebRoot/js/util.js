@@ -1,4 +1,21 @@
-
+/**
+ * 判断数组中是否存在某个值
+ * @param arr
+ * @param e
+ * @returns {Boolean}
+ */
+function contain(arr,e){
+	if(isEmpty(arr)){
+		return false;
+	}
+	for ( var i in arr) {
+		var ee = arr[i];
+		if(ee == e){
+			return true;
+		}
+	}
+	return false;
+}
 
 
 /**

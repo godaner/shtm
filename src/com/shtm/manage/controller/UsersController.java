@@ -156,9 +156,8 @@ public class UsersController extends BaseController<UsersServiceI>{
 			
 		} catch (Exception e) {
 			//返回默认图片
-			size = "200";
-			headimg = "default.png";
-			String path = getValue(CONFIG.FILED_SRC_USERS_HEADIMGS)+size+"_"+headimg;
+			String defaultImgName = getValue(CONFIG.FILED_USERS_HEADIMGS_DEFAULT).toString();
+			String path = getValue(CONFIG.FILED_SRC_USERS_HEADIMGS) + defaultImgName;
 			writeFileToOS(path, getResponse().getOutputStream());
 		}
 		

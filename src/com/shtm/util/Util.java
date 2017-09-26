@@ -35,6 +35,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.shtm.util.Static.CONFIG;
+
 /**
  * Title:Util
  * <p>
@@ -63,6 +65,7 @@ public class Util extends ClasssPathProps {
 	 */
 	public final static ValidateCode vc = new ValidateCode(160, 40, 5, 150);
 
+	
 	/**
 	 * Title:getErrors
 	 * <p>

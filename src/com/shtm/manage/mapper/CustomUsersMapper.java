@@ -3,8 +3,7 @@ package com.shtm.manage.mapper;
 import java.util.List;
 
 import com.shtm.manage.po.UsersReceiver;
-import com.shtm.po.Users;
-
+import com.shtm.manage.po.UsersReplier;
 
 
 /**
@@ -29,7 +28,7 @@ public interface CustomUsersMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	List<Users> selectUsersDatagrid(UsersReceiver po)throws Exception;
+	List<UsersReplier> selectUsersDatagrid(UsersReceiver po)throws Exception;
 	/**
 	 * 
 	 * Title:selectUsersNum

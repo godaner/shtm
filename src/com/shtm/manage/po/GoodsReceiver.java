@@ -1,5 +1,9 @@
 package com.shtm.manage.po;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
 import com.shtm.po.Goods;
 
 /**
@@ -10,6 +14,15 @@ import com.shtm.po.Goods;
  * 
  * @author Kor_Zhang
  * @date 2017年9月23日 下午2:22:52
+ * @version 1.0
+ */
+/**
+ * Title:GoodsReceiver
+ * <p>
+ * Description:
+ * <p>
+ * @author Kor_Zhang
+ * @date 2017年9月26日 下午2:14:15
  * @version 1.0
  */
 public class GoodsReceiver extends Goods {
@@ -78,4 +91,24 @@ public class GoodsReceiver extends Goods {
 	public void setEnd(Integer end) {
 		this.end = end;
 	}
+	
+	
+
+	//商品类型参数
+	@NotNull(message="{goods.clazzs.notnull.error}",groups={UpdateGoodGroups.class})
+	@Size(min=0,max=3,message="{goods.clazzs.range.error}",groups={UpdateGoodGroups.class})
+	private String[] clazzs;
+	
+	
+
+	public String[] getClazzs() {
+		return clazzs;
+	}
+
+	public void setClazzs(String[] clazzs) {
+		this.clazzs = clazzs;
+	}
+
+	
+	
 }

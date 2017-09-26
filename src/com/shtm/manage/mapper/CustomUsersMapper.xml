@@ -28,21 +28,43 @@
 	</sql>
 	
 	
-	<select id="selectUsersDatagrid" parameterType="com.shtm.manage.po.UsersReceiver" resultType="com.shtm.po.Users">
-	select u1.*
-	from
-	(
-		SELECT u0.*,rownum as n
-		FROM
-		(
-			SELECT *
-			FROM users
-			<include refid="selectUsersConditions"></include>
-			ORDER BY ${sort} ${order}
-		) u0
-		WHERE rownum &lt;=#{end}
-	) u1
-	where u1.n &gt;= #{start}
+	<select id="selectUsersDatagrid" parameterType="com.shtm.manage.po.UsersReceiver" resultType="com.shtm.manage.po.UsersReplier">
+		
+		
+		SELECT u0.*,nvl(c1.buynumber,0) as buynumber,nvl(c0.sellnumber,0) as sellnumber
+	
+	      FROM
+	    (
+	      select u1.*
+	        from
+	        (
+	          SELECT u0.*,rownum as n
+	          FROM
+	          (
+	            SELECT *
+	            FROM users
+	      		<include refid="selectUsersConditions"></include>
+	          ) u0
+	          WHERE rownum &lt;=#{end}
+	        ) u1
+	        where u1.n &gt;=#{start}
+	    ) u0,
+	    (
+	           SELECT u0.id,COUNT(g0.OWNER) sellnumber
+	           FROM users u0,goods g0
+	           WHERE u0.id = g0.OWNER(+) AND g0.STATUS !=-5
+	           GROUP BY u0.id
+	     )c0,
+	     (
+	           SELECT u0.id,COUNT(g0.OWNER) AS buynumber
+	           FROM users u0,goods g0
+	           WHERE u0.id = g0.buyer(+) AND g0.STATUS !=-5
+	           GROUP BY u0.id
+	     )c1
+	    
+	    WHERE u0.id = c0.id(+) AND u0.id = c1.id(+)
+    
+		
 		
 	</select>
 	<select id="selectUsersNum" parameterType="com.shtm.manage.po.UsersReceiver"
