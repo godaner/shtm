@@ -42,7 +42,7 @@
 		<a href="javascript:searchGoods();" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 		<a href="javascript:clearGoodSearch();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">清空条件</a>
 		|
-		<a href="javascript:editGood();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
+		<a href="javascript:editGood();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑基本信息</a>
 		<!-- |
 		<a href="javascript:insertGood();" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a> -->
 	</form>
@@ -60,9 +60,8 @@
 <%@include file="./goods_manage_edit_dialog.jsp" %>
 <!-- goods属性编辑弹窗 end -->
 
-
+<!-- goods圖片管理弹窗 start -->
+<%@include file="./goods_manage_imgs_dialog.jsp" %>
+<!-- goods属性编辑弹窗 end -->
 
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/goods_manage.js"></script>
-<script>
-	
-</script>

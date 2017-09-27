@@ -14,7 +14,7 @@ import com.shtm.po.Goods;
  * @date 2017年9月23日 下午2:22:36
  * @version 1.0
  */
-public class GoodsReplier extends Goods {
+public class GoodsReplier<T> extends Goods {
 	// 操作结果
 	private Integer result;
 
@@ -38,16 +38,16 @@ public class GoodsReplier extends Goods {
 	}
 
 	// 返回数据
-	private List<Goods> rows;
+	private List<T> rows;
 
 	// 记录总数
 	private Integer total;
 
-	public List<Goods> getRows() {
+	public List<T> getRows() {
 		return rows;
 	}
 
-	public void setRows(List<Goods> rows) {
+	public void setRows(List<T> rows) {
 		this.rows = rows;
 	}
 
@@ -104,5 +104,15 @@ public class GoodsReplier extends Goods {
 		this.regionDetail = regionDetail;
 	}
 	
+	//數據庫查詢出來的主圖
+	private String mainImg;
+
+	public String getMainImg() {
+		return mainImg;
+	}
+
+	public void setMainImg(String mainImg) {
+		this.mainImg = mainImg;
+	}
 	
 }

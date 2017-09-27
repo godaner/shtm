@@ -29,8 +29,7 @@ var buttons;
 var currtEditDatagridRow;
 //请求的用户头像的尺寸
 var headimgSize = 60;
-//查看用户商品的tab的title
-var users_goods_tab_title = "商品管理";
+var usserIdSearch;
 $(function(){
 	
 	initUsersManageVar();
@@ -59,6 +58,7 @@ function initUsersManageVar(){
 	
 	birthday = $("#birthday");
 	
+	usserIdSearch = usersSearchForm.find("#id");
 	
 	//设置按钮
 	birthday.datebox({
@@ -83,7 +83,11 @@ function initUsersManageVar(){
  * 加载界面
  */
 function loadUsersManageUI(){
-	
+	//判斷參數
+	if(goods_to_users_tab_context.contain('id')){
+		usserIdSearch.textbox("setValue",goods_to_users_tab_context.getAttr("id"));
+		
+	}
 	
 	
 	//新增user信息窗口
@@ -106,6 +110,7 @@ function loadUsersManageUI(){
 	//加载users的datagrid
 	users_datagrid.datagrid({    
 	    url:manageForwardUrl+"/users/selectUsersDatagrid.action",
+	    queryParams:goods_to_users_tab_context.getContent(),
 	    toolbar:"#users_dg_tb",
 	    pagination:true,
 	    striped:true,
@@ -119,11 +124,6 @@ function loadUsersManageUI(){
 	    sortOrder : 'desc', //降序
 		hideColumn:[[
 			{
-				field:'id',
-				title:'主键'/*,
-				width:270,
-				sortable : true*/
-			},{
 				field:'sellNumber',
 				title:'主键'/*,
 				width:270,
@@ -149,11 +149,15 @@ function loadUsersManageUI(){
 					if(isEmpty(value)){
 						value = "";
 					}
-					var img = "<img style='width:"+headimgSize+"px;' src ='"+manageForwardUrl+"/users/getHeadImg.action?headimg="+value+"&size="+headimgSize+"&t="+new Date().getTime()+"'/>";
+					var img = "<img style='width:50px;' src ='"+manageForwardUrl+"/users/getHeadImg.action?headimg="+value+"&size="+headimgSize+"&t="+new Date().getTime()+"'/>";
 					return img;
 				}
     		},  
-    		
+    		{
+				field:'id',
+				title:'主键',
+				sortable : true
+			},
 	        {
     			field:'username',
     			title:'名称',
@@ -165,17 +169,18 @@ function loadUsersManageUI(){
 	    		sortable : true
     		},
 	        {
-	        	field:'id',
+	        	field:'custom_checkGoods',
 	        	title:'查看商品',
 	    		sortable : true,
 				formatter: function(value,row,index){
 //					c(value);
+					var id = row.id;
 					var sellNumber = row.sellNumber;
 					var buyNumber = row.buyNumber;
 					var username = row.username;
-					var a = "<a style='color:red;' href=javascript:checkBuyGoods(\'"+value+"\',\'"+username+"\');>查看购买("+buyNumber+")</a>"
+					var a = "<a style='color:red;' href=javascript:checkBuyGoods(\'"+id+"\',\'"+username+"\');>查看购买("+buyNumber+")</a>"
 					a = a + "   ";
-					a = a + "<a style='color:red;' href=javascript:checkSellGoods(\'"+value+"\',\'"+username+"\');>查看出售("+sellNumber+")</a>"
+					a = a + "<a style='color:red;' href=javascript:checkSellGoods(\'"+id+"\',\'"+username+"\');>查看出售("+sellNumber+")</a>"
 					return a;
 				}
 	        	
@@ -292,16 +297,28 @@ function checkSellGoods(ownerId,username){
 	
 	confirm("确认查询 "+username+" 的商品出售信息?", function(r){
 		if(r){
+			if(tabs.tabs('exists',goods_manage_tab_title)){
+				
+				tabs.tabs('select',goods_manage_tab_title);
+				//清空条件
+				goodsSearchForm.clearEasyuiForm();
+				
+				sellerIdSearch.textbox("setValue",ownerId);
+				
+				searchGoods();
+				
+				return;
+			}
+
 			
-			tabs.tabs("close",users_goods_tab_title);
+			users_to_goods_tab_context.clear();
 			
-			var params = {"owner":ownerId};
+			users_to_goods_tab_context.setAttr("owner", ownerId);
 			
-			addTab(users_goods_tab_title,manageStaticSrcUrl+"/view/goods_manage.jsp",params);
+			addTab(goods_manage_tab_title,goods_manage_tab_url);
 			
 		}
 	});
-	
 	
 }
 /**
@@ -313,21 +330,29 @@ function checkBuyGoods(buyerId,username){
 	confirm("确认查询 "+username+" 的商品购买信息?", function(r){
 		if(r){
 			
-			tabs.tabs("close",users_goods_tab_title);
-
-			var params = {"buyer":buyerId};
 			
-			addTab(users_goods_tab_title,manageStaticSrcUrl+"/view/goods_manage.jsp",params);
+			if(tabs.tabs('exists',goods_manage_tab_title)){
+				tabs.tabs('select',goods_manage_tab_title);
+				
+				//清空条件
+				goodsSearchForm.clearEasyuiForm();
+				
+				buyerIdSearch.textbox("setValue",buyerId);
+				
+				searchGoods();
+				return;
+			}
 			
+			users_to_goods_tab_context.clear();
+			
+			users_to_goods_tab_context.setAttr("buyer", buyerId);
+			
+			addTab(goods_manage_tab_title,goods_manage_tab_url);
 
 		}
 	});
 	
-	
-
-	
 }
-
 
 
 /**

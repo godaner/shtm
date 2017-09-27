@@ -1,21 +1,26 @@
 package com.shtm.manage.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shtm.manage.mapper.CustomGoodsImgsMapper;
 import com.shtm.manage.mapper.CustomGoodsMapper;
+import com.shtm.manage.po.GoodsImgsReplier;
 import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 import com.shtm.manage.service.GoodsServiceI;
 import com.shtm.mapper.GoodsClazzsMapper;
+import com.shtm.mapper.GoodsImgsMapper;
 import com.shtm.mapper.GoodsMapper;
 import com.shtm.po.Goods;
 import com.shtm.po.GoodsClazzs;
 import com.shtm.po.GoodsClazzsExample;
 import com.shtm.po.GoodsClazzsExample.Criteria;
+import com.shtm.po.GoodsImgsExample;
 import com.shtm.service.impl.BaseService;
-import com.shtm.util.Static.CONFIG;
 import com.shtm.util.Static.GOODS_STAUS;
 
 /**
@@ -35,6 +40,9 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 	
 	@Autowired
 	private GoodsClazzsMapper goodsClazzsMapper;
+
+	@Autowired
+	private CustomGoodsImgsMapper customGoodsImgsMapper;
 	
 	@Autowired
 	private CustomGoodsMapper customGoodsMapper;
@@ -141,6 +149,21 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		
 		
 		BeanUtils.copyProperties(g, replier);
+		
+		return replier;
+	}
+
+	@Override
+	public GoodsReplier selectGoodsImgsDatagrid(GoodsReceiver receiver)
+			throws Exception {
+		
+		GoodsReplier replier = new GoodsReplier();
+		
+		List<GoodsImgsReplier> rows = customGoodsImgsMapper.selectGoodsImgsDatagrid(receiver);
+		
+		replier.setTotal(customGoodsImgsMapper.selectGoodsImgsNum(receiver));
+		
+		replier.setRows(rows);
 		
 		return replier;
 	}

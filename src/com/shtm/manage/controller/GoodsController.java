@@ -1,5 +1,7 @@
 package com.shtm.manage.controller;
 
+import java.io.File;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -99,6 +101,41 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 
 	}
 	
+	/**
+	 * Title:selectGoodsImgsDatagrid
+	 * <p>
+	 * Description:根据商品id查询商品图片
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月27日 上午11:24:16
+	 * @version 1.0
+	 * @param receiver
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/selectGoodsImgsDatagrid")
+	public @ResponseBody GoodsReplier selectGoodsImgsDatagrid(GoodsReceiver receiver)
+			throws Exception {
+
+		GoodsReplier replier = new GoodsReplier();
+
+		try {
+
+			replier = service.selectGoodsImgsDatagrid(receiver);
+
+			replier.setResult(RESULT.TRUE);
+
+			replier.setMsg("获取图片列表成功");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+
+		return replier;
+
+	}
 	
 	/**
 	 * Title:
@@ -174,4 +211,46 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 
 		return replier;
 	}
+	
+	
+	/**
+	 * Title:getGoodsImg
+	 * <p>
+	 * Description:通過size和imgName參數獲取商品圖片;<br/>
+	 * 测试:http://localhost/sht/common/goods_getGoodsImg.action?size=200&imgName=2.jpg;<br/>
+	 * 注意:保证目录下有指定size和imgName的文件,测试才能通过;<br/>
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月26日 上午11:32:24
+	 * @version 1.0
+	 * @throws Exception
+	 */
+	@RequestMapping("/getGoodsImg")
+	public void getGoodsImg(GoodsReceiver receiver) throws Exception {
+		String size = receiver.getSize();
+		String imgName = receiver.getImgName();
+		try {
+
+			eject(size == null || size.trim().isEmpty(), "商品图片size没有指定");
+
+			eject(imgName == null || size.trim().isEmpty(), "商品图片的imgName没有指定");
+
+			// 指定的图片路徑
+			String path = getValue(CONFIG.FILED_SRC_GOODS_IMGS) + size
+					+ "_" + imgName;
+
+			// 如果文件不存在
+			eject(!new File(path).exists(),"不存在商品图片图片: "+path);
+
+			// 返回头像
+			writeFileToOS(path, getResponse().getOutputStream());
+
+		} catch (Exception e) {
+			// 找不大图片,抛出异常
+			e.printStackTrace();
+		}
+
+	}
+	
+	
 }

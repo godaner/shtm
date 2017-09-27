@@ -31,7 +31,11 @@ var goodsStatus;
 var clazzsTd;
 var buyerIdSearch;
 var sellerIdSearch;
-/* 只负责初始化调用 */
+//主圖尺寸
+var mainImgSize = 200;
+
+var goods_imgs_dialog;
+var goods_imgs_datagrid;
 $(function(){
 	
 	initGoodsManageVar();
@@ -65,23 +69,26 @@ function initGoodsManageVar(){
 	
 	buyerIdSearch = goodsSearchForm.find("#buyer");
 	sellerIdSearch = goodsSearchForm.find("#owner");
+	
+	goods_imgs_datagrid = $("#goods_imgs_datagrid");
+	goods_imgs_dialog = $("#goods_imgs_dialog");
 }
 /**
  * 加载界面
  */
 function loadGoodsManageUI(){
 	
-	
-	if(!isEmpty(tabParams)){
-		if(!isEmpty(tabParams['buyer'])){
-			buyerIdSearch.textbox("setValue",tabParams['buyer']);
-			
-		}
-		if(!isEmpty(tabParams['owner'])){
-			sellerIdSearch.textbox("setValue",tabParams['owner']);
-			
-		}
+	//判斷參數
+	if(users_to_goods_tab_context.contain('buyer')){
+		buyerIdSearch.textbox("setValue",users_to_goods_tab_context.getAttr("buyer"));
+		
 	}
+	if(users_to_goods_tab_context.contain('owner')){
+		sellerIdSearch.textbox("setValue",users_to_goods_tab_context.getAttr("owner"));
+		
+	}
+	
+	
 	
 	//新增good信息窗口
 	insertGoodDialog.dialog({   
@@ -111,12 +118,12 @@ function loadGoodsManageUI(){
 	theme	bootstrap
 	email	null*/
 
-	
+//	c(users_to_goods_tab_context.toString());
 	//加载goods的datagrid
 	goods_datagrid.datagrid({    
 	    url:manageForwardUrl+"/goods/selectGoodsDatagrid.action",
 	    toolbar:"#goods_dg_tb",
-	    queryParams:tabParams,
+	    queryParams:users_to_goods_tab_context.getContent(),
 	    pagination:true,
 	    striped:true,
 	    fitColumns:true,
@@ -141,9 +148,35 @@ function loadGoodsManageUI(){
 			{
 				field:'owner',
 				title:'发布者id'
-			}
+			},
+			{
+    			field:'ownerName',
+    			title:'发布者',
+    		},    
+	        {
+    			field:'buyerName',
+    			title:'购买者',
+    		}, 
 		             ]],
 		frozenColumns:[[
+			
+		                
+		                ]],
+		columns:[[ 
+		    {
+				field:'mainImg',
+				title:'主圖',
+				sortable : true,
+				formatter: function(value,row,index){
+						if(isEmpty(value)){
+							value = "";
+						}
+						var goodsid = row.id;
+						var goodstitle = row.title;
+						var img = "<img style='width:80px;' src ='"+manageForwardUrl+"/goods/getGoodsImg.action?imgName="+value+"&size="+mainImgSize+"&t="+new Date().getTime()+"'/><div style='text-align:center;'><a style='color:red;' href=javascript:checkGoodsImgs('"+goodsid+"','"+goodstitle+"');>查看更多</a></div>";
+						return img;
+				}
+			},
 			{
 				field:'status',
 				title:'状态',
@@ -162,12 +195,34 @@ function loadGoodsManageUI(){
 				field:'description',
 				title:'描述',
 				sortable : true
-			}
-		                
-		                ]],
-		columns:[[ 
-			
-    		
+			},
+			{
+	        	field:'custom_checkSeller',
+	        	title:'发布者',
+	    		sortable : true,
+				formatter: function(value,row,index){
+					var sellerId = row.owner;
+					var sellerName = row.ownerName;
+					var a = "<a style='color:red;' href=javascript:checkSeller(\'"+sellerId+"\',\'"+sellerName+"\');>"+sellerName+"</a>"
+					return a;
+				}
+	        	
+	        }, 
+	        {
+	        	field:'custom_checkbuyer',
+	        	title:'购买者',
+	    		sortable : true,
+				formatter: function(value,row,index){
+					var buyerId = row.buyer;
+					if(isEmpty(buyerId)){
+						return "无";
+					}
+					var buyerName = row.buyerName;
+					var a = "<a style='color:red;' href=javascript:checkBuyer(\'"+buyerId+"\',\'"+buyerName+"\');>"+buyerName+"</a>"
+					return a;
+				}
+	        	
+	        }, 
     		{
     			field:'sprice',
     			title:'原价',
@@ -204,16 +259,7 @@ function loadGoodsManageUI(){
 	    			return value;
 	    		}
     		},    
-	        {
-    			field:'ownerName',
-    			title:'发布者',
-	    		sortable : true
-    		},    
-	        {
-    			field:'buyerName',
-    			title:'购买者',
-	    		sortable : true
-    		},    
+	           
 	        {
     			field:'browsenumber',
     			title:'浏览次数',
@@ -676,4 +722,141 @@ function statusCode2String(statusCode){
 	}
 	
 	return s;
+}
+
+/**
+ * 查詢顯示制定goodsid的圖片列表
+ * @param goodsid
+ */
+function checkGoodsImgs(goodsid,goodstitle){
+
+	goods_imgs_dialog.dialog({   
+	    title:"商品 "+goodstitle+" 的图片",
+		resizable : true,
+		modal : true,
+		borer:false
+	});
+	
+	goods_imgs_datagrid.datagrid({    
+	    url:manageForwardUrl+"/goods/selectGoodsImgsDatagrid.action?id="+goodsid,
+	    /*queryParams:tabParams,*/
+	    pagination:true,
+	    striped:true,
+	    fitColumns:true,
+	    height:"100%",
+	    width:"100%",
+	    fit: true,
+	    pageList: [5 , 10, 20, 30, 40, 50],
+	    singleSelect:true,
+		checkOnSelect:true,
+		selectOncheck:true,
+		columns:[[
+		          
+			{
+				field:'path',
+				title:'图片',
+				sortable : true,
+				formatter: function(value,row,index){
+						if(isEmpty(value)){
+							value = "";
+						}
+						var goodsid = row.id;
+						var img = "<img style='width:80px;' src ='"+manageForwardUrl+"/goods/getGoodsImg.action?imgName="+value+"&size="+mainImgSize+"&t="+new Date().getTime()+"'/>";
+						return img;
+				}
+			}  ,
+			{
+				field:'main',
+				title:'是否为主图',
+				sortable : true,
+				formatter: function(value,row,index){
+						if(isEmpty(value)){
+							value = "";
+						}
+						value = value==0?"非主图":"主图";
+						return value;
+				}
+			},
+			{
+				field:'id',
+				title:'是否为主图',
+				sortable : true,
+				formatter: function(value,row,index){
+						if(isEmpty(value)){
+							value = "";
+						}
+						var del = "<a href=javascript:void(0);>删除</a>";
+						return del;
+				}
+			}
+		]]
+	});
+	
+	
+	
+}
+
+
+/**
+ * 查看出售者
+ * @param sellerId
+ * @param sellName
+ */
+function checkSeller(sellerId,sellName){
+	confirm("确认查询 "+sellName+" 的商品出售信息?", function(r){
+		if(r){
+			if(tabs.tabs('exists',users_manage_tab_title)){
+				
+				tabs.tabs('select',users_manage_tab_title);
+				//清空条件
+				usersSearchForm.clearEasyuiForm();
+				
+				usserIdSearch.textbox("setValue",sellerId);
+				
+				searchUsers();
+				
+				return;
+			}
+
+			
+			goods_to_users_tab_context.clear();
+			
+			goods_to_users_tab_context.setAttr("id", sellerId);
+			
+			addTab(users_manage_tab_title,users_manage_tab_url);
+			
+		}
+	});
+}
+
+/**
+ * 查看购买者
+ * @param buyerId
+ * @param buyerName
+ */
+function checkBuyer(buyerId,buyerName){
+	confirm("确认查询 "+buyerName+" 的商品出售信息?", function(r){
+		if(r){
+			if(tabs.tabs('exists',users_manage_tab_title)){
+				
+				tabs.tabs('select',users_manage_tab_title);
+				//清空条件
+				usersSearchForm.clearEasyuiForm();
+				
+				usserIdSearch.textbox("setValue",buyerId);
+				
+				searchUsers();
+				
+				return;
+			}
+
+			
+			goods_to_users_tab_context.clear();
+			
+			goods_to_users_tab_context.setAttr("id", buyerId);
+			
+			addTab(users_manage_tab_title,users_manage_tab_url);
+			
+		}
+	});
 }

@@ -101,13 +101,29 @@
 
 
 <!-- 设置js使用的变量 start -->
-<script type="text/javascript" >
+<script type="text/javascript" charset="utf-8">
 	/*在线用户的usernmae*/
 	var onlineUsername = '${sessionScope.onlineUser.username}';
 	/*在线用户的theme*/
 	var onlineUserTheme = '${sessionScope.onlineUser.theme}';
 	/*默认theme*/
 	var defaultTheme = '${defaultTheme}';
+
+	
+	
+	/*统一管理tab跳转参数*/
+	
+	//商品的tab的title,url
+	var goods_manage_tab_title = "商品管理";
+	var goods_manage_tab_url = manageStaticSrcUrl+'/view/goods_manage.jsp';
+	//用户的tab的title,url
+	var users_manage_tab_title = "用户管理";
+	var users_manage_tab_url = manageStaticSrcUrl+'/view/users_manage.jsp';
+
+	//users跳转到goods的tab的上下文环境
+	var users_to_goods_tab_context = new Context();
+	//goods跳转到users的tab的上下文环境
+	var goods_to_users_tab_context = new Context();
 </script>
 <!-- 设置js使用的变量 end -->
 

@@ -109,6 +109,26 @@ public class GoodsReceiver extends Goods {
 		this.clazzs = clazzs;
 	}
 
+	//獲取圖片所需參數
+	
+	private String size;
+	private String imgName;
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public String getImgName() {
+		return imgName;
+	}
+
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
+	}
 	
 	
 }

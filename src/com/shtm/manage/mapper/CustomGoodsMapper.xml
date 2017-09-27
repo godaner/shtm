@@ -32,7 +32,7 @@
 	
 	<select id="selectGoodsDatagrid" parameterType="com.shtm.manage.po.GoodsReceiver" resultType="com.shtm.manage.po.GoodsReplier">
 		
-		SELECT G2.*,u0.USERNAME AS ownerName,u1.USERNAME AS buyerName,getRegionByBaseId(REGION) AS regiondetail,getClazzsBYgoodsid(g2.id) as clazzsDetail
+		SELECT G2.*,u0.USERNAME AS ownerName,u1.USERNAME AS buyerName,getRegionByBaseId(REGION) AS regiondetail,getClazzsBYgoodsid(g2.id) as clazzsDetail,getGoodsMainImgPath(g2.id) as mainImg
 		FROM 
 		       (
 		          SELECT G1.*,ROWNUM AS N

@@ -1,4 +1,71 @@
 /**
+ * 上下文容器
+ */
+function Context(){
+	this.ct = {};
+	this.length = 0;
+	/**
+	 * 设置参数,会覆盖原有数据
+	 */
+	this.setAttr = function(key,value){
+		if(typeof key != "string"){
+			throw "不能将非string参数作为key";
+		}
+		if(!this.contain(key)){
+			++length;
+		}
+		this.ct[key] = value;
+	},
+	/**
+	 * 获取参数
+	 */
+	this.getAttr = function(key){
+		return this.ct[key];
+		delete this.ct[key];
+	},
+	/**
+	 * 清空容器
+	 */
+	this.clear = function(){
+		this.ct = {};
+	},
+	/**
+	 * 是否为空
+	 */
+	this.empty = function(){
+		return length == 0?true:false;
+	},
+	/**
+	 * 容器储存数据个数
+	 */
+	this.length = function(){
+		return this.length;
+	}
+	,
+	/**
+	 * 是否包含某值
+	 */
+	this.contain = function(key){
+		return !this.empty(this.ct[key]);
+	},
+	/**
+	 * 获取所有键值对
+	 */
+	this.getContent = function(){
+		return this.ct;
+	},
+	/**
+	 * 将js内容对象格式化为字符串
+	 */
+	this.toString = function(){
+		return JSON.stringify(this.ct);
+	}
+};
+
+//上下文容器
+var context = new Context();
+
+/**
  * 判断数组中是否存在某个值
  * @param arr
  * @param e
@@ -117,7 +184,7 @@ $.fn.readEasyuiForm = function (){
  * @param obj
  */
 function isEmpty(obj){
-	return obj == null || obj==undefined || obj=="" || obj=="null";
+	return obj == null || obj==undefined || obj=="" || obj == "null";
 }
 
 // 对Date的扩展，将 Date 转化为指定格式的String  

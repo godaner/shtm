@@ -3,7 +3,7 @@ package com.shtm.manage.mapper;
 import java.util.List;
 
 import com.shtm.manage.po.GoodsReceiver;
-import com.shtm.po.Goods;
+import com.shtm.manage.po.GoodsReplier;
 
 /**
  * Title:CustomGoodsMapper
@@ -28,7 +28,7 @@ public interface CustomGoodsMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	List<Goods> selectGoodsDatagrid(GoodsReceiver receiver) throws Exception;
+	List<GoodsReplier> selectGoodsDatagrid(GoodsReceiver receiver) throws Exception;
 	/**
 	 * Title:selectGoodsNum
 	 * <p>

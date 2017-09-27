@@ -69,4 +69,18 @@ public interface GoodsServiceI {
 	 */
 	GoodsReplier selectGoodsByPK(String id) throws Exception;
 
+	/**
+	 * Title:selectGoodsImgsDatagrid
+	 * <p>
+	 * Description:通过商品id查询上商品图片
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月27日 上午11:27:18
+	 * @version 1.0
+	 * @param receiver
+	 * @return
+	 * @throws Exception
+	 */
+	GoodsReplier selectGoodsImgsDatagrid(GoodsReceiver receiver) throws Exception;
+
 }
