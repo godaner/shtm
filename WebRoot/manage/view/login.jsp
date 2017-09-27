@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 	
 <%@include file="./base.jsp"%>
-<link rel="stylesheet" type="text/css" href="${baseUrl}/css/login.css">
+<link rel="stylesheet" type="text/css" href="${manageStaticSrcUrl}/css/login.css">
 <!-- 这里不要指定其为 class="easyui-dialog",不然会有闪屏现象 -->
 <div id="login_dialog">
 

@@ -84,7 +84,7 @@ function initAdminsInfoDialogLis() {
  * @param adminId
  */
 function showAdmin(adminId){
-	var url = "/admins/selectAdmin.action?id="+adminId;
+	var url = manageForwardUrl+"/admins/selectAdmin.action?id="+adminId;
 	ajax.send(url, function(data){
 		//格式化参数
 		data.createtime = new Date(data.createtime).format("yyyy-MM-dd HH:mm:ss");

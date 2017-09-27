@@ -106,7 +106,7 @@ function initLoginLis() {
 		//获取登录信息
 		var loginInfo = getLoginInfo();
 		//执行ajax
-		var url = "/admins/login.action?"+loginInfo;
+		var url = manageForwardUrl+"/admins/login.action?"+loginInfo;
 
 
 		var formParams = loginForm.serializeParams();
@@ -159,7 +159,7 @@ function initLoginLis() {
  * 刷新登录验证码
  */
 function refreshVerifyCode() {
-	verifyCodeImg.attr("src", getWebProjectName()
+	verifyCodeImg.attr("src", manageForwardUrl
 			+ "/admins/verifyCode.action?t=" + (new Date().getTime()));
 }
 

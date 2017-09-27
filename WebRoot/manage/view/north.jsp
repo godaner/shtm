@@ -3,7 +3,7 @@
 <%@include file="./base.jsp"%>
 
 
-<link rel="stylesheet" type="text/css" href="${baseUrl}/css/north.css">
+<link rel="stylesheet" type="text/css" href="${manageStaticSrcUrl}/css/north.css">
 
 <div id="north_content" class="easyui-layout"
 	style="background-color: rgb(66, 166, 206); width: 100%; height: 80px;"
@@ -12,7 +12,7 @@
 	<!-- 西部start -->
 	<div id="n_w" data-options="region:'west',border:false"
 		style=" padding-left:20px;width:150px;background-color: rgb(66, 166, 206);height:100%;">
-		<img style="height:80px;" alt="" src="${baseUrl}/img/manager.jpg?t=123">
+		<img style="height:80px;" alt="" src="${manageStaticSrcUrl}/img/manager.jpg?t=123">
 		
 	</div>
 	<!-- 西部 end -->

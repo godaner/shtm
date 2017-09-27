@@ -48,7 +48,7 @@ function initNorthLis(){
 		//调用util.js的方法
 		pro.show("正在注销");
 		
-		var url = "/admins/logout.action";
+		var url = manageForwardUrl + "/admins/logout.action";
 		
 		ajax.send(
 				url,
@@ -105,7 +105,7 @@ function updateThemes(newThemeString) {
 	pro.show("正在同步主题");
 	
 	//执行ajax
-	var url = "/admins/updateTheme.action";
+	var url = manageForwardUrl + "/admins/updateTheme.action";
 
 	ajax.sendJson(
 		url, 

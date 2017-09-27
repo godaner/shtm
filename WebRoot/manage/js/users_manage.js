@@ -105,7 +105,7 @@ function loadUsersManageUI(){
 	
 	//加载users的datagrid
 	users_datagrid.datagrid({    
-	    url:getWebProjectName()+"/users/selectUsersDatagrid.action",
+	    url:manageForwardUrl+"/users/selectUsersDatagrid.action",
 	    toolbar:"#users_dg_tb",
 	    pagination:true,
 	    striped:true,
@@ -149,7 +149,7 @@ function loadUsersManageUI(){
 					if(isEmpty(value)){
 						value = "";
 					}
-					var img = "<img style='width:"+headimgSize+"px;' src ='"+getWebProjectName()+"/users/getHeadImg.action?headimg="+value+"&size="+headimgSize+"&t="+new Date().getTime()+"'/>";
+					var img = "<img style='width:"+headimgSize+"px;' src ='"+manageForwardUrl+"/users/getHeadImg.action?headimg="+value+"&size="+headimgSize+"&t="+new Date().getTime()+"'/>";
 					return img;
 				}
     		},  
@@ -297,7 +297,7 @@ function checkSellGoods(ownerId,username){
 			
 			var params = {"owner":ownerId};
 			
-			addTab(users_goods_tab_title,getWebProjectName()+"/view/goods_manage.jsp",params);
+			addTab(users_goods_tab_title,manageStaticSrcUrl+"/view/goods_manage.jsp",params);
 			
 		}
 	});
@@ -317,7 +317,7 @@ function checkBuyGoods(buyerId,username){
 
 			var params = {"buyer":buyerId};
 			
-			addTab(users_goods_tab_title,getWebProjectName()+"/view/goods_manage.jsp",params);
+			addTab(users_goods_tab_title,manageStaticSrcUrl+"/view/goods_manage.jsp",params);
 			
 
 		}
@@ -385,7 +385,7 @@ function submitUserEdit(){
 	pro.show("正在修改");
 	
 	editUserForm.form('submit', {    
-	    url:getWebProjectName()+"/users/updateUser.action",    
+	    url:manageForwardUrl+"/users/updateUser.action",    
 	    ajax:true,
 	    iframe:false,
 	    onSubmit: function(){   
@@ -454,7 +454,7 @@ function deleteUser(){
 			var id = currtEditDatagridRow.id;
 			
 			
-			var url = "/users/deleteUser.action?id="+id;
+			var url = manageForwardUrl+"/users/deleteUser.action?id="+id;
 			ajax.send(url, function(data){
 				//显示信息
 				showMsg(data.msg);
@@ -514,7 +514,7 @@ function submitNewUser(){
 
 	
 	insertUserForm.form('submit', {    
-	    url:getWebProjectName()+"/users/insertUser.action",    
+	    url:manageForwardUrl+"/users/insertUser.action",    
 	    ajax:true,
 	    iframe:false,
 	    onSubmit: function(){   

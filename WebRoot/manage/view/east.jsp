@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="./base.jsp"%>
-<link rel="stylesheet" type="text/css" href="${baseUrl}/css/east.css">
+<link rel="stylesheet" type="text/css" href="${manageStaticSrcUrl}/css/east.css">
 
 <div class="easyui-layout" data-options="fit:true">
 	<div class="" data-options="region:'north'" style="height:50%">

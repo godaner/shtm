@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="./base.jsp"%>
-<link rel="stylesheet" type="text/css" href="${baseUrl}/css/users_manage.css">
+<link rel="stylesheet" type="text/css" href="${manageStaticSrcUrl}/css/users_manage.css">
 <!-- 工具栏 start -->
 <div id="users_dg_tb" style="display: none;">
 	<form id="usersSearchForm">
@@ -46,5 +46,5 @@
 <%@include file="./users_manage_insert_dialog.jsp" %>
 <!-- 新增用户弹窗 end -->
 
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/users_manage.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/users_manage.js"></script>
 

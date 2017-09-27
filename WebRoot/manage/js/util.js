@@ -341,7 +341,8 @@ var ajax = {
 		$.ajax({
 			type : "POST",
 			async:async,
-			url : getWebProjectName() + url,
+			/*url : getWebProjectName() + url,*/
+			url : url,
 			/*重点*/
 			contentType : "application/json;charset=utf-8",
 			/*重点*/
@@ -488,7 +489,7 @@ function getCurrtRowData(datagrid, index) {
 /**
  * 得到当前项目名称
  */
-function getWebProjectName() {
+/*function getWebProjectName() {
 	var webProjectName = undefined;
 	// 获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
 	var pathName = window.document.location.pathname;
@@ -496,7 +497,7 @@ function getWebProjectName() {
 	webProjectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
 
 	return webProjectName;
-}
+}*/
 /**
  * 获取某年某月最大天数
  */

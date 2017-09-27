@@ -11,5 +11,5 @@
 	var returnCitySN = {"cip": "180.120.216.21", "cid": "320600", "cname": "江苏省南通市"};
 -->
 <script type="text/javascript" charset="utf-8" src="http://pv.sohu.com/cityjson?ie=utf-8"></script> 
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/visit.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/visit.js"></script>
 <!-- 导入js开始 end -->

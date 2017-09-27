@@ -113,7 +113,7 @@ function loadAdminsManageUI(){
 	
 	//加载admins的datagrid
 	admins_datagrid.datagrid({    
-	    url:getWebProjectName()+"/admins/selectAdminsDatagrid.action",
+	    url:manageForwardUrl+"/admins/selectAdminsDatagrid.action",
 	    toolbar:"#admins_dg_tb",
 	    pagination:true,
 	    striped:true,
@@ -244,6 +244,8 @@ function editAdmin(){
 	
 	row.password = "";
 	
+	row.status = row.status==0?"冻结":row.status==1?"激活":row.status;
+	
 	//注入对象的name与form的id对应的表单对象
 	editAdminForm.writeEasyuiForm(row);
 	
@@ -257,8 +259,8 @@ function submitAdminEdit(){
 	//提示信息
 	pro.show("正在修改");
 	
-	editAdminForm.form('submit', {    
-	    url:getWebProjectName()+"/admins/updateAdmin.action",    
+	editAdminForm.form('submit', {  
+	    url:manageForwardUrl+"/admins/updateAdmin.action",    
 	    ajax:true,
 	    iframe:false,
 	    onSubmit: function(){   
@@ -327,7 +329,7 @@ function deleteAdmin(){
 			var id = currtEditDatagridRow.id;
 			
 			
-			var url = "/admins/deleteAdmin.action?id="+id;
+			var url = manageForwardUrl+"/admins/deleteAdmin.action?id="+id;
 			ajax.send(url, function(data){
 				//显示信息
 				showMsg(data.msg);
@@ -387,7 +389,7 @@ function submitNewAdmin(){
 
 	
 	insertAdminForm.form('submit', {    
-	    url:getWebProjectName()+"/admins/insertAdmin.action",    
+	    url:manageForwardUrl+"/admins/insertAdmin.action",    
 	    ajax:true,
 	    iframe:false,
 	    onSubmit: function(){   

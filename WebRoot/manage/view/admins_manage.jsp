@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="./base.jsp"%>
-<link rel="stylesheet" type="text/css" href="${baseUrl}/css/admins_manage.css">
+<link rel="stylesheet" type="text/css" href="${manageStaticSrcUrl}/css/admins_manage.css">
 <!-- 工具栏 start -->
 <div id="admins_dg_tb" style="display: none;">
 	<form id="adminsSearchForm">
@@ -49,4 +49,4 @@
 <!-- 新增管理员弹窗 end -->
 
 
-<script type="text/javascript" src="${baseUrl}/js/admins_manage.js"></script>
+<script type="text/javascript" src="${manageStaticSrcUrl}/js/admins_manage.js"></script>

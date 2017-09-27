@@ -35,7 +35,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.shtm.util.Static.CONFIG;
+import redis.clients.jedis.Jedis;
+
+import com.shtm.util.Static.REDIS;
 
 /**
  * Title:Util
@@ -50,6 +52,21 @@ import com.shtm.util.Static.CONFIG;
  */
 public class Util extends ClasssPathProps {
 
+	/**
+	 * redis(jedis)
+	 */
+	public final static Jedis jedis = new Jedis(getValue(REDIS.FILED_REDIS_HOST).toString());
+	
+	
+	
+	
+	public static void main(String[] args) {
+        System.out.println("连接成功");
+        //查看服务是否运行
+        System.out.println("服务正在运行: "+jedis.ping());
+    }
+	
+	
 	/**
 	 * 日志打印
 	 */

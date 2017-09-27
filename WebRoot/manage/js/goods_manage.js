@@ -29,7 +29,8 @@ var region;
 var goodsStatus;
 //儲存clazz多選框的td
 var clazzsTd;
-var goodSearchConditionId;
+var buyerIdSearch;
+var sellerIdSearch;
 /* 只负责初始化调用 */
 $(function(){
 	
@@ -62,7 +63,8 @@ function initGoodsManageVar(){
 	
 	clazzsTd = $("#clazzsTd");
 	
-	goodSearchConditionId = goodsSearchForm.find("#id");
+	buyerIdSearch = goodsSearchForm.find("#buyer");
+	sellerIdSearch = goodsSearchForm.find("#owner");
 }
 /**
  * 加载界面
@@ -70,16 +72,16 @@ function initGoodsManageVar(){
 function loadGoodsManageUI(){
 	
 	
-	/*if(!isEmpty(tabParams)){
+	if(!isEmpty(tabParams)){
 		if(!isEmpty(tabParams['buyer'])){
-			goodSearchConditionId.textbox("setValue",tabParams['buyer']);
+			buyerIdSearch.textbox("setValue",tabParams['buyer']);
 			
 		}
 		if(!isEmpty(tabParams['owner'])){
-			goodSearchConditionId.textbox("setValue",tabParams['owner']);
+			sellerIdSearch.textbox("setValue",tabParams['owner']);
 			
 		}
-	}*/
+	}
 	
 	//新增good信息窗口
 	insertGoodDialog.dialog({   
@@ -112,7 +114,7 @@ function loadGoodsManageUI(){
 	
 	//加载goods的datagrid
 	goods_datagrid.datagrid({    
-	    url:getWebProjectName()+"/goods/selectGoodsDatagrid.action",
+	    url:manageForwardUrl+"/goods/selectGoodsDatagrid.action",
 	    toolbar:"#goods_dg_tb",
 	    queryParams:tabParams,
 	    pagination:true,
@@ -327,7 +329,7 @@ function editGood(){
 	
 
 	var pid = "1";
-	var url = '/region/selectRegionByPid.action';
+	var url = manageForwardUrl+'/region/selectRegionByPid.action';
 
 	//設置province
 	/**
@@ -396,7 +398,7 @@ function editGood(){
 	/**
 	 * 加載類型信息
 	 */
-	url0 = "/clazzs/selectClazzs.action";
+	url0 = manageForwardUrl+"/clazzs/selectClazzs.action";
 	ajax.sendSync(url0, function(data){
 		//清除缓存
 		clazzsTd.html("");
@@ -503,7 +505,7 @@ function submitGoodEdit(){
 	
 	
 	editGoodForm.form('submit', {    
-	    url:getWebProjectName()+"/goods/updateGood.action",    
+	    url:manageForwardUrl+"/goods/updateGood.action",    
 	    ajax:true,
 	    iframe:false,
 	    onSubmit: function(){   

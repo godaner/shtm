@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@include file="./base.jsp"%>
 <link rel="stylesheet" type="text/css"
-	href="${baseUrl}/css/center_index.css">
+	href="${manageStaticSrcUrl}/css/center_index.css">
 
 
 

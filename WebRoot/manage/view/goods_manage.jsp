@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="./base.jsp"%>
-<link rel="stylesheet" type="text/css" href="${baseUrl}/css/goods_manage.css">
+<link rel="stylesheet" type="text/css" href="${manageStaticSrcUrl}/css/goods_manage.css">
 <!-- 工具栏 start -->
 <div id="goods_dg_tb" style="display: none;">
 	<form id="goodsSearchForm">
 		<input id="id" name="id" class="easyui-textbox input" data-options="prompt:'id'" style="width:100px">
+		<input id="buyer" name="buyer" class="easyui-textbox input" data-options="prompt:'购买者id'" style="width:100px">
+		<input id="owner" name="owner" class="easyui-textbox input" data-options="prompt:'销售者id'" style="width:100px">
 		<input name="title" class="easyui-textbox input" data-options="prompt:'标题'" style="width:100px"> 
 		<input name="description" class="easyui-textbox input" data-options="prompt:'描述'" style="width:100px"> 
 		<select name="condition" class="easyui-combobox input" style="width:100px;" data-options="editable:false">   
@@ -60,7 +62,7 @@
 
 
 
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/goods_manage.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/goods_manage.js"></script>
 <script>
 	
 </script>

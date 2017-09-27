@@ -16,23 +16,23 @@
 
 <!-- 导入css start -->
 <link id="easyuiTheme" rel="stylesheet" type="text/css"
-	href="${baseUrl}/plugin/jquery-easyui-1.5.3/themes/${defaultTheme}/easyui.css">
+	href="${manageStaticSrcUrl}/plugin/jquery-easyui-1.5.3/themes/${defaultTheme}/easyui.css">
 <link rel="stylesheet" type="text/css"
-	href="${baseUrl}/plugin/jquery-easyui-1.5.3/themes/icon.css">
-<link rel="stylesheet" type="text/css" href="${baseUrl}/css/global.css">
-<link rel="stylesheet" type="text/css" href="${baseUrl}/css/index.css">
+	href="${manageStaticSrcUrl}/plugin/jquery-easyui-1.5.3/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="${manageStaticSrcUrl}/css/index.css">
+<link rel="stylesheet" type="text/css" href="${manageStaticSrcUrl}/css/global.css">
 <!-- 导入css end -->
 
 
 
 <!-- 导入插件 start -->
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/plugin/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/plugin/jquery-3.2.1.min.js"></script>
 <%-- <script type="text/javascript"
-	src="${baseUrl}/plugin/jquery-easyui-1.5.3/jquery.min.js"></script> --%>
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/plugin/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/plugin/jquery-easyui-1.5.3/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/plugin/cropper/js/imagecropper.js"></script>
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/util.js"></script>
+	src="${manageStaticSrcUrl}/plugin/jquery-easyui-1.5.3/jquery.min.js"></script> --%>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/plugin/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/plugin/jquery-easyui-1.5.3/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/plugin/cropper/js/imagecropper.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/util.js"></script>
 <!-- 导入插件 end -->
 
 
@@ -112,14 +112,14 @@
 <!-- 设置js使用的变量 end -->
 
 <!-- 导入js开始 start -->
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/admins_info_dialog.js"></script>
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/login.js"></script>
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/center.js"></script>
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/center_index.js"></script>
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/east.js"></script>
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/north.js"></script>
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/west.js"></script>
-<script type="text/javascript" charset="utf-8" src="${baseUrl}/js/index.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/admins_info_dialog.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/login.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/center.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/center_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/east.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/north.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/west.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/index.js"></script>
 <!-- 获取登录信息的js start -->
 <%@include file="./login_recored.jsp" %>
 <!-- 获取登录信息的js end -->

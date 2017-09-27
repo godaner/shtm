@@ -50,7 +50,7 @@ function loadCenterUI(){
 	center_index_panel.panel({
 		fit : true,
 		border : false,
-		href : getWebProjectName() + '/view/center_index.jsp',
+		href : manageStaticSrcUrl + '/view/center_index.jsp',
 		onLoad : function() {
 			
 		}

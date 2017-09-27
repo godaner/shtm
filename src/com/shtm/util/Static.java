@@ -107,6 +107,22 @@ public interface Static {
 	}
 	
 	/**
+	 * Title:REDIS
+	 * <p>
+	 * Description:redis相關屬性
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月27日 上午8:10:52
+	 * @version 1.0
+	 */
+	public static interface REDIS{
+		/**
+		 * redis主機字段
+		 */
+		static final String FILED_REDIS_HOST = "redis.host";
+	};
+	
+	/**
 	 * ajax返回的操作结果代号的字段
 	 */
 	public interface RESULT{

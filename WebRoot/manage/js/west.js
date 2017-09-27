@@ -26,7 +26,7 @@ function initWestVar(){
 function loadWestUI(){
 	//加载树
 	menutree.tree({    
-	    url:getWebProjectName()+'/permissions/selectPermissionsByPid.action',
+	    url:manageForwardUrl+'/permissions/selectPermissionsByPid.action',
 	    onClick: function(node){
 	    	//添加选项卡到index.jsp的tabs
 	    	var url = node.attributes.url;
@@ -36,7 +36,7 @@ function loadWestUI(){
 	    	}
 	    	c(url);
 	    	//加上项目名
-	    	url = getWebProjectName()+url;
+	    	url = manageForwardUrl+url;
 	    	//添加选项卡
 			addTab(title,url);
 		},    
