@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
 import com.shtm.manage.groups.GoodsGroups.DeleteGoodsGroups;
+import com.shtm.manage.groups.GoodsGroups.GetGoodsImgGroups;
+import com.shtm.manage.groups.GoodsGroups.SelectGoodsByPK;
+import com.shtm.manage.groups.GoodsGroups.SelectGoodsDatagrid;
+import com.shtm.manage.groups.GoodsGroups.SelectGoodsImgsDatagrid;
 import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
 import com.shtm.manage.groups.GoodsGroups.UploadGoodsImgsGroups;
 import com.shtm.manage.po.GoodsReceiver;
@@ -45,12 +49,15 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @return
 	 */
 	@RequestMapping("/selectGoodsByPK")
-	public @ResponseBody GoodsReplier selectGoodsByPK(String id){
+	public @ResponseBody GoodsReplier selectGoodsByPK(@Validated(value={SelectGoodsByPK.class}) GoodsReceiver receiver,
+			BindingResult result){
 		GoodsReplier replier = new GoodsReplier();
 
 		try {
+			
+			getError(result);
 
-			replier = service.selectGoodsByPK(id);
+			replier = service.selectGoodsByPK(receiver.getId());
 
 			replier.setResult(RESULT.TRUE);
 
@@ -79,13 +86,16 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @throws Exception
 	 */
 	@RequestMapping("/selectGoodsDatagrid")
-	public @ResponseBody GoodsReplier selectGoodsDatagrid(GoodsReceiver receiver)
+	public @ResponseBody GoodsReplier selectGoodsDatagrid(@Validated(value={SelectGoodsDatagrid.class}) GoodsReceiver receiver,
+			BindingResult result)
 			throws Exception {
 
 		GoodsReplier replier = new GoodsReplier();
 
 		try {
 
+			getError(result);
+			
 			replier = service.selectGoodsDatagrid(receiver);
 
 			replier.setResult(RESULT.TRUE);
@@ -115,13 +125,16 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @throws Exception
 	 */
 	@RequestMapping("/selectGoodsImgsDatagrid")
-	public @ResponseBody GoodsReplier selectGoodsImgsDatagrid(GoodsReceiver receiver)
+	public @ResponseBody GoodsReplier selectGoodsImgsDatagrid(@Validated(value={SelectGoodsImgsDatagrid.class}) GoodsReceiver receiver,
+			BindingResult result)
 			throws Exception {
 
 		GoodsReplier replier = new GoodsReplier();
 
 		try {
 
+			getError(result);
+			
 			replier = service.selectGoodsImgsDatagrid(receiver);
 
 			replier.setResult(RESULT.TRUE);
@@ -227,14 +240,14 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @throws Exception
 	 */
 	@RequestMapping("/getGoodsImg")
-	public void getGoodsImg(GoodsReceiver receiver) throws Exception {
-		String size = receiver.getSize();
-		String imgName = receiver.getImgName();
+	public void getGoodsImg(@Validated(value={GetGoodsImgGroups.class}) GoodsReceiver receiver,
+			BindingResult result) throws Exception {
 		try {
+			
+			getError(result);
 
-			eject(size == null || size.trim().isEmpty(), "商品图片size没有指定");
-
-			eject(imgName == null || size.trim().isEmpty(), "商品图片的imgName没有指定");
+			String size = receiver.getSize();
+			String imgName = receiver.getImgName();
 
 			// 指定的图片路徑
 			String path = getValue(CONFIG.FILED_SRC_GOODS_IMGS) + size

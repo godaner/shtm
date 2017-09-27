@@ -8,12 +8,14 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
 import com.shtm.manage.groups.GoodsGroups.DeleteGoodsGroups;
+import com.shtm.manage.groups.GoodsGroups.SelectGoodsByPK;
+import com.shtm.manage.groups.GoodsGroups.SelectGoodsImgsDatagrid;
 import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
 import com.shtm.manage.groups.GoodsGroups.UploadGoodsImgsGroups;
 
 public class Goods {
 	
-	@NotBlank(message="{goods.id.notblank.error}",groups={UpdateGoodGroups.class,DeleteGoodsGroups.class,UploadGoodsImgsGroups.class})
+	@NotBlank(message="{goods.id.notblank.error}",groups={UpdateGoodGroups.class,DeleteGoodsGroups.class,UploadGoodsImgsGroups.class,SelectGoodsImgsDatagrid.class,SelectGoodsByPK.class})
     private String id;
 
 	@NotBlank(message="{goods.title.notblank.error}",groups={UpdateGoodGroups.class})

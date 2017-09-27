@@ -3,8 +3,13 @@ package com.shtm.manage.po;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.shtm.manage.groups.GoodsGroups.GetGoodsImgGroups;
+import com.shtm.manage.groups.GoodsGroups.SelectGoodsDatagrid;
+import com.shtm.manage.groups.GoodsGroups.SelectGoodsImgsDatagrid;
 import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
 import com.shtm.manage.groups.GoodsGroups.UploadGoodsImgsGroups;
 import com.shtm.po.Goods;
@@ -36,9 +41,13 @@ public class GoodsReceiver extends Goods {
 	private String sort;
 
 	// 当前多少页数
+	@NotNull(message="{goods.page.notnull.error}",groups={SelectGoodsImgsDatagrid.class,SelectGoodsDatagrid.class})
+	@Range(message="{goods.page.range.error}",groups={SelectGoodsImgsDatagrid.class,SelectGoodsDatagrid.class})
 	private Integer page;
 
 	// 一页的行数
+	@NotNull(message="{goods.rows.notnull.error}",groups={SelectGoodsImgsDatagrid.class,SelectGoodsDatagrid.class})
+	@Range(message="{goods.rows.range.error}",groups={SelectGoodsImgsDatagrid.class,SelectGoodsDatagrid.class})
 	private Integer rows;
 
 	// 分页开始
@@ -113,8 +122,9 @@ public class GoodsReceiver extends Goods {
 	}
 
 	//獲取圖片所需參數
-	
+	@NotBlank(message="{goods.size.notblank.error}",groups={GetGoodsImgGroups.class})
 	private String size;
+	@NotBlank(message="{goods.imgName.notblank.error}",groups={GetGoodsImgGroups.class})
 	private String imgName;
 
 	public String getSize() {
