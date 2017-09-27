@@ -3,7 +3,10 @@ package com.shtm.manage.po;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
+import com.shtm.manage.groups.GoodsGroups.UploadGoodsImgsGroups;
 import com.shtm.po.Goods;
 
 /**
@@ -130,5 +133,16 @@ public class GoodsReceiver extends Goods {
 		this.imgName = imgName;
 	}
 	
+	
+	@NotNull(message="{goods.file.notnull.error}",groups={UploadGoodsImgsGroups.class})
+	private MultipartFile file;
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 	
 }

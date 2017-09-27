@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.shtm.controller.BaseController;
 import com.shtm.manage.groups.GoodsGroups.DeleteGoodsGroups;
 import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
+import com.shtm.manage.groups.GoodsGroups.UploadGoodsImgsGroups;
 import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 import com.shtm.manage.service.GoodsServiceI;
@@ -252,5 +253,40 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 
 	}
 	
+	/**
+	 * Title:
+	 * <p>
+	 * Description:上傳圖片
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月27日 下午8:27:53
+	 * @version 1.0
+	 * @param receiver
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping("/uploadGoodsImgs")
+	public @ResponseBody GoodsReplier uploadGoodsImgs(@Validated(value={UploadGoodsImgsGroups.class}) GoodsReceiver receiver,
+			BindingResult result){
+		GoodsReplier replier = new GoodsReplier();
+
+		try {
+			
+			getError(result);
+			
+			service.uploadGoodsImgs(receiver);
+
+			replier.setResult(RESULT.TRUE);
+
+			replier.setMsg("上傳成功");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+
+		return replier;
+	}
 	
 }

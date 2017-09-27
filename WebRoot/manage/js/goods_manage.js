@@ -36,6 +36,9 @@ var mainImgSize = 200;
 
 var goods_imgs_dialog;
 var goods_imgs_datagrid;
+
+var goods_upload_imgs_dialog;
+var goods_upload_imgs_form;
 $(function(){
 	
 	initGoodsManageVar();
@@ -72,6 +75,10 @@ function initGoodsManageVar(){
 	
 	goods_imgs_datagrid = $("#goods_imgs_datagrid");
 	goods_imgs_dialog = $("#goods_imgs_dialog");
+	
+	goods_upload_imgs_dialog = $("#goods_upload_imgs_dialog");
+	
+	goods_upload_imgs_form = $("#goods_upload_imgs_form");
 }
 /**
  * 加载界面
@@ -728,8 +735,11 @@ function statusCode2String(statusCode){
  * 查詢顯示制定goodsid的圖片列表
  * @param goodsid
  */
+var currtShowImgsGoodsId;
 function checkGoodsImgs(goodsid,goodstitle){
-
+	//記錄goodsid
+	currtShowImgsGoodsId = goodsid;
+	
 	goods_imgs_dialog.dialog({   
 	    title:"商品 "+goodstitle+" 的图片",
 		resizable : true,
@@ -739,12 +749,10 @@ function checkGoodsImgs(goodsid,goodstitle){
 	
 	goods_imgs_datagrid.datagrid({    
 	    url:manageForwardUrl+"/goods/selectGoodsImgsDatagrid.action?id="+goodsid,
-	    /*queryParams:tabParams,*/
+	    toolbar:"#goods_imgs_dg_tb",
 	    pagination:true,
 	    striped:true,
 	    fitColumns:true,
-	    height:"100%",
-	    width:"100%",
 	    fit: true,
 	    pageList: [5 , 10, 20, 30, 40, 50],
 	    singleSelect:true,
@@ -859,4 +867,65 @@ function checkBuyer(buyerId,buyerName){
 			
 		}
 	});
+}
+
+/**
+ * 打开图片上传对话框
+ */
+function openAddGoodsImgDialog(){
+	goods_upload_imgs_dialog.dialog({   
+	    title:"新增商品商品图片",
+		resizable : true,
+		modal : true,
+		closed : false,
+		borer:false
+	});
+}
+/**
+ * 提交商品图片
+ */
+function submitGoodsImgs(){
+	pro.show();
+	goods_upload_imgs_form.form('submit', {    
+	    url:manageForwardUrl+"/goods/uploadGoodsImgs.action?id="+currtShowImgsGoodsId,    
+	    ajax:true,
+	    iframe:false,
+	    onSubmit: function(){   
+	    	if(!goods_upload_imgs_form.form('validate')){
+	    		pro.close();
+	    		return false;
+	    	}
+	    	//关闭图片上传窗口
+	    	goods_upload_imgs_dialog.dialog('close');
+	    },    
+	    success:function(data){ 
+//	    	c(data);
+	    	data = JSON.parse(data);
+	    	
+	    	pro.close();
+			//提示信息
+			showMsg(data.msg);
+
+			if(data.result == 1){
+				//更新成功
+				
+				//刷新商品图片列表
+				goods_imgs_datagrid.datagrid("reload");
+				
+			}else{
+				//失敗
+		    	//打开图片上传窗口
+		    	goods_upload_imgs_dialog.dialog('open');
+			}
+	    } ,
+	    onLoadError:function(){
+	    	//失敗
+			//提示信息
+			showMsg(data.msg);
+	    	//关闭进度条
+	    	pro.close();
+			//打開图片上传窗口
+	    	goods_upload_imgs_dialog.dialog('open');
+	    }
+	});  
 }

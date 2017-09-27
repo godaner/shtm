@@ -83,4 +83,17 @@ public interface GoodsServiceI {
 	 */
 	GoodsReplier selectGoodsImgsDatagrid(GoodsReceiver receiver) throws Exception;
 
+	/**
+	 * Title:
+	 * <p>
+	 * Description:上傳商品圖片
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月27日 下午8:09:44
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	void uploadGoodsImgs(GoodsReceiver receiver) throws Exception; 
+
 }

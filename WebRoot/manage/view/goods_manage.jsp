@@ -64,4 +64,8 @@
 <%@include file="./goods_manage_imgs_dialog.jsp" %>
 <!-- goods属性编辑弹窗 end -->
 
+<!-- goods圖片管理弹窗 start -->
+<%@include file="./goods_manage_upload_imgs_dialog.jsp" %>
+<!-- goods属性编辑弹窗 end -->
+
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/goods_manage.js"></script>

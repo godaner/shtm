@@ -309,8 +309,12 @@ var pro = {
 	 * 中部进度条显示
 	 */
 	show : function(m) {
+		var title = "请稍等";
+		if(!isEmpty(m)){
+			title = m; 
+		}
 		$.messager.progress({
-			title : "请稍等",
+			title : title,
 			msg : m
 		});
 

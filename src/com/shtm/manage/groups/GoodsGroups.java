@@ -35,5 +35,17 @@ public interface GoodsGroups {
 	public interface DeleteGoodsGroups{};
 	
 
+
+	/**
+	 * Title:uploadGoodsImgsGroups
+	 * <p>
+	 * Description:上传goods图片所使用的验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月27日 下午8:04:07
+	 * @version 1.0
+	 */
+	public interface UploadGoodsImgsGroups{};
+	
 	
 }

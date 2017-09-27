@@ -1,5 +1,6 @@
 package com.shtm.manage.service.impl;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -12,15 +13,19 @@ import com.shtm.manage.po.GoodsImgsReplier;
 import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 import com.shtm.manage.service.GoodsServiceI;
+import com.shtm.mapper.FilesMapper;
 import com.shtm.mapper.GoodsClazzsMapper;
 import com.shtm.mapper.GoodsImgsMapper;
 import com.shtm.mapper.GoodsMapper;
+import com.shtm.po.Files;
 import com.shtm.po.Goods;
 import com.shtm.po.GoodsClazzs;
 import com.shtm.po.GoodsClazzsExample;
 import com.shtm.po.GoodsClazzsExample.Criteria;
-import com.shtm.po.GoodsImgsExample;
+import com.shtm.po.GoodsImgs;
 import com.shtm.service.impl.BaseService;
+import com.shtm.util.Static.CONFIG;
+import com.shtm.util.Static.GOODS_IMGS_IS_MAIN;
 import com.shtm.util.Static.GOODS_STAUS;
 
 /**
@@ -39,7 +44,14 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 	private GoodsMapper goodsMapper;
 	
 	@Autowired
+	private FilesMapper filesMapper;
+	
+	@Autowired
 	private GoodsClazzsMapper goodsClazzsMapper;
+	
+
+	@Autowired
+	private GoodsImgsMapper goodsImgsMapper;
 
 	@Autowired
 	private CustomGoodsImgsMapper customGoodsImgsMapper;
@@ -166,6 +178,41 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		replier.setRows(rows);
 		
 		return replier;
+	}
+
+	@Override
+	public void uploadGoodsImgs(GoodsReceiver receiver) throws Exception {
+		
+		String uuid = uuid();
+		//保存源文件
+		String path = getValue(CONFIG.FILED_SRC_GOODS_IMGS).toString();
+		String fileName = uuid + "." + getFileNameExt(receiver.getFile().getOriginalFilename());
+		
+		File targetFile = new File(path,fileName);
+		
+		receiver.getFile().transferTo(targetFile);
+		
+		//保存多版本文件
+		String versions = getValue(CONFIG.FILED_GOODS_IMGS_SIZES).toString();
+		
+		writeFileWithCompress(targetFile, versions, path, fileName);
+		
+		Files f = new Files();
+		f.setId(uuid);
+		f.setName(fileName);
+		f.setPath(fileName);
+		
+		filesMapper.insert(f);
+		
+		GoodsImgs gi = new GoodsImgs();
+		
+		gi.setId(uuid);
+		gi.setImg(uuid);
+		gi.setMain(GOODS_IMGS_IS_MAIN.NO);
+		gi.setOwner(receiver.getId());
+		
+		goodsImgsMapper.insert(gi);
+		
 	}
 
 }

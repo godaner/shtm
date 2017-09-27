@@ -25,6 +25,22 @@ public interface Static {
 	public final static String FILED_LOGIN_VERIFYCODE = "loginVerifyCode";
 	
 	/**
+	 * Title:GOODS_IMGS_MAIN
+	 * <p>
+	 * Description:是否為主文件
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月27日 下午8:17:06
+	 * @version 1.0
+	 */
+	public interface GOODS_IMGS_IS_MAIN{
+		public final static Double YES = 1d;
+		public final static Double NO = -1d;
+	}
+	
+	
+	
+	/**
 	 * 
 	 * Title:ADMINS_LOGIN_LOG_RESULT
 	 * <p>
