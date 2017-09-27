@@ -744,7 +744,14 @@ function checkGoodsImgs(goodsid,goodstitle){
 	    title:"商品 "+goodstitle+" 的图片",
 		resizable : true,
 		modal : true,
-		borer:false
+		borer:false,
+		onDestroy:function(){
+			goods_datagrid.datagrid("reload");
+		},
+		onClose:function(){
+
+			goods_datagrid.datagrid("reload");
+		}
 	});
 	
 	goods_imgs_datagrid.datagrid({    
