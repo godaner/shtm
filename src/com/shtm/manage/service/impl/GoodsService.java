@@ -291,6 +291,12 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		
 		goodsImgsMapper.deleteByPrimaryKey(receiver.getId());
 		
+		//更新商品的最后更新时间
+		Goods g = new Goods();
+		g.setId(dbGI.getOwner());
+		g.setLastupdatetime(timestamp());
+		goodsMapper.updateByPrimaryKeySelective(g);
+		
 		//删除磁盘文件
 		deleteVersionsFile( path, fileName,versions);
 		
