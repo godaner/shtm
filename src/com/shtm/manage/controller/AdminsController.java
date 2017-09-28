@@ -46,7 +46,7 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 	 * @param receiver
 	 * @return
 	 */
-	/*@RequestMapping("/selectAdmin")
+	@RequestMapping("/selectAdmin")
 	public @ResponseBody AdminsReplier selectAdmin(@Validated(value={SelectAdminGroups.class}) AdminsReceiver receiver,
 			BindingResult result) throws Exception{
 		AdminsReplier replier = new AdminsReplier();		
@@ -63,7 +63,7 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 			replier.setMsg(e.getMessage());
 		}
 		return replier;
-	}*/
+	}
 	
 	/**
 	 * Title:verifyCode

@@ -5,7 +5,7 @@
 <!-- 工具栏 start -->
 <div id="admins_dg_tb" style="display: none;">
 	<form id="adminsSearchForm">
-		<input id="id" name="id" class="easyui-textbox input" data-options="prompt:'id'" style="width:100px">
+		<input name="id" class="easyui-textbox input" data-options="prompt:'id'" style="width:100px">
 		<input name="username" class="easyui-textbox input" data-options="prompt:'管理员名'" style="width:100px"> 
 		<input name="email" class="easyui-textbox input" data-options="prompt:'邮箱'" style="width:100px"> 
 		<select name="theme" class="easyui-combobox input" style="width:100px;" data-options="editable:false">   

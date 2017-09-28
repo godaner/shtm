@@ -85,10 +85,77 @@ function initGoodsManageVar(){
  */
 function loadGoodsManageUI(){
 	
+	//判斷參數
+	if(users_to_goods_tab_context.contain('buyer')){
+		buyerIdSearch.textbox("setValue",users_to_goods_tab_context.getAttr("buyer"));
+		
+	}
+	if(users_to_goods_tab_context.contain('owner')){
+		sellerIdSearch.textbox("setValue",users_to_goods_tab_context.getAttr("owner"));
+		
+	}
 	
 	
-	
-	
+	//商品图片列表
+	goods_imgs_datagrid.datagrid({    
+	    toolbar:'#goods_imgs_dg_tb',
+	    pagination:true,
+	    striped:true,
+	    fitColumns:true,
+	    fit: true,
+	    pageList: [5 , 10, 20, 30, 40, 50],
+	    singleSelect:true,
+		checkOnSelect:true,
+		selectOncheck:true,
+		columns:[[
+		          
+			{
+				field:'path',
+				title:'图片',
+				sortable : true,
+				formatter: function(value,row,index){
+						if(isEmpty(value)){
+							value = "";
+						}
+						var goodsid = row.id;
+						var img = "<img style='width:80px;' src ='"+manageForwardUrl+"/goods/getGoodsImg.action?imgName="+value+"&size="+mainImgSize+"&t="+new Date().getTime()+"'/>";
+						return img;
+				}
+			}  ,
+			{
+				field:'main',
+				title:'是否为主图',
+				sortable : true,
+				formatter: function(value,row,index){
+						if(isEmpty(value)){
+							value = "";
+						}
+						value = value==0?"非主图":"主图";
+						return value;
+				}
+			},
+			{
+				field:'id',
+				title:'删除图片',
+				sortable : true,
+				formatter: function(value,row,index){
+						var goodsImgsId = row.id;
+						var del = "<a href=javascript:deleteGoodsImg('"+goodsImgsId+"');>删除</a>";
+						return del;
+				}
+			},
+			{
+				field:'custom_updateMainImg',
+				title:'设置为主图',
+				sortable : true,
+				formatter: function(value,row,index){
+						var goodsImgsId = row.id;
+						var a = "<a href=javascript:updateMainImg('"+currtShowImgsGoodsId+"','"+goodsImgsId+"');>设置为主图</a>";
+						return a;
+				}
+			}
+		]]
+	});
 	
 	
 	//新增good信息窗口
@@ -109,20 +176,17 @@ function loadGoodsManageUI(){
 	});
 	
 	
+	/*id	1
+	username	123
+	password	4297f44b13955235245b2497399d7a93
+	salt	123
+	status	1
+	createtime	1505441889000
+	creator	null
+	theme	bootstrap
+	email	null*/
 
-	//判斷加载參數
-	if(users_to_goods_tab_context.contain('buyer')){
-		buyerIdSearch.textbox("setValue",users_to_goods_tab_context.removeAttr("buyer"));
-//		users_to_goods_tab_context.clear();
-		
-	}
-	if(users_to_goods_tab_context.contain('owner')){
-		sellerIdSearch.textbox("setValue",users_to_goods_tab_context.removeAttr("owner"));
-//		users_to_goods_tab_context.clear();
-	}
-	
-//	c(users_to_goods_tab_context.getContent());
-	
+//	c(users_to_goods_tab_context.toString());
 	//加载goods的datagrid
 	goods_datagrid.datagrid({    
 	    url:manageForwardUrl+"/goods/selectGoodsDatagrid.action",
@@ -622,8 +686,10 @@ function deleteGood(){
 			
 			
 			var id = currtEditDatagridRow.id;
-			ajax.send(manageForwardUrl+"/goods/deleteGood.action?id="+id, 
-			function(data){
+			
+			
+			var url = "/goods/deleteGood.action?id="+id;
+			ajax.send(url, function(data){
 				//显示信息
 				showMsg(data.msg);
 				
@@ -753,81 +819,14 @@ function checkGoodsImgs(goodsid,goodstitle){
 			
 		}
 	});
-	//商品图片列表
-	goods_imgs_datagrid.datagrid({    
-	    /*toolbar:'#goods_imgs_dg_tb',*/
-		url:manageForwardUrl+"/goods/selectGoodsImgsDatagrid.action?id="+goodsid,
-		toolbar:[
-				{
-					text:"添加图片",
-					iconCls:'icon-add',
-					handler:function(){
-						openAddGoodsImgDialog();
-					}
-				}],
-	    pagination:true,
-	    striped:true,
-	    fitColumns:true,
-	    fit: true,
-	    pageList: [5 , 10, 20, 30, 40, 50],
-	    singleSelect:true,
-		checkOnSelect:true,
-		selectOncheck:true,
-		columns:[[
-		          
-			{
-				field:'path',
-				title:'图片',
-				sortable : true,
-				formatter: function(value,row,index){
-						if(isEmpty(value)){
-							value = "";
-						}
-						var goodsid = row.id;
-						var img = "<img style='width:80px;' src ='"+manageForwardUrl+"/goods/getGoodsImg.action?imgName="+value+"&size="+mainImgSize+"&t="+new Date().getTime()+"'/>";
-						return img;
-				}
-			}  ,
-			{
-				field:'main',
-				title:'是否为主图',
-				sortable : true,
-				formatter: function(value,row,index){
-						if(isEmpty(value)){
-							value = "";
-						}
-						value = value==0?"非主图":"主图";
-						return value;
-				}
-			},
-			{
-				field:'id',
-				title:'删除图片',
-				sortable : true,
-				formatter: function(value,row,index){
-						var goodsImgsId = row.id;
-						var del = "<a href=javascript:deleteGoodsImg('"+goodsImgsId+"');>删除</a>";
-						return del;
-				}
-			},
-			{
-				field:'custom_updateMainImg',
-				title:'设置为主图',
-				sortable : true,
-				formatter: function(value,row,index){
-						var goodsImgsId = row.id;
-						var a = "<a href=javascript:updateMainImg('"+currtShowImgsGoodsId+"','"+goodsImgsId+"');>设置为主图</a>";
-						return a;
-				}
-			}
-		]]
-	});
+	
 	
 	//加载goods图片列表
-	/*goods_imgs_datagrid.datagrid({
+	goods_imgs_datagrid.datagrid({
+		url:manageForwardUrl+"/goods/selectGoodsImgsDatagrid.action?id="+goodsid
 		
 	});
-	*/
+	
 	
 	
 }
