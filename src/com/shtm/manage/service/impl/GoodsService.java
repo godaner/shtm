@@ -1,6 +1,7 @@
 package com.shtm.manage.service.impl;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -14,10 +15,12 @@ import com.shtm.manage.po.GoodsImgsReplier;
 import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 import com.shtm.manage.service.GoodsServiceI;
+import com.shtm.mapper.ClazzsMapper;
 import com.shtm.mapper.FilesMapper;
 import com.shtm.mapper.GoodsClazzsMapper;
 import com.shtm.mapper.GoodsImgsMapper;
 import com.shtm.mapper.GoodsMapper;
+import com.shtm.po.Clazzs;
 import com.shtm.po.Files;
 import com.shtm.po.Goods;
 import com.shtm.po.GoodsClazzs;
@@ -60,6 +63,9 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 	
 	@Autowired
 	private CustomGoodsMapper customGoodsMapper;
+	
+	@Autowired
+	private ClazzsMapper clazzsMapper;
 	
 	@Override
 	public GoodsReplier selectGoodsDatagrid(GoodsReceiver receiver)
@@ -116,11 +122,24 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		/**
 		 * 更新clazzs
 		 */
-		//删除clazzs
 		GoodsClazzsExample example = new GoodsClazzsExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andGoodsEqualTo(receiver.getId());
+		//查詢當前goods和clazzs的关联記錄
+		List<GoodsClazzs> goodsClazzs = goodsClazzsMapper.selectByExample(example);
+		//删除舊的clazzs
 		goodsClazzsMapper.deleteByExample(example);
+		//clazzs数量减-1
+		for (int i = 0; i < goodsClazzs.size(); i++) {
+			GoodsClazzs sc = goodsClazzs.get(i);
+			
+			Clazzs c = clazzsMapper.selectByPrimaryKey(sc.getClazz());
+			
+			c.setNum(c.getNum() -1);
+			
+			clazzsMapper.updateByPrimaryKeySelective(c);
+		}
+		
 		
 		//添加clazzs
 		for (String clz : receiver.getClazzs()) {
@@ -131,7 +150,14 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 			gc.setId(uuid());
 			gc.setGoods(receiver.getId());
 			gc.setClazz(clz);
+			//插入goods和clazzs关联记录
 			goodsClazzsMapper.insert(gc);
+			//clazzs数量+1
+			Clazzs c = clazzsMapper.selectByPrimaryKey(clz);
+			
+			c.setNum(c.getNum() + 1);
+			
+			clazzsMapper.updateByPrimaryKeySelective(c);
 		}
 		
 	}

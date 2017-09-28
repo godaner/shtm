@@ -51,6 +51,14 @@ function loadClazzsManageUI() {
 			formatter : function(value, row, index) {
 				return value;
 			}
+		},
+		{
+			field : 'num',
+			title : '商品數量',
+			sortable : true,
+			formatter : function(value, row, index) {
+				return value;
+			}
 		}] ]
 	});
 }
