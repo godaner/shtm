@@ -1,10 +1,18 @@
 package com.shtm.po;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.shtm.manage.groups.GoodsGroups.DeleteGoodsImgGroups;
+import com.shtm.manage.groups.GoodsGroups.UpdateGoodsMainImgGroups;
+
 public class GoodsImgs {
+	
+	@NotBlank(message="{goodsimgs.id.notblank.error}",groups={UpdateGoodsMainImgGroups.class,DeleteGoodsImgGroups.class})
     private String id;
 
+	@NotBlank(message="{goodsimgs.owner.notblank.error}",groups={UpdateGoodsMainImgGroups.class})
     private String owner;
-
+    
     private String img;
 
     private Double main;

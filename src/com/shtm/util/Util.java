@@ -64,6 +64,29 @@ public class Util extends RedisUtil {
 	 */
 	public final static ValidateCode vc = new ValidateCode(160, 40, 5, 150);
 
+	/**
+	 * Title:
+	 * <p>
+	 * Description:删除多个版本的文件;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月28日 上午11:16:39
+	 * @version 1.0
+	 * @param path
+	 * @param fileName
+	 * @param versions
+	 */
+	public static void deleteVersionsFile(String path,String fileName,String versions){
+		String[] widthStrs = versions.split(",");
+
+		for (String widthStr : widthStrs) {
+
+			File targetFile = new File(path + widthStr + "_" + fileName);
+
+			deleteFile(targetFile);
+		}
+	}
+	
 	
 	/**
 	 * Title:getErrors

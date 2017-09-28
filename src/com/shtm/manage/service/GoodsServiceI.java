@@ -1,5 +1,6 @@
 package com.shtm.manage.service;
 
+import com.shtm.manage.po.GoodsImgsReceiver;
 import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 
@@ -94,6 +95,32 @@ public interface GoodsServiceI {
 	 * @param receiver
 	 * @throws Exception
 	 */
-	void uploadGoodsImgs(GoodsReceiver receiver) throws Exception; 
+	void uploadGoodsImgs(GoodsReceiver receiver) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:修改主图片
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月28日 上午8:28:37
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	void updateGoodsMainImg(GoodsImgsReceiver receiver) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:删除商品图片
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月28日 上午11:08:19
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	void deleteGoodsImg(GoodsImgsReceiver receiver) throws Exception; 
 
 }

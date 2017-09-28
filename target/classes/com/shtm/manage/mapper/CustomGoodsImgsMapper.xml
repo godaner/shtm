@@ -21,4 +21,6 @@
 		WHERE G0.ID = GI0.OWNER and g0.id = #{id}
 	  
 	</select>
+	
+	
 </mapper>

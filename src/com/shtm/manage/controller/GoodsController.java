@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
 import com.shtm.manage.groups.GoodsGroups.DeleteGoodsGroups;
+import com.shtm.manage.groups.GoodsGroups.DeleteGoodsImgGroups;
 import com.shtm.manage.groups.GoodsGroups.GetGoodsImgGroups;
 import com.shtm.manage.groups.GoodsGroups.SelectGoodsByPK;
 import com.shtm.manage.groups.GoodsGroups.SelectGoodsDatagrid;
 import com.shtm.manage.groups.GoodsGroups.SelectGoodsImgsDatagrid;
 import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
+import com.shtm.manage.groups.GoodsGroups.UpdateGoodsMainImgGroups;
 import com.shtm.manage.groups.GoodsGroups.UploadGoodsImgsGroups;
+import com.shtm.manage.po.GoodsImgsReceiver;
 import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 import com.shtm.manage.service.GoodsServiceI;
@@ -292,6 +295,77 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 			replier.setResult(RESULT.TRUE);
 
 			replier.setMsg("上傳成功");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+
+		return replier;
+	}
+	
+	/**
+	 * Title:
+	 * <p>
+	 * Description:通过goodsimgsid和goodsid更新主图为goodsimgsid为主图
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月28日 上午9:00:55
+	 * @version 1.0
+	 * @param receiver
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping("/updateGoodsMainImg")
+	public @ResponseBody GoodsReplier updateGoodsMainImg(@Validated(value={UpdateGoodsMainImgGroups.class}) GoodsImgsReceiver receiver,
+			BindingResult result){
+		GoodsReplier replier = new GoodsReplier();
+
+		try {
+			
+			getError(result);
+			
+			service.updateGoodsMainImg(receiver);
+
+			replier.setResult(RESULT.TRUE);
+
+			replier.setMsg("更新主图成功");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+
+		return replier;
+	}
+	/**
+	 * Title:
+	 * <p>
+	 * Description:通过goodsimgs对象的id删除图片;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月28日 上午11:00:44
+	 * @version 1.0
+	 * @param receiver
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping("/deleteGoodsImg")
+	public @ResponseBody GoodsReplier deleteGoodsImg(@Validated(value={DeleteGoodsImgGroups.class}) GoodsImgsReceiver receiver,
+			BindingResult result){
+		GoodsReplier replier = new GoodsReplier();
+
+		try {
+			
+			getError(result);
+			
+			service.deleteGoodsImg(receiver);
+
+			replier.setResult(RESULT.TRUE);
+
+			replier.setMsg("删除成功");
 
 		} catch (Exception e) {
 			e.printStackTrace();

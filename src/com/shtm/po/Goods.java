@@ -11,6 +11,7 @@ import com.shtm.manage.groups.GoodsGroups.DeleteGoodsGroups;
 import com.shtm.manage.groups.GoodsGroups.SelectGoodsByPK;
 import com.shtm.manage.groups.GoodsGroups.SelectGoodsImgsDatagrid;
 import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
+import com.shtm.manage.groups.GoodsGroups.UpdateGoodsMainImgGroups;
 import com.shtm.manage.groups.GoodsGroups.UploadGoodsImgsGroups;
 
 public class Goods {

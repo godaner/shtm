@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.shtm.manage.mapper.CustomGoodsImgsMapper;
 import com.shtm.manage.mapper.CustomGoodsMapper;
+import com.shtm.manage.po.GoodsImgsReceiver;
 import com.shtm.manage.po.GoodsImgsReplier;
 import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
@@ -23,6 +24,7 @@ import com.shtm.po.GoodsClazzs;
 import com.shtm.po.GoodsClazzsExample;
 import com.shtm.po.GoodsClazzsExample.Criteria;
 import com.shtm.po.GoodsImgs;
+import com.shtm.po.GoodsImgsExample;
 import com.shtm.service.impl.BaseService;
 import com.shtm.util.Static.CONFIG;
 import com.shtm.util.Static.GOODS_IMGS_IS_MAIN;
@@ -183,8 +185,21 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 	@Override
 	public void uploadGoodsImgs(GoodsReceiver receiver) throws Exception {
 		
+		/**
+		 * 判断上传图片的数量
+		 */
+		//获取指定goodsid的图片数量
+		Integer num = customGoodsImgsMapper.selectGoodsImgsNum(receiver);
+		
+		Integer max = Integer.valueOf(getValue(CONFIG.FILED_GOODS_IMGS_MAXNUMBER).toString());
+		
+		eject(num >= max, "最多能上传"+max+"张图片");
+		
+		
 		String uuid = uuid();
-		//保存源文件
+		/**
+		 * 保存源文件
+		 */
 		String path = getValue(CONFIG.FILED_SRC_GOODS_IMGS).toString();
 		String fileName = uuid + "." + getFileNameExt(receiver.getFile().getOriginalFilename());
 		
@@ -197,6 +212,10 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		
 		writeFileWithCompress(targetFile, versions, path, fileName);
 		
+		/**
+		 * 
+		 * 保存files
+		 */
 		Files f = new Files();
 		f.setId(uuid);
 		f.setName(fileName);
@@ -204,6 +223,9 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		
 		filesMapper.insert(f);
 		
+		/**
+		 * 保存goodsimgs
+		 */
 		GoodsImgs gi = new GoodsImgs();
 		
 		gi.setId(uuid);
@@ -212,6 +234,67 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		gi.setOwner(receiver.getId());
 		
 		goodsImgsMapper.insert(gi);
+		
+	}
+
+	@Override
+	public void updateGoodsMainImg(GoodsImgsReceiver receiver) throws Exception {
+		
+		/**
+		 * 更新旧的所有图片为非主图
+		 */
+		//设置条件
+		GoodsImgsExample example = new GoodsImgsExample();
+		
+		com.shtm.po.GoodsImgsExample.Criteria criteria0 = example.createCriteria();
+		
+		criteria0.andOwnerEqualTo(receiver.getOwner());
+		
+		
+		//设置更新字段
+		GoodsImgs record = new GoodsImgs();
+		
+		record.setMain(GOODS_IMGS_IS_MAIN.NO);
+		
+		goodsImgsMapper.updateByExampleSelective(record, example);
+		
+		/**
+		 * 更新指定goodsimgs的图片为最新的主图
+		 */
+
+		
+		record.setId(receiver.getId());
+		
+		record.setMain(GOODS_IMGS_IS_MAIN.YES);
+		
+		goodsImgsMapper.updateByPrimaryKeySelective(record);
+		
+	}
+
+	@Override
+	public void deleteGoodsImg(GoodsImgsReceiver receiver) throws Exception {
+		
+		GoodsImgs dbGI = goodsImgsMapper.selectByPrimaryKey(receiver.getId());
+		
+		eject(dbGI.getMain().equals(GOODS_IMGS_IS_MAIN.YES), "不能删除主图");
+		
+		//删除files表
+		Files f = filesMapper.selectByPrimaryKey(dbGI.getImg());
+		String path = getValue(CONFIG.FILED_SRC_GOODS_IMGS).toString();
+		String fileName = f.getPath();
+		String versions = getValue(CONFIG.FILED_GOODS_IMGS_SIZES).toString();
+		
+		
+		filesMapper.deleteByPrimaryKey(f.getId());
+		
+		//删除goodsims表
+		
+		goodsImgsMapper.deleteByPrimaryKey(receiver.getId());
+		
+		//删除磁盘文件
+		deleteVersionsFile( path, fileName,versions);
+		
+		
 		
 	}
 

@@ -92,4 +92,29 @@ public interface GoodsGroups {
 	 * @version 1.0
 	 */
 	public interface SelectGoodsByPK{};
+	
+	
+	/**
+	 * 
+	 * Title:UpdateGoodsMainImg
+	 * <p>
+	 * Description:更新商品主图所使用的验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月28日 上午8:13:28
+	 * @version 1.0
+	 */
+	public interface UpdateGoodsMainImgGroups{};
+	
+	
+	/**
+	 * Title:DeleteGoodsImgGroups
+	 * <p>
+	 * Description:删除商品图片所使用的验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月28日 上午11:07:28
+	 * @version 1.0
+	 */
+	public interface DeleteGoodsImgGroups{};
 }

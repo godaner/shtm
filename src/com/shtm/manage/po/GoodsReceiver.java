@@ -155,4 +155,16 @@ public class GoodsReceiver extends Goods {
 		this.file = file;
 	}
 	
+	/*private String goodsimgsId;
+
+	public String getGoodsimgsId() {
+		return goodsimgsId;
+	}
+
+	public void setGoodsimgsId(String goodsimgsId) {
+		this.goodsimgsId = goodsimgsId;
+	}*/
+	
+	
+	
 }

@@ -35,7 +35,7 @@ public interface Static {
 	 */
 	public interface GOODS_IMGS_IS_MAIN{
 		public final static Double YES = 1d;
-		public final static Double NO = -1d;
+		public final static Double NO = 0d;
 	}
 	
 	

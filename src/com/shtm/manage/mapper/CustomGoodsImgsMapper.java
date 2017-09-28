@@ -37,7 +37,7 @@ public interface CustomGoodsImgsMapper {
 	 * @author Kor_Zhang
 	 * @date 2017年9月27日 下午1:53:44
 	 * @version 1.0
-	 * @param receiver
+	 * @param string
 	 * @return
 	 */
 	public Integer selectGoodsImgsNum(GoodsReceiver receiver) throws Exception;
