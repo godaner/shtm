@@ -87,9 +87,6 @@
 	<%@include file="./login.jsp"%>
 	<!-- 登录弹框 end -->
 	
-	<!-- 管理员信息弹框 start -->
-	<%@include file="./admins_info_dialog.jsp"%>
-	<!-- 管理员信息弹框 end -->
 	
 </body>
 
@@ -119,16 +116,21 @@
 	//用户的tab的title,url
 	var users_manage_tab_title = "用户管理";
 	var users_manage_tab_url = manageStaticSrcUrl+'/view/users_manage.jsp';
+	//管理员的tab的title,url
+	//var admins_manage_tab_title = "管理员管理";
+	//var admins_manage_tab_url = manageStaticSrcUrl+'/view/admins_manage.jsp';
 
+	
 	//users跳转到goods的tab的上下文环境
 	var users_to_goods_tab_context = new Context();
 	//goods跳转到users的tab的上下文环境
 	var goods_to_users_tab_context = new Context();
+	//admins跳转到admins的tab的上下文环境
+	//var admins_to_admins_tab_context = new Context();
 </script>
 <!-- 设置js使用的变量 end -->
 
 <!-- 导入js开始 start -->
-<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/admins_info_dialog.js"></script>
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/login.js"></script>
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/center.js"></script>
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/center_index.js"></script>

@@ -83,10 +83,10 @@ function initUsersManageVar(){
  * 加载界面
  */
 function loadUsersManageUI(){
-	//判斷參數
+	//判斷加载參數
 	if(goods_to_users_tab_context.contain('id')){
-		usserIdSearch.textbox("setValue",goods_to_users_tab_context.getAttr("id"));
-		
+		usserIdSearch.textbox("setValue",goods_to_users_tab_context.removeAttr("id"));
+//		goods_to_users_tab_context.clear();
 	}
 	
 	
@@ -311,7 +311,7 @@ function checkSellGoods(ownerId,username){
 			}
 
 			
-			users_to_goods_tab_context.clear();
+//			users_to_goods_tab_context.clear();
 			
 			users_to_goods_tab_context.setAttr("owner", ownerId);
 			

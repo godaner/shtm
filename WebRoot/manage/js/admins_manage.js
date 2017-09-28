@@ -29,6 +29,7 @@ var buttons;
 var currtEditDatagridRow;
 //请求的管理员头像的尺寸
 var headimgSize = 60;
+var adminsSearchId;
 $(function(){
 	
 	initAdminsManageVar();
@@ -49,6 +50,8 @@ function initAdminsManageVar(){
 
 	insertAdminDialog = $("#insertAdminDialog");
 	insertAdminForm = $("#insertAdminForm");
+
+	adminsSearchId = adminsSearchForm.find("#id");
 	
 	//sex
 	sexInput = $("#sex");
@@ -56,6 +59,7 @@ function initAdminsManageVar(){
 	statusInput = $("#status");
 	
 	birthday = $("#birthday");
+	
 	
 	//设置按钮
 	birthday.datebox({
@@ -167,10 +171,11 @@ function loadAdminsManageUI(){
 	    		sortable : true,
 				formatter: function(value,row,index){
 					
-					if(!isEmpty(value)){
-						return "<a href=javascript:showAdmin('"+row.creator+"');>"+value+"</a>"
+					if(isEmpty(value)){
+						return "无";
 					}
-					return "";
+					
+					return "<a href=javascript:checkAdmin('"+row.creator+"');>"+value+"</a>";
 				}
 	        },
 	        {
@@ -445,3 +450,15 @@ function clearInsertAdminForm(){
 	
 }
 
+/**
+ * 查看某个管理员信息
+ * @param adminId
+ */
+function checkAdmin(adminId){
+	
+	clearAdminSearch();
+	
+	adminsSearchId.textbox("setValue",adminId);
+	
+	searchAdmins();
+};
