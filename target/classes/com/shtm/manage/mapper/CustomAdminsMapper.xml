@@ -11,7 +11,7 @@
 		<where>
 			STATUS != -1
 			<if test="id !=null and id!=''">
-				AND id LIKE '%${id}%'
+				AND id = #{id}
 			</if>
 			<if test="username !=null and username!=''">
 				AND username LIKE '%${username}%'

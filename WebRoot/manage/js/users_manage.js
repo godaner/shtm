@@ -83,11 +83,7 @@ function initUsersManageVar(){
  * 加载界面
  */
 function loadUsersManageUI(){
-	//判斷參數
-	if(goods_to_users_tab_context.contain('id')){
-		usserIdSearch.textbox("setValue",goods_to_users_tab_context.getAttr("id"));
-		
-	}
+	
 	
 	
 	//新增user信息窗口
@@ -107,6 +103,12 @@ function loadUsersManageUI(){
 		borer:false
 	});
 	
+	
+	//判斷加载參數
+	if(goods_to_users_tab_context.contain('id')){
+		usserIdSearch.textbox("setValue",goods_to_users_tab_context.removeAttr("id"));
+//		goods_to_users_tab_context.clear();
+	}
 	//加载users的datagrid
 	users_datagrid.datagrid({    
 	    url:manageForwardUrl+"/users/selectUsersDatagrid.action",
@@ -311,7 +313,7 @@ function checkSellGoods(ownerId,username){
 			}
 
 			
-			users_to_goods_tab_context.clear();
+			/*users_to_goods_tab_context.clear();*/
 			
 			users_to_goods_tab_context.setAttr("owner", ownerId);
 			

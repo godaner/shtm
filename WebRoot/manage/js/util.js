@@ -21,7 +21,14 @@ function Context(){
 	 */
 	this.getAttr = function(key){
 		return this.ct[key];
+	},
+	/**
+	 * 移除并且返回参数
+	 */
+	this.removeAttr = function(key){
+		var value = this.ct[key];
 		delete this.ct[key];
+		return value;
 	},
 	/**
 	 * 清空容器
