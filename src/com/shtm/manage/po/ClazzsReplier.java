@@ -58,7 +58,8 @@ public class ClazzsReplier extends Clazzs {
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
-	//最大上傳的clazzs數量
+
+	// 最大上傳的clazzs數量
 	private Integer maxClazzs;
 
 	public Integer getMaxClazzs() {
@@ -68,5 +69,5 @@ public class ClazzsReplier extends Clazzs {
 	public void setMaxClazzs(Integer maxClazzs) {
 		this.maxClazzs = maxClazzs;
 	}
-	
+
 }

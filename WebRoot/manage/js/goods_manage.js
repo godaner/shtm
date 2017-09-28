@@ -512,7 +512,7 @@ function editGood(){
 	/**
 	 * 加載類型信息
 	 */
-	url0 = manageForwardUrl+"/clazzs/selectClazzs.action";
+	url0 = manageForwardUrl+"/clazzs/selectAllClazzs.action";
 	ajax.sendSync(url0, function(data){
 		//清除缓存
 		clazzsTd.html("");

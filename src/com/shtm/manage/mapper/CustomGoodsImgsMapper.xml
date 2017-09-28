@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shtm.manage.mapper.CustomGoodsImgsMapper">
-	<!-- 查询指定id的商品图片信息 -->
+	<!-- 查询商品图片列表信息 -->
 	<select id="selectGoodsImgsDatagrid" parameterType="com.shtm.manage.po.GoodsReceiver" resultType="com.shtm.manage.po.GoodsImgsReplier">
 		  SELECT T0.*
 		  FROM 

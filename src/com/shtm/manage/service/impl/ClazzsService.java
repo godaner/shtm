@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shtm.manage.mapper.CustomClazzsMapper;
+import com.shtm.manage.po.ClazzsReceiver;
 import com.shtm.manage.po.ClazzsReplier;
 import com.shtm.manage.service.ClazzsServiceI;
 import com.shtm.mapper.ClazzsMapper;
@@ -28,14 +29,31 @@ public class ClazzsService extends BaseService implements ClazzsServiceI {
 	private CustomClazzsMapper customClazzsMapper;
 	
 	@Override
-	public ClazzsReplier selectClazzs() throws Exception {
+	public ClazzsReplier selectAllClazzs() throws Exception {
 		
 		ClazzsReplier replier = new ClazzsReplier();
-		replier.setRows(customClazzsMapper.selectClazzs());
+		replier.setRows(customClazzsMapper.selectAllClazzs());
 		
 		//設置最大clazzs數量
 		Integer max = Integer.valueOf(getValue(CONFIG.FILED_GOODS_CLAZZS_MAXNUMBER).toString());
+		
 		replier.setMaxClazzs(max);
+		
+		return replier;
+	}
+
+	@Override
+	public ClazzsReplier selectClazzsDatagrid(ClazzsReceiver receiver) throws Exception {
+		ClazzsReplier replier = new ClazzsReplier();
+
+		// 查询
+		replier.setRows(customClazzsMapper.selectClazzsDatagrid(receiver));
+
+		// 设置记录总数
+		Integer totalNum = customClazzsMapper.selectClazzsNum(receiver);
+
+		replier.setTotal(totalNum);
+
 		return replier;
 	}
 
