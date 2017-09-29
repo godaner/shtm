@@ -19,5 +19,37 @@ public interface ClazzsGroups {
 	 * @date 2017年9月28日 下午2:58:12
 	 * @version 1.0
 	 */
-	public interface SelectClazzsDatagrid{};
+	public interface SelectClazzsDatagridGroups{};
+	/**
+	 * Title:DeleteClazzsGroups
+	 * <p>
+	 * Description:删除类型;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 上午9:19:25
+	 * @version 1.0
+	 */
+	public interface DeleteClazzsGroups{};
+	/**
+	 * Title:InsertClazzsGroups
+	 * <p>
+	 * Description:新增类型;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 上午9:19:49
+	 * @version 1.0
+	 */
+	public interface InsertClazzsGroups{};
+	
+	
+	/**
+	 * Title:UpdateClazzsGroups
+	 * <p>
+	 * Description:更新类型
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 上午9:33:31
+	 * @version 1.0
+	 */
+	public interface UpdateClazzsGroups{};
 }

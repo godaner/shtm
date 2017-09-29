@@ -10,9 +10,9 @@
 		<a href="javascript:searchClazzs();" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 		<a href="javascript:clearGoodSearch();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">清空条件</a>
 		|
-		<a href="javascript:editGood();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑基本信息</a>
-		<!-- |
-		<a href="javascript:insertGood();" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a> -->
+		<a href="javascript:editClazzs();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑基本信息</a>
+		|
+		<a href="javascript:insertClazzs();" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
 	</form>
 </div>
 <!-- 工具栏 end -->

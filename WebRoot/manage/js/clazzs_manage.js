@@ -3,6 +3,7 @@
  * 变量申明
  */
 var clazzs_datagrid;
+var clazzsSearchForm;
 $(function() {
 
 	initClazzsManageVar();
@@ -15,6 +16,7 @@ $(function() {
  */
 function initClazzsManageVar() {
 	clazzs_datagrid = $("#clazzs_datagrid");
+	clazzsSearchForm = $("#clazzsSearchForm");
 }
 /**
  * 加载界面
@@ -61,4 +63,34 @@ function loadClazzsManageUI() {
 			}
 		}] ]
 	});
+}
+
+/**
+ * 搜索類型
+ */
+function searchClazzs(){
+	//form转js对象
+	var searchConditions = clazzsSearchForm.serializeObject();
+	clazzs_datagrid.datagrid('load',searchConditions);
+}
+
+/**
+ * 清空搜索信息
+ */
+function clearGoodSearch(){
+	
+	clazzsSearchForm.clearEasyuiForm();
+	
+}
+/**
+ * 新增clazzs
+ */
+function insertClazzs(){
+	
+}
+/**
+ * 编辑clazzs
+ */
+function editClazzs(){
+	
 }

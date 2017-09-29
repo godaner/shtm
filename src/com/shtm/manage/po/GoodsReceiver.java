@@ -35,9 +35,11 @@ import com.shtm.po.Goods;
  */
 public class GoodsReceiver extends Goods {
 	// 排序方式
+	@NotNull(message="{goods.order.notnull.error}",groups={SelectGoodsDatagrid.class})
 	private String order;
 
 	// 排序字段
+	@NotNull(message="{goods.sort.notnull.error}",groups={SelectGoodsDatagrid.class})
 	private String sort;
 
 	// 当前多少页数

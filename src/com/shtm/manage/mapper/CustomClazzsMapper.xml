@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shtm.manage.mapper.CustomClazzsMapper">
+	
+	<sql id="selectClazzsConditions">
+		<where>
+			
+			<if test="text !=null and text!=''">
+				AND text like '%${text}%'
+			</if>
+			
+			<if test="id !=null and id!=''">
+				AND id like #{id}
+			</if>
+		</where>
+	</sql>
+	
 	<!-- 查询所有的clazzs -->
 	<select id="selectAllClazzs" resultType="com.shtm.po.Clazzs">
 		select *
@@ -12,7 +26,14 @@
 		FROM
 		(
 		SELECT C0.*,ROWNUM AS N
-		FROM CLAZZS C0
+		FROM 
+           (
+                SELECT *
+                FROM clazzs 
+                <include refid="selectClazzsConditions"></include>
+				ORDER BY ${sort} ${order}
+                       
+           ) c0
 		WHERE ROWNUM &lt;=#{end}
 		) C1
 		WHERE C1.N &gt;=#{start}

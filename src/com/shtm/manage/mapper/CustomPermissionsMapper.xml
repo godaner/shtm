@@ -15,12 +15,14 @@
 		       SELECT p1.*
 		       FROM PERMISSIONS p1
 		       <where>
+		       		1=1
 					<if test=" value == null ">
-						p1.pid is null
+						and p1.pid is null
 					</if>
 					<if test=" value != null ">
-						p1.pid=#{value}
+						and p1.pid=#{value}
 					</if>
+					and p1.status = 1
 				</where>
 		
 		  ) p0,

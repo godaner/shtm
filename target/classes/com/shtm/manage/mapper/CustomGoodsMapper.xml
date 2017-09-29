@@ -41,6 +41,7 @@
 		                  SELECT *
 		                  FROM GOODS
 		                  <include refid="selectGoodsConditions"></include>
+						  ORDER BY ${sort} ${order}
 		               ) G1
 		          
 		          WHERE ROWNUM &lt;=#{end}

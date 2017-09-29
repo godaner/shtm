@@ -41,5 +41,44 @@ public interface ClazzsServiceI {
 	 */
 	ClazzsReplier selectClazzsDatagrid(ClazzsReceiver receiver) throws Exception;
 
+	/**
+	 * Title:
+	 * <p>
+	 * Description:删除clazz
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 上午9:23:36
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	void deleteClazzs(ClazzsReceiver receiver) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:新增类型
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 上午9:27:31
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	void insertClazzs(ClazzsReceiver receiver) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:更新類型;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 上午9:38:34
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	void updateClazzs(ClazzsReceiver receiver) throws Exception;
+
 	
 }

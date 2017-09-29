@@ -1,8 +1,16 @@
 package com.shtm.po;
 
-public class Clazzs {
-    private String id;
+import javax.validation.constraints.NotNull;
 
+import com.shtm.manage.groups.ClazzsGroups.DeleteClazzsGroups;
+import com.shtm.manage.groups.ClazzsGroups.InsertClazzsGroups;
+
+public class Clazzs {
+	
+	@NotNull(message="{clazzs.id.notnull.error}",groups={InsertClazzsGroups.class,DeleteClazzsGroups.class})
+    private String id;
+	
+	@NotNull(message="{clazzs.text.notnull.error}",groups={InsertClazzsGroups.class})
     private String text;
 
     private Double num;

@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
-import com.shtm.manage.groups.ClazzsGroups.SelectClazzsDatagrid;
+import com.shtm.manage.groups.ClazzsGroups.SelectClazzsDatagridGroups;
 import com.shtm.po.Clazzs;
 
 /**
@@ -20,19 +20,21 @@ import com.shtm.po.Clazzs;
 public class ClazzsReceiver extends Clazzs {
 
 	// 排序方式
+	@NotNull(message = "{clazzs.order.notnull.error}", groups = { SelectClazzsDatagridGroups.class })
 	private String order;
 
 	// 排序字段
+	@NotNull(message = "{clazzs.sort.notnull.error}", groups = { SelectClazzsDatagridGroups.class })
 	private String sort;
 
 	// 当前多少页数
-	@NotNull(message = "{clazzs.page.notnull.error}", groups = { SelectClazzsDatagrid.class })
-	@Range(message = "{clazzs.page.range.error}", groups = { SelectClazzsDatagrid.class })
+	@NotNull(message = "{clazzs.page.notnull.error}", groups = { SelectClazzsDatagridGroups.class })
+	@Range(message = "{clazzs.page.range.error}", groups = { SelectClazzsDatagridGroups.class })
 	private Integer page;
 
 	// 一页的行数
-	@NotNull(message = "{clazzs.rows.notnull.error}", groups = { SelectClazzsDatagrid.class })
-	@Range(message = "{clazzs.rows.range.error}", groups = { SelectClazzsDatagrid.class })
+	@NotNull(message = "{clazzs.rows.notnull.error}", groups = { SelectClazzsDatagridGroups.class })
+	@Range(message = "{clazzs.rows.range.error}", groups = { SelectClazzsDatagridGroups.class })
 	private Integer rows;
 
 	// 分页开始

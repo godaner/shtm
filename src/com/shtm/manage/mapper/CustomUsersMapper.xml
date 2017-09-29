@@ -46,6 +46,7 @@
 	            SELECT *
 	            FROM users
 	      		<include refid="selectUsersConditions"></include>
+				ORDER BY ${sort} ${order}
 	          ) u0
 	          WHERE rownum &lt;=#{end}
 	        ) u1
