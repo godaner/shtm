@@ -5,6 +5,8 @@ import java.util.List;
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
 import com.shtm.po.Admins;
+import com.shtm.po.Permissions;
+import com.shtm.po.Roles;
 
 
 /**
@@ -72,4 +74,32 @@ public interface CustomAdminsMapper {
 	 * @throws Exception
 	 */
 	AdminsReplier selectAdmin(String id) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:通过adminid获取roles
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 下午6:38:53
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	List<Roles> selectRoles(String id) throws Exception;
+	
+	/**
+	 * Title:
+	 * <p>
+	 * Description:通过id查询权限
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 下午6:52:13
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	List<Permissions> selectPermissions(String id) throws Exception;
 }

@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.shtm.manage.groups.AdminsGroups.DeleteAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.InsertAdminGroups;
+import com.shtm.manage.groups.AdminsGroups.LoginGroups;
 import com.shtm.manage.groups.AdminsGroups.SelectAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.UpdateAdminGroups;
 import com.shtm.util.Static;
@@ -18,11 +19,11 @@ public class Admins {
 	@NotBlank(message="{admins.id.notblank.error}",groups={UpdateAdminGroups.class,DeleteAdminGroups.class,SelectAdminGroups.class})
     private String id;
 	
-	@Pattern(regexp=Static.REG.USERNAME,message="{admins.username.reg.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class})
+	@Pattern(regexp=Static.REG.USERNAME,message="{admins.username.reg.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class,LoginGroups.class})
     private String username;
 	
 	
-	@Pattern(regexp=Static.REG.PASSWORD,message="{admins.password.reg.error}",groups={InsertAdminGroups.class})
+	@Pattern(regexp=Static.REG.PASSWORD,message="{admins.password.reg.error}",groups={InsertAdminGroups.class,LoginGroups.class})
     private String password;
 	
     private String salt;

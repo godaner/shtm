@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -24,6 +25,8 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletResponse;
+
 import net.coobird.thumbnailator.Thumbnails;
 
 import org.apache.commons.fileupload.disk.DiskFileItem;
@@ -34,6 +37,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 /**
  * Title:Util
@@ -64,6 +70,47 @@ public class Util extends RedisUtil {
 	 */
 	public final static ValidateCode vc = new ValidateCode(160, 40, 5, 150);
 
+	
+	
+	
+	/**
+	 * 
+	 * Title:
+	 * <p>
+	 * Description:写入一个对象到响应流;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 下午7:15:44
+	 * @version 1.0
+	 * @param o
+	 * @param response
+	 */
+	public static void writeJSON(Object o,HttpServletResponse response) {
+		if(null == o){
+			return;
+		}
+		PrintWriter pt = null;
+		try {
+			// 获取输出流
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json;charset=utf-8");
+			pt= response.getWriter();
+			// 序列化对象
+			String json = JSON.toJSONStringWithDateFormat(o,
+					"yyyy-MM-dd HH:mm:ss",
+					SerializerFeature.DisableCircularReferenceDetect);
+			// 写入对象
+			pt.write(json);
+			pt.flush();
+			pt.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// 关闭
+			pt.close();
+		}
+	}
+	
 	/**
 	 * Title:
 	 * <p>

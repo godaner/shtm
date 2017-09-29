@@ -144,9 +144,30 @@
 		</property>
 	</bean>
     <!-- *********配置文件上传 end********* -->
+
+
+
+
+
+	<!-- 定义统一异常处理器 -->
+	<bean class="com.shtm.exception.ExceptionResolver"></bean>
+  
     
     
     
+    
+    
+    
+    <!-- 开启shiro注解-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true" />
+    </bean>
+
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
     
     
     

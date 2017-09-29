@@ -71,4 +71,26 @@
 	</select>
 	
 	
+	
+	<select id="selectRoles" parameterType="string" resultType="com.shtm.po.Roles">
+		SELECT r.*
+		FROM ADMINS_ROLES ar,ROLES r
+		WHERE ar.ADMin =#{value} AND ar.ROLE= r.ID
+	</select>
+	<select id="selectPermissions" parameterType="string" resultType="com.shtm.po.Permissions">
+		
+		SELECT DISTINCT(p.id),p.*
+		FROM 
+		       (
+		          SELECT r.*
+		          FROM ADMINS_ROLES ar,ROLES r
+		          WHERE ar.ADMin =#{value} AND ar.ROLE= r.ID
+		       ) t,ROLES_PERMISSIONS rp,PERMISSIONS p
+		WHERE t.ID = rp.ROLE AND p.ID = rp.PERMISSION
+
+	</select>
+	
+	
+	
+	
 </mapper>

@@ -122,6 +122,12 @@ function loadUsersManageUI(){
 		selectOncheck:true,
 	    sortName : 'registtime',
 	    sortOrder : 'desc', //降序
+	    onLoadSuccess:function(data){
+//	    	a(data.result);
+	    	
+	    	//检测管理员在线状态
+	    	checkOnlineStatus(data);
+	    },
 		hideColumn:[[
 			{
 				field:'sellNumber',

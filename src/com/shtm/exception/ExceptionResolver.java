@@ -3,8 +3,14 @@ package com.shtm.exception;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import oracle.net.aso.r;
+
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.shtm.manage.po.Replier;
+import com.shtm.util.Static.RESULT;
+import com.shtm.util.Util;
 
 /**
  * Title:ExceptionResolver
@@ -21,14 +27,35 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 	public ModelAndView resolveException(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex) {
 		
+		ex.printStackTrace();
 		
-		ModelAndView mav = new ModelAndView();
+		Replier r = new Replier();
 		
-		mav.addObject("msg",ex.getMessage());
+		if(ex instanceof org.apache.shiro.authz.UnauthenticatedException){
+			r.setMsg("ExceptionResolver:您没有登录");
+			
+			r.setResult(RESULT.UNONLINE);
+			
+			Util.writeJSON(r, response);
+			
+			return null;
+		}
 		
-		mav.setViewName("exception");
 		
-		return mav;
+		
+		
+		if(ex instanceof org.apache.shiro.authz.UnauthorizedException){
+			r.setMsg("ExceptionResolver:您没有权限");
+
+			Util.writeJSON(r, response);
+			
+
+			r.setResult(RESULT.FALSE);
+			
+			return null;
+		}
+		
+		return null;
 	}
 
 }

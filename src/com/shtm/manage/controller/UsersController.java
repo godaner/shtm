@@ -2,6 +2,8 @@ package com.shtm.manage.controller;
 
 import java.io.File;
 
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,8 @@ public class UsersController extends BaseController<UsersServiceI>{
 	 * @param page	第几页
 	 * @return
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("users:select")
 	@RequestMapping("/selectUsersDatagrid")
 	public @ResponseBody UsersReplier selectUsersDatagrid(UsersReceiver receiver) throws Exception{
 		UsersReplier replier = new UsersReplier();
@@ -71,6 +75,8 @@ public class UsersController extends BaseController<UsersServiceI>{
 	 * @param id
 	 * @return
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("users:select")
 	@RequestMapping("/selectUserByPK")
 	public @ResponseBody UsersReplier selectUserByPK(String id) throws Exception{
 		UsersReplier replier = new UsersReplier();
@@ -104,6 +110,8 @@ public class UsersController extends BaseController<UsersServiceI>{
 	 * @version 1.0
 	 * @return
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("users:update")
 	@RequestMapping("/updateUser")
 	public @ResponseBody UsersReplier updateUser(UsersReceiver receiver) throws Exception{
 		UsersReplier replier = new UsersReplier();

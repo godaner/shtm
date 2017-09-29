@@ -119,10 +119,10 @@ function initLoginLis() {
 		ajax.send(url, function(data) {
 			//连接服务器成功
 			//调用util.js的方法
-			showMsg(data.msg);
+//			showMsg(data.msg);
 
 			//调用util.js的方法
-			pro.close();
+//			pro.close();
 
 			if (data == undefined || data == "" || data.result == undefined || data.result == 0) {
 
@@ -143,7 +143,7 @@ function initLoginLis() {
 			
 		},function(data){//连接服务器错误
 			
-			pro.close();
+//			pro.close();
 			//显示登录窗口
 			loginDialog.show();
 		});

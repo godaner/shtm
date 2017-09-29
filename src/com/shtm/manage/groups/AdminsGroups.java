@@ -54,4 +54,16 @@ public interface AdminsGroups {
 	 * @version 1.0
 	 */
 	public interface SelectAdminGroups{};
+	
+	/**
+	 * Title:LoginGroups
+	 * <p>
+	 * Description:登录验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 下午3:41:42
+	 * @version 1.0
+	 */
+	public interface LoginGroups{};
+	
 }

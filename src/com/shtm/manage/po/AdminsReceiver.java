@@ -1,5 +1,8 @@
 package com.shtm.manage.po;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.shtm.manage.groups.AdminsGroups.LoginGroups;
 import com.shtm.po.Admins;
 
 /**
@@ -15,6 +18,8 @@ import com.shtm.po.Admins;
 public class AdminsReceiver extends Admins {
 
 	// 验证码
+	
+	@NotBlank(message="{admins.verifyCode.notblank.error}",groups={LoginGroups.class})
 	private String verifyCode;
 
 	public String getVerifyCode() {

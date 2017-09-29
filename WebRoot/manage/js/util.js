@@ -1,4 +1,28 @@
 /**
+ * 检测管理员在线状态
+ */
+function checkOnlineStatus(data){
+//	a(data.result);
+	//显示信息
+	if(!isEmpty(data.msg)){
+		showMsg(data.msg);
+	}
+	
+	//离线
+	if(data.result==-1){
+		
+		loginDialog.show();
+
+		//关闭进度条
+		pro.close();
+		
+//		c("已离线");
+		
+		throw "已离线";
+		
+	}
+}
+/**
  * 上下文容器
  */
 function Context(){
@@ -157,7 +181,9 @@ $.fn.writeEasyuiForm = function (obj){
 		}
 		
 		try{
-//			input.combobox('setValue',value);
+			c(value);
+			input.combobox('setValue',value);
+			input.combobox('select',value);
 //			input.combobox('loadData',[]);
 		}catch(e){
 			//c(e);
@@ -427,23 +453,9 @@ var ajax = {
 			dataType : "json",
 			data : jsonStr,
 			success : function(data, textStatus) {
-//				c(data);
 				
-				//显示信息
-				if(!isEmpty(data.msg)){
-					showMsg(data.msg);
-				}
-				
-				//离线
-				if(data.result==-1){
-					loginDialog.show();
-
-					//关闭进度条
-					pro.close();
-					
-					return ;
-					
-				}
+				//验证在线状态
+				checkOnlineStatus(data);
 				
 				//回调
 				if(success){

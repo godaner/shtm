@@ -1,7 +1,11 @@
 package com.shtm.manage.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +20,9 @@ import com.shtm.mapper.AdminsMapper;
 import com.shtm.po.Admins;
 import com.shtm.po.AdminsExample;
 import com.shtm.po.AdminsExample.Criteria;
+import com.shtm.po.Permissions;
+import com.shtm.po.Roles;
 import com.shtm.service.impl.BaseService;
-import com.shtm.util.Static.ADMINS_LOGIN_LOG_RESULT;
 import com.shtm.util.Static.ADMINS_STATUS;
 
 /**
@@ -38,59 +43,42 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	@Autowired
 	private AdminsMapper adminsMapper;
 	
-
 	@Autowired
 	private AdminsLoginLogMapper adminsLoginLogMapper;
 	
+	/**
+	 * Title:
+	 * <p>
+	 * Description:登录
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 下午8:23:36
+	 * @version 1.0
+	 * @param receiver
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
-	public Admins login(AdminsReceiver receiver,AdminsLoginLogReceiver adminsLoginLogReceiver) throws Exception {
+	public AdminsReplier login(AdminsReceiver receiver) throws Exception {
 		
-		Admins dbAD = customAdminsMapper.selectAdminByUsername((String) receiver.getUsername());
 		
-		//设置参数
-		adminsLoginLogReceiver.setTime(new Date());
-		adminsLoginLogReceiver.setId(uuid());
-		adminsLoginLogReceiver.setLoginAdmin(dbAD.getId());
-		//验证用户是否存在
-		eject(dbAD == null, "用户不存在",new EjectCallFun() {
-			
-			@Override
-			public void ejectCallFun(Boolean r) {
-				if(r){
-					adminsLoginLogReceiver.setResult(ADMINS_LOGIN_LOG_RESULT.FAILURE);
-					adminsLoginLogMapper.insert(adminsLoginLogReceiver);
-				}
-			}
-		});
+		//查询admins
+		Admins dbAd = customAdminsMapper.selectAdminByUsername(receiver.getUsername());
 		
-		//验证密码
-		String salt = (String) dbAD.getSalt();
+		String password = md5(receiver.getPassword() + dbAd.getSalt());
+		//传入realm的数据
+		UsernamePasswordToken token = new UsernamePasswordToken(
+				receiver.getUsername(), password);
+		Subject subject = SecurityUtils.getSubject();
+		// 调用realm验证
+		subject.login(token);
 		
-		String formPW = (String) receiver.getPassword();
+		AdminsReplier replier = new AdminsReplier();
 		
-		String md5PW = md5(formPW+salt);
+		BeanUtils.copyProperties(dbAd, replier);
 		
-		eject(!dbAD.getPassword().equals(md5PW), "密码错误",new EjectCallFun() {
-			
-			@Override
-			public void ejectCallFun(Boolean r) {
-				if(r){
-					adminsLoginLogReceiver.setResult(ADMINS_LOGIN_LOG_RESULT.FAILURE);
-					adminsLoginLogMapper.insert(adminsLoginLogReceiver);
-				}
-			}
-		});
+		return replier;
 		
-		//屏蔽关键信息
-		dbAD.setPassword("");
-		
-		dbAD.setSalt("");
-		
-		//登录成功
-		adminsLoginLogReceiver.setResult(ADMINS_LOGIN_LOG_RESULT.SUCCESS);
-		adminsLoginLogMapper.insert(adminsLoginLogReceiver);
-		
-		return dbAD;
 		
 	}
 
@@ -216,6 +204,37 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		replier.setSalt("");
 		
 		return replier;
+	}
+
+	@Override
+	public Admins selectAdminByUsername(String username) throws Exception {
+		//查询admins
+		return customAdminsMapper.selectAdminByUsername(username);
+				
+	}
+
+	@Override
+	public void insertAdminsLoginLog(String adminId,
+			AdminsLoginLogReceiver adminsLoginLogReceiver) throws Exception {
+		//插入登录记录
+		//设置参数
+		adminsLoginLogReceiver.setTime(new Date());
+		adminsLoginLogReceiver.setId(uuid());
+		adminsLoginLogReceiver.setLoginAdmin(adminId);
+		adminsLoginLogMapper.insert(adminsLoginLogReceiver);
+				
+		
+	}
+
+	@Override
+	public List<Roles> selectRoles(String id) throws Exception {
+		
+		return customAdminsMapper.selectRoles(id);
+	}
+
+	@Override
+	public List<Permissions> selectPermissions(String id) throws Exception {
+		return customAdminsMapper.selectPermissions(id);
 	}
 
 

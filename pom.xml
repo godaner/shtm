@@ -18,6 +18,7 @@
 		<strus2.version>2.3.4.1</strus2.version>
 		<shiro.version>1.2.0</shiro.version>
 		<shiro.ehcache.version>2.5.3</shiro.ehcache.version>
+		<shiro.ehcache.version>3.1</shiro.ehcache.version> 
 	</properties>
 	<!-- 属性配置 end -->
 
@@ -135,6 +136,11 @@
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache-core</artifactId>
 			<version>${shiro.ehcache.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>cglib</groupId>
+		    <artifactId>cglib</artifactId>
+		    <version>${shiro.cglib.version}</version>
 		</dependency>
 		<!-- shiro end -->
 

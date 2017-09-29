@@ -1,9 +1,14 @@
 package com.shtm.manage.service;
 
+import java.util.List;
+import java.util.Set;
+
 import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
 import com.shtm.po.Admins;
+import com.shtm.po.Permissions;
+import com.shtm.po.Roles;
 
 /**
  * Title:UsersServiceI
@@ -16,18 +21,35 @@ import com.shtm.po.Admins;
  */
 public interface AdminsServiceI {
 	/**
-	 * Title:login
+	 * Title:
 	 * <p>
-	 * Description:登录,并且记录
+	 * Description:通过username查询admins
 	 * <p>
 	 * @author Kor_Zhang
-	 * @date 2017年9月15日 上午10:44:14
+	 * @date 2017年9月29日 下午3:35:06
 	 * @version 1.0
-	 * @param adminsLoginLogReceiver 
-	 * @return 返回数据库的记录
+	 * @param po
+	 * @param username
+	 * @return
 	 * @throws Exception
 	 */
-	public Admins login(AdminsReceiver po, AdminsLoginLogReceiver adminsLoginLogReceiver) throws Exception;
+	public Admins selectAdminByUsername(String username) throws Exception;
+	
+	/**
+	 * 
+	 * Title:
+	 * <p>
+	 * Description:插入管理员登录记录
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 下午3:38:45
+	 * @version 1.0
+	 * @param adminId
+	 * @param adminsLoginLogReceiver
+	 * @throws Exception
+	 */
+	public void insertAdminsLoginLog(String adminId,AdminsLoginLogReceiver adminsLoginLogReceiver) throws Exception;
+	
 	
 	/**
 	 * 
@@ -108,6 +130,48 @@ public interface AdminsServiceI {
 	 * @throws Exception
 	 */
 	public AdminsReplier selectAdmin(String id) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:通过管理员id获取其角色;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 下午6:34:32
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Roles> selectRoles(String id) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:通过管理员id获取其权限;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 下午6:52:40
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 * @throws Exception 
+	 */
+	public List<Permissions> selectPermissions(String id) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:登录
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月29日 下午8:24:37
+	 * @version 1.0
+	 * @param receiver
+	 * @return
+	 * @throws Exception
+	 */
+	AdminsReplier login(AdminsReceiver receiver) throws Exception;
 
 
 }
