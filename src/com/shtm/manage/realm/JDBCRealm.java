@@ -121,7 +121,7 @@ public class JDBCRealm extends AuthorizingRealm {
 		List<Permissions> permissions = null;
 		try {
 			permissions = adminsService
-					.selectPermissions(username);
+					.selectPermissions(dbAdmin.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

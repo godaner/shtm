@@ -9,7 +9,7 @@
 	<description>这是一个基于spring+sprngmvc+mybatis+oracle+hibernate-validator_easyui的二手交易平台后台WEB项目(SHTM)。</description>
 	<name>shtm</name>
 	<organization>
-		<name>xiyanghong</name>
+		<name>xiyanghong</name>  
 	</organization>
 
 	<!-- 属性配置 start -->
@@ -18,7 +18,7 @@
 		<strus2.version>2.3.4.1</strus2.version>
 		<shiro.version>1.2.0</shiro.version>
 		<shiro.ehcache.version>2.5.3</shiro.ehcache.version>
-		<shiro.ehcache.version>3.1</shiro.ehcache.version> 
+		<shiro.cglib.version>3.1</shiro.cglib.version>
 	</properties>
 	<!-- 属性配置 end -->
 
