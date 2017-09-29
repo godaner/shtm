@@ -427,6 +427,24 @@ var ajax = {
 			dataType : "json",
 			data : jsonStr,
 			success : function(data, textStatus) {
+//				c(data);
+				
+				//显示信息
+				if(!isEmpty(data.msg)){
+					showMsg(data.msg);
+				}
+				
+				//离线
+				if(data.result==-1){
+					loginDialog.show();
+
+					//关闭进度条
+					pro.close();
+					
+					return ;
+					
+				}
+				
 				//回调
 				if(success){
 					success(data, textStatus);
@@ -434,10 +452,7 @@ var ajax = {
 				//关闭进度条
 				pro.close();
 				
-				//显示信息
-				if(!isEmpty(data.msg)){
-					showMsg(data.msg);
-				}
+				
 				
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {

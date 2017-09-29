@@ -98,12 +98,12 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 	 * @param po
 	 * @return
 	 */
-	@RequestMapping("login")
+	/*@RequestMapping("login")
 	public @ResponseBody AdminsReplier login(AdminsReceiver receiver,AdminsLoginLogReceiver adminsLoginLogReceiver) {
 		AdminsReplier replier = new AdminsReplier();
 		try{
 			
-			/**
+			*//**
 			 * 验证验证码
 			 *//*
 			String msg = "验证码错误";
@@ -116,7 +116,7 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 			eject(formVc == null,msg);
 			
 			eject(!vc.toString().toLowerCase().equals(formVc.toLowerCase()),
-					"验证码错误");*/
+					"验证码错误");
 			
 			//---start,模拟用户信息,用于测试
 			receiver.setUsername("123");
@@ -124,9 +124,9 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 			
 			//---end
 			
-			/**
+			*//**
 			 * 执行业务
-			 */
+			 *//*
 			Admins admin = service.login(receiver,adminsLoginLogReceiver);
 			
 			//设置到session
@@ -141,9 +141,22 @@ public class AdminsController extends BaseController<AdminsServiceI>{
 			replier.setMsg(e.getMessage());
 		}
 		return replier;
+	}*/
+	
+	@RequestMapping("login")
+	public @ResponseBody AdminsReplier login() {
+		AdminsReplier replier = new AdminsReplier();
+		replier.setResult(RESULT.UNONLINE);
+		replier.setMsg("您現在處於離綫狀態");
+		return replier;
 	}
-	
-	
+	@RequestMapping("loginSuccess")
+	public @ResponseBody AdminsReplier loginSuccess() {
+		AdminsReplier replier = new AdminsReplier();
+		replier.setResult(RESULT.TRUE);
+		replier.setMsg("登录成功");
+		return replier;
+	}
 	/**
 	 * 
 	 * Title:logout

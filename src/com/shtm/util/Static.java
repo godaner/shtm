@@ -150,7 +150,11 @@ public interface Static {
 		 * 操作失败
 		 */
 		Integer FALSE = 0;
-		
+
+		/**
+		 * 已离线
+		 */
+		Integer UNONLINE = -1;
 	}
 	/**
 	 * 权限节点状态
