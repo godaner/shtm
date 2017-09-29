@@ -6,7 +6,7 @@
 	<artifactId>shtm-web-pc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<description>这是一个基于spring+sprngmvc+mybatis+oracle的二手交易平台后台WEB项目(SHTM)。</description>
+	<description>这是一个基于spring+sprngmvc+mybatis+oracle+hibernate-validator_easyui的二手交易平台后台WEB项目(SHTM)。</description>
 	<name>shtm</name>
 	<organization>
 		<name>xiyanghong</name>
@@ -14,8 +14,10 @@
 
 	<!-- 属性配置 start -->
 	<properties>
-		<version_spring>3.1.2.RELEASE</version_spring>
-		<version_strus2>2.3.4.1</version_strus2>
+		<spring.version>3.1.2.RELEASE</spring.version>
+		<strus2.version>2.3.4.1</strus2.version>
+		<shiro.version>1.2.0</shiro.version>
+		<shiro.ehcache.version>2.5.3</shiro.ehcache.version>
 	</properties>
 	<!-- 属性配置 end -->
 
@@ -54,67 +56,99 @@
 
 		<!-- struts2 start -->
 		<!-- <dependency> <groupId>org.apache.struts</groupId> <artifactId>struts2-core</artifactId> 
-			<version>${version_strus2}</version> </dependency> <dependency> <groupId>org.apache.struts</groupId> 
-			<artifactId>struts2-spring-plugin</artifactId> <version>${version_strus2}</version> 
+			<version>${strus2.version}</version> </dependency> <dependency> <groupId>org.apache.struts</groupId> 
+			<artifactId>struts2-spring-plugin</artifactId> <version>${strus2.version}</version> 
 			</dependency> <dependency> <groupId>org.apache.struts</groupId> <artifactId>struts2-convention-plugin</artifactId> 
-			<version>${version_strus2}</version> </dependency> -->
+			<version>${strus2.version}</version> </dependency> -->
 		<!-- struts2 end -->
 
 		<!-- spring start -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${version_spring}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${version_spring}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>${version_spring}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>${version_spring}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${version_spring}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-expression</artifactId>
-			<version>${version_spring}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>${version_spring}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<!-- springmvc -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${version_spring}</version>
+			<version>${spring.version}</version>
 			<type>jar</type>
 		</dependency>
 		<!-- spring end -->
 
-		<!-- hibernate validator start -->
+
+
+		<!-- shiro stat -->
+
 		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-validator</artifactId>
-		    <version>4.3.2.Final</version>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>${shiro.version}</version>
 		</dependency>
 		<dependency>
-    		<groupId>javax.validation</groupId>
-		    <artifactId>validation-api</artifactId>
-		    <version>2.0.0.Final</version>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-core</artifactId>
+			<version>${shiro.ehcache.version}</version>
+		</dependency>
+		<!-- shiro end -->
+
+
+		<!-- hibernate validator start -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.3.2.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.logging</groupId>
@@ -241,16 +275,16 @@
 		</dependency>
 		<!-- 图片压缩 end -->
 		<!-- redis的jar start -->
-		
+
 
 		<dependency>
-          <groupId>redis.clients</groupId>
-          <artifactId>jedis</artifactId>
-          <version>2.2.1</version>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.2.1</version>
 		</dependency>
 		<!-- redis的jar end -->
 
-		
+
 		<!-- 其他 jar end -->
 	</dependencies>
 	<!-- 依赖配置 end -->
