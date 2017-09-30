@@ -11,10 +11,11 @@ import com.shtm.manage.groups.GoodsGroups.DeleteGoodsGroups;
 import com.shtm.manage.groups.GoodsGroups.SelectGoodsByPK;
 import com.shtm.manage.groups.GoodsGroups.SelectGoodsImgsDatagrid;
 import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
+import com.shtm.manage.groups.GoodsGroups.UpdateGoodsStatusGroups;
 import com.shtm.manage.groups.GoodsGroups.UploadGoodsImgsGroups;
 
 public class Goods {
-	@NotBlank(message="{goods.id.notblank.error}",groups={UpdateGoodGroups.class,DeleteGoodsGroups.class,UploadGoodsImgsGroups.class,SelectGoodsImgsDatagrid.class,SelectGoodsByPK.class})
+	@NotBlank(message="{goods.id.notblank.error}",groups={UpdateGoodsStatusGroups.class,UpdateGoodGroups.class,DeleteGoodsGroups.class,UploadGoodsImgsGroups.class,SelectGoodsImgsDatagrid.class,SelectGoodsByPK.class})
     private String id;
 
 	@NotBlank(message="{goods.title.notblank.error}",groups={UpdateGoodGroups.class})
@@ -38,7 +39,7 @@ public class Goods {
 	@NotNull(message="{goods.region.notblank.error}",groups={UpdateGoodGroups.class})
     private Double region;
 
-	@NotNull(message="{goods.status.notnull.error}",groups={UpdateGoodGroups.class})
+	@NotNull(message="{goods.status.notnull.error}",groups={UpdateGoodsStatusGroups.class})
     private Short status;
 
     private Timestamp createtime;
@@ -69,7 +70,7 @@ public class Goods {
 
     private String postcode;
 
-    private Object refusereturnmoneybill;
+    private String refusereturnmoneybill;
 
     public String getId() {
         return id;
@@ -247,11 +248,11 @@ public class Goods {
         this.postcode = postcode == null ? null : postcode.trim();
     }
 
-    public Object getRefusereturnmoneybill() {
+    public String getRefusereturnmoneybill() {
         return refusereturnmoneybill;
     }
 
-    public void setRefusereturnmoneybill(Object refusereturnmoneybill) {
-        this.refusereturnmoneybill = refusereturnmoneybill;
+    public void setRefusereturnmoneybill(String refusereturnmoneybill) {
+        this.refusereturnmoneybill = refusereturnmoneybill == null ? null : refusereturnmoneybill.trim();
     }
 }

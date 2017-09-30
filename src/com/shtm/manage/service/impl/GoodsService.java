@@ -93,14 +93,10 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		eject(dbGood == null || dbGood.getStatus() == GOODS_STAUS.ADMIN_DELETE, "该商品已不存在");
 		
 		Short oldStatus = dbGood.getStatus();
-		Short newStatus = receiver.getStatus();
 		
-		if(oldStatus != newStatus){//如果更新了状态
-			//旧状态只能为"待审核"和"审核通过"
-			eject(oldStatus != GOODS_STAUS.WAIT_TO_PASS && oldStatus != GOODS_STAUS.PASS_SUCCESS ,"当前状态不允许更新");
-			
-		}
-		
+		//旧状态只能为"待审核","审核通过"才允许更新字段
+		eject(oldStatus != GOODS_STAUS.WAIT_TO_PASS && 
+				oldStatus != GOODS_STAUS.PASS_SUCCESS,"当前状态不允许更新");
 		
 		//禁止更新字段
 		receiver.setBrowsenumber(null);
@@ -109,9 +105,9 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		receiver.setCreatetime(null);
 		receiver.setFinishtime(null);
 		receiver.setOwner(null);
+		receiver.setStatus(null);
 		//設置字段
 		receiver.setLastupdatetime(timestamp());
-		
 		
 		
 		
@@ -328,6 +324,110 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		
 		
 		
+	}
+
+	@Override
+	public void updateGoodsStatus(GoodsReceiver receiver) throws Exception {
+		// 判斷商品狀態
+		Goods dbGood = goodsMapper.selectByPrimaryKey(receiver.getId());
+		// 判断是否存在
+		eject(dbGood == null || dbGood.getStatus() == GOODS_STAUS.ADMIN_DELETE,
+				"该商品已不存在");
+
+		Short oldStatus = dbGood.getStatus();
+		Short newStatus = receiver.getStatus();
+
+		/**
+		 * 满足下列状态组合可以更新状态
+		 */
+		Goods g = new Goods();
+		g.setId(receiver.getId());
+		g.setStatus(newStatus);
+
+		/**
+		 * oldStatus:-6
+		 * newStatus:0,-7
+		 */
+		if (oldStatus == GOODS_STAUS.WAIT_TO_PASS) {
+			if (newStatus == GOODS_STAUS.PASS_SUCCESS || 
+					newStatus == GOODS_STAUS.UNPASSED) {
+				goodsMapper.updateByPrimaryKeySelective(g);
+				return;
+			} else {
+				eject("更新状态失败");
+			}
+		}
+		/**
+		 * oldStatus:-8
+		 * newStatus:-9,-1
+		 */
+		if (oldStatus == GOODS_STAUS.WAIT_RETURN_MONEY) {
+			if (newStatus == GOODS_STAUS.BUYER_RECEIVED_AND_FINISHED
+					|| newStatus == GOODS_STAUS.RETURN_MONEY_SUCCESS) {
+				goodsMapper.updateByPrimaryKeySelective(g);
+			} else {
+				eject("更新状态失败");
+			}
+		}
+		/**
+		 * oldStatus:-7
+		 * newStatus:0
+		 */
+		if (oldStatus == GOODS_STAUS.UNPASSED) {
+			if (newStatus == GOODS_STAUS.PASS_SUCCESS){
+				goodsMapper.updateByPrimaryKeySelective(g);
+			} else {
+				eject("更新状态失败");
+			}
+		}
+		
+		/**
+		 * oldStatus:0
+		 * newStatus:-7
+		 */
+		if (oldStatus == GOODS_STAUS.PASS_SUCCESS) {
+			if (newStatus == GOODS_STAUS.UNPASSED){
+				goodsMapper.updateByPrimaryKeySelective(g);
+			} else {
+				eject("更新状态失败");
+			}
+		}
+		/**
+		 * oldStatus:1
+		 * newStatus:-7
+		 */
+		if (oldStatus == GOODS_STAUS.BUY_BUT_NOT_SEND) {
+			if (newStatus == GOODS_STAUS.UNPASSED){
+				goodsMapper.updateByPrimaryKeySelective(g);
+			} else {
+				eject("更新状态失败");
+			}
+		}
+		/**
+		 * oldStatus:-2
+		 * newStatus:-7
+		 */
+		if (oldStatus == GOODS_STAUS.SELLER_CANCEL) {
+			if (newStatus == GOODS_STAUS.UNPASSED){
+				goodsMapper.updateByPrimaryKeySelective(g);
+			} else {
+				eject("更新状态失败");
+			}
+		}
+		/**
+		 * oldStatus:-3
+		 * newStatus:-7
+		 */
+		if (oldStatus == GOODS_STAUS.BUYER_CANCEL) {
+			if (newStatus == GOODS_STAUS.UNPASSED){
+				goodsMapper.updateByPrimaryKeySelective(g);
+			} else {
+				eject("更新状态失败");
+			}
+		}
+		
+		
+
 	}
 
 }

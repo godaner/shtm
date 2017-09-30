@@ -10,7 +10,17 @@ package com.shtm.manage.groups;
  * @version 1.0
  */
 public interface GoodsGroups {
-	
+	/**
+	 * 
+	 * Title:UpdateGoodStatusGroups
+	 * <p>
+	 * Description:新goods状态所使用的验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月30日 下午1:45:29
+	 * @version 1.0
+	 */
+	public interface UpdateGoodsStatusGroups{};
 	/**
 	 * Title:UpdateGoodsGroups
 	 * <p>

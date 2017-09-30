@@ -68,4 +68,8 @@
 <%@include file="./goods_manage_upload_imgs_dialog.jsp" %>
 <!-- goods属性编辑弹窗 end -->
 
+<!-- goods退款管理弹窗 start -->
+<%@include file="./check_buyer_apply_dialog.jsp" %>
+<!-- goods退款管理弹窗 end -->
+
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/goods_manage.js"></script>

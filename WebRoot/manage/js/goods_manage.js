@@ -39,6 +39,10 @@ var goods_imgs_datagrid;
 
 var goods_upload_imgs_dialog;
 var goods_upload_imgs_form;
+//卖家拒绝付款证据
+var sellerRefuseBillImg;
+//退款查看弹窗
+var checkBuyerApplyDialog;
 $(function(){
 	
 	initGoodsManageVar();
@@ -79,6 +83,8 @@ function initGoodsManageVar(){
 	goods_upload_imgs_dialog = $("#goods_upload_imgs_dialog");
 	
 	goods_upload_imgs_form = $("#goods_upload_imgs_form");
+	
+	sellerRefuseBillImg = $("#sellerRefuseBillImg");
 }
 /**
  * 加载界面
@@ -186,52 +192,64 @@ function loadGoodsManageUI(){
 			},
 			{
 				field:'status',
-				title:'状态',
+				title:'当前状态(点击后的状态)',
 				sortable : true,
 				formatter: function(value,row,index){
 					/*状态:,
-					-6:待审核状态,(不可以被显示,不可以购买)
-					0:审核通过,(可以被显示,可以购买)
-					1:购买了且待发货,
-					2:已发货,
-					-1:买家收货后交易正常结束,
-					-5:管理员删除本商品,
-					-8:买家申请退款,
-				    -9:退款成功（失败则保持-1状态）*/
+					  -6:待审核状态,(不可以被显示,不可以购买)
+				      -7:审核未通过,(不可以被显示,不可以购买)
+				      0:审核通过,(可以被显示,可以购买)
+				      1:购买了且待发货,
+				      2:已发货,
+				      -1:买家收货后交易正常结束,
+				      -2:卖家取消了出售本商品(可以被显示,可以购买),
+					  -3:买家取消购买本商品(可以被显示,可以购买),
+					  -5:管理员删除本商品,
+				      -8:买家申请退款,
+				      -9:退款成功（失败则保持-1状态）*/
+					var buyerId= row.buyer;
+					var goodsId= row.id;
+					var sellerId= row.owner;
 					var fun = "void(0);"
-					var words = value;
+					var words = statusCode2String(value);
+					var passLabel = "<label style='color:green;cursor:pointer;'>通过审核</label>";
+					var unPassLabel = "<label style='color:red;cursor:pointer;'>取消通过</label>";
 					switch (value) {
-					case 6:
-						fun = "updateGoodsStatus('0')";
-						words = "通过审核";
+					case -6:
+						fun = "updateGoodsStatus('"+goodsId+"','0')";
+						words = words + "("+passLabel+")";
+						break;
+					case -7:
+						fun = "updateGoodsStatus('"+goodsId+"','0')";
+						words = words + "("+passLabel+")";
 						break;
 					case 0:
-						fun = "updateGoodsStatus('6')";
-						words = "转为待审核";
+						fun = "updateGoodsStatus('"+goodsId+"','-7')";
+						words = words+"("+unPassLabel+")";
 						break;
 					case 1:
-//						fun = "updateGoodsStatus('0')";
-//						words = "点击通过审核";
+						fun = "updateGoodsStatus('"+goodsId+"','-7')";
+						words = words+"("+unPassLabel+")";
 						break;
 					case 2:
-//						fun = "updateGoodsStatus('0')";
-						words = "已发货";
 						break;
 					case -1:
-//						fun = "updateGoodsStatus('0')";
-						words = "交易结束";
+						break;
+					case -2:
+						fun = "updateGoodsStatus('"+goodsId+"','-7')";
+						words = words+"("+unPassLabel+")";
+						break;
+					case -3:
+						fun = "updateGoodsStatus('"+goodsId+"','-7')";
+						words = words+"("+unPassLabel+")";
 						break;
 					case -5:
-//						fun = "updateGoodsStatus('0')";
-						words = "被删除";
 						break;
 					case -8:
-						fun = "checkBuyerApply()";
-						words = "查看申请";
+						fun = "checkBuyerApply('"+goodsIs+"')";
+						words = "查看退款申请";
 						break;	
 					case -9:
-//						fun = "checkBuyerApply()";
-						words = "退款成功";
 						break;	
 					default:
 						break;
@@ -408,7 +426,7 @@ function editGood(){
 	/**
 	 * 设置状态选择框
 	 */
-	buildStatusCombobox({"text":statusStr,"value":statusCode});
+	/*buildStatusCombobox({"text":statusStr,"value":statusCode});*/
 
 	
 	
@@ -436,11 +454,7 @@ function editGood(){
 	 */
 	ajax.sendSync(url+"?pid="+pid, function(data){
 		
-		responseHandler.handleSuccess(data, function(data){
-			
-		}, function(){
-			
-		});
+	
 		
 		province.combobox({ 
 			valueField: 'value',
@@ -541,14 +555,14 @@ function editGood(){
  * @param combo
  * @param itemObj
  */
-function buildStatusCombobox(newItemObj){
+/*function buildStatusCombobox(newItemObj){
 	
-	/*<option value="-6">待审核状态</option>  
-    <option value="0">审核通过</option>*/
+	<option value="-6">待审核状态</option>  
+    <option value="0">审核通过</option>
 	var data = [{"text":"待审核","value":"-6"},
 	            {"text":"审核通过","value":"0"}]; 
 
-	/*goodsStatus.combobox("loadData", []);*/
+	goodsStatus.combobox("loadData", []);
 	var append = true;
 	for (var i = 0; i < data.length; i++) {
 		var d = data[i];
@@ -566,13 +580,13 @@ function buildStatusCombobox(newItemObj){
 		textField: 'text',
 		data:data
 	});
-	/*
-	goodsStatus.combobox("loadData", data);*/
+	
+	goodsStatus.combobox("loadData", data);
 	goodsStatus.combobox("select",newItemObj.value);
 	
-}
+}*/
 /**
- * 轉化,加載combobox數據
+ * 轉化,加載data數據到combobox;在编辑goods的地址下拉框时用到该方法
  */
 function loadComboboxData(combox,data,onSelect){
 	var regions = data.childs;
@@ -584,7 +598,7 @@ function loadComboboxData(combox,data,onSelect){
 	combox.combobox("loadData", data);
 }
 /**
- * 比較text獲取value
+ * 比較text獲取value;在编辑goods的地址下拉框时用到该方法
  * @param combobox
  * @param text
  * @returns
@@ -622,33 +636,27 @@ function submitGoodEdit(){
 	    	editGoodDialog.dialog('close');
 	    },    
 	    success:function(data){ 
-//	    	c(data);
-	    	data = JSON.parse(data);
-	    	
-	    	pro.close();
-			//提示信息
-			showMsg(data.msg);
 
-			if(data.result == 1){
-				//更新成功
+	    	data = JSON.parse(data);
+	    	responseHandler.handleSuccess(data, function(data){
+	    		//更新成功
 				
 				//刷新表格
 				goods_datagrid.datagrid("reload");
-				
-			}else{
-				//失敗
+	    	}, function(){
+	    		//失敗
 				//打開信息编辑
 				editGoodDialog.dialog('open');
-			}
+	    	});
 	    } ,
 	    onLoadError:function(){
-	    	//失敗
-			//提示信息
-			showMsg(data.msg);
-	    	//关闭进度条
-	    	pro.close();
-			//打開信息编辑
-			editGoodDialog.dialog('open');
+	    	
+	    	responseHandler.handleFailure(function(){
+
+				//打開信息编辑
+				editGoodDialog.dialog('open');
+	    	});
+	    	
 	    }
 	});  
 
@@ -681,14 +689,14 @@ function deleteGood(){
 			
 			ajax.send(manageForwardUrl+"/goods/deleteGood.action?id="+id, 
 			function(data){
-				//显示信息
-				showMsg(data.msg);
 				
 				//关闭信息编辑
 				editGoodDialog.dialog('close');
 				
 				//刷新表格
 				goods_datagrid.datagrid("reload");
+				
+			}, function(){
 				
 			}, function(){
 				
@@ -752,18 +760,24 @@ function clearInsertGoodForm(){
 function statusCode2String(statusCode){
 	
 	/*状态:,
-	-6:待审核状态,(不可以被显示,不可以购买)
-	0:审核通过,(可以被显示,可以购买)
-	1:购买了且待发货,
-	2:已发货,
-	-1:买家收货后交易正常结束,
-	-5:管理员删除本商品,
-	-8:买家申请退款,
-    -9:退款成功（失败则保持-1状态）*/
+	  -6:待审核状态,(不可以被显示,不可以购买)
+      -7:审核未通过,(不可以被显示,不可以购买)
+      0:审核通过,(可以被显示,可以购买)
+      1:购买了且待发货,
+      2:已发货,
+      -1:买家收货后交易正常结束,
+      -2:卖家取消了出售本商品,
+	  -3:买家取消购买本商品,
+	  -5:管理员删除本商品,
+      -8:买家申请退款,
+      -9:退款成功（失败则保持-1状态）*/
 	var s = statusCode;
 	switch (statusCode) {
 		case -6:
 			s = "待审核";
+			break;
+		case -7:
+			s = "审核未通过";
 			break;
 		case 0:
 			s = "审核通过";
@@ -776,6 +790,15 @@ function statusCode2String(statusCode){
 			break;
 		case -1:
 			s = "交易结束";
+			break;
+		case -2:
+			s = "卖家取消出售";
+			break;
+		case -3:
+			s = "买家取消购买";
+			break;
+		case -5:
+			s = "已被删除";
 			break;
 		case -8:
 			s = "正在申请退款";
@@ -824,6 +847,17 @@ function checkGoodsImgs(goodsid,goodstitle){
 	goods_imgs_datagrid.datagrid({    
 	    /*toolbar:'#goods_imgs_dg_tb',*/
 		url:manageForwardUrl+"/goods/selectGoodsImgsDatagrid.action?id="+goodsid,
+		onLoadSuccess:function(data){
+	    	responseHandler.handleSuccess(data, function(){
+	    		
+	    	}, function(){
+	    		
+	    	});
+	    	
+	    },
+	    onLoadError:function(){
+	    	responseHandler.handleFailure();
+	    },
 		toolbar:[
 				{
 					text:"添加图片",
@@ -902,8 +936,9 @@ function checkGoodsImgs(goodsid,goodstitle){
 function deleteGoodsImg(goodsImgId){
 	ajax.send(manageForwardUrl+"/goods/deleteGoodsImg.action?id="+goodsImgId, 
 			function(data){
-				c(data);
 				goods_imgs_datagrid.datagrid("reload");
+			}, function(){
+				
 			}, function(){
 				
 			});
@@ -916,8 +951,9 @@ function deleteGoodsImg(goodsImgId){
 function updateMainImg(goodsId,goodImgId){
 	ajax.send(manageForwardUrl+"/goods/updateGoodsMainImg.action?owner="+goodsId+"&id="+goodImgId, 
 	function(data){
-//		c(data);
 		goods_imgs_datagrid.datagrid("reload");
+	}, function(){
+		
 	}, function(){
 		
 	});
@@ -956,33 +992,24 @@ function submitGoodsImgs(){
 	    	goods_upload_imgs_dialog.dialog('close');
 	    },    
 	    success:function(data){ 
-//	    	c(data);
 	    	data = JSON.parse(data);
 	    	
-	    	pro.close();
-			//提示信息
-			showMsg(data.msg);
-
-			if(data.result == 1){
-				//更新成功
+	    	
+	    	responseHandler.handleSuccess(data, function(data){
+	    		//更新成功
 				
 				//刷新商品图片列表
 				goods_imgs_datagrid.datagrid("reload");
-				
-			}else{
-				//失敗
-		    	//打开图片上传窗口
-//		    	goods_upload_imgs_dialog.dialog('open');
-			}
+	    	}, function(){
+	    		
+	    	});
+	    	
 	    } ,
 	    onLoadError:function(){
-	    	//失敗
-			//提示信息
-			showMsg(data.msg);
-	    	//关闭进度条
-	    	pro.close();
-			//打開图片上传窗口
-//	    	goods_upload_imgs_dialog.dialog('open');
+	    	
+	    	responseHandler.handleFailure(function(){
+	    		
+	    	});
 	    }
 	});  
 }
@@ -1049,4 +1076,38 @@ function checkBuyer(buyerId,buyerName){
 			
 		}
 	});
+}
+
+/**
+ * 查看购买者的退款申请
+ */
+function checkBuyerApply(goodsIs){
+	checkBuyerApplyDialog.dialog({   
+	    title:"退款管理",
+		resizable : true,
+		modal : true,
+		closed : false,
+		borer:false,
+		onOpen:function(){
+			
+		}
+	});
+	
+//	sellerRefuseBillImg = 
+}
+
+
+/**
+ * 更新商品状态
+ * @param newStatus
+ */
+function updateGoodsStatus(goodsId,newStatus){
+	ajax.send(manageForwardUrl+"/goods/updateGoodsStatus.action?id="+goodsId+"&status="+newStatus, 
+	function(data){
+		goods_datagrid.datagrid("reload");
+	}, function(){
+		
+	}, function(){
+		
+	})
 }

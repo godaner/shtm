@@ -523,7 +523,7 @@ var responseHandler = {
 			return okCallFun(data);
 		}
 		// 操作失败
-		if (data.result == 0 && errorOrNotOkCallFun) {
+		if (data.result == 0 && notOkCallFun) {
 			return notOkCallFun(data);
 		}
 

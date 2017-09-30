@@ -121,6 +121,19 @@ public interface GoodsServiceI {
 	 * @param receiver
 	 * @throws Exception
 	 */
-	void deleteGoodsImg(GoodsImgsReceiver receiver) throws Exception; 
+	void deleteGoodsImg(GoodsImgsReceiver receiver) throws Exception;
+	/**
+	 * 
+	 * Title:
+	 * <p>
+	 * Description:更新goods状态
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月30日 下午2:05:47
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	void updateGoodsStatus(GoodsReceiver receiver) throws Exception;
 
 }

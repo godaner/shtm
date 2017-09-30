@@ -19,6 +19,7 @@ import com.shtm.manage.groups.GoodsGroups.SelectGoodsByPK;
 import com.shtm.manage.groups.GoodsGroups.SelectGoodsDatagrid;
 import com.shtm.manage.groups.GoodsGroups.SelectGoodsImgsDatagrid;
 import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
+import com.shtm.manage.groups.GoodsGroups.UpdateGoodsStatusGroups;
 import com.shtm.manage.groups.GoodsGroups.UpdateGoodsMainImgGroups;
 import com.shtm.manage.groups.GoodsGroups.UploadGoodsImgsGroups;
 import com.shtm.manage.po.GoodsImgsReceiver;
@@ -161,6 +162,48 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 		return replier;
 
 	}
+	
+	
+
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:跟新商品状态
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月30日 下午2:04:14
+	 * @version 1.0
+	 * @param receiver
+	 * @param result
+	 * @return
+	 */
+	@RequiresAuthentication
+	@RequiresPermissions("goods:update")
+	@RequestMapping("/updateGoodsStatus")
+	public @ResponseBody GoodsReplier updateGoodsStatus(@Validated(value={UpdateGoodsStatusGroups.class}) GoodsReceiver receiver,
+			BindingResult result){
+		GoodsReplier replier = new GoodsReplier();
+
+		try {
+			
+			getError(result);
+
+			service.updateGoodsStatus(receiver);
+
+			replier.setResult(RESULT.TRUE);
+
+			replier.setMsg("更新成功");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+
+		return replier;
+	}
+
 	
 	/**
 	 * Title:

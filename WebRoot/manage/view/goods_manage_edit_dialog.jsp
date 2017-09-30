@@ -115,11 +115,11 @@
 				</td>
 				
 				<td>
-					<!-- <input id="status" class="easyui-textbox input" data-options="required:true,editable:false" style="width:100%"> -->
+					<input id="status" class="easyui-textbox input" data-options="required:true,editable:false" style="width:100%">
 					
 					<!-- 选项在js中添加 -->
-					<select id="status" name="status" class="easyui-combobox " style="width:100%;" data-options="required:true,editable:false">
-						<!-- 状态:,
+					<!-- <select id="status" name="status" class="easyui-combobox " style="width:100%;" data-options="required:true,editable:false">
+						状态:,
 						-6:待审核状态,(不可以被显示,不可以购买)
 						0:审核通过,(可以被显示,可以购买)
 						1:购买了且待发货,
@@ -137,9 +137,9 @@
 					    <!-- <option value="-1">买家收货后交易正常结束</option> -->    
 					    <!-- <option value="-2">卖家取消了出售本商品</option>     -->
 					    <!-- <option value="-3">买家取消购买本商品</option> -->     
-					    <!-- <option value="-5">管理员删除本商品</option> -->     
+					    <!-- <option value="-5">管理员删除本商品</option>     
 					</select>       
-				
+					--> 
 				</td>
 			</tr>
 			<tr>
