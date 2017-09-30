@@ -189,8 +189,39 @@ function loadGoodsManageUI(){
 				title:'状态',
 				sortable : true,
 				formatter: function(value,row,index){
-					
-					return statusCode2String(value);
+					/*状态:,
+					-6:待审核状态,(不可以被显示,不可以购买)
+					0:审核通过,(可以被显示,可以购买)
+					1:购买了且待发货,
+					2:已发货,
+					-1:买家收货后交易正常结束,
+					-5:管理员删除本商品,
+					-8:买家申请退款,
+				    -9:退款成功（失败则保持-1状态）*/
+					var fun = "void(0);"
+					var words = value;
+					switch (value) {
+					case 6:
+						fun = "updateGoodsSttaus('0')";
+						words = "点击通过审核";
+						break;
+					case 0:
+						fun = "updateGoodsSttaus('6')";
+						words = "转为待审核";
+						break;
+					case 1:
+//						fun = "updateGoodsSttaus('0')";
+//						words = "点击通过审核";
+						break;
+					case 6:
+						fun = "updateGoodsSttaus('0')";
+						words = "点击通过审核";
+						break;
+
+					default:
+						break;
+					}
+					return "<a href=javascript:"+fun+">"+words+"</a>";
 				}
 			},
 			{
@@ -730,6 +761,12 @@ function statusCode2String(statusCode){
 			break;
 		case -1:
 			s = "交易结束";
+			break;
+		case -8:
+			s = "正在申请退款";
+			break;
+		case -9:
+			s = "退款成功";
 			break;
 			
 		default:
