@@ -117,35 +117,36 @@ function initLoginLis() {
 //		c(url);
 		
 		ajax.send(url, function(data) {
-			//连接服务器成功
-			//调用util.js的方法
-//			showMsg(data.msg);
-
-			//调用util.js的方法
-//			pro.close();
-
-			if (data == undefined || data == "" || data.result == undefined || data.result == 0) {
-
-				loginDialog.show();
-				return;
-			}
 			
-			/**
-			 * 登录成功
-			 */
-			//如果连接服务器成功
-			//加载用户名
-			setUsername(data.username);
+			
+			
+			responseHandler.handleSuccess(data, function(){
+				/**
+				 * 登录成功
+				 */
+				//如果连接服务器成功
+				//加载用户名
+				setUsername(data.username);
 
-			//加载主题
+				//加载主题
 
-			setLocalTheme(data.theme);
+				setLocalTheme(data.theme);
+			}, function(){
+				loginDialog.show();
+			});
+			
+			
+			
 			
 		},function(data){//连接服务器错误
 			
-//			pro.close();
-			//显示登录窗口
-			loginDialog.show();
+			responseHandler.handleFailure(function(){
+
+				//显示登录窗口
+				loginDialog.show();
+			});
+			
+			
 		});
 
 	});

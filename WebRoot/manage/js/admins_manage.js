@@ -129,6 +129,17 @@ function loadAdminsManageUI(){
 		selectOncheck:true,
 	    sortName : 'createtime',
 	    sortOrder : 'desc', //降序
+	    onLoadSuccess:function(data){
+	    	responseHandler.handleSuccess(data, function(){
+	    		
+	    	}, function(){
+	    		
+	    	});
+	    	
+	    },
+	    onLoadError:function(){
+	    	responseHandler.handleFailure();
+	    },
 		hideColumn:[[
 			{
 				field:'creator',
@@ -277,33 +288,28 @@ function submitAdminEdit(){
 	    	editAdminDialog.dialog('close');
 	    },    
 	    success:function(data){ 
-//	    	c(data);
-	    	data = JSON.parse(data);
-	    	
-	    	pro.close();
-			//提示信息
-			showMsg(data.msg);
 
-			if(data.result == 1){
-				//更新成功
+	    	data = JSON.parse(data);
+	    	responseHandler.handleSuccess(data, function(){
+	    		//更新成功
 				
 				//刷新表格
 				admins_datagrid.datagrid("reload");
-				
-			}else{
+	    	}, function(){
+
 				//失敗
 				//打開信息编辑
 				editAdminDialog.dialog('open');
-			}
+	    	});
+		    	
+	    	
 	    } ,
 	    onLoadError:function(){
-	    	//失敗
-			//提示信息
-			showMsg(data.msg);
-	    	//关闭进度条
-	    	pro.close();
-			//打開信息编辑
-			editAdminDialog.dialog('open');
+		    responseHandler.handleFailure(function(){
+
+				//打開信息编辑
+				editAdminDialog.dialog('open');
+		    });
 	    }
 	});  
 
@@ -344,6 +350,8 @@ function deleteAdmin(){
 				
 				//刷新表格
 				admins_datagrid.datagrid("reload");
+				
+			}, function(){
 				
 			}, function(){
 				
@@ -406,33 +414,26 @@ function submitNewAdmin(){
 	    	insertAdminDialog.dialog('close');
 	    },    
 	    success:function(data){ 
-//	    	c(data);
 	    	data = JSON.parse(data);
-	    	
-	    	pro.close();
-			//提示信息
-			showMsg(data.msg);
-
-			if(data.result == 1){
-				//更新成功
-				
+	    	responseHandler.handleSuccess(data, function(){
+	    		//更新成功
 				//刷新表格
 				admins_datagrid.datagrid("reload");
-				
-			}else{
-				//失敗
+	    	}, function(){
+	    		//失敗
 				//打開信息编辑
 				insertAdminDialog.dialog('open');
-			}
+	    	});
+	    	
 	    } ,
 	    onLoadError:function(){
-	    	//失敗
-			//提示信息
-			showMsg(data.msg);
-	    	//关闭进度条
-	    	pro.close();
-			//打開信息编辑
-	    	insertAdminDialog.dialog('open');
+	    	
+	    	responseHandler.handleFailure(function(){
+
+				//打開信息编辑
+		    	insertAdminDialog.dialog('open');
+	    	});
+	    	
 	    }
 	});  
 

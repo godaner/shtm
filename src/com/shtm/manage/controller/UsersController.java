@@ -184,6 +184,8 @@ public class UsersController extends BaseController<UsersServiceI>{
 	 * @return
 	 * @throws Exception
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("users:insert")
 	@RequestMapping("insertUser")
 	public @ResponseBody UsersReplier insertUser(UsersReceiver receiver) throws Exception{
 		
@@ -219,6 +221,8 @@ public class UsersController extends BaseController<UsersServiceI>{
 	 * @param id
 	 * @return
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("users:delete")
 	@RequestMapping("deleteUser")
 	public @ResponseBody UsersReplier deleteUser(String id) throws Exception{
 		

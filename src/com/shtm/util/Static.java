@@ -155,6 +155,11 @@ public interface Static {
 		 * 已离线
 		 */
 		Integer UNONLINE = -1;
+		
+		/**
+		 * 没有权限
+		 */
+		Integer NOPERMISSIONS = -2;
 	}
 	/**
 	 * 权限节点状态

@@ -39,11 +39,19 @@ function loadWestUI(){
 	    	url = manageForwardUrl+url;
 	    	//添加选项卡
 			addTab(title,url);
-		},    
-	    loadFilter: function(data){    
-	        if (data.datagrid){    
-	            return data.datagrid;    
-	        }   
+		},   
+		//先于onLoadSuccess:function(node, data){}执行
+	    loadFilter: function(data){ 
+	    	
+	    	
+	    	return responseHandler.handleSuccess(data, function(data){
+	    		
+	            return data.datagrid;
+	            
+	    	}, function(){
+	    		
+	    		return [];
+	    	}); 
 	    },
 	    onLoadSuccess:function(node, data){
 	    	//设置url到attributes
@@ -59,6 +67,15 @@ function loadWestUI(){
 		    	});
 				
 			}
+	    	
+	    	
+	    	
+	    	
+	    },
+	    onLoadError:function(){
+	    	responseHandler.handleFailure(function(){
+	    		
+	    	});
 	    },
 	    onDblClick:function(node){
 	    	menutree.tree("expandAll",node.target);

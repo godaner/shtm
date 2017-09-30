@@ -123,10 +123,15 @@ function loadUsersManageUI(){
 	    sortName : 'registtime',
 	    sortOrder : 'desc', //降序
 	    onLoadSuccess:function(data){
-//	    	a(data.result);
+	    	responseHandler.handleSuccess(data, function(){
+	    		
+	    	}, function(){
+	    		
+	    	});
 	    	
-	    	//检测管理员在线状态
-	    	checkOnlineStatus(data);
+	    },
+	    onLoadError:function(){
+	    	responseHandler.handleFailure();
 	    },
 		hideColumn:[[
 			{
@@ -428,33 +433,31 @@ function submitUserEdit(){
 	    	editUserDialog.dialog('close');
 	    },    
 	    success:function(data){ 
-//	    	c(data);
+	    	
 	    	data = JSON.parse(data);
 	    	
-	    	pro.close();
-			//提示信息
-			showMsg(data.msg);
-
-			if(data.result == 1){
-				//更新成功
-				
-				//刷新表格
+	    	c(data);
+	    	
+	    	responseHandler.handleSuccess(data, function(data){
+	    		//更新成功
+	    		//刷新表格
 				users_datagrid.datagrid("reload");
-				
-			}else{
-				//失敗
+	    	}, function(data){
+	    		//失敗
 				//打開信息编辑
 				editUserDialog.dialog('open');
-			}
+	    	});
+	    	
+	    	
 	    } ,
 	    onLoadError:function(){
-	    	//失敗
-			//提示信息
-			showMsg(data.msg);
-	    	//关闭进度条
-	    	pro.close();
-			//打開信息编辑
-			editUserDialog.dialog('open');
+	    	
+	    	responseHandler.handleFailure(function(){
+
+				//打開信息编辑
+				editUserDialog.dialog('open');
+	    	});
+	    	
 	    }
 	});  
 

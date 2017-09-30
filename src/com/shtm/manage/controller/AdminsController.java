@@ -8,6 +8,8 @@ import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -54,6 +56,8 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 	 * @param receiver
 	 * @return
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("admins:select")
 	@RequestMapping("/selectAdmin")
 	public @ResponseBody AdminsReplier selectAdmin(
 			@Validated(value = { SelectAdminGroups.class }) AdminsReceiver receiver,
@@ -165,13 +169,6 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 
 	}
 
-	/*@RequestMapping("loginSuccess")
-	public @ResponseBody AdminsReplier loginSuccess() {
-		AdminsReplier replier = new AdminsReplier();
-		replier.setResult(RESULT.TRUE);
-		replier.setMsg("登录成功");
-		return replier;
-	}*/
 
 	/**
 	 * 
@@ -190,11 +187,6 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 
 		AdminsReplier replier = new AdminsReplier();
 		try {
-			/*
-			 * removeSessionAttr(FILED_ONLINE_ADMIN);
-			 * 
-			 * getSession().invalidate();
-			 */
 
 			// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
 			SecurityUtils.getSubject().logout();
@@ -224,6 +216,8 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 	 * @return
 	 * @throws IOException
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("admins:update")
 	@RequestMapping("/updateTheme")
 	public @ResponseBody AdminsReplier updateTheme(
 			@RequestBody AdminsReceiver receiver) throws IOException {
@@ -272,6 +266,8 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 	 * @param receiver
 	 * @return
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("admins:select")
 	@RequestMapping("/selectAdminsDatagrid")
 	public @ResponseBody AdminsReplier selectAdminsDatagrid(
 			AdminsReceiver receiver) throws Exception {
@@ -308,6 +304,8 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 	 * @param receiver
 	 * @return
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("admins:insert")
 	@RequestMapping("/insertAdmin")
 	public @ResponseBody AdminsReplier insertAdmin(
 			@Validated(value = { InsertAdminGroups.class }) AdminsReceiver receiver,
@@ -347,6 +345,8 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 		return replier;
 	}
 
+	@RequiresAuthentication
+	@RequiresPermissions("admins:update")
 	@RequestMapping("/updateAdmin")
 	public @ResponseBody AdminsReplier updateAdmin(
 			@Validated(value = { UpdateAdminGroups.class }) AdminsReceiver receiver,
@@ -389,6 +389,8 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("admins:delete")
 	@RequestMapping("/deleteAdmin")
 	public @ResponseBody AdminsReplier deleteAdmin(
 			@Validated(value = { DeleteAdminGroups.class }) AdminsReceiver receiver,

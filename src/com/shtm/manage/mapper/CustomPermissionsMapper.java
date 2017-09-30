@@ -18,7 +18,7 @@ public interface CustomPermissionsMapper {
 	/**
 	 * Title:selectPermissionsByPid
 	 * <p>
-	 * Description:通過pid獲取權限;
+	 * Description:通過pid獲取菜單;
 	 * <p>
 	 * @author Kor_Zhang
 	 * @date 2017年9月17日 下午2:00:23

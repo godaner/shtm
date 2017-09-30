@@ -46,7 +46,7 @@ public class PermissionsController extends BaseController<PermissionsServiceI> {
 			
 			per.setDatagrid(pers);
 			
-			per.setMsg("获取权限成功");
+			per.setMsg("获取菜单成功");
 			per.setResult(RESULT.TRUE);
 		} catch (Exception e) {
 			e.printStackTrace();

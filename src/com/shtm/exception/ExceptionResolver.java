@@ -3,8 +3,6 @@ package com.shtm.exception;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import oracle.net.aso.r;
-
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,8 +29,10 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		
 		Replier r = new Replier();
 		
+		r.setRows(Util.getList());
+		
 		if(ex instanceof org.apache.shiro.authz.UnauthenticatedException){
-			r.setMsg("ExceptionResolver:您没有登录");
+			r.setMsg("您当前没有登录");
 			
 			r.setResult(RESULT.UNONLINE);
 			
@@ -47,10 +47,9 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		if(ex instanceof org.apache.shiro.authz.UnauthorizedException){
 			r.setMsg("您没有该权限");
 
-			Util.writeJSON(r, response);
-			
+			r.setResult(RESULT.NOPERMISSIONS);
 
-			r.setResult(RESULT.FALSE);
+			Util.writeJSON(r, response);
 			
 			return null;
 		}

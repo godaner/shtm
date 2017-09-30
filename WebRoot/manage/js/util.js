@@ -1,27 +1,7 @@
-/**
- * 检测管理员在线状态
- */
-function checkOnlineStatus(data){
-//	a(data.result);
-	//显示信息
-	if(!isEmpty(data.msg)){
-		showMsg(data.msg);
-	}
-	
-	//离线
-	if(data.result==-1){
-		
-		loginDialog.show();
 
-		//关闭进度条
-		pro.close();
-		
-//		c("已离线");
-		
-		throw "已离线";
-		
-	}
-}
+
+
+
 /**
  * 上下文容器
  */
@@ -385,23 +365,26 @@ var ajax = {
 	 * 
 	 * @param url
 	 *            不包含项目名的路径
-	 * @param success
-	 *            连接服务器成功回调方法
+	 *            连接数据库成功且操作成功的回调;
+	 * @param notOk
+	 *            连接数据库成功且操作失败的回调;
 	 * @param error
 	 *            连接服务器失败回调方法
 	 */
-	send : function(url, success,error) {
+	send : function(url, ok,notOk,error) {
 
-		this.sendJson(url, {}, success,error);
+		this.sendJson(url, {}, ok,notOk,error);
 	},
 	/**
 	 * 发送一个同步的请求
 	 * @param url
-	 * @param success
+	 *            连接数据库成功且操作成功的回调;
+	 * @param notOk
+	 *            连接数据库成功且操作失败的回调;
 	 * @param error
 	 */
-	sendSync:function(url, success,error){
-		this.s(url, undefined,success,error,false);
+	sendSync:function(url, ok,notOk,error){
+		this.s(url, undefined,ok,notOk,error,false);
 	},
 	/**
 	 * 发送一个携带参数的ajax异步请求
@@ -412,23 +395,26 @@ var ajax = {
 	 * @param jsObjectOrJsonStr
 	 * 			js对象或者json字符串
 	 *            不包含项目名的路径
-	 * @param success
-	 *            连接服务器成功回调方法
+	 *            连接数据库成功且操作成功的回调;
+	 * @param notOk
+	 *            连接数据库成功且操作失败的回调;
 	 * @param error
 	 *            连接服务器失败回调方法
 	 */
-	sendJson : function(url, jsObjectOrJsonStr,success,error) {
-		this.s(url, jsObjectOrJsonStr,success,error,true);
+	sendJson : function(url, jsObjectOrJsonStr,ok,notOk,error) {
+		this.s(url, jsObjectOrJsonStr,ok,notOk,error,true);
 	},
 	/**
 	 * 发送ajax请求,可能是异步,可能是同步
 	 * @param url
 	 * @param jsObjectOrJsonStr
-	 * @param success
+	 *            连接数据库成功且操作成功的回调;
+	 * @param notOk
+	 *            连接数据库成功且操作失败的回调;
 	 * @param error
 	 * @param async
 	 */
-	s : function(url, jsObjectOrJsonStr,success,error,async){
+	s : function(url, jsObjectOrJsonStr,ok,notOk,error,async){
 		//显示进度条
 		pro.show("正在操作,请稍等");
 		
@@ -453,55 +439,112 @@ var ajax = {
 			dataType : "json",
 			data : jsonStr,
 			success : function(data, textStatus) {
-				
-				//验证在线状态
-				checkOnlineStatus(data);
-				
-				//回调
-				if(success){
-					success(data, textStatus);
-				}
-				//关闭进度条
-				pro.close();
-				
-				
+
+				responseHandler.handleSuccess(data, ok, notOk);
 				
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				
-				showMsg("连接服务器失败,请稍后尝试");
-				c("ajax失败:");
-				c(XMLHttpRequest);
-				c(textStatus);
-				c(errorThrown);
-				//回调
-				if(error){
-					error(XMLHttpRequest, textStatus, errorThrown);
-				}
-				//关闭进度条
-				pro.close();
+				
+				responseHandler.handleFailure(error);
+				
+				
 			}
 		});
 	},
 	/**
 	 * 将form表单的参数转化为json,发送ajax异步请求
-	 * 
 	 * @param url
 	 *            不包含项目名的路径
 	 * @param form 
 	 * 			  表单
-	 * @param success
-	 *            连接服务器成功回调方法
+	 * @param ok
+	 *            连接数据库成功且操作成功的回调;
+	 * @param notOk
+	 *            连接数据库成功且操作失败的回调;
 	 * @param error
 	 *            连接服务器失败回调方法
 	 */
-	sendForm : function(url, form, success,error) {
+	sendForm : function(url, form, ok,notOk,error) {
 
 		var formObject = loginForm.serializeObject();
 
 		var jsonStr = JSON.stringify(formObject);
 		
-		this.sendJson(url, jsonStr, success,error);
+		this.sendJson(url, jsonStr, ok,notOk,error);
+
+	}
+
+};
+/**
+ * 对服务器的响应进行处理;
+ */
+var responseHandler = {
+	/**
+	 * 处理本应用访问服务器的响应结果;<br/> 
+	 * 
+	 * @param data
+	 *            服务器响应数据;
+	 * @param okCallFun
+	 *            当操作结果为true时进行回调
+	 * @param errorOrNotOkCallFun
+	 *            当操作结果为false时进行回调;包含-1和2状态;
+	 */
+	handleSuccess : function(data, okCallFun, notOkCallFun) {
+		// 显示信息
+		if (!isEmpty(data.msg)) {
+			showMsg(data.msg);
+		}
+
+		// 关闭进度条
+		pro.close();
+
+		// 离线
+		if (data.result == -1) {
+
+			loginDialog.show();
+
+			c("已离线");
+			
+			return ;
+
+		}
+		// 无权限
+		if (data.result == -2) {
+			
+			c("无权限");
+			
+			return notOkCallFun(data);
+
+		}
+		
+		// 操作成功
+		if (data.result == 1 && okCallFun) {
+			return okCallFun(data);
+		}
+		// 操作失败
+		if (data.result == 0 && errorOrNotOkCallFun) {
+			return notOkCallFun(data);
+		}
+
+	},
+	/**
+	 * 处理本应用访问服务器失败的响应结果;
+	 * @param errorCallFun	失败回调方法
+	 */
+	handleFailure : function(errorCallFun) {
+		//访问服务器失败
+		showMsg("连接服务器失败,请稍后尝试");
+		c("ajax失败:");
+		// 关闭进度条
+		pro.close();
+		// 回调
+		if (errorCallFun) {
+			// 错误时回调参数
+			errorCallFun();
+
+		}
+		
 
 	}
 

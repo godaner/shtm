@@ -75,7 +75,7 @@
 	<select id="selectRoles" parameterType="string" resultType="com.shtm.po.Roles">
 		SELECT r.*
 		FROM ADMINS_ROLES ar,ROLES r
-		WHERE ar.ADMin =#{value} AND ar.ROLE= r.ID
+		WHERE ar.ADMin =#{value} AND ar.ROLE= r.ID and r.status =1
 	</select>
 	<select id="selectPermissions" parameterType="string" resultType="com.shtm.po.Permissions">
 		
@@ -84,9 +84,9 @@
 		       (
 		          SELECT r.*
 		          FROM ADMINS_ROLES ar,ROLES r
-		          WHERE ar.ADMin =#{value} AND ar.ROLE= r.ID
+		          WHERE ar.ADMin =#{value} AND ar.ROLE= r.ID and r.status =1
 		       ) t,ROLES_PERMISSIONS rp,PERMISSIONS p
-		WHERE t.ID = rp.ROLE AND p.ID = rp.PERMISSION
+		WHERE t.ID = rp.ROLE AND p.ID = rp.PERMISSION and p.status=1
 
 	</select>
 	

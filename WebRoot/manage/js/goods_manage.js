@@ -130,6 +130,17 @@ function loadGoodsManageUI(){
 		selectOncheck:true,
 	    sortName : 'createtime',
 	    sortOrder : 'desc', //降序
+		onLoadSuccess:function(data){
+			responseHandler.handleSuccess(data, function() {
+
+			}, function() {
+
+			});
+		    	
+	    },
+	    onLoadError:function(){
+	    	responseHandler.handleFailure();
+	    },
 		hideColumn:[[
 			{
 				field:'id',
@@ -378,6 +389,12 @@ function editGood(){
 	 * 加载省
 	 */
 	ajax.sendSync(url+"?pid="+pid, function(data){
+		
+		responseHandler.handleSuccess(data, function(data){
+			
+		}, function(){
+			
+		});
 		
 		province.combobox({ 
 			valueField: 'value',

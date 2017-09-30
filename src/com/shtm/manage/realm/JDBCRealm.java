@@ -104,7 +104,7 @@ public class JDBCRealm extends AuthorizingRealm {
 		}
 
 		// 根据用户名查询当前用户拥有的角色
-		List<Roles> roles = null;
+		List<Roles> roles = Util.getList();
 		try {
 			roles = adminsService.selectRoles(dbAdmin.getId());
 		} catch (Exception e) {
@@ -118,7 +118,7 @@ public class JDBCRealm extends AuthorizingRealm {
 
 		authorizationInfo.setRoles(roleNames);
 		// 根据用户名查询当前用户权限
-		List<Permissions> permissions = null;
+		List<Permissions> permissions = Util.getList();
 		try {
 			permissions = adminsService
 					.selectPermissions(dbAdmin.getId());

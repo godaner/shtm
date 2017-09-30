@@ -53,28 +53,28 @@ function initNorthLis(){
 		ajax.send(
 				url,
 				function(data){
-					//连接服务器成功
+					
+					responseHandler.handleSuccess(data, function(data){
+						//连接服务器成功
 
-					//重设主题为默认defaultTheme在index.js
-					setLocalTheme(defaultTheme);
-
-					//调用util.js的方法
-					pro.close();
-
-					//调用util.js的方法
-					showMsg(data.msg);
-
-					if (data.result == 1) {
+						//重设主题为默认defaultTheme在index.js
+						setLocalTheme(defaultTheme);
+						
 						loginDialog.show();
 						//调用north方法
 						setUsername("");
-						return;
-					}
+						
+					}, function(){
+						
+					});
+					
+					
 					
 					
 				},function(data){
-					//调用util.js的方法
-					pro.close();
+					responseHandler.handleFailure(function(){
+						
+					});
 				});
 	});
 }

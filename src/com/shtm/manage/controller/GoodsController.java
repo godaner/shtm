@@ -2,6 +2,8 @@ package com.shtm.manage.controller;
 
 import java.io.File;
 
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -51,6 +53,8 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @param id
 	 * @return
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("goods:select")
 	@RequestMapping("/selectGoodsByPK")
 	public @ResponseBody GoodsReplier selectGoodsByPK(@Validated(value={SelectGoodsByPK.class}) GoodsReceiver receiver,
 			BindingResult result){
@@ -88,6 +92,8 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("goods:select")
 	@RequestMapping("/selectGoodsDatagrid")
 	public @ResponseBody GoodsReplier selectGoodsDatagrid(@Validated(value={SelectGoodsDatagrid.class}) GoodsReceiver receiver,
 			BindingResult result)
@@ -127,6 +133,8 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("goods:select")
 	@RequestMapping("/selectGoodsImgsDatagrid")
 	public @ResponseBody GoodsReplier selectGoodsImgsDatagrid(@Validated(value={SelectGoodsImgsDatagrid.class}) GoodsReceiver receiver,
 			BindingResult result)
@@ -166,6 +174,8 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("goods:update")
 	@RequestMapping("/updateGood")
 	public @ResponseBody GoodsReplier updateGood(@Validated(value={UpdateGoodGroups.class}) GoodsReceiver receiver,
 			BindingResult result)
@@ -204,6 +214,8 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("goods:delete")
 	@RequestMapping("/deleteGood")
 	public @ResponseBody GoodsReplier deleteGood(@Validated(value={DeleteGoodsGroups.class}) GoodsReceiver receiver,
 			BindingResult result)
@@ -281,6 +293,8 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @param result
 	 * @return
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("goods:update")
 	@RequestMapping("/uploadGoodsImgs")
 	public @ResponseBody GoodsReplier uploadGoodsImgs(@Validated(value={UploadGoodsImgsGroups.class}) GoodsReceiver receiver,
 			BindingResult result){
@@ -317,6 +331,8 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @param result
 	 * @return
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("goods:update")
 	@RequestMapping("/updateGoodsMainImg")
 	public @ResponseBody GoodsReplier updateGoodsMainImg(@Validated(value={UpdateGoodsMainImgGroups.class}) GoodsImgsReceiver receiver,
 			BindingResult result){
@@ -352,6 +368,8 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	 * @param result
 	 * @return
 	 */
+	@RequiresAuthentication
+	@RequiresPermissions("goods:delete")
 	@RequestMapping("/deleteGoodsImg")
 	public @ResponseBody GoodsReplier deleteGoodsImg(@Validated(value={DeleteGoodsImgGroups.class}) GoodsImgsReceiver receiver,
 			BindingResult result){

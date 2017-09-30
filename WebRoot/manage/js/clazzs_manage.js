@@ -38,6 +38,17 @@ function loadClazzsManageUI() {
 		selectOncheck : true,
 		sortName : 'createtime',
 		sortOrder : 'desc', //降序
+		onLoadSuccess:function(data){
+			responseHandler.handleSuccess(data, function() {
+
+			}, function() {
+
+			});
+		    	
+	    },
+	    onLoadError:function(){
+	    	responseHandler.handleFailure();
+	    },
 		columns : [ [ {
 			field : 'id',
 			title : '主键',
