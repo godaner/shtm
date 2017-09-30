@@ -54,27 +54,24 @@ function initNorthLis(){
 				url,
 				function(data){
 					
-					responseHandler.handleSuccess(data, function(data){
-						//连接服务器成功
+					//连接服务器成功
 
-						//重设主题为默认defaultTheme在index.js
-						setLocalTheme(defaultTheme);
-						
-						loginDialog.show();
-						//调用north方法
-						setUsername("");
-						
-					}, function(){
-						
-					});
+					//重设主题为默认defaultTheme在index.js
+					setLocalTheme(defaultTheme);
+					
+					loginDialog.show();
+					//调用north方法
+					setUsername("");
 					
 					
 					
 					
-				},function(data){
-					responseHandler.handleFailure(function(){
-						
-					});
+				},
+				function(data){
+					
+					
+				},function(){
+					
 				});
 	});
 }
@@ -111,22 +108,13 @@ function updateThemes(newThemeString) {
 		url, 
 		{theme:newThemeString}, 
 		function(data) {
-			
-			pro.close();
-
-			showMsg(data.msg);
-			
-			//同步成功
-			if(data.result == 1){
-				//设置主题
-				setLocalTheme(newThemeString);
-				
-			}
-			
+			//设置主题
+			setLocalTheme(newThemeString);
 			
 		},function(data){
-			pro.close();
-			showMsg("同步主题失敗");
+			
+		},function(){
+			
 		});
 	
 	

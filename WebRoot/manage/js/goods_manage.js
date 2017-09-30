@@ -711,7 +711,9 @@ function statusCode2String(statusCode){
 	1:购买了且待发货,
 	2:已发货,
 	-1:买家收货后交易正常结束,
-	-5:管理员删除本商品*/
+	-5:管理员删除本商品,
+	-8:买家申请退款,
+    -9:退款成功（失败则保持-1状态）*/
 	var s = statusCode;
 	switch (statusCode) {
 		case -6:
