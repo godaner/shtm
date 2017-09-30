@@ -202,22 +202,37 @@ function loadGoodsManageUI(){
 					var words = value;
 					switch (value) {
 					case 6:
-						fun = "updateGoodsSttaus('0')";
-						words = "点击通过审核";
+						fun = "updateGoodsStatus('0')";
+						words = "通过审核";
 						break;
 					case 0:
-						fun = "updateGoodsSttaus('6')";
+						fun = "updateGoodsStatus('6')";
 						words = "转为待审核";
 						break;
 					case 1:
-//						fun = "updateGoodsSttaus('0')";
+//						fun = "updateGoodsStatus('0')";
 //						words = "点击通过审核";
 						break;
-					case 6:
-						fun = "updateGoodsSttaus('0')";
-						words = "点击通过审核";
+					case 2:
+//						fun = "updateGoodsStatus('0')";
+						words = "已发货";
 						break;
-
+					case -1:
+//						fun = "updateGoodsStatus('0')";
+						words = "交易结束";
+						break;
+					case -5:
+//						fun = "updateGoodsStatus('0')";
+						words = "被删除";
+						break;
+					case -8:
+						fun = "checkBuyerApply()";
+						words = "查看申请";
+						break;	
+					case -9:
+//						fun = "checkBuyerApply()";
+						words = "退款成功";
+						break;	
 					default:
 						break;
 					}
