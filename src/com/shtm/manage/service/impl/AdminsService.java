@@ -23,7 +23,6 @@ import com.shtm.po.AdminsExample.Criteria;
 import com.shtm.po.Permissions;
 import com.shtm.po.Roles;
 import com.shtm.service.impl.BaseService;
-import com.shtm.util.Static.ADMINS_STATUS;
 
 /**
  * Title:AdminsService

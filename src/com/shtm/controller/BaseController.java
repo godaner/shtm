@@ -8,8 +8,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.shtm.util.ProjectUtil;
 import com.shtm.util.Static;
-import com.shtm.util.Util;
 
 /**
  * Title:BaseController
@@ -24,7 +24,7 @@ import com.shtm.util.Util;
  * @param <S>
  *            事务对象
  */
-public class BaseController<S> extends Util implements Static {
+public class BaseController<S> extends ProjectUtil implements Static {
 
 	/**
 	 * 自动注入service

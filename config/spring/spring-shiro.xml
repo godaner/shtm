@@ -42,14 +42,14 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 		<property name="adminsService" ref="adminsService"></property>
 	</bean> -->
 
-	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" depends-on="JDBCRealm">
 		<!-- 单realm应用。如果有多个realm，使用‘realms’属性代替 -->
 		<property name="realm" ref="JDBCRealm" />
 		<property name="cacheManager" ref="cacheManager" />
 	</bean>
 
 	<!-- shiroFilter配置 -->
-	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" depends-on="securityManager">
 		<property name="securityManager" ref="securityManager" />
 		<!-- 登录url -->
 		<property name="loginUrl" value="/admins/login.action" />

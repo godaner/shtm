@@ -1,6 +1,6 @@
 package com.shtm.service.impl;
 
-import com.shtm.util.Util;
+import com.shtm.util.ProjectUtil;
 
 /**
  * Title:BaseService
@@ -11,6 +11,6 @@ import com.shtm.util.Util;
  * @date 2017年9月15日 上午11:10:11
  * @version 1.0
  */
-public class BaseService extends Util{
+public class BaseService extends ProjectUtil{
 
 }

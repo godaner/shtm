@@ -8,8 +8,6 @@ import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -99,52 +97,7 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 
 	}
 
-	/**
-	 * Title:login
-	 * <p>
-	 * Description:登录
-	 * <p>
-	 * 
-	 * @author Kor_Zhang
-	 * @date 2017年9月15日 下午2:46:34
-	 * @version 1.0
-	 * @param po
-	 * @return
-	 */
-	/*
-	 * @RequestMapping("login") public @ResponseBody AdminsReplier
-	 * login(AdminsReceiver receiver,AdminsLoginLogReceiver
-	 * adminsLoginLogReceiver) { AdminsReplier replier = new AdminsReplier();
-	 * try{
-	 *//**
-	 * 验证验证码
-	 */
-	/*
-	 * String msg = "验证码错误"; //正确验证码 Object vc =
-	 * getApplicationAttr(FILED_LOGIN_VERIFYCODE); eject(vc == null,msg);
-	 * 
-	 * //表单验证码 String formVc = po.getVerifyCode(); eject(formVc == null,msg);
-	 * 
-	 * eject(!vc.toString().toLowerCase().equals(formVc.toLowerCase()),
-	 * "验证码错误");
-	 * 
-	 * //---start,模拟用户信息,用于测试 receiver.setUsername("123");
-	 * receiver.setPassword("123");
-	 * 
-	 * //---end
-	 *//**
-	 * 执行业务
-	 */
-	/*
-	 * Admins admin = service.login(receiver,adminsLoginLogReceiver);
-	 * 
-	 * //设置到session setSessionAttr(FILED_ONLINE_ADMIN, admin);
-	 * 
-	 * replier = (AdminsReplier) admin; replier.setResult(RESULT.TRUE);
-	 * replier.setMsg("登录成功"); }catch(Exception e){ e.printStackTrace();
-	 * replier.setResult(RESULT.FALSE); replier.setMsg(e.getMessage()); } return
-	 * replier; }
-	 */
+	
 
 	/**
 	 * Title:login
@@ -175,7 +128,9 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 
 			replier.setResult(RESULT.TRUE);
 			
-			setSessionAttr(FILED_ONLINE_ADMIN,replier);
+			/*setSessionAttr(FILED_ONLINE_ADMIN,replier);*/
+			setOnlineAdmin((Admins)replier);
+			
 			
 			adminsLoginLogReceiver.setResult(ADMINS_LOGIN_LOG_RESULT.SUCCESS);
 			
@@ -203,6 +158,7 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 			service.insertAdminsLoginLog(replier.getId(), adminsLoginLogReceiver);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.err.println("insertAdminsLoginLog插入錯誤!!!!!!!!!!!!!!!!!!!!!!!");
 		}
 		return replier;
 
@@ -276,7 +232,9 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 
 		try {
 			// 获取id
-			Admins onlineAdmin = getSessionAttr(FILED_ONLINE_ADMIN);
+			/*Admins onlineAdmin = getSessionAttr(FILED_ONLINE_ADMIN);*/
+			
+			Admins onlineAdmin = getOnlineAdmin();
 
 			receiver.setId(onlineAdmin.getId());
 
@@ -364,10 +322,12 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 			/**
 			 * 获取在线的管理员
 			 */
-			Admins ad = getSessionAttr(FILED_ONLINE_ADMIN);
+			
+			Admins ad = getOnlineAdmin();
+			/*Admins ad = getSessionAttr(FILED_ONLINE_ADMIN);*/
 
 			// 假設在綫用戶為1,123,123
-			ad.setId("1");
+			/*ad.setId("1");*/
 
 			/**
 			 * 执行业务
