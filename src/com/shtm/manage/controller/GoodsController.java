@@ -26,6 +26,7 @@ import com.shtm.manage.po.GoodsImgsReceiver;
 import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 import com.shtm.manage.service.GoodsServiceI;
+import com.shtm.util.Static.CONFIG;
 
 /**
  * Title:GoodsController
@@ -283,7 +284,40 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 
 		return replier;
 	}
-	
+	/**
+	 * 
+	 * Title:getBill
+	 * <p>
+	 * Description:获取卖家证据图片;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月1日 上午10:53:16
+	 * @version 1.0
+	 * @param headimg
+	 * @param size
+	 * @throws Exception
+	 */
+	@RequestMapping("/getBill")
+	public void getBill(String fileName) throws Exception{
+
+		
+		try {
+			
+			//找不到指定的图片
+			String path = getValue(CONFIG.FILED_SRC_RETURN_MONEY_BILL) + fileName;
+			
+			//如果文件不存在
+			eject(!new File(path).exists());
+			
+			//返回头像
+			writeFileToOS(path, getResponse().getOutputStream());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
 	
 	/**
 	 * Title:getGoodsImg

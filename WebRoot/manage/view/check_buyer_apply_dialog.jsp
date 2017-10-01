@@ -1,10 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- 用户退款申请查看弹窗 start -->
-<div id="checkBuyerApplyDialog" style="display: none;width:450px;">
-	<img id="sellerRefuseBillImg" src=""/>
-	<!-- 删除按钮 -->
-	<a id="agreeApplyBtn" style="color:red;" href="javascript:deleteGood();" class="easyui-linkbutton" data-options="">同意退款</a>
-	<a id="refuseApplyBtn" style="color:red;" href="javascript:deleteGood();" class="easyui-linkbutton" data-options="">拒绝退款</a>
+<div id="checkBuyerApplyDialog" style="display: none;width:70%;height:70%;">
+	<table style="width:100%;height:100%;">
+		<tr>
+			<td colspan="2" align="center">
+			
+				<img id="sellerRefuseBillImg" style="width:80%;" src=""/>
+				
+			</td>
+		</tr>
+		<tr>
+			
+			
+			<td align="center">
+				<!-- 删除按钮 -->
+				<a id="agreeApplyBtn" style="color:green;" href="javascript:updateGoodsStatus('-9');" class="easyui-linkbutton" data-options="">同意退款</a>
+			</td>
+			<td align="center">
+				<a id="refuseApplyBtn" style="color:red;" href="javascript:updateGoodsStatus('-1');" class="easyui-linkbutton" data-options="">拒绝退款</a>
+			
+			</td>
+		</tr>
+	</table>
 </div>
 <!-- 用户退款申请查看弹窗 end -->

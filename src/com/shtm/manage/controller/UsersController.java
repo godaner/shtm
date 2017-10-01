@@ -171,6 +171,7 @@ public class UsersController extends BaseController<UsersServiceI>{
 		
 		
 	}
+	
 	/**
 	 * 
 	 * Title:insertUser

@@ -437,7 +437,18 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 				eject("更新状态失败");
 			}
 		}
-		
+		/**
+		 * oldStatus:-8
+		 * newStatus:-9,-1
+		 */
+		if (oldStatus == GOODS_STAUS.WAIT_RETURN_MONEY) {
+			if (newStatus == GOODS_STAUS.RETURN_MONEY_SUCCESS || 
+					newStatus == GOODS_STAUS.BUYER_RECEIVED_AND_FINISHED	){
+				goodsMapper.updateByPrimaryKeySelective(g);
+			} else {
+				eject("更新状态失败");
+			}
+		}
 		
 
 	}

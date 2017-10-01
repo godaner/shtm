@@ -85,6 +85,9 @@ function initGoodsManageVar(){
 	goods_upload_imgs_form = $("#goods_upload_imgs_form");
 	
 	sellerRefuseBillImg = $("#sellerRefuseBillImg");
+	
+	checkBuyerApplyDialog = $("#checkBuyerApplyDialog");
+	
 }
 /**
  * 加载界面
@@ -169,7 +172,10 @@ function loadGoodsManageUI(){
 	        {
     			field:'buyerName',
     			title:'购买者',
-    		}, 
+    		}, {
+    			field:'refusereturnmoneybill',
+    			title:'發佈者拒絕付款憑證',
+    		}
 		             ]],
 		frozenColumns:[[
 			
@@ -210,6 +216,7 @@ function loadGoodsManageUI(){
 					var buyerId= row.buyer;
 					var goodsId= row.id;
 					var sellerId= row.owner;
+					var fileName = row.refusereturnmoneybill;
 					var fun = "void(0);"
 					var words = statusCode2String(value);
 					
@@ -245,7 +252,7 @@ function loadGoodsManageUI(){
 					case -5:
 						break;
 					case -8:
-						fun = "checkBuyerApply('"+goodsId+"')";
+						fun = "checkBuyerApply('"+fileName+"');";
 						words = font.color("查看退款申请", "green");
 						break;	
 					case -9:
@@ -1080,7 +1087,7 @@ function checkBuyer(buyerId,buyerName){
 /**
  * 查看购买者的退款申请
  */
-function checkBuyerApply(goodsId){
+function checkBuyerApply(fileName){
 	checkBuyerApplyDialog.dialog({   
 	    title:"退款管理",
 		resizable : true,
@@ -1092,7 +1099,9 @@ function checkBuyerApply(goodsId){
 		}
 	});
 	
-//	sellerRefuseBillImg = 
+	//設置圖片
+	sellerRefuseBillImg.attr("src",manageForwardUrl+"/goods/getBill.action?fileName="+fileName+"&t="+(new Date().getTime()));
+	
 }
 
 
