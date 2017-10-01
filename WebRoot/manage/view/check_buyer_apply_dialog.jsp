@@ -6,7 +6,7 @@
 		<tr>
 			<td colspan="2" align="center">
 			
-				<img id="sellerRefuseBillImg" style="width:80%;" src=""/>
+				<img id="sellerRefuseBillImg" style="border:1px solid rgba(0.5,222,222,222); width:80%;" src=""/>
 				
 			</td>
 		</tr>

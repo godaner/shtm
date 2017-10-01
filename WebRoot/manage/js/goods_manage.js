@@ -43,6 +43,8 @@ var goods_upload_imgs_form;
 var sellerRefuseBillImg;
 //退款查看弹窗
 var checkBuyerApplyDialog;
+//当前查看退款的goods的id
+var currtCheckReturnMoneyGoodsId;
 $(function(){
 	
 	initGoodsManageVar();
@@ -222,19 +224,19 @@ function loadGoodsManageUI(){
 					
 					switch (value) {
 					case -6:
-						fun = "updateGoodsStatus('"+goodsId+"','0')";
+						fun = "updateGoodsStatus('0','"+goodsId+"')";
 						words = font.color(words, "red") + "("+font.color("通过", "green")+")";
 						break;
 					case -7:
-						fun = "updateGoodsStatus('"+goodsId+"','0')";
+						fun = "updateGoodsStatus('0','"+goodsId+"')";
 						words = font.color(words, "red") + "("+font.color("通过", "green")+")";
 						break;
 					case 0:
-						fun = "updateGoodsStatus('"+goodsId+"','-7')";
+						fun = "updateGoodsStatus('-7','"+goodsId+"')";
 						words = font.color(words, "green")+"("+font.color("取消通过", "red")+")";
 						break;
 					case 1:
-						fun = "updateGoodsStatus('"+goodsId+"','-7')";
+						fun = "updateGoodsStatus('-7','"+goodsId+"')";
 						words = words+"("+font.color("取消通过", "green")+")";
 						break;
 					case 2:
@@ -242,16 +244,17 @@ function loadGoodsManageUI(){
 					case -1:
 						break;
 					case -2:
-						fun = "updateGoodsStatus('"+goodsId+"','-7')";
+						fun = "updateGoodsStatus('-7','"+goodsId+"')";
 						words = words+"("+font.color("取消通过", "green")+")";
 						break;
 					case -3:
-						fun = "updateGoodsStatus('"+goodsId+"','-7')";
+						fun = "updateGoodsStatus('-7','"+goodsId+"')";
 						words = words+"("+font.color("取消通过", "green")+")";
 						break;
 					case -5:
 						break;
 					case -8:
+						currtCheckReturnMoneyGoodsId = goodsId;
 						fun = "checkBuyerApply('"+fileName+"');";
 						words = font.color("查看退款申请", "green");
 						break;	
@@ -1109,12 +1112,18 @@ function checkBuyerApply(fileName){
  * 更新商品状态
  * @param newStatus
  */
-function updateGoodsStatus(goodsId,newStatus){
+function updateGoodsStatus(newStatus,goodsId){
+	if(isEmpty(goodsId)){
+		goodsId = currtCheckReturnMoneyGoodsId;
+	}
 	ajax.send(manageForwardUrl+"/goods/updateGoodsStatus.action?id="+goodsId+"&status="+newStatus, 
 	function(data){
-		goods_datagrid.datagrid("reload");
-	}, function(){
 		
+		goods_datagrid.datagrid("reload");
+		
+		checkBuyerApplyDialog.dialog("close");
+	}, function(){
+		goods_datagrid.datagrid("reload");
 	}, function(){
 		
 	})
