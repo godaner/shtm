@@ -110,22 +110,22 @@ function loadGoodsManageUI(){
 		borer:false
 	});
 	//判斷加载參數
+	var key = "";
 	if(users_to_goods_tab_context.contain('buyer')){
-		buyerIdSearch.textbox("setValue",users_to_goods_tab_context.removeAttr("buyer"));
-//		users_to_goods_tab_context.clear();
+		buyerIdSearch.textbox("setValue",users_to_goods_tab_context.getAttr("buyer"));
+		key = "buyer";
 		
 	}
 	if(users_to_goods_tab_context.contain('owner')){
-		sellerIdSearch.textbox("setValue",users_to_goods_tab_context.removeAttr("owner"));
-//		users_to_goods_tab_context.clear();
+		sellerIdSearch.textbox("setValue",users_to_goods_tab_context.getAttr("owner"));
+		key = "owner";
 	}
 	
-//	c(users_to_goods_tab_context.getContent());
 	//加载goods的datagrid
 	goods_datagrid.datagrid({    
 	    url:manageForwardUrl+"/goods/selectGoodsDatagrid.action",
 	    toolbar:"#goods_dg_tb",
-	    queryParams:users_to_goods_tab_context.getContent(),
+	    queryParams:users_to_goods_tab_context.removeObj(key),
 	    pagination:true,
 	    striped:true,
 	    fitColumns:true,
@@ -212,24 +212,23 @@ function loadGoodsManageUI(){
 					var sellerId= row.owner;
 					var fun = "void(0);"
 					var words = statusCode2String(value);
-					var passLabel = "<label style='color:green;cursor:pointer;'>通过审核</label>";
-					var unPassLabel = "<label style='color:red;cursor:pointer;'>取消通过</label>";
+					
 					switch (value) {
 					case -6:
 						fun = "updateGoodsStatus('"+goodsId+"','0')";
-						words = words + "("+passLabel+")";
+						words = font.color(words, "red") + "("+font.color("通过", "green")+")";
 						break;
 					case -7:
 						fun = "updateGoodsStatus('"+goodsId+"','0')";
-						words = words + "("+passLabel+")";
+						words = font.color(words, "red") + "("+font.color("通过", "green")+")";
 						break;
 					case 0:
 						fun = "updateGoodsStatus('"+goodsId+"','-7')";
-						words = words+"("+unPassLabel+")";
+						words = font.color(words, "green")+"("+font.color("取消通过", "red")+")";
 						break;
 					case 1:
 						fun = "updateGoodsStatus('"+goodsId+"','-7')";
-						words = words+"("+unPassLabel+")";
+						words = words+"("+font.color("取消通过", "green")+")";
 						break;
 					case 2:
 						break;
@@ -237,17 +236,17 @@ function loadGoodsManageUI(){
 						break;
 					case -2:
 						fun = "updateGoodsStatus('"+goodsId+"','-7')";
-						words = words+"("+unPassLabel+")";
+						words = words+"("+font.color("取消通过", "green")+")";
 						break;
 					case -3:
 						fun = "updateGoodsStatus('"+goodsId+"','-7')";
-						words = words+"("+unPassLabel+")";
+						words = words+"("+font.color("取消通过", "green")+")";
 						break;
 					case -5:
 						break;
 					case -8:
-						fun = "checkBuyerApply('"+goodsIs+"')";
-						words = "查看退款申请";
+						fun = "checkBuyerApply('"+goodsId+"')";
+						words = font.color("查看退款申请", "green");
 						break;	
 					case -9:
 						break;	
@@ -1081,7 +1080,7 @@ function checkBuyer(buyerId,buyerName){
 /**
  * 查看购买者的退款申请
  */
-function checkBuyerApply(goodsIs){
+function checkBuyerApply(goodsId){
 	checkBuyerApplyDialog.dialog({   
 	    title:"退款管理",
 		resizable : true,

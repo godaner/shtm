@@ -1,7 +1,6 @@
 package com.shtm.manage.service.impl;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -29,9 +28,6 @@ import com.shtm.po.GoodsClazzsExample.Criteria;
 import com.shtm.po.GoodsImgs;
 import com.shtm.po.GoodsImgsExample;
 import com.shtm.service.impl.BaseService;
-import com.shtm.util.Static.CONFIG;
-import com.shtm.util.Static.GOODS_IMGS_IS_MAIN;
-import com.shtm.util.Static.GOODS_STAUS;
 
 /**
  * Title:GoodsService
@@ -94,9 +90,16 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		
 		Short oldStatus = dbGood.getStatus();
 		
-		//旧状态只能为"待审核","审核通过"才允许更新字段
-		eject(oldStatus != GOODS_STAUS.WAIT_TO_PASS && 
-				oldStatus != GOODS_STAUS.PASS_SUCCESS,"当前状态不允许更新");
+		/**
+		 * 判断状态
+		 */
+		if(oldStatus != GOODS_STAUS.WAIT_TO_PASS &&
+				oldStatus != GOODS_STAUS.UNPASSED &&
+				oldStatus != GOODS_STAUS.PASS_SUCCESS &&
+				oldStatus != GOODS_STAUS.SELLER_CANCEL &&
+				oldStatus != GOODS_STAUS.BUYER_CANCEL){
+			eject("更新失败,当前状态的商品不能更新");
+		}
 		
 		//禁止更新字段
 		receiver.setBrowsenumber(null);
@@ -163,8 +166,17 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 	public void deleteGood(GoodsReceiver receiver) throws Exception {
 		
 		Goods dbGood = goodsMapper.selectByPrimaryKey(receiver.getId());
+
+		eject(dbGood == null || dbGood.getStatus() == GOODS_STAUS.ADMIN_DELETE, "该商品已不存在");
 		
-		eject(dbGood == null || dbGood.getStatus() == GOODS_STAUS.ADMIN_DELETE, "该用户已不存在");
+		Short oldStatus = dbGood.getStatus();
+		
+		if(oldStatus != GOODS_STAUS.WAIT_TO_PASS &&
+				oldStatus != GOODS_STAUS.UNPASSED &&
+				oldStatus != GOODS_STAUS.PASS_SUCCESS &&
+				oldStatus != GOODS_STAUS.BUY_BUT_NOT_SEND){
+			eject("删除失败,当前状态的商品不能删除");
+		}
 		
 		Goods g = new Goods();
 		

@@ -22,21 +22,31 @@
 		    <option value="8">8</option> 
 		    <option value="9">9</option> 
 		</select>
-		<select name="status" class="easyui-combobox input" style="width:100px;" data-options="editable:false">
+		<select name="status" class="easyui-combobox input" style="width:150px;" data-options="editable:false">
 			<!-- 状态:,
 			-6:待审核状态,(不可以被显示,不可以购买)
-			0:审核通过,(可以被显示,可以购买)
-			1:购买了且待发货,
-			2:已发货,
-			-1:买家收货后交易正常结束,
-			-5:管理员删除本商品 -->
+	      -7:审核未通过,(不可以被显示,不可以购买)
+	      0:审核通过,(可以被显示,可以购买)
+	      1:购买了且待发货,
+	      2:已发货,
+	      -1:买家收货后交易正常结束,
+	      -2:卖家取消了出售本商品(可以被显示,可以购买),
+		  -3:买家取消购买本商品(可以被显示,可以购买),
+		  -5:管理员删除本商品,
+	      -8:买家申请退款,
+	      -9:退款成功（失败则保持-1状态） -->
 
 			<option value="">状态</option>    
 		    <option value="-6">待审核</option>  
+		    <option value="-7">审核未通过</option>  
 		    <option value="0">审核通过</option>   
 		    <option value="1">待发货</option>    
 		    <option value="2">已发货</option>    
-		    <option value="-1">交易结束</option>    
+		    <option value="-1">交易结束</option>  
+		    <option value="-2">卖家取消出售</option>  
+		    <option value="-3">买家取消购买</option>  
+		    <option value="-8">买家申请退款</option>    
+		    <option value="-9">退款成功</option>    
 		    <!-- <option value="-5">管理员删除本商品</option>  -->    
 		</select>       
 		<a href="javascript:searchGoods();" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>

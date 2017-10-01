@@ -83,11 +83,7 @@ function initUsersManageVar(){
  * 加载界面
  */
 function loadUsersManageUI(){
-	//判斷加载參數
-	if(goods_to_users_tab_context.contain('id')){
-		usserIdSearch.textbox("setValue",goods_to_users_tab_context.removeAttr("id"));
-//		goods_to_users_tab_context.clear();
-	}
+	
 	
 	
 	//新增user信息窗口
@@ -108,9 +104,13 @@ function loadUsersManageUI(){
 	});
 	
 	//加载users的datagrid
+	//判斷加载參數
+	if(goods_to_users_tab_context.contain('id')){
+		usserIdSearch.textbox("setValue",goods_to_users_tab_context.getAttr("id"));
+	}
 	users_datagrid.datagrid({    
 	    url:manageForwardUrl+"/users/selectUsersDatagrid.action",
-	    queryParams:goods_to_users_tab_context.getContent(),
+	    queryParams:goods_to_users_tab_context.removeObj("id"),
 	    toolbar:"#users_dg_tb",
 	    pagination:true,
 	    striped:true,

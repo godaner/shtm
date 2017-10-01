@@ -1,6 +1,12 @@
 
-
-
+/**
+ * 传入字符和颜色,返回label
+ */
+var font= {
+	color:function(text,color){
+		return "<label style='color:"+color+";'>"+text+"</label>";
+	}
+};
 
 /**
  * 上下文容器
@@ -33,6 +39,23 @@ function Context(){
 		var value = this.ct[key];
 		delete this.ct[key];
 		return value;
+	},
+	/**
+	 * 移除并且返回键值对对象
+	 */
+	this.removeObj = function(key){
+		var obj = {};
+		obj[key] = this.ct[key];
+		delete this.ct[key];
+		return obj;
+	},
+	/**
+	 * 获取键值对对象
+	 */
+	this.getObj = function(key){
+		var obj = {};
+		obj[key] = this.ct[key];
+		return obj;
 	}
 	/**
 	 * 清空容器
@@ -58,6 +81,17 @@ function Context(){
 	 */
 	this.contain = function(key){
 		return !this.empty(this.ct[key]);
+	},
+	/**
+	 * 获取并移除所有键值对
+	 */
+	this.removeContent = function(){
+		
+		var s = this.ct;
+		
+		this.ct = {};
+		
+		return s;
 	},
 	/**
 	 * 获取所有键值对
