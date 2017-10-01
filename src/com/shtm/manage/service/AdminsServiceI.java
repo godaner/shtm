@@ -1,7 +1,6 @@
 package com.shtm.manage.service;
 
 import java.util.List;
-import java.util.Set;
 
 import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsReceiver;
@@ -172,6 +171,34 @@ public interface AdminsServiceI {
 	 * @throws Exception
 	 */
 	AdminsReplier login(AdminsReceiver receiver) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:获取指定id的admin的roles(所有的roles也会被全部查询出来,但是admin拥有的roles有特殊标记);
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月1日 下午1:59:47
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 */
+	public AdminsReplier selectAdminRolesById(String id) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:更新管理员的角色;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月1日 下午5:23:50
+	 * @version 1.0
+	 * @param id
+	 * @param rolesIds
+	 * @return
+	 * @throws Exception
+	 */
+	public void updateAdminRoles(String id, String[] rolesIds) throws Exception;
 
 
 }

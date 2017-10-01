@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
+import com.shtm.manage.po.RolesReplier;
 import com.shtm.po.Admins;
 import com.shtm.po.Permissions;
 import com.shtm.po.Roles;
@@ -102,4 +103,18 @@ public interface CustomAdminsMapper {
 	 * @throws Exception
 	 */
 	List<Permissions> selectPermissions(String id) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:获取指定id的admin的roles(所有的roles也会被全部查询出来,但是admin拥有的roles有特殊标记);
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月1日 下午2:02:02
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	List<RolesReplier> selectAdminRolesById(String id) throws Exception;
 }

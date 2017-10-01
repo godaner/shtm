@@ -25,7 +25,9 @@
 		<a href="javascript:searchAdmins();" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 		<a href="javascript:clearAdminSearch();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">清空条件</a>
 		|
-		<a href="javascript:editAdmin();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
+		<a href="javascript:editAdmin();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑基本信息</a>
+		|
+		<a href="javascript:editAdminRole();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑角色</a>
 		|
 		<a href="javascript:insertAdmin();" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
 	</form>
@@ -42,6 +44,10 @@
 <!-- 管理员属性编辑弹窗 start -->
 <%@include file="./admins_manage_edit_dialog.jsp" %>
 <!-- 管理员属性编辑弹窗 end -->
+
+<!-- 管理员角色属性编辑弹窗 start -->
+<%@include file="./admins_manage_edit_roles_dialog.jsp" %>
+<!-- 管理员角色属性编辑弹窗 end -->
 
 
 <!-- 新增管理员弹窗 start -->

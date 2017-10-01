@@ -30,7 +30,7 @@ var currtEditDatagridRow;
 //请求的管理员头像的尺寸
 var headimgSize = 60;
 var adminsSearchId;
-var admins_roles_datalist;
+var admins_roles_datagrid;
 
 var editAdminRoleDialog;
 $(function(){
@@ -58,7 +58,7 @@ function initAdminsManageVar(){
 	
 	editAdminRoleDialog = $("#editAdminRoleDialog");
 	
-	admins_roles_datalist= $("#admins_roles_datalist");
+	admins_roles_datagrid= $("#admins_roles_datagrid");
 	
 	//sex
 	sexInput = $("#sex");
@@ -476,6 +476,8 @@ function checkAdmin(adminId){
  */
 function editAdminRole(){
 	
+	pro.show();
+	
 	//获取datagrid当前选择行
 	var row = admins_datagrid.datagrid('getSelected');
 	if(isEmpty(row)){
@@ -487,22 +489,82 @@ function editAdminRole(){
 	currtEditDatagridRow = row;
 	
 	
-	editAdminRoleDialog.dialog({   
-	    title:"管理员角色编辑",
-		resizable : true,
-		modal : true,
-		closed : false,
-		borer:false
-	});
-	
-	
 	var adminId = currtEditDatagridRow.id;
-	admins_roles_datalist.datalist({ 
-	    url: manageForwardUrl +"/admins/getRolesByAdminId.action?id="+adminId, 
-	    checkbox: true, 
+	
+	admins_roles_datagrid.datagrid({ 
+	    url: manageForwardUrl +"/admins/selectAdminRolesById.action?id="+adminId, 
 	    lines: true,
+	    fitColumns: true,
+	    singleSelect:false,
+	    selectOnCheck: true,
+	    checkOnSelect: true, 
+	    hideColumn:[[
+	    ]],
+	    columns:[[
+  	        {
+	        	field:'ck',
+	     	    checkbox: true,
+				width:'5%'
+	        },
+			{
+				field:'id',
+				title:'id',
+				width:'30%'
+			},
+			{
+				field:'name',
+				title:'角色名',
+				width:'30%',
+				formatter: function(value,row,index){
+					
+					return value;  
+				}
+			},
+			{
+				field:'grantTime',
+				title:'分配角色的时间',
+				width:'35%',
+				formatter: function(value,row,index){
+					
+					if(!isEmpty(value)){
+						return timeFormatter.formatTime(value);
+					}
+					
+					return value;  
+				}
+			}   
+	              
+	              
+	    ]],
 	    onLoadSuccess:function(data){
 	    	responseHandler.handleSuccess(data, function(){
+	    		
+	    		
+	    		//修改datalist的checked
+	    		var rows = data.rows;
+	    		for (var i = 0; i < rows.length; i++) {
+	    			var r = rows[i];
+	    			var grantTime = r.grantTime;
+	    			if (!isEmpty(grantTime)) {
+	    				admins_roles_datagrid.datagrid("checkRow", i);
+	    				admins_roles_datagrid.datagrid("selectRow", i);
+	    	        }else{
+
+	    				admins_roles_datagrid.datagrid("unselectRow", i);
+	    				admins_roles_datagrid.datagrid("uncheckRow", i);
+	    	        }
+				}
+	    		
+
+	    		//加載成功顯示彈窗
+	    		editAdminRoleDialog.dialog({   
+	    		    title:"管理员角色编辑",
+	    			resizable : true,
+	    			modal : true,
+	    			closed : false,
+	    			borer:false
+	    		});
+	    		
 	    		
 	    	}, function(){
 	    		
@@ -515,4 +577,31 @@ function editAdminRole(){
 	});  
 
 	
+}
+
+/**
+ * 提交对管理员角色的修改
+ */
+function submitAdminRolesEdit(){
+
+	editAdminRoleDialog.dialog("close");
+	var selects = admins_roles_datagrid.datagrid("getChecked");
+	var newRolesId = [];
+	for (var i = 0; i < selects.length; i++) {
+		var s = selects[i];
+		newRolesId.push(s.id);
+	}
+	var id = currtEditDatagridRow.id;
+	var url = manageForwardUrl+"/admins/updateAdminRoles.action";
+	var data = {"rolesIds":newRolesId,"id":id};
+	ajax.sendJson(url, 
+	data, 
+	function(data){
+		c(data);
+		editAdminRoleDialog.dialog("close");
+	}, function(){
+		editAdminRoleDialog.dialog("open");
+	}, function(){
+		
+	});
 }

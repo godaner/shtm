@@ -11,12 +11,14 @@ import com.shtm.manage.groups.AdminsGroups.DeleteAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.InsertAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.LoginGroups;
 import com.shtm.manage.groups.AdminsGroups.SelectAdminGroups;
+import com.shtm.manage.groups.AdminsGroups.SelectAdminRolesById;
 import com.shtm.manage.groups.AdminsGroups.UpdateAdminGroups;
+import com.shtm.manage.groups.AdminsGroups.UpdateAdminRolesGroups;
 import com.shtm.util.Static;
 
 public class Admins {
 	
-	@NotBlank(message="{admins.id.notblank.error}",groups={UpdateAdminGroups.class,DeleteAdminGroups.class,SelectAdminGroups.class})
+	@NotBlank(message="{admins.id.notblank.error}",groups={UpdateAdminGroups.class,DeleteAdminGroups.class,SelectAdminGroups.class,SelectAdminRolesById.class,UpdateAdminRolesGroups.class})
     private String id;
 	
 	@Pattern(regexp=Static.REG.USERNAME,message="{admins.username.reg.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class,LoginGroups.class})

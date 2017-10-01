@@ -13,8 +13,9 @@ import com.shtm.po.Admins;
  * @author Kor_Zhang
  * @date 2017年9月15日 上午11:11:14
  * @version 1.0
+ * @param <T>
  */
-public class AdminsReplier extends Admins{
+public class AdminsReplier<T> extends Admins{
 	// 操作结果
 	private Integer result;
 
@@ -38,16 +39,16 @@ public class AdminsReplier extends Admins{
 	}
 
 	// 返回数据
-	private List<Admins> rows;
+	private List<T> rows;
 
 	// 记录总数
 	private Integer total;
 
-	public List<Admins> getRows() {
+	public List<T> getRows() {
 		return rows;
 	}
 
-	public void setRows(List<Admins> rows) {
+	public void setRows(List<T> rows) {
 		this.rows = rows;
 	}
 

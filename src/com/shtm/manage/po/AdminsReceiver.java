@@ -1,8 +1,11 @@
 package com.shtm.manage.po;
 
+import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.shtm.manage.groups.AdminsGroups.LoginGroups;
+import com.shtm.manage.groups.AdminsGroups.UpdateAdminRolesGroups;
 import com.shtm.po.Admins;
 
 /**
@@ -21,6 +24,18 @@ public class AdminsReceiver extends Admins {
 	
 	@NotBlank(message="{admins.verifyCode.notblank.error}",groups={LoginGroups.class})
 	private String verifyCode;
+
+	//角色id
+	@Size(min = 0,message="{admins.rolesIds.size.error}",groups={UpdateAdminRolesGroups.class})
+	private String[] rolesIds;
+	
+	public String[] getRolesIds() {
+		return rolesIds;
+	}
+
+	public void setRolesIds(String[] rolesIds) {
+		this.rolesIds = rolesIds;
+	}
 
 	public String getVerifyCode() {
 		return verifyCode;

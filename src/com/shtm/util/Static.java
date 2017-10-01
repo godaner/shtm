@@ -10,6 +10,23 @@ package com.shtm.util;
  * @version 1.0
  */
 public interface Static {
+	
+	/**
+	 * 
+	 * Title:ROLES_STATUS
+	 * <p>
+	 * Description:roles状态
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月1日 下午5:27:16
+	 * @version 1.0
+	 */
+	public interface ROLES_STATUS{
+		static final Short FOREZEN = 0;
+		static final Short ACTIVITY = 1;
+	}
+	
+	
 	/**
 	 * request返回信息的字段名
 	 */

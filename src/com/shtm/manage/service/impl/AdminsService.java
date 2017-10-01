@@ -14,12 +14,17 @@ import com.shtm.manage.mapper.CustomAdminsMapper;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
+import com.shtm.manage.po.RolesReplier;
 import com.shtm.manage.service.AdminsServiceI;
 import com.shtm.mapper.AdminsLoginLogMapper;
 import com.shtm.mapper.AdminsMapper;
+import com.shtm.mapper.AdminsRolesMapper;
+import com.shtm.mapper.RolesMapper;
 import com.shtm.po.Admins;
 import com.shtm.po.AdminsExample;
 import com.shtm.po.AdminsExample.Criteria;
+import com.shtm.po.AdminsRoles;
+import com.shtm.po.AdminsRolesExample;
 import com.shtm.po.Permissions;
 import com.shtm.po.Roles;
 import com.shtm.service.impl.BaseService;
@@ -45,6 +50,11 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	@Autowired
 	private AdminsLoginLogMapper adminsLoginLogMapper;
 	
+	@Autowired
+	private RolesMapper rolesMapper;
+
+	@Autowired
+	private AdminsRolesMapper adminsRolesMapper;
 	/**
 	 * Title:
 	 * <p>
@@ -234,6 +244,57 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	@Override
 	public List<Permissions> selectPermissions(String id) throws Exception {
 		return customAdminsMapper.selectPermissions(id);
+	}
+
+	@Override
+	public AdminsReplier selectAdminRolesById(String id) throws Exception {
+		
+		AdminsReplier replier = new AdminsReplier();
+		
+		List<RolesReplier> rows = customAdminsMapper.selectAdminRolesById(id);
+		
+		replier.setRows(rows);
+		
+		return replier;
+	}
+
+	@Override
+	public void updateAdminRoles(String id, String[] rolesIds)
+			throws Exception {
+		
+		//判断管理员是否存在
+		
+		Admins ad = adminsMapper.selectByPrimaryKey(id);
+		eject(ad == null ||
+				ad.getStatus() == ADMINS_STATUS.DELETE, "管理员不存在");
+		//删除admin的旧角色
+		
+		AdminsRolesExample example = new AdminsRolesExample();
+		
+		com.shtm.po.AdminsRolesExample.Criteria criteria = example.createCriteria();
+		
+		criteria.andAdminEqualTo(id);
+		
+		adminsRolesMapper.deleteByExample(example);
+		
+		//为admin添加新角色
+		
+		for (int i = 0; i < rolesIds.length; i++) {
+			String rolesId = rolesIds[i];
+			
+			//插入AdminsRoles
+			AdminsRoles ar = new AdminsRoles();
+			
+			ar.setAdmin(id);
+			
+			ar.setGranttime(timestamp());
+			
+			ar.setId(uuid());
+			
+			ar.setRole(rolesId);
+			
+			adminsRolesMapper.insert(ar);
+		}
 	}
 
 

@@ -66,4 +66,28 @@ public interface AdminsGroups {
 	 */
 	public interface LoginGroups{};
 	
+	/**
+	 * 
+	 * Title:SelectAdminRolesById
+	 * <p>
+	 * Description:获取指定id的admin的roles(所有的roles也会被全部查询出来,但是admin拥有的roles有特殊标记)的验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月1日 下午1:44:50
+	 * @version 1.0
+	 */
+	public interface SelectAdminRolesById{};
+	
+	
+	
+	/**
+	 * Title:UpdateAdminRolesGroups
+	 * <p>
+	 * Description:更新管理员角色所用的验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月1日 下午5:19:00
+	 * @version 1.0
+	 */
+	public interface UpdateAdminRolesGroups{};
 }

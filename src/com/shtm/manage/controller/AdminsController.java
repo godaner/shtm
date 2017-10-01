@@ -22,7 +22,9 @@ import com.shtm.controller.BaseController;
 import com.shtm.manage.groups.AdminsGroups.DeleteAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.InsertAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.SelectAdminGroups;
+import com.shtm.manage.groups.AdminsGroups.SelectAdminRolesById;
 import com.shtm.manage.groups.AdminsGroups.UpdateAdminGroups;
+import com.shtm.manage.groups.AdminsGroups.UpdateAdminRolesGroups;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
@@ -44,6 +46,78 @@ import com.shtm.po.Admins;
 @Controller
 public class AdminsController extends BaseController<AdminsServiceI> {
 
+	/**
+	 * 
+	 * Title:
+	 * <p>
+	 * Description:更新管理员的角色
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月1日 下午5:18:21
+	 * @version 1.0
+	 * @param receiver
+	 * @param result
+	 * @return
+	 * @throws Exception
+	 */
+	@RequiresAuthentication
+	@RequiresPermissions("admins:update")
+	@RequestMapping("/updateAdminRoles")
+	public @ResponseBody AdminsReplier updateAdminRoles(
+			@Validated(value = { UpdateAdminRolesGroups.class }) @RequestBody AdminsReceiver receiver,
+			BindingResult result) throws Exception {
+		AdminsReplier replier = new AdminsReplier();
+		try {
+			getError(result);
+
+			service.updateAdminRoles(receiver.getId(),receiver.getRolesIds());
+
+			replier.setResult(RESULT.TRUE);
+			replier.setMsg("更新角色成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+		return replier;
+	}
+	
+	/**
+	 * 
+	 * Title:
+	 * <p>
+	 * Description:获取指定id的admin的roles(所有的roles也会被全部查询出来,但是admin拥有的roles有特殊标记);
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月1日 下午5:15:09
+	 * @version 1.0
+	 * @param receiver
+	 * @param result
+	 * @return
+	 * @throws Exception
+	 */
+	@RequiresAuthentication
+	@RequiresPermissions("admins:select")
+	@RequestMapping("/selectAdminRolesById")
+	public @ResponseBody AdminsReplier selectAdminRolesById(
+			@Validated(value = { SelectAdminRolesById.class }) AdminsReceiver receiver,
+			BindingResult result) throws Exception {
+		AdminsReplier replier = new AdminsReplier();
+		try {
+			getError(result);
+
+			replier = service.selectAdminRolesById(receiver.getId());
+
+			replier.setResult(RESULT.TRUE);
+			replier.setMsg("获取成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+		return replier;
+	}
+	
 	/**
 	 * Title:selectAdmin
 	 * <p>
