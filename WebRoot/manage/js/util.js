@@ -197,7 +197,7 @@ $.fn.writeEasyuiForm = function (obj){
 		try{
 			c(value);
 			input.combobox('setValue',value);
-			input.combobox('select',value);
+//			input.combobox('select',value);
 //			input.combobox('loadData',[]);
 		}catch(e){
 			//c(e);

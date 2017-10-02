@@ -267,8 +267,7 @@ function editAdmin(){
 	
 	row.password = "";
 	
-	row.status = row.status==0?"冻结":row.status==1?"激活":row.status;
-	
+//	row.status = row.status==0?"冻结":row.status==1?"激活":row.status;
 	//注入对象的name与form的id对应的表单对象
 	editAdminForm.writeEasyuiForm(row);
 	
@@ -493,28 +492,39 @@ function editAdminRole(){
 	
 	admins_roles_datagrid.datagrid({ 
 	    url: manageForwardUrl +"/admins/selectAdminRolesById.action?id="+adminId, 
-	    lines: true,
 	    fitColumns: true,
 	    singleSelect:false,
 	    selectOnCheck: true,
 	    checkOnSelect: true, 
+	    sortName : 'name',
+	    sortOrder : 'desc', //降序
 	    hideColumn:[[
 	    ]],
 	    columns:[[
-  	        {
+  	        /*{
 	        	field:'ck',
 	     	    checkbox: true,
 				width:'5%'
-	        },
+	        },*/
 			{
 				field:'id',
 				title:'id',
-				width:'30%'
+				width:'25%'
 			},
 			{
 				field:'name',
 				title:'角色名',
-				width:'30%',
+				width:'25%',
+				sortable:true,
+				formatter: function(value,row,index){
+					
+					return value;  
+				}
+			},{
+				field:'description',
+				title:'简介',
+				width:'25%',
+				sortable:true,
 				formatter: function(value,row,index){
 					
 					return value;  
@@ -523,7 +533,8 @@ function editAdminRole(){
 			{
 				field:'grantTime',
 				title:'分配角色的时间',
-				width:'35%',
+				width:'25%',
+				sortable:true,
 				formatter: function(value,row,index){
 					
 					if(!isEmpty(value)){

@@ -112,9 +112,9 @@ public interface CustomAdminsMapper {
 	 * @author Kor_Zhang
 	 * @date 2017年10月1日 下午2:02:02
 	 * @version 1.0
-	 * @param id
+	 * @param receiver
 	 * @return
 	 * @throws Exception
 	 */
-	List<RolesReplier> selectAdminRolesById(String id) throws Exception;
+	List<RolesReplier> selectAdminRolesById(AdminsReceiver receiver) throws Exception;
 }

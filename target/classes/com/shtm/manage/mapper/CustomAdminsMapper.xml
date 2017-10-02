@@ -92,16 +92,19 @@
 	
 	
 	<!-- 获取指定id的admin的roles(所有的roles也会被全部查询出来,但是admin拥有的roles有特殊标记); -->
-	<select id="selectAdminRolesById" parameterType="string" resultType="com.shtm.manage.po.RolesReplier">
+	<select id="selectAdminRolesById" parameterType="com.shtm.manage.po.AdminsReceiver" resultType="com.shtm.manage.po.RolesReplier">
 		
-		SELECT r0.id,r0.NAME,t0.granttime
+		SELECT r0.id,r0.NAME,r0.description,t0.granttime
 		  FROM ROLES r0,
 		  (
 		    SELECT r.ID,ar.GRANTTIME
 		    FROM ROLES r,ADMINS_ROLES ar
-		    WHERE r.ID = ar.ROLE(+) AND ar.admin = #{value} AND r.STATUS = 1
+		    WHERE r.ID = ar.ROLE(+) AND ar.admin = #{id} AND r.STATUS = 1
 		  ) t0
 		 WHERE r0.ID = t0.id(+)
+		 <if test="order != null and sort != null">
+			ORDER BY ${sort} ${order}
+		 </if>
 		
 	</select>
 </mapper>

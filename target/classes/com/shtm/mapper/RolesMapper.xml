@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shtm.mapper.RolesMapper">
   <resultMap id="BaseResultMap" type="com.shtm.po.Roles">
-    <id column="ID" jdbcType="OTHER" property="id" />
-    <result column="NAME" jdbcType="OTHER" property="name" />
-    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <id column="ID" jdbcType="CHAR" property="id" />
+    <result column="NAME" jdbcType="CHAR" property="name" />
+    <result column="STATUS" jdbcType="SMALLINT" property="status" />
+    <result column="DESCRIPTION" jdbcType="CHAR" property="description" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    ID, NAME, STATUS
+    ID, NAME, STATUS, DESCRIPTION
   </sql>
   <select id="selectByExample" parameterType="com.shtm.po.RolesExample" resultMap="BaseResultMap">
     select
@@ -73,7 +74,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ROLES
+    from SHT.ROLES
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -81,28 +82,30 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Object" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ROLES
-    where ID = #{id,jdbcType=OTHER}
+    from SHT.ROLES
+    where ID = #{id,jdbcType=CHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Object">
-    delete from ROLES
-    where ID = #{id,jdbcType=OTHER}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SHT.ROLES
+    where ID = #{id,jdbcType=CHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.shtm.po.RolesExample">
-    delete from ROLES
+    delete from SHT.ROLES
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.shtm.po.Roles">
-    insert into ROLES (ID, NAME, STATUS)
-    values (#{id,jdbcType=OTHER}, #{name,jdbcType=OTHER}, #{status,jdbcType=DECIMAL})
+    insert into SHT.ROLES (ID, NAME, STATUS, 
+      DESCRIPTION)
+    values (#{id,jdbcType=CHAR}, #{name,jdbcType=CHAR}, #{status,jdbcType=SMALLINT}, 
+      #{description,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.shtm.po.Roles">
-    insert into ROLES
+    insert into SHT.ROLES
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,
@@ -113,36 +116,45 @@
       <if test="status != null">
         STATUS,
       </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=OTHER},
+        #{id,jdbcType=CHAR},
       </if>
       <if test="name != null">
-        #{name,jdbcType=OTHER},
+        #{name,jdbcType=CHAR},
       </if>
       <if test="status != null">
-        #{status,jdbcType=DECIMAL},
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.shtm.po.RolesExample" resultType="java.lang.Long">
-    select count(*) from ROLES
+    select count(*) from SHT.ROLES
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ROLES
+    update SHT.ROLES
     <set>
       <if test="record.id != null">
-        ID = #{record.id,jdbcType=OTHER},
+        ID = #{record.id,jdbcType=CHAR},
       </if>
       <if test="record.name != null">
-        NAME = #{record.name,jdbcType=OTHER},
+        NAME = #{record.name,jdbcType=CHAR},
       </if>
       <if test="record.status != null">
-        STATUS = #{record.status,jdbcType=DECIMAL},
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.description != null">
+        DESCRIPTION = #{record.description,jdbcType=CHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -150,30 +162,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ROLES
-    set ID = #{record.id,jdbcType=OTHER},
-      NAME = #{record.name,jdbcType=OTHER},
-      STATUS = #{record.status,jdbcType=DECIMAL}
+    update SHT.ROLES
+    set ID = #{record.id,jdbcType=CHAR},
+      NAME = #{record.name,jdbcType=CHAR},
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      DESCRIPTION = #{record.description,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.shtm.po.Roles">
-    update ROLES
+    update SHT.ROLES
     <set>
       <if test="name != null">
-        NAME = #{name,jdbcType=OTHER},
+        NAME = #{name,jdbcType=CHAR},
       </if>
       <if test="status != null">
-        STATUS = #{status,jdbcType=DECIMAL},
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=CHAR},
       </if>
     </set>
-    where ID = #{id,jdbcType=OTHER}
+    where ID = #{id,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.shtm.po.Roles">
-    update ROLES
-    set NAME = #{name,jdbcType=OTHER},
-      STATUS = #{status,jdbcType=DECIMAL}
-    where ID = #{id,jdbcType=OTHER}
+    update SHT.ROLES
+    set NAME = #{name,jdbcType=CHAR},
+      STATUS = #{status,jdbcType=SMALLINT},
+      DESCRIPTION = #{description,jdbcType=CHAR}
+    where ID = #{id,jdbcType=CHAR}
   </update>
 </mapper>

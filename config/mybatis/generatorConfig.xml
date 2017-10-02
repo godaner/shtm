@@ -145,7 +145,6 @@
 			<columnOverride column="postcode" javaType="java.lang.String" jdbcType="CHAR" />
 		</table>
         
-         -->
         
         
         
@@ -180,8 +179,14 @@
         	<columnOverride column="refusereturnmoneybill" javaType="java.lang.String"  jdbcType="CHAR"/>
         </table>
 
+         -->
 		
-        
+        <table schema="sht" tableName="roles">
+			<columnOverride column="id" javaType="java.lang.String" jdbcType="CHAR" />
+			<columnOverride column="name" javaType="java.lang.String" jdbcType="CHAR" />
+			<columnOverride column="status" javaType="java.lang.Short"  jdbcType="SMALLINT"/>
+			<columnOverride column="description" javaType="java.lang.String"  jdbcType="CHAR"/>
+		</table>
         
         
         <!-- <table schema="" tableName="sys_user"></table>

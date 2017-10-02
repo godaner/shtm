@@ -5,6 +5,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.shtm.manage.groups.AdminsGroups.LoginGroups;
+import com.shtm.manage.groups.AdminsGroups.SelectAdminRolesById;
 import com.shtm.manage.groups.AdminsGroups.UpdateAdminRolesGroups;
 import com.shtm.po.Admins;
 
@@ -44,11 +45,13 @@ public class AdminsReceiver extends Admins {
 	public void setVerifyCode(String verifyCode) {
 		this.verifyCode = verifyCode;
 	}
-
+	
 	// 排序方式
+	@NotBlank(message="{admins.order.size.error}",groups={SelectAdminRolesById.class})
 	private String order;
 
 	// 排序字段
+	@NotBlank(message="{admins.sort.size.error}",groups={SelectAdminRolesById.class})
 	private String sort;
 
 	// 当前多少页数

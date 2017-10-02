@@ -106,7 +106,7 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 		try {
 			getError(result);
 
-			replier = service.selectAdminRolesById(receiver.getId());
+			replier = service.selectAdminRolesById(receiver);
 
 			replier.setResult(RESULT.TRUE);
 			replier.setMsg("获取成功");

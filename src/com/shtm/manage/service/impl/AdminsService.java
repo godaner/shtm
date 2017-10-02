@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
 import com.shtm.manage.po.RolesReplier;
+import com.shtm.manage.realm.JDBCRealm;
 import com.shtm.manage.service.AdminsServiceI;
 import com.shtm.mapper.AdminsLoginLogMapper;
 import com.shtm.mapper.AdminsMapper;
@@ -55,6 +59,9 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 
 	@Autowired
 	private AdminsRolesMapper adminsRolesMapper;
+	
+	 @Autowired
+	 private SessionDAO sessionDAO;
 	/**
 	 * Title:
 	 * <p>
@@ -74,10 +81,9 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		//查询admins
 		Admins dbAd = customAdminsMapper.selectAdminByUsername(receiver.getUsername());
 		
-		String password = md5(receiver.getPassword() + dbAd.getSalt());
-		//传入realm的数据
+		//传入realm的数据(原始數據)
 		UsernamePasswordToken token = new UsernamePasswordToken(
-				receiver.getUsername(), password);
+				receiver.getUsername(), receiver.getPassword());
 		Subject subject = SecurityUtils.getSubject();
 		// 调用realm验证
 		subject.login(token);
@@ -147,6 +153,9 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		
 		receiver.setSalt(receiver.getUsername());
 		
+		//md5加密
+		receiver.setPassword(md5(receiver.getPassword()+receiver.getSalt()));
+		
 		adminsMapper.insert(receiver);
 	}
 
@@ -182,7 +191,7 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		String password = receiver.getPassword();
 		if (password != null && !password.isEmpty()) {
 			//如果有更新情况,加密密码
-			receiver.setPassword(md5(receiver.getEmail()+receiver.getPassword()));
+			receiver.setPassword(md5(receiver.getUsername()+receiver.getPassword()));
 		}
 		if(password.trim().equals("")){
 			receiver.setPassword(null);
@@ -231,7 +240,6 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		adminsLoginLogReceiver.setId(uuid());
 		adminsLoginLogReceiver.setLoginAdmin(adminId);
 		adminsLoginLogMapper.insert(adminsLoginLogReceiver);
-				
 		
 	}
 
@@ -247,11 +255,11 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	}
 
 	@Override
-	public AdminsReplier selectAdminRolesById(String id) throws Exception {
+	public AdminsReplier selectAdminRolesById(AdminsReceiver receiver) throws Exception {
 		
 		AdminsReplier replier = new AdminsReplier();
 		
-		List<RolesReplier> rows = customAdminsMapper.selectAdminRolesById(id);
+		List<RolesReplier> rows = customAdminsMapper.selectAdminRolesById(receiver);
 		
 		replier.setRows(rows);
 		
@@ -263,10 +271,13 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 			throws Exception {
 		
 		//判断管理员是否存在
-		
 		Admins ad = adminsMapper.selectByPrimaryKey(id);
 		eject(ad == null ||
 				ad.getStatus() == ADMINS_STATUS.DELETE, "管理员不存在");
+		//不能更新自己
+		Admins onlineAdmins = getOnlineAdmin();
+		eject(ad.getUsername().equals(onlineAdmins.getUsername()), "不能更新自己");
+		
 		//删除admin的旧角色
 		
 		AdminsRolesExample example = new AdminsRolesExample();
@@ -295,7 +306,9 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 			
 			adminsRolesMapper.insert(ar);
 		}
+		
+		
 	}
 
-
+	
 }

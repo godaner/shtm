@@ -180,10 +180,10 @@ public interface AdminsServiceI {
 	 * @author Kor_Zhang
 	 * @date 2017年10月1日 下午1:59:47
 	 * @version 1.0
-	 * @param id
+	 * @param receiver
 	 * @return
 	 */
-	public AdminsReplier selectAdminRolesById(String id) throws Exception;
+	public AdminsReplier selectAdminRolesById(AdminsReceiver receiver) throws Exception;
 
 	/**
 	 * Title:

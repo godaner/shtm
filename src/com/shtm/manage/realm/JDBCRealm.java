@@ -16,15 +16,13 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.shtm.manage.service.AdminsServiceI;
 import com.shtm.po.Admins;
 import com.shtm.po.Permissions;
 import com.shtm.po.Roles;
-import com.shtm.util.Util;
 import com.shtm.util.Static.ADMINS_STATUS;
+import com.shtm.util.Util;
 
 /**
  * Title:JDBCRealm
@@ -36,11 +34,18 @@ import com.shtm.util.Static.ADMINS_STATUS;
  * @date 2017年9月29日 上午10:04:39
  * @version 1.0
  */
-@Component
 public class JDBCRealm extends AuthorizingRealm {
 
-	@Autowired
 	private AdminsServiceI adminsService;
+
+	
+	public AdminsServiceI getAdminsService() {
+		return adminsService;
+	}
+
+	public void setAdminsService(AdminsServiceI adminsService) {
+		this.adminsService = adminsService;
+	}
 
 	/**
 	 * 认证
@@ -82,7 +87,7 @@ public class JDBCRealm extends AuthorizingRealm {
 		}
 		// 若存在，将此用户存放到登录认证info中
 		return new SimpleAuthenticationInfo(admin.getUsername(),
-				admin.getPassword(), getName());
+				admin.getPassword(),ByteSource.Util.bytes(admin.getSalt()), getName());
 
 	}
 

@@ -114,52 +114,52 @@ public class RolesExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Object value) {
+        public Criteria andIdEqualTo(String value) {
             addCriterion("ID =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Object value) {
+        public Criteria andIdNotEqualTo(String value) {
             addCriterion("ID <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Object value) {
+        public Criteria andIdGreaterThan(String value) {
             addCriterion("ID >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Object value) {
+        public Criteria andIdGreaterThanOrEqualTo(String value) {
             addCriterion("ID >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Object value) {
+        public Criteria andIdLessThan(String value) {
             addCriterion("ID <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Object value) {
+        public Criteria andIdLessThanOrEqualTo(String value) {
             addCriterion("ID <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Object> values) {
+        public Criteria andIdIn(List<String> values) {
             addCriterion("ID in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Object> values) {
+        public Criteria andIdNotIn(List<String> values) {
             addCriterion("ID not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Object value1, Object value2) {
+        public Criteria andIdBetween(String value1, String value2) {
             addCriterion("ID between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Object value1, Object value2) {
+        public Criteria andIdNotBetween(String value1, String value2) {
             addCriterion("ID not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -174,52 +174,52 @@ public class RolesExample {
             return (Criteria) this;
         }
 
-        public Criteria andNameEqualTo(Object value) {
+        public Criteria andNameEqualTo(String value) {
             addCriterion("NAME =", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotEqualTo(Object value) {
+        public Criteria andNameNotEqualTo(String value) {
             addCriterion("NAME <>", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThan(Object value) {
+        public Criteria andNameGreaterThan(String value) {
             addCriterion("NAME >", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThanOrEqualTo(Object value) {
+        public Criteria andNameGreaterThanOrEqualTo(String value) {
             addCriterion("NAME >=", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThan(Object value) {
+        public Criteria andNameLessThan(String value) {
             addCriterion("NAME <", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThanOrEqualTo(Object value) {
+        public Criteria andNameLessThanOrEqualTo(String value) {
             addCriterion("NAME <=", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNameIn(List<Object> values) {
+        public Criteria andNameIn(List<String> values) {
             addCriterion("NAME in", values, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotIn(List<Object> values) {
+        public Criteria andNameNotIn(List<String> values) {
             addCriterion("NAME not in", values, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNameBetween(Object value1, Object value2) {
+        public Criteria andNameBetween(String value1, String value2) {
             addCriterion("NAME between", value1, value2, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotBetween(Object value1, Object value2) {
+        public Criteria andNameNotBetween(String value1, String value2) {
             addCriterion("NAME not between", value1, value2, "name");
             return (Criteria) this;
         }
@@ -281,6 +281,66 @@ public class RolesExample {
 
         public Criteria andStatusNotBetween(Short value1, Short value2) {
             addCriterion("STATUS not between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNull() {
+            addCriterion("DESCRIPTION is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNotNull() {
+            addCriterion("DESCRIPTION is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionEqualTo(String value) {
+            addCriterion("DESCRIPTION =", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotEqualTo(String value) {
+            addCriterion("DESCRIPTION <>", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThan(String value) {
+            addCriterion("DESCRIPTION >", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION >=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThan(String value) {
+            addCriterion("DESCRIPTION <", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION <=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIn(List<String> values) {
+            addCriterion("DESCRIPTION in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotIn(List<String> values) {
+            addCriterion("DESCRIPTION not in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION between", value1, value2, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION not between", value1, value2, "description");
             return (Criteria) this;
         }
     }
