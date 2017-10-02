@@ -1,23 +1,29 @@
 package com.shtm.po;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.shtm.manage.groups.RolesGroups.DeleteRoleGroups;
 import com.shtm.manage.groups.RolesGroups.InsertRoleGroups;
+import com.shtm.manage.groups.RolesGroups.SelectRolePermissionsById;
 import com.shtm.manage.groups.RolesGroups.UpdateRoleGroups;
 import com.shtm.manage.groups.RolesGroups.UpdateRolePermission;
+import com.shtm.util.Static;
 
 public class Roles {
-	@NotBlank(message="{roles.id.notblank.error}",groups={UpdateRolePermission.class,DeleteRoleGroups.class,UpdateRoleGroups.class})
+	@NotBlank(message="{roles.id.notblank.error}",groups={UpdateRolePermission.class,DeleteRoleGroups.class,UpdateRoleGroups.class,SelectRolePermissionsById.class})
     private String id;
 	
 	@NotBlank(message="{roles.name.notblank.error}",groups={InsertRoleGroups.class})
+	@Pattern(regexp=Static.REG.ROLES_NAME,message="{roles.name.reg.error}",groups={InsertRoleGroups.class,UpdateRoleGroups.class})
     private String name;
     
-	@NotBlank(message="{roles.status.notblank.error}",groups={UpdateRoleGroups.class})
+	@NotNull(message="{roles.status.notnull.error}",groups={UpdateRoleGroups.class})
     private Short status;
     
-    @NotBlank(message="{roles.description.notblank.error}",groups={InsertRoleGroups.class,DeleteRoleGroups.class,UpdateRoleGroups.class})
+    @NotBlank(message="{roles.description.notblank.error}",groups={InsertRoleGroups.class,UpdateRoleGroups.class})
     private String description;
 
     public String getId() {

@@ -26,7 +26,7 @@ var birthday;
 //datebox的buttons
 var buttons;
 //保存当前编辑的管理员的信息
-var currtEditDatagridRow;
+var currtRolesRow;
 //请求的管理员头像的尺寸
 var headimgSize = 60;
 var rolesSearchId;
@@ -148,10 +148,6 @@ function loadRolesManageUI(){
 	    	responseHandler.handleFailure();
 	    },
 		hideColumn:[[
-			{
-				field:'creator',
-				title:'创建者id'
-			}
 		             ]],
 		columns:[[ 
 			{
@@ -161,55 +157,15 @@ function loadRolesManageUI(){
 				sortable : true*/
 			},
 	        {
-    			field:'username',
+    			field:'name',
     			title:'名称',
 	    		sortable : true
-    		},    
-	        {
-    			field:'email',
-    			title:'邮箱',
+    		},  
+    		{
+    			field:'description',
+    			title:'描述',
 	    		sortable : true
     		},    
-	        {
-	        	field:'password',
-	        	title:'密码',
-	    		sortable : true,
-        		formatter: function(value,row,index){
-					return "******";
-				}
-	        },    
-	        /*{
-	        	field:'salt',
-	        	title:'盐',
-	    		sortable : true
-	        },*/    
-	        {
-	        	field:'creatorName',
-	        	title:'创建者',
-	    		sortable : true,
-				formatter: function(value,row,index){
-					
-					if(isEmpty(value)){
-						return "无";
-					}
-					
-					return "<a href=javascript:checkRole('"+row.creator+"');>"+value+"</a>";
-				}
-	        },
-	        {
-	        	field:'theme',
-	        	title:'主题',
-	    		sortable : true
-	        },
-	        {
-	        	field:'createtime',
-	        	title:'创建时间',
-	    		sortable : true,
-				formatter: function(value,row,index){
-					
-					return new Date(value).format("yyyy-MM-dd HH:mm:ss");
-				}
-	        },     
 	        {
 	        	field:'status',
 	        	title:'状态',
@@ -218,7 +174,8 @@ function loadRolesManageUI(){
 					if(value == 1){
 						return "激活";
 					}
-					if(value == 0){
+					if(value == -1){
+
 						return "冻结";
 					}
 					return value;
@@ -251,7 +208,7 @@ function editRole(){
 	}
 	
 	//保存当前操作的管理员的行
-	currtEditDatagridRow = row;
+	currtRolesRow = row;
 	
 	//清空旧的文本记录
 	editRoleForm.clearEasyuiForm();
@@ -338,12 +295,12 @@ function resetRole(){
  */
 function deleteRole(){
 	//确认删除?
-	confirm("确认删除"+currtEditDatagridRow.username+"?",function(r){
+	confirm("确认删除"+currtRolesRow.name+"?",function(r){
 		if(r){
 			//进度条
 			
 			
-			var id = currtEditDatagridRow.id;
+			var id = currtRolesRow.id;
 			
 			
 			var url = manageForwardUrl+"/roles/deleteRole.action?id="+id;
@@ -485,10 +442,10 @@ function editRolePermission(){
 	}
 	
 	//保存当前操作的管理员的行
-	currtEditDatagridRow = row;
+	currtRolesRow = row;
 	
 	
-	var roleId = currtEditDatagridRow.id;
+	var roleId = currtRolesRow.id;
 	
 	roles_permissions_datagrid.datagrid({ 
 	    url: manageForwardUrl +"/roles/selectRolePermissionsById.action?id="+roleId, 
@@ -496,7 +453,7 @@ function editRolePermission(){
 	    singleSelect:false,
 	    selectOnCheck: true,
 	    checkOnSelect: true, 
-	    sortName : 'name',
+	    sortName : 'text',
 	    sortOrder : 'desc', //降序
 	    hideColumn:[[
 			{
@@ -511,17 +468,8 @@ function editRolePermission(){
 	     	    checkbox: true
 	        },
 			{
-				field:'name',
-				title:'角色名',
-				width:'30%',
-				sortable:true,
-				formatter: function(value,row,index){
-					
-					return value;  
-				}
-			},{
-				field:'description',
-				title:'简介',
+				field:'text',
+				title:'权限名',
 				width:'30%',
 				sortable:true,
 				formatter: function(value,row,index){
@@ -530,8 +478,28 @@ function editRolePermission(){
 				}
 			},
 			{
+				field:'code',
+				title:'权限码',
+				width:'30%',
+				sortable:true,
+				formatter: function(value,row,index){
+					
+					return value;  
+				}
+			},
+			/*{
+				field:'description',
+				title:'简介',
+				width:'30%',
+				sortable:true,
+				formatter: function(value,row,index){
+					
+					return value;  
+				}
+			},*/
+			{
 				field:'grantTime',
-				title:'分配角色的时间',
+				title:'分配权限的时间',
 				width:'30%',
 				sortable:true,
 				formatter: function(value,row,index){
@@ -601,7 +569,7 @@ function submitRolePermissionsEdit(){
 		var s = selects[i];
 		newPermissionsId.push(s.id);
 	}
-	var id = currtEditDatagridRow.id;
+	var id = currtRolesRow.id;
 	var url = manageForwardUrl+"/roles/updateRolePermissions.action";
 	var data = {"permissionsIds":newPermissionsId,"id":id};
 	ajax.sendJson(url, 

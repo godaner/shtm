@@ -6,28 +6,18 @@
 <div id="roles_dg_tb" style="display: none;">
 	<form id="rolesSearchForm">
 		<input id="id" name="id" class="easyui-textbox input" data-options="prompt:'id'" style="width:100px">
-		<input name="username" class="easyui-textbox input" data-options="prompt:'管理员名'" style="width:100px"> 
-		<input name="email" class="easyui-textbox input" data-options="prompt:'邮箱'" style="width:100px"> 
-		<select name="theme" class="easyui-combobox input" style="width:100px;" data-options="editable:false">   
-		    <option value="">不选择</option>   
-		    <option value="black">black</option> 
-		    <option value="bootstrap">bootstrap</option> 
-		    <option value="default">default</option> 
-		    <option value="gray">gray</option> 
-		    <option value="material">material</option> 
-		    <option value="metro">metro</option> 
-		</select>
+		<input name="name" class="easyui-textbox input" data-options="prompt:'名称'" style="width:100px"> 
 		<select name="status" class="easyui-combobox input" style="width:100px;" data-options="editable:false">   
 		    <option value="">不选择</option>   
 		    <option value="1">激活</option> 
-		    <option value="0">冻结</option>    
+		    <option value="-1">冻结</option>    
 		</select>       
 		<a href="javascript:searchRoles();" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 		<a href="javascript:clearRoleSearch();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">清空条件</a>
 		|
 		<a href="javascript:editRole();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑基本信息</a>
 		|
-		<a href="javascript:editRolePermission();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑角色</a>
+		<a href="javascript:editRolePermission();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑权限</a>
 		|
 		<a href="javascript:insertRole();" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
 	</form>

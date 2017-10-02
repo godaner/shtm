@@ -2,6 +2,7 @@ package com.shtm.manage.mapper;
 
 import java.util.List;
 
+import com.shtm.manage.po.PermissionsReplier;
 import com.shtm.manage.po.RolesReceiver;
 import com.shtm.po.Roles;
 
@@ -46,4 +47,18 @@ public interface CustomRolesMapper {
 	 * @throws Exception
 	 */
 	Integer selectRolesNum(RolesReceiver receiver) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:获取指定id的role的permisssions(所有的permisssions也会被全部查询出来,但是role拥有的permisssions有特殊标记);
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月2日 下午5:24:31
+	 * @version 1.0
+	 * @param receiver
+	 * @return
+	 * @throws Exception
+	 */
+	List<PermissionsReplier> selectRolePermissionsById(RolesReceiver receiver) throws Exception;
 }

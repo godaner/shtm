@@ -62,4 +62,16 @@ public interface RolesGroups {
 	 * @version 1.0
 	 */
 	public interface SelectRolesDatagridGroups{};
+	
+	
+	/**
+	 * Title:SelectRolePermissionsById
+	 * <p>
+	 * Description:查询角色权限所用的验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月2日 下午4:24:42
+	 * @version 1.0
+	 */
+	public interface SelectRolePermissionsById{};
 }

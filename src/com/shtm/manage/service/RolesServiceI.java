@@ -80,4 +80,18 @@ public interface RolesServiceI {
 	 */
 	void updateRole(RolesReceiver receiver) throws Exception;
 
+	/**
+	 * Title:
+	 * <p>
+	 * Description:获取指定id的role的permisssions(所有的permisssions也会被全部查询出来,但是role拥有的permisssions有特殊标记);
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月2日 下午5:22:53
+	 * @version 1.0
+	 * @param receiver
+	 * @return
+	 * @throws Exception
+	 */
+	RolesReplier selectRolePermissionsById(RolesReceiver receiver) throws Exception;
+
 }

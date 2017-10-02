@@ -7,6 +7,12 @@
 	<sql id="selectRolesConditions">
 		<where>
 			STATUS != 0
+			<if test="name !=null">
+				and name like '%${name}%'
+			</if>
+			<if test="status !=null">
+				and status = #{status}
+			</if>
 		</where>
 	</sql>
 	
@@ -37,4 +43,29 @@
 		<include refid="selectRolesConditions"></include>
 		
 	</select>
+	
+	
+	
+	<!-- 获取指定id的role的permisssions(所有的permisssions也会被全部查询出来,但是role拥有的permisssions有特殊标记); -->
+	<select id="selectRolePermissionsById" parameterType="com.shtm.manage.po.AdminsReceiver" resultType="com.shtm.manage.po.PermissionsReplier">
+		
+		
+		
+		SELECT P1.id,p1.text,p1.code,P0.granttime
+		  FROM PERMISSIONS P1,
+		  (
+		    SELECT p.ID,rp.GRANTTIME
+		    FROM PERMISSIONS p,ROLES_PERMISSIONS rp
+		    WHERE p.ID = rp.PERMISSION(+) AND rp.role = #{id} AND p.STATUS = 1
+		  ) P0
+		 WHERE P1.ID = P0.id(+) and p1.type='p'
+		<if test="order != null and sort != null">
+			ORDER BY ${sort} ${order}
+		 </if>
+		
+		
+		
+	</select>
+	
+	
 </mapper>

@@ -24,6 +24,7 @@ public interface Static {
 	public interface ROLES_STATUS{
 		static final Short DELETE = 0;
 		static final Short ACTIVITY = 1;
+		static final Short FORENZEN = -1;
 	}
 	
 	
@@ -219,6 +220,9 @@ public interface Static {
 		
 		//邮编
 		String POST_CODE = "^[1-9]\\d{5}$";
+		
+		//后台角色名
+		String ROLES_NAME = "^[A-Za-z][A-Za-z1-9_-]{4,20}$";
 	}
 	public static void main(String[] args) {
 		System.out.println("1138829222@qq.com".matches(REG.EMAIL));

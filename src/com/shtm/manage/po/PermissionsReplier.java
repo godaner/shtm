@@ -1,5 +1,6 @@
 package com.shtm.manage.po;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.shtm.po.Permissions;
@@ -16,6 +17,16 @@ import com.shtm.util.Static;
  * @version 1.0
  */
 public class PermissionsReplier extends Permissions implements Static {
+	private Timestamp grantTime;
+
+	public Timestamp getGrantTime() {
+		return grantTime;
+	}
+
+	public void setGrantTime(Timestamp grantTime) {
+		this.grantTime = grantTime;
+	}
+	
 	// 操作结果
 	private Integer result;
 

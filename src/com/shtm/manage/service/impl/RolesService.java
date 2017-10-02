@@ -1,15 +1,20 @@
 package com.shtm.manage.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shtm.manage.mapper.CustomRolesMapper;
+import com.shtm.manage.po.AdminsReplier;
+import com.shtm.manage.po.PermissionsReplier;
 import com.shtm.manage.po.RolesReceiver;
 import com.shtm.manage.po.RolesReplier;
 import com.shtm.manage.service.RolesServiceI;
 import com.shtm.mapper.RolesMapper;
 import com.shtm.mapper.RolesPermissionsMapper;
 import com.shtm.po.Roles;
+import com.shtm.po.RolesExample;
 import com.shtm.po.RolesPermissions;
 import com.shtm.po.RolesPermissionsExample;
 import com.shtm.po.RolesPermissionsExample.Criteria;
@@ -42,7 +47,9 @@ public class RolesService extends BaseService implements RolesServiceI {
 		
 		//检测角色状态
 		Roles dbR = rolesMapper.selectByPrimaryKey(id);
-		eject(dbR == null || dbR.getStatus() == ROLES_STATUS.DELETE, "角色已不存在");
+		eject(dbR == null, "角色已不存在");
+		eject(dbR.getStatus() != ROLES_STATUS.ACTIVITY, "当前角色状态不允许更新");
+		
 		
 		
 		//删除原有的权限
@@ -64,6 +71,19 @@ public class RolesService extends BaseService implements RolesServiceI {
 
 	@Override
 	public void insertRoleGroups(RolesReceiver receiver) throws Exception {
+		
+		/**
+		 * 判断name是否存在
+		 */
+		RolesExample example = new RolesExample();
+		com.shtm.po.RolesExample.Criteria criteria = example.createCriteria();
+		criteria.andNameEqualTo(receiver.getName());
+		List<Roles> list = rolesMapper.selectByExample(example);
+		
+		eject(list.size() >= 1, "该角色名已存在");
+		/**
+		 * 插入roles
+		 */
 		receiver.setId(uuid());
 		receiver.setStatus(ROLES_STATUS.ACTIVITY);
 		rolesMapper.insert(receiver);
@@ -72,10 +92,16 @@ public class RolesService extends BaseService implements RolesServiceI {
 
 	@Override
 	public void deleteRole(RolesReceiver receiver) throws Exception {
+		Roles dbR = rolesMapper.selectByPrimaryKey(receiver.getId());
+		
+		eject(dbR == null || dbR.getStatus() == ROLES_STATUS.DELETE, "该角色已不存在");
+		
+		
 		Roles r = new Roles();
 		//设置字段
 		r.setId(receiver.getId());
 		r.setStatus(ROLES_STATUS.DELETE);
+		r.setName(uuid()+"_"+dbR.getName());
 		
 		rolesMapper.updateByPrimaryKeySelective(r);
 	}
@@ -98,7 +124,41 @@ public class RolesService extends BaseService implements RolesServiceI {
 
 	@Override
 	public void updateRole(RolesReceiver receiver) throws Exception {
+		Roles dbR = rolesMapper.selectByPrimaryKey(receiver.getId());
+		//打算更新的roles是否存在
+		eject(dbR == null || dbR.getStatus() == ROLES_STATUS.DELETE, "该劫色已不存在");
+		
+		
+		//更新name
+		if(!dbR.getName().equals(receiver.getName())){
+			/**
+			 * 判断name是否存在
+			 */
+			RolesExample example = new RolesExample();
+			com.shtm.po.RolesExample.Criteria criteria = example.createCriteria();
+			criteria.andNameEqualTo(receiver.getName());
+			List<Roles> list = rolesMapper.selectByExample(example);
+			
+			eject(list.size() >= 1, "该角色名已存在");
+		}else{
+			receiver.setName(null);
+		}
+		
+		
 		rolesMapper.updateByPrimaryKeySelective(receiver);
+	}
+
+	@Override
+	public RolesReplier selectRolePermissionsById(RolesReceiver receiver)
+			throws Exception {
+		
+		RolesReplier replier = new RolesReplier();
+		
+		List<PermissionsReplier> rows = customRolesMapper.selectRolePermissionsById(receiver);
+		
+		replier.setRows(rows);
+		
+		return replier;
 	}
 
 }

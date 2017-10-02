@@ -28,6 +28,8 @@ public class RolesReplier<T> extends Roles {
 		this.grantTime = grantTime;
 	}
 
+	
+	
 	// 操作结果
 	private Integer result;
 
