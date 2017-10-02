@@ -255,6 +255,11 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	}
 
 	@Override
+	public List<Permissions> selectPermissions(String id) throws Exception {
+		return customAdminsMapper.selectPermissions(id);
+	}
+
+	@Override
 	public AdminsReplier selectAdminRolesById(AdminsReceiver receiver) throws Exception {
 		
 		AdminsReplier replier = new AdminsReplier();

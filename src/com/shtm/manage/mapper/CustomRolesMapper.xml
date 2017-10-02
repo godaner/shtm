@@ -2,4 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shtm.manage.mapper.CustomRolesMapper">
 	
+	
+	
+	<sql id="selectRolesConditions">
+		<where>
+			STATUS != 0
+		</where>
+	</sql>
+	
+	
+	
+	<select id="selectRolesDatagrid" parameterType="com.shtm.manage.po.RolesReceiver" resultType="com.shtm.manage.po.RolesReplier">
+		select r1.*
+		from
+		(
+			SELECT r0.*,rownum as n
+			FROM
+			(
+				SELECT *
+				FROM ROLES
+				<include refid="selectRolesConditions"></include>
+				ORDER BY ${sort} ${order}
+			) r0
+			WHERE rownum &lt;=#{end}
+		) r1
+		where r1.n &gt;= #{start}
+		
+		
+	</select>
+	<select id="selectRolesNum" parameterType="com.shtm.manage.po.RolesReceiver"
+		resultType="int">
+		SELECT count(*)
+		FROM roles 
+		<include refid="selectRolesConditions"></include>
+		
+	</select>
 </mapper>

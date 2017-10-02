@@ -499,22 +499,21 @@ function editAdminRole(){
 	    sortName : 'name',
 	    sortOrder : 'desc', //降序
 	    hideColumn:[[
-	    ]],
-	    columns:[[
-  	        /*{
-	        	field:'ck',
-	     	    checkbox: true,
-				width:'5%'
-	        },*/
 			{
 				field:'id',
 				title:'id',
 				width:'25%'
-			},
+			}
+	    ]],
+	    columns:[[
+  	        {
+	        	field:'ck',
+	     	    checkbox: true
+	        },
 			{
 				field:'name',
 				title:'角色名',
-				width:'25%',
+				width:'30%',
 				sortable:true,
 				formatter: function(value,row,index){
 					
@@ -523,7 +522,7 @@ function editAdminRole(){
 			},{
 				field:'description',
 				title:'简介',
-				width:'25%',
+				width:'30%',
 				sortable:true,
 				formatter: function(value,row,index){
 					
@@ -533,7 +532,7 @@ function editAdminRole(){
 			{
 				field:'grantTime',
 				title:'分配角色的时间',
-				width:'25%',
+				width:'30%',
 				sortable:true,
 				formatter: function(value,row,index){
 					

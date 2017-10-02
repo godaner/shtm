@@ -1,6 +1,7 @@
 package com.shtm.manage.service;
 
 import com.shtm.manage.po.RolesReceiver;
+import com.shtm.manage.po.RolesReplier;
 
 /**
  * Title:RolesServiceI
@@ -39,5 +40,44 @@ public interface RolesServiceI {
 	 * @throws Exception
 	 */
 	void insertRoleGroups(RolesReceiver receiver) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:删除角色成功
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月2日 下午1:25:27
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	void deleteRole(RolesReceiver receiver) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:查询easyui所需的分页数据;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月2日 下午1:26:34
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	RolesReplier selectRolesDatagrid(RolesReceiver receiver) throws Exception;
+
+	/**
+	 * Title:
+	 * <p>
+	 * Description:更新角色基本信息;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月2日 下午1:28:06
+	 * @version 1.0
+	 * @param receiver
+	 * @throws Exception
+	 */
+	void updateRole(RolesReceiver receiver) throws Exception;
 
 }

@@ -22,7 +22,7 @@ public interface Static {
 	 * @version 1.0
 	 */
 	public interface ROLES_STATUS{
-		static final Short FOREZEN = 0;
+		static final Short DELETE = 0;
 		static final Short ACTIVITY = 1;
 	}
 	
