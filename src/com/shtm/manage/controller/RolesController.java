@@ -16,8 +16,8 @@ import com.shtm.manage.groups.RolesGroups.InsertRoleGroups;
 import com.shtm.manage.groups.RolesGroups.SelectRolesDatagridGroups;
 import com.shtm.manage.groups.RolesGroups.UpdateRoleGroups;
 import com.shtm.manage.groups.RolesGroups.UpdateRolePermission;
-import com.shtm.manage.po.AdminsReplier;
 import com.shtm.manage.po.RolesReceiver;
+import com.shtm.manage.po.RolesReplier;
 import com.shtm.manage.service.RolesServiceI;
 
 
@@ -52,10 +52,10 @@ public class RolesController extends BaseController<RolesServiceI> {
 	@RequiresAuthentication
 	@RequiresPermissions("roles:update")
 	@RequestMapping("/updateRolePermission")
-	public @ResponseBody AdminsReplier updateRolePermission(
+	public @ResponseBody RolesReplier updateRolePermission(
 			@Validated(value = { UpdateRolePermission.class }) @RequestBody RolesReceiver receiver,
 			BindingResult result) throws Exception {
-		AdminsReplier replier = new AdminsReplier();
+		RolesReplier replier = new RolesReplier();
 		try {
 			getError(result);
 
@@ -88,10 +88,10 @@ public class RolesController extends BaseController<RolesServiceI> {
 	@RequiresAuthentication
 	@RequiresPermissions("roles:insert")
 	@RequestMapping("/insertRole")
-	public @ResponseBody AdminsReplier insertRole(
+	public @ResponseBody RolesReplier insertRole(
 			@Validated(value = { InsertRoleGroups.class }) @RequestBody RolesReceiver receiver,
 			BindingResult result) throws Exception {
-		AdminsReplier replier = new AdminsReplier();
+		RolesReplier replier = new RolesReplier();
 		try {
 			getError(result);
 
@@ -123,10 +123,10 @@ public class RolesController extends BaseController<RolesServiceI> {
 	@RequiresAuthentication
 	@RequiresPermissions("roles:delete")
 	@RequestMapping("/deleteRole")
-	public @ResponseBody AdminsReplier deleteRole(
+	public @ResponseBody RolesReplier deleteRole(
 			@Validated(value = { DeleteRoleGroups.class }) @RequestBody RolesReceiver receiver,
 			BindingResult result) throws Exception {
-		AdminsReplier replier = new AdminsReplier();
+		RolesReplier replier = new RolesReplier();
 		try {
 			getError(result);
 
@@ -157,14 +157,14 @@ public class RolesController extends BaseController<RolesServiceI> {
 	@RequiresAuthentication
 	@RequiresPermissions("roles:select")
 	@RequestMapping("/selectRolesDatagrid")
-	public @ResponseBody AdminsReplier selectRolesDatagrid(
-			@Validated(value = { SelectRolesDatagridGroups.class }) @RequestBody RolesReceiver receiver,
+	public @ResponseBody RolesReplier selectRolesDatagrid(
+			@Validated(value = { SelectRolesDatagridGroups.class }) RolesReceiver receiver,
 			BindingResult result) throws Exception {
-		AdminsReplier replier = new AdminsReplier();
+		RolesReplier replier = new RolesReplier();
 		try {
 			getError(result);
 
-			service.selectRolesDatagrid(receiver);
+			replier = service.selectRolesDatagrid(receiver);
 
 			replier.setResult(RESULT.TRUE);
 			replier.setMsg("查询角色成功");
@@ -191,10 +191,10 @@ public class RolesController extends BaseController<RolesServiceI> {
 	@RequiresAuthentication
 	@RequiresPermissions("roles:update")
 	@RequestMapping("/updateRole")
-	public @ResponseBody AdminsReplier updateRole(
+	public @ResponseBody RolesReplier updateRole(
 			@Validated(value = { UpdateRoleGroups.class }) @RequestBody RolesReceiver receiver,
 			BindingResult result) throws Exception {
-		AdminsReplier replier = new AdminsReplier();
+		RolesReplier replier = new RolesReplier();
 		try {
 			getError(result);
 
