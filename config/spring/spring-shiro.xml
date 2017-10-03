@@ -14,70 +14,73 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx">
 	<!-- *******************配置spring对shiro层的管理 start******************* -->
 
-	<!-- 缓存管理器 -->
+	<!-- 缓存管理器:目前测试cacheManager配置的cacheManager是无效的 -->
 	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
 		<property name="cacheManagerConfigFile" value="classpath:shiro/shiro-ehcache.xml" />
 	</bean>
 
 	<!-- 凭证匹配器 -->
-	<bean id="credentialsMatcher"
-		class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-		<property name="hashAlgorithmName" value="md5" />
-		<property name="hashIterations" value="1" />
-	</bean>
+	<!-- <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher"> 
+		<property name="hashAlgorithmName" value="md5" /> <property name="hashIterations" 
+		value="1" /> </bean> -->
 
 	<!-- realm -->
 	<bean id="jdbcRealm" class="com.shtm.manage.realm.JDBCRealm">
 		<!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 -->
-		<property name="credentialsMatcher" ref="credentialsMatcher" />
+		<!-- <property name="credentialsMatcher" ref="credentialsMatcher" /> -->
 		<property name="adminsService" ref="adminsService"></property>
 	</bean>
 
 	<!-- sessionDAO -->
 	<bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO" />
-
-
-
+	<!-- sessionIdCookie -->
+	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg name="name" value="meta.session.id" />
+	</bean>
 	<!-- 会话管理器 -->
 	<bean id="sessionManager"
 		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
 		<!-- session的失效时长，单位毫秒 -->
-		<property name="globalSessionTimeout" value="10000" />
+		<property name="globalSessionTimeout" value="100000" />
 		<!-- 删除失效的session -->
 		<property name="deleteInvalidSessions" value="true" />
-		<property name="sessionDAO" ref="sessionDAO" />
-	</bean>
 
+		<property name="sessionValidationSchedulerEnabled" value="true" />
+		<!-- <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/> -->
+		<property name="sessionDAO" ref="sessionDAO" />
+		<property name="sessionIdCookieEnabled" value="true" />
+		<property name="sessionIdCookie" ref="sessionIdCookie" />
+
+	</bean>
+	<!-- securityManager -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<!-- 单realm应用。如果有多个realm，使用‘realms’属性代替 -->
 		<property name="realm" ref="jdbcRealm" />
 		<property name="cacheManager" ref="cacheManager" />
+		<property name="sessionManager" ref="sessionManager" />
 	</bean>
 
 	<!-- shiroFilter配置 -->
-	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" depends-on="securityManager">
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean"
+		depends-on="securityManager">
 		<property name="securityManager" ref="securityManager" />
-		<!-- 登录url -->
+		<!-- 登录的url -->
 		<property name="loginUrl" value="/admins/login.action" />
 		<!-- 登录成功 -->
-		<!-- <property name="successUrl" value="/admins/loginSuccess.action" />
-		<property name="unauthorizedUrl" value="/login/unauthorized" /> -->
+		<!-- <property name="successUrl" value="/admins/loginSuccess.action" /> 
+			<property name="unauthorizedUrl" value="/login/unauthorized" /> -->
 		<property name="filterChainDefinitions">
 			<value>
 				<!-- 登录時訪問 -->
-				/**/js/** = anon
-				/**/img/** = anon
-				/**/css/** = anon
-				/**/plugin/** = anon
-				/admins/login.action = anon
-				/admins/logout.action = anon
-				<!-- /**/**.action = authc -->
-				
+				<!--/**/js/** = anon /**/img/** = anon /**/css/** = anon /**/plugin/** 
+					= anon /admins/login.action = anon /admins/logout.action = anon /**/**.action 
+					= authc -->
+
 			</value>
 		</property>
 	</bean>
 
-    <!-- Shiro的注解配置一定要放在spring-mvc中 -->
+	<!-- Shiro的注解配置一定要放在spring-mvc中 -->
 
 
 	<!-- *******************配置spring对shiro层的管理 end******************* -->

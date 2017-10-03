@@ -6,6 +6,9 @@
     <result column="NAME" jdbcType="CHAR" property="name" />
     <result column="STATUS" jdbcType="SMALLINT" property="status" />
     <result column="DESCRIPTION" jdbcType="CHAR" property="description" />
+    <result column="STATICC" jdbcType="SMALLINT" property="staticc" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="CREATOR" jdbcType="CHAR" property="creator" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    ID, NAME, STATUS, DESCRIPTION
+    ID, NAME, STATUS, DESCRIPTION, STATICC, CREATETIME, CREATOR
   </sql>
   <select id="selectByExample" parameterType="com.shtm.po.RolesExample" resultMap="BaseResultMap">
     select
@@ -100,9 +103,11 @@
   </delete>
   <insert id="insert" parameterType="com.shtm.po.Roles">
     insert into SHT.ROLES (ID, NAME, STATUS, 
-      DESCRIPTION)
+      DESCRIPTION, STATICC, CREATETIME, 
+      CREATOR)
     values (#{id,jdbcType=CHAR}, #{name,jdbcType=CHAR}, #{status,jdbcType=SMALLINT}, 
-      #{description,jdbcType=CHAR})
+      #{description,jdbcType=CHAR}, #{staticc,jdbcType=SMALLINT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.shtm.po.Roles">
     insert into SHT.ROLES
@@ -119,6 +124,15 @@
       <if test="description != null">
         DESCRIPTION,
       </if>
+      <if test="staticc != null">
+        STATICC,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="creator != null">
+        CREATOR,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -132,6 +146,15 @@
       </if>
       <if test="description != null">
         #{description,jdbcType=CHAR},
+      </if>
+      <if test="staticc != null">
+        #{staticc,jdbcType=SMALLINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -156,6 +179,15 @@
       <if test="record.description != null">
         DESCRIPTION = #{record.description,jdbcType=CHAR},
       </if>
+      <if test="record.staticc != null">
+        STATICC = #{record.staticc,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createtime != null">
+        CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null">
+        CREATOR = #{record.creator,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +198,10 @@
     set ID = #{record.id,jdbcType=CHAR},
       NAME = #{record.name,jdbcType=CHAR},
       STATUS = #{record.status,jdbcType=SMALLINT},
-      DESCRIPTION = #{record.description,jdbcType=CHAR}
+      DESCRIPTION = #{record.description,jdbcType=CHAR},
+      STATICC = #{record.staticc,jdbcType=SMALLINT},
+      CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      CREATOR = #{record.creator,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,6 +218,15 @@
       <if test="description != null">
         DESCRIPTION = #{description,jdbcType=CHAR},
       </if>
+      <if test="staticc != null">
+        STATICC = #{staticc,jdbcType=SMALLINT},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        CREATOR = #{creator,jdbcType=CHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=CHAR}
   </update>
@@ -190,7 +234,10 @@
     update SHT.ROLES
     set NAME = #{name,jdbcType=CHAR},
       STATUS = #{status,jdbcType=SMALLINT},
-      DESCRIPTION = #{description,jdbcType=CHAR}
+      DESCRIPTION = #{description,jdbcType=CHAR},
+      STATICC = #{staticc,jdbcType=SMALLINT},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      CREATOR = #{creator,jdbcType=CHAR}
     where ID = #{id,jdbcType=CHAR}
   </update>
 </mapper>

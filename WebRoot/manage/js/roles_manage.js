@@ -165,7 +165,42 @@ function loadRolesManageUI(){
     			field:'description',
     			title:'描述',
 	    		sortable : true
-    		},    
+    		},  
+	        {
+	        	field:'staticc',
+	        	title:'是否为内置对象',
+	        	formatter: function(value,row,index){
+					if(value == 1){
+						return font.color("内置角色", "red");
+					}
+					if(value == 0){
+						return "非内置角色";
+					}
+					return value;
+				}
+	        }, 
+	        {
+	        	field:'creatorName',
+	        	title:'创建者',
+	    		sortable : true,
+				formatter: function(value,row,index){
+					
+					if(isEmpty(value)){
+						return "无";
+					}
+					
+					return "<a href=javascript:checkAdmin('"+row.creator+"');>"+value+"</a>";
+				}
+	        },
+	        {
+	        	field:'createtime',
+	        	title:'创建时间',
+	    		sortable : true,
+				formatter: function(value,row,index){
+					
+					return new Date(value).format("yyyy-MM-dd HH:mm:ss");
+				}
+	        },   
 	        {
 	        	field:'status',
 	        	title:'状态',
@@ -174,7 +209,7 @@ function loadRolesManageUI(){
 					if(value == 1){
 						return "激活";
 					}
-					if(value == -1){
+					if(value == 0){
 
 						return "冻结";
 					}
@@ -487,16 +522,6 @@ function editRolePermission(){
 					return value;  
 				}
 			},
-			/*{
-				field:'description',
-				title:'简介',
-				width:'30%',
-				sortable:true,
-				formatter: function(value,row,index){
-					
-					return value;  
-				}
-			},*/
 			{
 				field:'grantTime',
 				title:'分配权限的时间',

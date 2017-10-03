@@ -36,7 +36,7 @@
 				<td>
 					<select id="status" name="status" class="easyui-combobox input" data-options="required:true,editable:false" style="width:100%">   
 					    <option value="1">激活</option>   
-					    <option selected="selected" value="-1">冻结</option>   
+					    <option selected="selected" value="0">冻结</option>   
 					</select>  
 				</td>
 			</tr>

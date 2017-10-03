@@ -1,13 +1,13 @@
 package com.shtm.manage.service.impl;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
-import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +60,11 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	@Autowired
 	private AdminsRolesMapper adminsRolesMapper;
 	
-	 @Autowired
-	 private SessionDAO sessionDAO;
+	@Autowired
+	private JDBCRealm jdbcRealm;
+	
+	@Autowired
+	private SessionDAO sessionDAO;
 	/**
 	 * Title:
 	 * <p>
@@ -78,17 +81,36 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	public AdminsReplier login(AdminsReceiver receiver) throws Exception {
 		
 		
+		
+		// 是否正确提交了用户信息
+		eject(receiver.getUsername() == null
+				|| receiver.getUsername().trim().equals(""), "账户不能为空");
+		eject(receiver.getPassword() == null
+				|| receiver.getPassword().toString().trim().equals(""), "密码不能为空");
+		
 		//查询admins
 		Admins dbAd = customAdminsMapper.selectAdminByUsername(receiver.getUsername());
+				
+		// 用户不存在
+		eject(dbAd == null, "账户不存在");
+
+		// 用户被冻结
+		eject(dbAd.getStatus() == ADMINS_STATUS.FROZEN, "账户被冻结");
+		//验证密码
+		String formPW = md5( receiver.getPassword() + dbAd.getSalt());
+		eject(!dbAd.getPassword().equals(formPW), "密码错误");
 		
 		//传入realm的数据(原始數據)
 		UsernamePasswordToken token = new UsernamePasswordToken(
-				receiver.getUsername(), receiver.getPassword());
+				receiver.getUsername(), dbAd.getPassword());
 		Subject subject = SecurityUtils.getSubject();
-		// 调用realm验证
+		// 调用shiro登录
 		subject.login(token);
 		
 		AdminsReplier replier = new AdminsReplier();
+		
+		//不显示字段
+		dbAd.setPassword(null);
 		
 		BeanUtils.copyProperties(dbAd, replier);
 		
@@ -141,6 +163,13 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		receiver.setEmail(receiver.getEmail());
 		receiver.setUsername(receiver.getUsername());
 		
+		
+		/**
+		 * 验证名称是否存在
+		 */
+		
+		Admins dbA = customAdminsMapper.selectAdminByUsername(receiver.getUsername());
+		eject(dbA != null, "该用户名已存在");
 		/**
 		 * 设置属性
 		 */
@@ -153,6 +182,8 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		
 		receiver.setSalt(receiver.getUsername());
 		
+		receiver.setStaticc(ADMINS_STATIC.NO);
+		
 		//md5加密
 		receiver.setPassword(md5(receiver.getPassword()+receiver.getSalt()));
 		
@@ -162,20 +193,23 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	@Override
 	public void deleteAdmin(AdminsReceiver receiver) throws Exception {
 		
-		Admins ad = adminsMapper.selectByPrimaryKey(receiver.getId());
+		Admins dbA = adminsMapper.selectByPrimaryKey(receiver.getId());
 		
 		
-		if(ad == null || ad.getStatus() == ADMINS_STATUS.DELETE){
+		if(dbA == null || dbA.getStatus() == ADMINS_STATUS.DELETE){
 			//如果已被刪除
 			return ;
 		}
+		
+		eject(isStaticAdmin(dbA),"不能删除内置管理员");
+		
 		
 		//標志位刪除
 		Admins newAd = new Admins();
 		
 		newAd.setId(receiver.getId());
 		
-		newAd.setUsername(uuid()+"_"+ad.getUsername());
+		newAd.setUsername(uuid()+"_"+dbA.getUsername());
 		
 		newAd.setStatus(ADMINS_STATUS.DELETE);
 		
@@ -185,13 +219,32 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 
 	@Override
 	public void updateAdmin(AdminsReceiver receiver) throws Exception {
+		Admins dbA = adminsMapper.selectByPrimaryKey(receiver.getId());
+		//判断管理员是否存在
+		eject(dbA == null ||
+				dbA.getStatus() == ADMINS_STATUS.DELETE, "管理员不存在");
+		
+		//不能更新name
+//		if(!dbA.getUsername().equals(receiver.getUsername())){
+//			/**
+//			 * 判断name是否存在
+//			 */
+//			AdminsExample example = new AdminsExample();
+//			com.shtm.po.AdminsExample.Criteria criteria = example.createCriteria();
+//			criteria.andUsernameEqualTo(receiver.getUsername());
+//			List<Admins> list = adminsMapper.selectByExample(example);
+//			
+//			eject(list.size() >= 1, "该名称已存在");
+//		}else{
+//			receiver.setUsername(null);
+//		}
 		/**
 		 * 判断password是否需要更新
 		 */
 		String password = receiver.getPassword();
 		if (password != null && !password.isEmpty()) {
 			//如果有更新情况,加密密码
-			receiver.setPassword(md5(receiver.getUsername()+receiver.getPassword()));
+			receiver.setPassword(md5(password + dbA.getSalt()));
 		}
 		if(password.trim().equals("")){
 			receiver.setPassword(null);
@@ -202,6 +255,11 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		receiver.setCreator(null);
 		
 		receiver.setCreatetime(null);
+		
+		receiver.setStaticc(null);
+		
+		receiver.setUsername(null);
+		
 		
 		//更新
 		adminsMapper.updateByPrimaryKeySelective(receiver);
@@ -272,12 +330,14 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 			throws Exception {
 		
 		//判断管理员是否存在
-		Admins ad = adminsMapper.selectByPrimaryKey(id);
-		eject(ad == null ||
-				ad.getStatus() == ADMINS_STATUS.DELETE, "管理员不存在");
+		Admins dbA = adminsMapper.selectByPrimaryKey(id);
+		eject(dbA == null ||
+				dbA.getStatus() == ADMINS_STATUS.DELETE, "管理员不存在");
 		//不能更新自己
-		Admins onlineAdmins = getOnlineAdmin();
-		eject(ad.getUsername().equals(onlineAdmins.getUsername()), "不能更新自己");
+//		Admins onlineAdmins = getOnlineAdmin();
+//		eject(dbA.getUsername().equals(onlineAdmins.getUsername()), "不能更新自己的角色");
+
+		eject(isStaticAdmin(dbA),"不能更新内置管理员的角色");
 		
 		//删除admin的旧角色
 		
@@ -308,8 +368,53 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 			adminsRolesMapper.insert(ar);
 		}
 		
+		//刷新权限
+		jdbcRealm.clearCached();
+//		reloadAuthorizing(new JDBCRealm(),dbA);
+		//使指定的session离线
+//		destroyShiroSession(dbA.getUsername());
 		
 	}
+	/**
+	 * Title:
+	 * <p>
+	 * Description:判断数据库的某个管理员为内置管理员;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月3日 上午11:51:29
+	 * @version 1.0
+	 * @param dbAdmin
+	 * @return
+	 */
+	private boolean isStaticAdmin(Admins dbAdmin){
+		return dbAdmin.getStaticc() == ADMINS_STATIC.YES;
+	}
+	
+	/**
+	 * Title:
+	 * <p>
+	 * Description:销毁指定username的shiro的session;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月3日 下午4:39:40
+	 * @version 1.0
+	 * @param username
+	 */
+	public void destroyShiroSession(String username){
 
+		Collection<Session> sessions = sessionDAO.getActiveSessions();
+
+		for (Session session : sessions) {
+			Admins shiroAdmins = (Admins) session.getAttribute(FILED_ONLINE_ADMIN);
+			if (username.equals(shiroAdmins.getUsername())) {
+				session.setTimeout(0);
+				break;
+
+			}
+
+		}
+	}
+	
+	
 	
 }

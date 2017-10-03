@@ -45,7 +45,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		
 		
 		if(ex instanceof org.apache.shiro.authz.UnauthorizedException){
-			r.setMsg("您没有该权限");
+			r.setMsg("您没有权限进行此操作");
 
 			r.setResult(RESULT.NOPERMISSIONS);
 

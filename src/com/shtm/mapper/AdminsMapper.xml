@@ -11,6 +11,8 @@
     <result column="CREATOR" jdbcType="CHAR" property="creator" />
     <result column="THEME" jdbcType="CHAR" property="theme" />
     <result column="EMAIL" jdbcType="CHAR" property="email" />
+    <result column="STATICC" jdbcType="SMALLINT" property="staticc" />
+    <result column="DESCRIPTION" jdbcType="CHAR" property="description" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,7 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    ID, USERNAME, PASSWORD, SALT, STATUS, CREATETIME, CREATOR, THEME, EMAIL
+    ID, USERNAME, PASSWORD, SALT, STATUS, CREATETIME, CREATOR, THEME, EMAIL, STATICC, 
+    DESCRIPTION
   </sql>
   <select id="selectByExample" parameterType="com.shtm.po.AdminsExample" resultMap="BaseResultMap">
     select
@@ -106,10 +109,12 @@
   <insert id="insert" parameterType="com.shtm.po.Admins">
     insert into SHT.ADMINS (ID, USERNAME, PASSWORD, 
       SALT, STATUS, CREATETIME, 
-      CREATOR, THEME, EMAIL)
+      CREATOR, THEME, EMAIL, STATICC, 
+      DESCRIPTION)
     values (#{id,jdbcType=CHAR}, #{username,jdbcType=CHAR}, #{password,jdbcType=CHAR}, 
       #{salt,jdbcType=CHAR}, #{status,jdbcType=SMALLINT}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{creator,jdbcType=CHAR}, #{theme,jdbcType=CHAR}, #{email,jdbcType=CHAR})
+      #{creator,jdbcType=CHAR}, #{theme,jdbcType=CHAR}, #{email,jdbcType=CHAR}, #{staticc,jdbcType=SMALLINT}, 
+      #{description,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.shtm.po.Admins">
     insert into SHT.ADMINS
@@ -141,6 +146,12 @@
       <if test="email != null">
         EMAIL,
       </if>
+      <if test="staticc != null">
+        STATICC,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -169,6 +180,12 @@
       </if>
       <if test="email != null">
         #{email,jdbcType=CHAR},
+      </if>
+      <if test="staticc != null">
+        #{staticc,jdbcType=SMALLINT},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -208,6 +225,12 @@
       <if test="record.email != null">
         EMAIL = #{record.email,jdbcType=CHAR},
       </if>
+      <if test="record.staticc != null">
+        STATICC = #{record.staticc,jdbcType=SMALLINT},
+      </if>
+      <if test="record.description != null">
+        DESCRIPTION = #{record.description,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -223,7 +246,9 @@
       CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
       CREATOR = #{record.creator,jdbcType=CHAR},
       THEME = #{record.theme,jdbcType=CHAR},
-      EMAIL = #{record.email,jdbcType=CHAR}
+      EMAIL = #{record.email,jdbcType=CHAR},
+      STATICC = #{record.staticc,jdbcType=SMALLINT},
+      DESCRIPTION = #{record.description,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -255,6 +280,12 @@
       <if test="email != null">
         EMAIL = #{email,jdbcType=CHAR},
       </if>
+      <if test="staticc != null">
+        STATICC = #{staticc,jdbcType=SMALLINT},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=CHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=CHAR}
   </update>
@@ -267,7 +298,9 @@
       CREATETIME = #{createtime,jdbcType=TIMESTAMP},
       CREATOR = #{creator,jdbcType=CHAR},
       THEME = #{theme,jdbcType=CHAR},
-      EMAIL = #{email,jdbcType=CHAR}
+      EMAIL = #{email,jdbcType=CHAR},
+      STATICC = #{staticc,jdbcType=SMALLINT},
+      DESCRIPTION = #{description,jdbcType=CHAR}
     where ID = #{id,jdbcType=CHAR}
   </update>
 </mapper>

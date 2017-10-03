@@ -17,8 +17,8 @@
 		<!-- spring原版本為:3.1.2.RELEASE --> 
 		<spring.version>3.2.16.RELEASE</spring.version>
 		<strus2.version>2.3.4.1</strus2.version>
-		<shiro.version>1.2.0</shiro.version>
-		<shiro.ehcache.version>2.5.3</shiro.ehcache.version>
+		<shiro.version>1.2.3</shiro.version>
+		<shiro.ehcache.version>2.5.0</shiro.ehcache.version>
 		<shiro.cglib.version>3.1</shiro.cglib.version>
 	</properties>
 	<!-- 属性配置 end -->

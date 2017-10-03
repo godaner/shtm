@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shtm.manage.mapper.CustomRolesMapper;
-import com.shtm.manage.po.AdminsReplier;
 import com.shtm.manage.po.PermissionsReplier;
 import com.shtm.manage.po.RolesReceiver;
 import com.shtm.manage.po.RolesReplier;
 import com.shtm.manage.service.RolesServiceI;
 import com.shtm.mapper.RolesMapper;
 import com.shtm.mapper.RolesPermissionsMapper;
+import com.shtm.po.Admins;
 import com.shtm.po.Roles;
 import com.shtm.po.RolesExample;
 import com.shtm.po.RolesPermissions;
@@ -42,14 +42,17 @@ public class RolesService extends BaseService implements RolesServiceI {
 	private RolesPermissionsMapper rolesPermissionsMapper;
 	
 	@Override
-	public void updateRolePermission(String id, String[] permissionsIds)
+	public void updateRolePermissions(String id, String[] permissionsIds)
 			throws Exception {
+
 		
 		//检测角色状态
 		Roles dbR = rolesMapper.selectByPrimaryKey(id);
+		
+
 		eject(dbR == null, "角色已不存在");
 		eject(dbR.getStatus() != ROLES_STATUS.ACTIVITY, "当前角色状态不允许更新");
-		
+		eject(isStaticRole(dbR),"不能更新内置角色的权限");
 		
 		
 		//删除原有的权限
@@ -82,10 +85,17 @@ public class RolesService extends BaseService implements RolesServiceI {
 		
 		eject(list.size() >= 1, "该角色名已存在");
 		/**
-		 * 插入roles
+		 * 设置字段
 		 */
+		receiver.setCreatetime(timestamp());
+		receiver.setCreator(((Admins)getOnlineAdmin()).getId());
 		receiver.setId(uuid());
 		receiver.setStatus(ROLES_STATUS.ACTIVITY);
+		receiver.setStaticc(ROLES_STATIC.NO);
+		/**
+		 * 插入roles
+		 */
+		
 		rolesMapper.insert(receiver);
 		
 	}
@@ -95,7 +105,8 @@ public class RolesService extends BaseService implements RolesServiceI {
 		Roles dbR = rolesMapper.selectByPrimaryKey(receiver.getId());
 		
 		eject(dbR == null || dbR.getStatus() == ROLES_STATUS.DELETE, "该角色已不存在");
-		
+
+		eject(isStaticRole(dbR),"不能删除内置角色");
 		
 		Roles r = new Roles();
 		//设置字段
@@ -128,7 +139,7 @@ public class RolesService extends BaseService implements RolesServiceI {
 		//打算更新的roles是否存在
 		eject(dbR == null || dbR.getStatus() == ROLES_STATUS.DELETE, "该劫色已不存在");
 		
-		
+
 		//更新name
 		if(!dbR.getName().equals(receiver.getName())){
 			/**
@@ -144,6 +155,10 @@ public class RolesService extends BaseService implements RolesServiceI {
 			receiver.setName(null);
 		}
 		
+		//禁止更新字段
+		receiver.setCreatetime(null);
+		receiver.setCreator(null);
+		receiver.setStaticc(null);
 		
 		rolesMapper.updateByPrimaryKeySelective(receiver);
 	}
@@ -160,5 +175,20 @@ public class RolesService extends BaseService implements RolesServiceI {
 		
 		return replier;
 	}
-
+	/**
+	 * 
+	 * Title:
+	 * <p>
+	 * Description:判断数据库的某个角色为内置角色;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月3日 上午11:41:23
+	 * @version 1.0
+	 * @param dbRole
+	 * @return
+	 */
+	private boolean isStaticRole(Roles dbRole){
+		return dbRole.getStaticc() == ROLES_STATIC.YES;
+	}
+	
 }

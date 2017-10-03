@@ -38,7 +38,7 @@ public class RolesController extends BaseController<RolesServiceI> {
 	
 	/**
 	 * 
-	 * Title:
+	 * Title:selectRolePermissionsById
 	 * <p>
 	 * Description:获取指定id的role的permisssions(所有的permisssions也会被全部查询出来,但是role拥有的permisssions有特殊标记);
 	 * <p>
@@ -86,15 +86,15 @@ public class RolesController extends BaseController<RolesServiceI> {
 	 */
 	@RequiresAuthentication
 	@RequiresPermissions("roles:update")
-	@RequestMapping("/updateRolePermission")
-	public @ResponseBody RolesReplier updateRolePermission(
+	@RequestMapping("/updateRolePermissions")
+	public @ResponseBody RolesReplier updateRolePermissions(
 			@Validated(value = { UpdateRolePermission.class }) @RequestBody RolesReceiver receiver,
 			BindingResult result) throws Exception {
 		RolesReplier replier = new RolesReplier();
 		try {
 			getError(result);
 
-			service.updateRolePermission(receiver.getId(),receiver.getPermissionsIds());
+			service.updateRolePermissions(receiver.getId(),receiver.getPermissionsIds());
 
 			replier.setResult(RESULT.TRUE);
 			replier.setMsg("更新角色權限成功");

@@ -206,30 +206,14 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 
 			replier.setResult(RESULT.TRUE);
 			
-			/*setSessionAttr(FILED_ONLINE_ADMIN,replier);*/
-			setOnlineAdmin((Admins)replier);
+			setOnlineAdmin(((Admins)replier));
 			
-			
+			//插入登录记录
 			adminsLoginLogReceiver.setResult(ADMINS_LOGIN_LOG_RESULT.SUCCESS);
 			
-		} catch (IncorrectCredentialsException e0) {
-			e0.printStackTrace();
-			replier.setMsg("密码错误");
-		} catch (UnknownAccountException e1) {
-			e1.printStackTrace();
-			replier.setMsg("账户错误");
-		} catch (ExcessiveAttemptsException e2) {
-			e2.printStackTrace();
-			replier.setMsg("ExcessiveAttemptsException");
-		} catch (LockedAccountException e3) {
-			e3.printStackTrace();
-			replier.setMsg("该账户已被冻结");
-		} catch (AuthenticationException e4) {
-			e4.printStackTrace();
-			replier.setMsg("验证失败");
-		} catch (Exception e5) {
-			e5.printStackTrace();
-			replier.setMsg(e5.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setMsg(e.getMessage());
 		}
 		try {
 			//尝试插入登录记录,如果没有详情信息,mapper将不会插入,并抛出错误

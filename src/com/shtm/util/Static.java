@@ -22,9 +22,31 @@ public interface Static {
 	 * @version 1.0
 	 */
 	public interface ROLES_STATUS{
-		static final Short DELETE = 0;
+		static final Short DELETE = -1;
 		static final Short ACTIVITY = 1;
-		static final Short FORENZEN = -1;
+		static final Short FORENZEN = 0;
+		
+		
+	}
+	/**
+	 * Title:ROLES_STATIC
+	 * <p>
+	 * Description:角色的内置状态
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月3日 下午1:09:45
+	 * @version 1.0
+	 */
+	public interface ROLES_STATIC{
+		/**
+		 * 1代表内置角色,不可删除,修改权限
+		 */
+		static final Short YES = 1;
+		/**
+		 * 1代表内置角色,不可删除,修改权限
+		 */
+		static final Short NO = 0;
+		
 	}
 	
 	
@@ -331,5 +353,25 @@ public interface Static {
 		static final Short ACTIVITY = 1;
 		static final Short FROZEN = 0;
 		static final Short DELETE = -1;
+	}
+	/**
+	 * Title:ADMINS_STATIC
+	 * <p>
+	 * Description:管理员的内置状态
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月3日 下午1:10:09
+	 * @version 1.0
+	 */
+	public interface ADMINS_STATIC{
+		/**
+		 * 1代表内置管理员,不可删除,修改权限
+		 */
+		static final Short YES = 1;
+		/**
+		 * 1代表内置管理员,不可删除,修改权限
+		 */
+		static final Short NO = 0;
+		
 	}
 }

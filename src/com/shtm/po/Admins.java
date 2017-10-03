@@ -17,17 +17,16 @@ import com.shtm.manage.groups.AdminsGroups.UpdateAdminRolesGroups;
 import com.shtm.util.Static;
 
 public class Admins {
-	
 	@NotBlank(message="{admins.id.notblank.error}",groups={UpdateAdminGroups.class,DeleteAdminGroups.class,SelectAdminGroups.class,SelectAdminRolesById.class,UpdateAdminRolesGroups.class})
     private String id;
-	
-	@Pattern(regexp=Static.REG.USERNAME,message="{admins.username.reg.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class,LoginGroups.class})
+    
+    @Pattern(regexp=Static.REG.USERNAME,message="{admins.username.reg.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class,LoginGroups.class})
     private String username;
-	
-	
-	@Pattern(regexp=Static.REG.PASSWORD,message="{admins.password.reg.error}",groups={InsertAdminGroups.class,LoginGroups.class})
+    
+    
+    @Pattern(regexp=Static.REG.PASSWORD,message="{admins.password.reg.error}",groups={InsertAdminGroups.class,LoginGroups.class})
     private String password;
-	
+    
     private String salt;
 
     @NotNull(message="{admins.status.notnull.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class})
@@ -37,11 +36,16 @@ public class Admins {
 
     private String creator;
 
-	@NotBlank(message="{admins.theme.notnull.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class})
+    @NotBlank(message="{admins.theme.notnull.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class})
     private String theme;
 
-	@Pattern(regexp=Static.REG.EMAIL,message="{admins.email.reg.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class})
+    @Pattern(regexp=Static.REG.EMAIL,message="{admins.email.reg.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class})
     private String email;
+
+    private Short staticc;
+    
+    @NotBlank(message="{admins.description.notblank.error}",groups={InsertAdminGroups.class,UpdateAdminGroups.class})
+    private String description;
 
     public String getId() {
         return id;
@@ -113,5 +117,21 @@ public class Admins {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public Short getStaticc() {
+        return staticc;
+    }
+
+    public void setStaticc(Short staticc) {
+        this.staticc = staticc;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 }

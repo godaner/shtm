@@ -85,17 +85,7 @@
         	<columnOverride column="money" javaType="java.lang.Double" jdbcType="DOUBLE"/>
         	
         </table> 
-        <table schema="sht" tableName="admins">
-        	<columnOverride column="id" javaType="java.lang.String" jdbcType="CHAR" />
-        	<columnOverride column="username" javaType="java.lang.String"  jdbcType="CHAR"/>
-        	<columnOverride column="email" javaType="java.lang.String"  jdbcType="CHAR"/>
-        	<columnOverride column="password" javaType="java.lang.String"  jdbcType="CHAR"/>
-        	<columnOverride column="salt" javaType="java.lang.String"  jdbcType="CHAR"/>
-        	<columnOverride column="createtime" javaType="java.sql.Timestamp"  jdbcType="TIMESTAMP"/>
-        	<columnOverride column="status" javaType="java.lang.Short" jdbcType="SMALLINT"/>
-        	<columnOverride column="theme" javaType="java.lang.String" jdbcType="CHAR"/>
-        	<columnOverride column="creator" javaType="java.lang.String" jdbcType="CHAR"/>
-        </table>
+        
         <table schema="sht" tableName="clazzs">
         	<columnOverride column="id" javaType="java.lang.String" jdbcType="CHAR" />
         	<columnOverride column="text" javaType="java.lang.String"  jdbcType="CHAR"/>
@@ -185,9 +175,24 @@
 			<columnOverride column="id" javaType="java.lang.String" jdbcType="CHAR" />
 			<columnOverride column="name" javaType="java.lang.String" jdbcType="CHAR" />
 			<columnOverride column="status" javaType="java.lang.Short"  jdbcType="SMALLINT"/>
-			<columnOverride column="description" javaType="java.lang.String"  jdbcType="CHAR"/>
+			<columnOverride column="staticc" javaType="java.lang.Short"  jdbcType="SMALLINT"/>
+			<columnOverride column="createtime" javaType="java.sql.Timestamp"  jdbcType="TIMESTAMP"/>
+			<columnOverride column="CREATOR" javaType="java.lang.String"  jdbcType="CHAR"/>
+        	<columnOverride column="description" javaType="java.lang.String"  jdbcType="CHAR"/>
 		</table>
-        
+        <table schema="sht" tableName="admins">
+        	<columnOverride column="id" javaType="java.lang.String" jdbcType="CHAR" />
+        	<columnOverride column="username" javaType="java.lang.String"  jdbcType="CHAR"/>
+        	<columnOverride column="email" javaType="java.lang.String"  jdbcType="CHAR"/>
+        	<columnOverride column="password" javaType="java.lang.String"  jdbcType="CHAR"/>
+        	<columnOverride column="salt" javaType="java.lang.String"  jdbcType="CHAR"/>
+        	<columnOverride column="createtime" javaType="java.sql.Timestamp"  jdbcType="TIMESTAMP"/>
+        	<columnOverride column="status" javaType="java.lang.Short" jdbcType="SMALLINT"/>
+        	<columnOverride column="theme" javaType="java.lang.String" jdbcType="CHAR"/>
+        	<columnOverride column="creator" javaType="java.lang.String" jdbcType="CHAR"/>
+			<columnOverride column="staticc" javaType="java.lang.Short"  jdbcType="SMALLINT"/>
+        	<columnOverride column="description" javaType="java.lang.String"  jdbcType="CHAR"/>
+        </table>
         
         <!-- <table schema="" tableName="sys_user"></table>
         <table schema="" tableName="sys_role"></table>

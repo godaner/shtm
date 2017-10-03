@@ -6,13 +6,14 @@
 	
 	<sql id="selectRolesConditions">
 		<where>
-			STATUS != 0
+			1=1
 			<if test="name !=null">
 				and name like '%${name}%'
 			</if>
 			<if test="status !=null">
 				and status = #{status}
 			</if>
+			and STATUS !=-1
 		</where>
 	</sql>
 	
@@ -56,9 +57,9 @@
 		  (
 		    SELECT p.ID,rp.GRANTTIME
 		    FROM PERMISSIONS p,ROLES_PERMISSIONS rp
-		    WHERE p.ID = rp.PERMISSION(+) AND rp.role = #{id} AND p.STATUS = 1
+		    WHERE p.ID = rp.PERMISSION(+) AND rp.role = #{id}
 		  ) P0
-		 WHERE P1.ID = P0.id(+) and p1.type='p'
+		 WHERE P1.ID = P0.id(+) and p1.type='p' AND p1.STATUS != -1
 		<if test="order != null and sort != null">
 			ORDER BY ${sort} ${order}
 		 </if>

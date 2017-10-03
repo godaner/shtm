@@ -177,7 +177,25 @@ function loadAdminsManageUI(){
         		formatter: function(value,row,index){
 					return "******";
 				}
-	        },    
+	        },   
+	        {
+	        	field:'description',
+	        	title:'描述',
+	    		sortable : true
+	        }, 
+	        {
+	        	field:'staticc',
+	        	title:'是否为内置对象',
+	        	formatter: function(value,row,index){
+					if(value == 1){
+						return font.color("内置管理员", "red");
+					}
+					if(value == 0){
+						return "非内置管理员";
+					}
+					return value;
+				}
+	        }, 
 	        /*{
 	        	field:'salt',
 	        	title:'盐',
@@ -501,8 +519,7 @@ function editAdminRole(){
 	    hideColumn:[[
 			{
 				field:'id',
-				title:'id',
-				width:'25%'
+				title:'id'
 			}
 	    ]],
 	    columns:[[
@@ -513,7 +530,6 @@ function editAdminRole(){
 			{
 				field:'name',
 				title:'角色名',
-				width:'30%',
 				sortable:true,
 				formatter: function(value,row,index){
 					
@@ -522,7 +538,6 @@ function editAdminRole(){
 			},{
 				field:'description',
 				title:'简介',
-				width:'30%',
 				sortable:true,
 				formatter: function(value,row,index){
 					
@@ -530,9 +545,36 @@ function editAdminRole(){
 				}
 			},
 			{
+	        	field:'staticc',
+	        	title:'是否为内置对象',
+	        	formatter: function(value,row,index){
+					if(value == 1){
+						return font.color("内置角色","red");
+					}
+					if(value == 0){
+						return "非内置角色";
+					}
+					return value;
+				}
+	        }, 
+	        {
+	        	field:'status',
+	        	title:'状态',
+	    		sortable : true,
+				formatter: function(value,row,index){
+					if(value == 1){
+						return "激活";
+					}
+					if(value == 0){
+
+						return "冻结";
+					}
+					return value;
+				}
+	        },
+			{
 				field:'grantTime',
 				title:'分配角色的时间',
-				width:'30%',
 				sortable:true,
 				formatter: function(value,row,index){
 					

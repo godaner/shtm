@@ -9,7 +9,7 @@
 	
 	<sql id="selectAdminsConditions">
 		<where>
-			STATUS != -1
+			1=1
 			<if test="id !=null and id!=''">
 				AND id = #{id}
 			</if>
@@ -28,7 +28,7 @@
 			<if test="theme !=null and theme!=''">
 				AND theme = #{theme}
 			</if>
-			
+			and STATUS != -1
 		</where>
 	</sql>
 	
@@ -71,12 +71,14 @@
 	</select>
 	
 	
-	
+	<!-- shiro赋权时查询角色 -->
 	<select id="selectRoles" parameterType="string" resultType="com.shtm.po.Roles">
 		SELECT r.*
 		FROM ADMINS_ROLES ar,ROLES r
 		WHERE ar.ADMin =#{value} AND ar.ROLE= r.ID and r.status =1
 	</select>
+	
+	<!-- shiro赋权时查询权限 -->
 	<select id="selectPermissions" parameterType="string" resultType="com.shtm.po.Permissions">
 		
 		SELECT DISTINCT(p.id),p.*
@@ -94,12 +96,12 @@
 	<!-- 获取指定id的admin的roles(所有的roles也会被全部查询出来,但是admin拥有的roles有特殊标记); -->
 	<select id="selectAdminRolesById" parameterType="com.shtm.manage.po.AdminsReceiver" resultType="com.shtm.manage.po.RolesReplier">
 		
-		SELECT r0.id,r0.NAME,r0.description,t0.granttime
+		SELECT r0.*,t0.granttime
 		  FROM ROLES r0,
 		  (
 		    SELECT r.ID,ar.GRANTTIME
 		    FROM ROLES r,ADMINS_ROLES ar
-		    WHERE r.ID = ar.ROLE(+) AND ar.admin = #{id} AND r.STATUS = 1
+		    WHERE r.ID = ar.ROLE(+) AND ar.admin = #{id} AND r.STATUS != -1
 		  ) t0
 		 WHERE r0.ID = t0.id(+)
 		 <if test="order != null and sort != null">

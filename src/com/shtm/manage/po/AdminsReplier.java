@@ -71,6 +71,19 @@ public class AdminsReplier<T> extends Admins{
 	public void setCreatorName(String creatorName) {
 		this.creatorName = creatorName;
 	}
+
+	@Override
+	public String toString() {
+		return "AdminsReplier [result=" + result + ", msg=" + msg + ", rows="
+				+ rows + ", total=" + total + ", creatorName=" + creatorName
+				+ ", getId()=" + getId() + ", getUsername()=" + getUsername()
+				+ ", getPassword()=" + getPassword() + ", getSalt()="
+				+ getSalt() + ", getStatus()=" + getStatus()
+				+ ", getCreatetime()=" + getCreatetime() + ", getCreator()="
+				+ getCreator() + ", getTheme()=" + getTheme() + ", getEmail()="
+				+ getEmail() + ", getStaticc()=" + getStaticc()
+				+ ", getDescription()=" + getDescription() + "]";
+	}
 	
 	
 }

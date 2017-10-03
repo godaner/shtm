@@ -644,6 +644,126 @@ public class AdminsExample {
             addCriterion("EMAIL not between", value1, value2, "email");
             return (Criteria) this;
         }
+
+        public Criteria andStaticcIsNull() {
+            addCriterion("STATICC is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStaticcIsNotNull() {
+            addCriterion("STATICC is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStaticcEqualTo(Short value) {
+            addCriterion("STATICC =", value, "staticc");
+            return (Criteria) this;
+        }
+
+        public Criteria andStaticcNotEqualTo(Short value) {
+            addCriterion("STATICC <>", value, "staticc");
+            return (Criteria) this;
+        }
+
+        public Criteria andStaticcGreaterThan(Short value) {
+            addCriterion("STATICC >", value, "staticc");
+            return (Criteria) this;
+        }
+
+        public Criteria andStaticcGreaterThanOrEqualTo(Short value) {
+            addCriterion("STATICC >=", value, "staticc");
+            return (Criteria) this;
+        }
+
+        public Criteria andStaticcLessThan(Short value) {
+            addCriterion("STATICC <", value, "staticc");
+            return (Criteria) this;
+        }
+
+        public Criteria andStaticcLessThanOrEqualTo(Short value) {
+            addCriterion("STATICC <=", value, "staticc");
+            return (Criteria) this;
+        }
+
+        public Criteria andStaticcIn(List<Short> values) {
+            addCriterion("STATICC in", values, "staticc");
+            return (Criteria) this;
+        }
+
+        public Criteria andStaticcNotIn(List<Short> values) {
+            addCriterion("STATICC not in", values, "staticc");
+            return (Criteria) this;
+        }
+
+        public Criteria andStaticcBetween(Short value1, Short value2) {
+            addCriterion("STATICC between", value1, value2, "staticc");
+            return (Criteria) this;
+        }
+
+        public Criteria andStaticcNotBetween(Short value1, Short value2) {
+            addCriterion("STATICC not between", value1, value2, "staticc");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNull() {
+            addCriterion("DESCRIPTION is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNotNull() {
+            addCriterion("DESCRIPTION is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionEqualTo(String value) {
+            addCriterion("DESCRIPTION =", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotEqualTo(String value) {
+            addCriterion("DESCRIPTION <>", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThan(String value) {
+            addCriterion("DESCRIPTION >", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION >=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThan(String value) {
+            addCriterion("DESCRIPTION <", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION <=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIn(List<String> values) {
+            addCriterion("DESCRIPTION in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotIn(List<String> values) {
+            addCriterion("DESCRIPTION not in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION between", value1, value2, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION not between", value1, value2, "description");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

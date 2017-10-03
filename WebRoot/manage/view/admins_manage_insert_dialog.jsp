@@ -46,6 +46,14 @@
 					<input id="password" name="password" class="easyui-textbox input" data-options="required:true,prompt:'请输入密码'" style="width:100%"> 
 				</td>
 			</tr>
+			<tr>
+				<td>
+					<label>简介</label> 
+				</td>
+				<td>
+					<input id="description" name="description" class="easyui-textbox input" data-options="prompt:'请输入简介',required:true" style="width:100%"> 
+				</td>
+			</tr>
 			<!-- <tr>
 				<td>
 					<label>盐</label> 

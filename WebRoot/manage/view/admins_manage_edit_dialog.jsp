@@ -27,7 +27,7 @@
 					<label>名称</label> 
 				</td>
 				<td>
-					<input id="username" name="username" class="easyui-textbox input" data-options="prompt:'请输入用户名',required:true" style="width:100%"> 
+					<input id="username" name="username" class="easyui-textbox input" data-options="editable:false,prompt:'请输入用户名',required:true" style="width:100%"> 
 				</td>
 			</tr>
 			<tr>
@@ -44,6 +44,14 @@
 				</td>
 				<td>
 					<input id="password" name="password" class="easyui-textbox input" data-options="prompt:'默认为原密码'" style="width:100%"> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>简介</label> 
+				</td>
+				<td>
+					<input id="description" name="description" class="easyui-textbox input" data-options="prompt:'请输入简介',required:true" style="width:100%"> 
 				</td>
 			</tr>
 			<!-- <tr>

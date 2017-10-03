@@ -26,7 +26,7 @@ public interface RolesServiceI {
 	 * @param permissionsIds
 	 * @throws Exception
 	 */
-	void updateRolePermission(String id, String[] permissionsIds) throws Exception;
+	void updateRolePermissions(String id, String[] permissionsIds) throws Exception;
 
 	/**
 	 * Title:
