@@ -107,6 +107,8 @@
 			<version>${spring.version}</version>
 			<type>jar</type>
 		</dependency>
+
+		
 		<!-- spring end -->
 
 
@@ -143,6 +145,7 @@
 		    <artifactId>cglib</artifactId>
 		    <version>${shiro.cglib.version}</version>
 		</dependency>
+		
 		<!-- shiro end -->
 
 
