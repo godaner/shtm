@@ -3,11 +3,6 @@ package com.shtm.manage.controller;
 import java.io.IOException;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.ExcessiveAttemptsException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.context.annotation.Scope;
@@ -26,6 +21,7 @@ import com.shtm.manage.groups.AdminsGroups.SelectAdminRolesById;
 import com.shtm.manage.groups.AdminsGroups.UpdateAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.UpdateAdminRolesGroups;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
+import com.shtm.manage.po.AdminsLoginLogReplier;
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
 import com.shtm.manage.service.AdminsServiceI;
@@ -217,11 +213,15 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 		}
 		try {
 			//尝试插入登录记录,如果没有详情信息,mapper将不会插入,并抛出错误
-			service.insertAdminsLoginLog(replier.getId(), adminsLoginLogReceiver);
+			AdminsLoginLogReplier adminsLoginLogReplier = service.insertAdminsLoginLog(replier.getId(), adminsLoginLogReceiver);
+			//返回处理过后的登陆记录
+			adminsLoginLogReplier.setAdminName(replier.getUsername());
+			replier.setAdminsLoginLogReplier(adminsLoginLogReplier);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("insertAdminsLoginLog插入錯誤!!!!!!!!!!!!!!!!!!!!!!!");
 		}
+		//返回登陆相关信息
 		return replier;
 
 
@@ -245,10 +245,15 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 
 		AdminsReplier replier = new AdminsReplier();
 		try {
-
+			Admins onlineAdmin = getOnlineAdmin();
+			//设置离线的admins的id
+			if(onlineAdmin != null){
+				replier.setId(onlineAdmin.getId());
+			}
+			
 			// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
 			SecurityUtils.getSubject().logout();
-
+			
 			replier.setResult(RESULT.TRUE);
 
 			replier.setMsg("注销成功");

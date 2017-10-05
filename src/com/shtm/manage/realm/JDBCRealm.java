@@ -124,10 +124,10 @@ public class JDBCRealm extends AuthorizingRealm {
 	 * @date 2017年10月3日 下午10:27:50
 	 * @version 1.0
 	 */
-	public void clearCached(){
+	/*public void clearCached(){
 		PrincipalCollection principals = SecurityUtils.getSubject().getPreviousPrincipals();
 		super.clearCache(principals);
 		super.clearCachedAuthenticationInfo(principals);
 		super.clearCachedAuthorizationInfo(principals);
-	}
+	}*/
 }

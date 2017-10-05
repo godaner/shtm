@@ -63,7 +63,8 @@ function initNorthLis(){
 					//调用north方法
 					setUsername("");
 					
-					
+					//关闭连接
+					onlineAdminsSocket.close();
 					
 					
 				},

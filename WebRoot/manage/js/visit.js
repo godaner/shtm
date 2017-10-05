@@ -62,6 +62,43 @@ function getLoginInfo(){
     "&city=" + remote_ip_info.city;
     
 }
+/**
+ * 获取json格式的管理员登录信息
+ * @returns {String}
+ */
+function getJSONLoginInfo(){
+	// 获取当前的网址
+    var link = window.location.href;
+    // 获取上页地址
+    var oldlink = document.referrer;
+    // 获取当前访问页的标题
+    var titleName = document.title;
+    // 屏幕分辨率
+    var screen = window.screen.width + "*" + window.screen.height;    
+    // 异步请求发送
+    /*return "ip="+returnCitySN.cip+
+    "&page=" + escape(link) + 
+    "&oldlink=" + escape(oldlink) + 
+    "&title=" + escape(titleName) + 
+    "&system=" + getSysInfo() + 
+    "&dpi=" + screen + 
+    "&browser=" + GetBrowserType() + " " + GetBrowserVersion() + 
+    "&country=" + remote_ip_info.country +
+    "&province=" + remote_ip_info.province + 
+    "&city=" + remote_ip_info.city + 
+    "&keyword=" + GetKeyword(oldlink);*/
+    
+    var r = {};
+    r["ip"] = returnCitySN.cip;
+    r["system"] = getSysInfo();
+    r["dpi"] = screen;
+    r["browser"] = screen;
+    r["country"] = remote_ip_info.country;
+    r["province"] = remote_ip_info.province;
+    r["city"] = remote_ip_info.city;
+    return r;
+    
+}
 
 
 

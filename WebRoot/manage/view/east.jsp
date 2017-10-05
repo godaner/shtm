@@ -9,7 +9,9 @@
 	</div>
 	<div class="" data-options="fit:true,region:'center'">
 		<div id="cc" class="easyui-panel" data-options="fit:true,title:'在线用户'">
-			<table id="onlineAdmins_table"></table>
+			<table id="onlineAdmins_datagrid">
+				
+			</table>
 		</div>
 	</div>
 </div>

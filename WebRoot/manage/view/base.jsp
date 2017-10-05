@@ -8,6 +8,8 @@
 <c:set var="manageStaticSrcUrl" value="${pageContext.request.contextPath}/manage"></c:set>
 <!-- 本模塊請求url -->
 <c:set var="manageForwardUrl" value="${pageContext.request.contextPath}"></c:set>
+<!-- 本模塊webscoket請求url -->
+<c:set var="manageWebSocketUrl" value="ws://localhost${pageContext.request.contextPath}"></c:set>
 
 
 <script type="text/javascript" charset="utf-8">
@@ -17,6 +19,8 @@
 	var manageStaticSrcUrl = '${manageStaticSrcUrl}';
 	/*本模塊請求url*/
 	var manageForwardUrl = '${manageForwardUrl}';
+	/*本模塊webscoket請求url*/
+	var manageWebSocketUrl = '${manageWebSocketUrl}';
 
 </script>
 

@@ -191,7 +191,7 @@ function loadAdminsManageUI(){
 						return font.color("内置管理员", "red");
 					}
 					if(value == 0){
-						return "非内置管理员";
+						return "否";
 					}
 					return value;
 				}

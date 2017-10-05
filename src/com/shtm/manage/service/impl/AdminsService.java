@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.shtm.manage.mapper.CustomAdminsMapper;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
+import com.shtm.manage.po.AdminsLoginLogReplier;
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
 import com.shtm.manage.po.RolesReplier;
@@ -290,14 +291,20 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	}
 
 	@Override
-	public void insertAdminsLoginLog(String adminId,
-			AdminsLoginLogReceiver adminsLoginLogReceiver) throws Exception {
+	public AdminsLoginLogReplier insertAdminsLoginLog(String adminId,
+			AdminsLoginLogReceiver receiver) throws Exception {
 		//插入登录记录
 		//设置参数
-		adminsLoginLogReceiver.setTime(new Date());
-		adminsLoginLogReceiver.setId(uuid());
-		adminsLoginLogReceiver.setLoginAdmin(adminId);
-		adminsLoginLogMapper.insert(adminsLoginLogReceiver);
+		receiver.setTime(new Date());
+		receiver.setId(uuid());
+		receiver.setLoginAdmin(adminId);
+		adminsLoginLogMapper.insert(receiver);
+		
+		AdminsLoginLogReplier replier = new AdminsLoginLogReplier();
+		
+		BeanUtils.copyProperties(receiver, replier);
+		
+		return replier;
 		
 	}
 
@@ -369,7 +376,7 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		}
 		
 		//刷新权限
-		jdbcRealm.clearCached();
+//		jdbcRealm.clearCached();
 //		reloadAuthorizing(new JDBCRealm(),dbA);
 		//使指定的session离线
 //		destroyShiroSession(dbA.getUsername());

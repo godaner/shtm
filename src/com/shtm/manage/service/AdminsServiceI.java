@@ -3,6 +3,7 @@ package com.shtm.manage.service;
 import java.util.List;
 
 import com.shtm.manage.po.AdminsLoginLogReceiver;
+import com.shtm.manage.po.AdminsLoginLogReplier;
 import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
 import com.shtm.po.Admins;
@@ -47,7 +48,7 @@ public interface AdminsServiceI {
 	 * @param adminsLoginLogReceiver
 	 * @throws Exception
 	 */
-	public void insertAdminsLoginLog(String adminId,AdminsLoginLogReceiver adminsLoginLogReceiver) throws Exception;
+	public AdminsLoginLogReplier insertAdminsLoginLog(String adminId,AdminsLoginLogReceiver adminsLoginLogReceiver) throws Exception;
 	
 	
 	/**

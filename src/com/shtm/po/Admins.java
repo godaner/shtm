@@ -51,10 +51,13 @@ public class Admins {
         return id;
     }
 
-    public void setId(String id) {
+    public Admins() {
+		super();
+	}
+
+	public void setId(String id) {
         this.id = id == null ? null : id.trim();
     }
-
     public String getUsername() {
         return username;
     }
@@ -134,4 +137,7 @@ public class Admins {
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
     }
+
+	
+    
 }

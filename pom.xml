@@ -210,7 +210,6 @@
 			<version>1.9.13</version>
 		</dependency>
 		<!-- springmvc json交互功能所需jar end -->
-
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>

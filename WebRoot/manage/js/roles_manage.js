@@ -174,7 +174,7 @@ function loadRolesManageUI(){
 						return font.color("内置角色", "red");
 					}
 					if(value == 0){
-						return "非内置角色";
+						return "否";
 					}
 					return value;
 				}

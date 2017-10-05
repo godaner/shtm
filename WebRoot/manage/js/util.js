@@ -1,5 +1,35 @@
 
 /**
+ * WebSocket构造法;
+ * baseUrl形如ws://localhost:8080/websocket
+ * 
+ */
+/*function WebSocket(baseUrl){
+	this.baseUrl = baseUrl;
+	this.websocket = undefined;
+	// 判断当前浏览器是否支持WebSocket
+	if ('WebSocket' in window) {
+		this.websocket = new WebSocket("ws://localhost:80/websocket");
+	} else {
+		alert('当前浏览器 Not support websocket')
+	};
+	// 连接发生错误的回调方法
+	this.onerror = websocket.onerror;
+	// 连接成功建立的回调方法
+	this.onopen = websocket.onopen;
+	// 接收到消息的回调方法,参数(event)
+	this.onmessage = websocket.onmessage;
+	// 连接关闭的回调方法
+	this.onclose = websocket.onclose;
+	// 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+	this.onbeforeunload = window.onbeforeunload;
+	// 关闭WebSocket连接
+	this.close = websocket.close();
+	// 发送消息
+	this.send = websocket.send(msg);
+};*/
+
+/**
  * 传入字符和颜色,返回label
  */
 var font= {

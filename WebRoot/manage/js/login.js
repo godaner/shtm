@@ -16,6 +16,10 @@ var login_dialog;
 var loginDialog
 //登录框加载后是否直接关闭,不现实
 var login_dialog_closed = true;
+/**
+ * 统计在线管理员
+ */
+var onlineAdminsSocket;
 $(function() {
 
 	initLoginVar();
@@ -57,6 +61,7 @@ function initLoginVar() {
 			login_dialog.dialog('close');
 		}
 	}
+	
 }
 /**
  * 加载界面
@@ -72,6 +77,14 @@ function loadLoginUI() {
 		//在线
 		//加载主题
 		setLocalTheme(onlineUserTheme);
+
+		//初始化websocket
+		initOnlineAdminsSocket(onlineAdminId);
+		onlineAdminsSocket.onopen = function(){
+			
+			onlineAdminsSocket.send("{}");
+		}
+		
 	}
 	login_dialog.dialog({
 		title : '登录',
@@ -117,34 +130,40 @@ function initLoginLis() {
 //		c(url);
 		
 		ajax.send(url, function(data) {
+//			c(data);
 			
-			
-			
-			responseHandler.handleSuccess(data, function(){
-				/**
-				 * 登录成功
-				 */
-				//如果连接服务器成功
-				//加载用户名
-				setUsername(data.username);
+			/**
+			 * 登录成功
+			 */
+			//如果连接服务器成功
+			//加载用户名
+			setUsername(data.username);
 
-				//加载主题
+			//加载主题
 
-				setLocalTheme(data.theme);
-			}, function(){
-				loginDialog.show();
-			});
+			setLocalTheme(data.theme);
+			
+			//连接websocket,记录在线管理员信息
+			
+
+			var wsParams = JSON.stringify(data.adminsLoginLogReplier);
+			
+
+			//初始化websocket
+			initOnlineAdminsSocket(data.id);
+
+			onlineAdminsSocket.onopen = function(){
+				
+				onlineAdminsSocket.send(wsParams);
+			}
 			
 			
-			
-			
+		}, function(){//登录失败
+			loginDialog.show();
 		},function(data){//连接服务器错误
 			
-			responseHandler.handleFailure(function(){
-
-				//显示登录窗口
-				loginDialog.show();
-			});
+			//显示登录窗口
+			loginDialog.show();
 			
 			
 		});
@@ -152,7 +171,29 @@ function initLoginLis() {
 	});
 
 }
-
+/**
+ * 初始化在线OnlineAdmins
+ */
+function initOnlineAdminsSocket(adminId){
+	if(onlineAdminsSocket != undefined){
+		onlineAdminsSocket.close();
+	}
+	if ('WebSocket' in window) {
+		onlineAdminsSocket = new WebSocket(manageWebSocketUrl+"/onlineAdminsWS/"+adminId);
+	} else {
+		alert('当前浏览器 Not support websocket')
+	};
+	
+	
+	onlineAdminsSocket.onmessage = function (event){
+		var data = $.parseJSON(event.data);
+		c("ws----");
+		c(data);
+		c("----ws");
+	};
+	
+	
+}
 
 
 

@@ -3,6 +3,7 @@ package com.shtm.manage.po;
 import java.util.List;
 
 import com.shtm.po.Admins;
+import com.shtm.po.AdminsLoginLog;
 
 /**
  * Title:CustomAdmins
@@ -16,6 +17,8 @@ import com.shtm.po.Admins;
  * @param <T>
  */
 public class AdminsReplier<T> extends Admins{
+	//记录admins的登陆记录
+	private AdminsLoginLogReplier adminsLoginLogReplier;
 	// 操作结果
 	private Integer result;
 
@@ -37,6 +40,16 @@ public class AdminsReplier<T> extends Admins{
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
+	
+
+	public AdminsLoginLogReplier getAdminsLoginLogReplier() {
+		return adminsLoginLogReplier;
+	}
+
+	public void setAdminsLoginLogReplier(AdminsLoginLogReplier adminsLoginLogReplier) {
+		this.adminsLoginLogReplier = adminsLoginLogReplier;
+	}
+
 
 	// 返回数据
 	private List<T> rows;
