@@ -26,6 +26,7 @@ import com.shtm.manage.po.AdminsReceiver;
 import com.shtm.manage.po.AdminsReplier;
 import com.shtm.manage.service.AdminsServiceI;
 import com.shtm.po.Admins;
+import com.shtm.util.ProjectUtil;
 
 /**
  * Title:AdminsController
@@ -202,7 +203,7 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 
 			replier.setResult(RESULT.TRUE);
 			
-			setOnlineAdmin(((Admins)replier));
+			setOnlineAdmin(replier);
 			
 			//插入登录记录
 			adminsLoginLogReceiver.setResult(ADMINS_LOGIN_LOG_RESULT.SUCCESS);
@@ -250,6 +251,8 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 			if(onlineAdmin != null){
 				replier.setId(onlineAdmin.getId());
 			}
+			
+			SecurityUtils.getSubject().getSession().removeAttribute(FILED_ONLINE_ADMIN);
 			
 			// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
 			SecurityUtils.getSubject().logout();
@@ -477,5 +480,40 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 
 		return replier;
 	}
+	/**
+	 * Title:getOnlineAdmin
+	 * <p>
+	 * Description:獲取在綫管理員
+	 * <p>
+	 * 
+	 * @author Kor_Zhang
+	 * @date 2017年9月23日 上午8:22:14
+	 * @version 1.0
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/getOnlineAdmin")
+	public @ResponseBody AdminsReplier getOnlineAd(){
+		
+		
+				
+		AdminsReplier replier = new AdminsReplier();
+		try {
 
+			eject(ProjectUtil.getOnlineAdmin() == null);
+
+			replier = ProjectUtil.getOnlineAdmin();
+			
+			replier.setResult(RESULT.TRUE);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.UNONLINE);
+			replier.setMsg(e.getMessage());
+		}
+
+		return replier;
+	}
+	
 }

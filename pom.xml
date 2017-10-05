@@ -6,7 +6,8 @@
 	<artifactId>shtm-web-pc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<description>这是一个基于spring+sprngmvc+mybatis+oracle+hibernate-validator+shiro+easyui的二手交易平台后台WEB项目(SHTM)。</description>
+	<description>这是一个基于spring+sprngmvc+mybatis+shiro+websocket+oracle+hibernate-validator+easyui的二手交易平台后台WEB项目(SHTM)。</description>
+				 
 	<name>shtm</name>
 	<organization>
 		<name>xiyanghong</name>  

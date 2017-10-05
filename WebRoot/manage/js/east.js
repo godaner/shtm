@@ -31,11 +31,12 @@ function loadEastUI(){
 }
 
 /**
- * 刷新在綫
+ * 刷新在綫管理员的datagrid
  * @param data
  */
 function refreshOnlineAdminDG(data){
 	onlineAdmins_datagrid.datagrid({    
+		title:"共 "+data.length+" 人在线",
 		data:data,
 		onLoadSuccess:function(data){
 			responseHandler.handleSuccess(data, function() {
@@ -56,40 +57,41 @@ function refreshOnlineAdminDG(data){
 				sortable : true*/
 			},
 			{
-				field:'addrs',
-				title:'地址',
-				sortable : true
+				field:'province'
 			}
 			,
 			{
-				field:'addrs',
-				title:'地址',
-				sortable : true
+				field:'city'
 			}
-			,
-			{
-				field:'addrs',
-				title:'地址',
-				sortable : true
-			}
-		             ]],
+			
+		]],
 		columns:[[ 
 		    {
 				field:'adminName',
 				title:'名稱'
 			},
+			
+			
 			{
-				field:'time',
-				title:'登陸時間'
-			},
+				field:'addrs',
+				title:'地址',
+				formatter: function(value,row,index){
+					var province = row.province;
+					var city = row.city;
+					return province+"-"+city;
+				}
+			}
+			,
 			{
 				field:'ip',
 				title:'ip'
 			},
 			{
-				field:'addrs',
-				title:'地址',
-				sortable : true
+				field:'time',
+				title:'登陸時間',
+				formatter: function(value,row,index){
+					return timeFormatter.formatTime(value);
+				}
 			}
 			    
 	    ]]    

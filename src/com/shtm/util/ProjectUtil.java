@@ -2,7 +2,7 @@ package com.shtm.util;
 
 import org.apache.shiro.SecurityUtils;
 
-import com.shtm.po.Admins;
+import com.shtm.manage.po.AdminsReplier;
 
 /**
  * Title:ProjectUtil
@@ -26,8 +26,8 @@ public class ProjectUtil extends Util implements Static {
 	 * @version 1.0
 	 * @return
 	 */
-	public <T> T getOnlineAdmin() {
-		return (T) SecurityUtils.getSubject().getSession()
+	public static AdminsReplier getOnlineAdmin() {
+		return (AdminsReplier) SecurityUtils.getSubject().getSession()
 				.getAttribute(FILED_ONLINE_ADMIN);
 	}
 
@@ -42,7 +42,7 @@ public class ProjectUtil extends Util implements Static {
 	 * @version 1.0
 	 * @param ad
 	 */
-	public void setOnlineAdmin(Admins ad) {
+	public static void setOnlineAdmin(AdminsReplier ad) {
 		SecurityUtils.getSubject().getSession()
 				.setAttribute(FILED_ONLINE_ADMIN, ad);
 	}

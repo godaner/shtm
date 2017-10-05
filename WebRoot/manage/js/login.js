@@ -14,8 +14,6 @@ var login_dialog;
  * 登录弹窗对象;在login_dialog加载完成后被初始化;
  */
 var loginDialog
-//登录框加载后是否直接关闭,不现实
-var login_dialog_closed = true;
 /**
  * 统计在线管理员
  */
@@ -67,36 +65,46 @@ function initLoginVar() {
  * 加载界面
  */
 function loadLoginUI() {
-	/**
-	 * 登录弹窗
-	 */
-	if (onlineUsername == undefined || onlineUsername == "") {
-		//离线
-		login_dialog_closed = false;
-	}else{
-		//在线
-		//加载主题
-		setLocalTheme(onlineUserTheme);
 
-		//初始化websocket
-		initOnlineAdminsSocket(onlineAdminId);
-		onlineAdminsSocket.onopen = function(){
-			
-			onlineAdminsSocket.send("{}");
-		}
-		
-	}
+	
 	login_dialog.dialog({
 		title : '登录',
 		width : 320,
 		height : 285,
-		closed : login_dialog_closed,
+		closed : true,
 		closable : false,
 		cache : true,
 		modal : true,
 		onLoad : function() {
 		}
 	});
+	
+	
+	/**
+	 * 獲取在綫的admin,判斷是否應該打開登錄框
+	 */
+	ajax.send(manageForwardUrl+"/admins/getOnlineAdmin.action", 
+	function(data){
+		//在线(不在线的话,ajax内部会处理)
+		
+		//加载主题
+		setLocalTheme(data.theme);
+
+		//初始化websocket
+		connectOnlineAdminsSocket(data.id);
+		//初始化websocket
+		onlineAdminsSocket.onopen = function(){
+			var p = JSON.stringify(data.adminsLoginLogReplier);
+			onlineAdminsSocket.send(p);
+		}
+			
+
+	}, function(data){
+		
+	}, function(){
+		
+	})
+	
 }
 /**
  * 监听事件
@@ -150,7 +158,7 @@ function initLoginLis() {
 			
 
 			//初始化websocket
-			initOnlineAdminsSocket(data.id);
+			connectOnlineAdminsSocket(data.id);
 
 			onlineAdminsSocket.onopen = function(){
 				
@@ -172,9 +180,9 @@ function initLoginLis() {
 
 }
 /**
- * 初始化在线OnlineAdmins
+ * 鏈接在綫用戶統計服務器
  */
-function initOnlineAdminsSocket(adminId){
+function connectOnlineAdminsSocket(adminId){
 	if(onlineAdminsSocket != undefined){
 		onlineAdminsSocket.close();
 	}
@@ -189,7 +197,9 @@ function initOnlineAdminsSocket(adminId){
 		var data = $.parseJSON(event.data);
 		c("ws----");
 		c(data);
+		refreshOnlineAdminDG(data);
 		c("----ws");
+		
 	};
 	
 	

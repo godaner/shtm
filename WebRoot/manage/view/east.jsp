@@ -8,9 +8,9 @@
 		<div id="cc" class="easyui-calendar" data-options="fit:true"></div>
 	</div>
 	<div class="" data-options="fit:true,region:'center'">
-		<div id="cc" class="easyui-panel" data-options="fit:true,title:'在线用户'">
-			<table id="onlineAdmins_datagrid">
-				
+		<div id="cc" class="easyui-panel" data-options="fit:true">
+			<table id="onlineAdmins_datagrid" style="height:50%">
+			
 			</table>
 		</div>
 	</div>

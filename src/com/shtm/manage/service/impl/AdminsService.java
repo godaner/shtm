@@ -115,6 +115,10 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		
 		BeanUtils.copyProperties(dbAd, replier);
 		
+
+		//强制已登录的该用户下线
+		destroyShiroSession(dbAd.getUsername());
+		
 		return replier;
 		
 		
@@ -412,7 +416,10 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		Collection<Session> sessions = sessionDAO.getActiveSessions();
 
 		for (Session session : sessions) {
-			Admins shiroAdmins = (Admins) session.getAttribute(FILED_ONLINE_ADMIN);
+			AdminsReplier shiroAdmins = (AdminsReplier) session.getAttribute(FILED_ONLINE_ADMIN);
+			if(shiroAdmins == null ){
+				break;
+			}
 			if (username.equals(shiroAdmins.getUsername())) {
 				session.setTimeout(0);
 				break;

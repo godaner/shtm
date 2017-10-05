@@ -555,60 +555,74 @@ var responseHandler = {
 	 *            当操作结果为false时进行回调;包含-1和2状态;
 	 */
 	handleSuccess : function(data, okCallFun, notOkCallFun) {
-		// 显示信息
-		if (!isEmpty(data.msg)) {
-			showMsg(data.msg);
-		}
 
-		// 关闭进度条
-		pro.close();
-
-		// 离线
-		if (data.result == -1) {
-
-			loginDialog.show();
-
-			c("已离线");
+		try{
 			
-			return ;
-
-		}
-		// 无权限
-		if (data.result == -2) {
+			// 显示信息
+			if (!isEmpty(data.msg)) {
+				showMsg(data.msg);
+			}
+	
+	
+			// 离线
+			if (data.result == -1) {
+	
+				loginDialog.show();
+	
+				c("已离线");
+				
+				return ;
+	
+			}
+			// 无权限
+			if (data.result == -2) {
+				
+				c("无权限");
+				
+				return notOkCallFun(data);
+	
+			}
 			
-			c("无权限");
+			// 操作成功
+			if (data.result == 1 && okCallFun) {
+				return okCallFun(data);
+			}
+			// 操作失败
+			if (data.result == 0 && notOkCallFun) {
+				return notOkCallFun(data);
+			}
+			//未分发的事件
+			c("此处的ajax结果未被responseHandler#handleSuccess分发.");
+		}finally{
+
+			// 关闭进度条
+			pro.close();
 			
-			return notOkCallFun(data);
-
-		}
-		
-		// 操作成功
-		if (data.result == 1 && okCallFun) {
-			return okCallFun(data);
-		}
-		// 操作失败
-		if (data.result == 0 && notOkCallFun) {
-			return notOkCallFun(data);
-		}
-
+		};
 	},
 	/**
 	 * 处理本应用访问服务器失败的响应结果;
 	 * @param errorCallFun	失败回调方法
 	 */
 	handleFailure : function(errorCallFun) {
-		//访问服务器失败
-		showMsg("连接服务器失败,请稍后尝试");
-		c("ajax失败:");
-		// 关闭进度条
-		pro.close();
-		// 回调
-		if (errorCallFun) {
-			// 错误时回调参数
-			errorCallFun();
+		try{
+			//访问服务器失败
+			showMsg("连接服务器失败,请稍后尝试");
+			c("ajax失败:");
+			// 关闭进度条
+			pro.close();
+			// 回调
+			if (errorCallFun) {
+				// 错误时回调参数
+				errorCallFun();
+	
+			}
+		}finally{
 
-		}
-		
+			// 关闭进度条
+			pro.close();
+			
+		};
 
 	}
 

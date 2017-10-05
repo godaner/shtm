@@ -100,11 +100,11 @@
 <!-- 设置js使用的变量 start -->
 <script type="text/javascript" charset="utf-8">
 	/*在线admin的usernmae*/
-	var onlineUsername = '${sessionScope.onlineUser.username}';
+	//var onlineUsername = '${sessionScope.onlineUser.username}';
 	/*在线admin的id*/
-	var onlineAdminId = '${sessionScope.onlineUser.id}';
+	//var onlineAdminId = '${sessionScope.onlineUser.id}';
 	/*在线用户的theme*/
-	var onlineUserTheme = '${sessionScope.onlineUser.theme}';
+	//var onlineUserTheme = '${sessionScope.onlineUser.theme}';
 	/*默认theme*/
 	var defaultTheme = '${defaultTheme}';
 
