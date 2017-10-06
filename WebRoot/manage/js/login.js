@@ -14,10 +14,6 @@ var login_dialog;
  * 登录弹窗对象;在login_dialog加载完成后被初始化;
  */
 var loginDialog
-/**
- * 统计在线管理员
- */
-var onlineAdminsSocket;
 $(function() {
 
 	initLoginVar();
@@ -179,44 +175,7 @@ function initLoginLis() {
 	});
 
 }
-/**
- * 鏈接在綫用戶統計服務器
- */
-function connectOnlineAdminsSocket(adminId){
-	if(onlineAdminsSocket != undefined){
-		onlineAdminsSocket.close();
-	}
-	if ('WebSocket' in window) {
-		onlineAdminsSocket = new WebSocket(manageWebSocketUrl+"/onlineAdminsWS/"+adminId);
-	} else {
-		alert('当前浏览器 Not support websocket')
-	};
-	
-	
-	onlineAdminsSocket.onmessage = function (event){
-		var data = $.parseJSON(event.data);
-		c("ws----");
-		c(data);
-		if(data.length == 0){
-			//说明当前的客户端的session已经离线
-			onlineAdminsSocket.close();
-			
-			//关闭所有的dialog
-			closeAllEasyuiDialog();
-			
-			//显示登录
-			login_dialog.show();
-			
-			
-		}
-		//刷行在线列表
-		refreshOnlineAdminDG(data);
-		c("----ws");
-		
-	};
-	
-	
-}
+
 
 
 

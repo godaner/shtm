@@ -150,6 +150,7 @@
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/west.js"></script>
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/index.js"></script>
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/admins_edit_self_dialog.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/online_admin_ws.js"></script>
 <!-- 获取登录信息的js start -->
 <%@include file="./login_recored.jsp" %>
 <!-- 获取登录信息的js end -->

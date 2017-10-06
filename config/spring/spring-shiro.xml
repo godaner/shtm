@@ -39,18 +39,22 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 	<!-- 会话管理器 -->
 	<bean id="sessionManager"
 		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<property name="sessionDAO" ref="sessionDAO" />
 		<!-- session的失效时长，单位毫秒 -->
-		<property name="globalSessionTimeout" value="6000" />
+		<property name="globalSessionTimeout" value="1000" />
 		<!-- 删除失效的session -->
-		<property name="deleteInvalidSessions" value="true" />
-
+		<!-- <property name="deleteInvalidSessions" value="false" /> -->
+		<property name="sessionValidationInterval" value="10000"/>
 		<property name="sessionValidationSchedulerEnabled" value="true" />
 		<!-- <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/> -->
-		<property name="sessionDAO" ref="sessionDAO" />
-		<property name="sessionIdCookieEnabled" value="true" />
 		<property name="sessionIdCookie" ref="sessionIdCookie" />
+		<property name="sessionIdCookieEnabled" value="true" />
 		<!-- 监听器 -->
-   		<property name="sessionListeners" ref="shiroSessionListener" />  
+		 <property name ="sessionListeners">   
+             <list>   
+                <ref bean="shiroSessionListener"/>  
+             </list>    
+          </property>
 	</bean>
 	<!-- securityManager -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
