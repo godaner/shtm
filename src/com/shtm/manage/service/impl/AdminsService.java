@@ -1,5 +1,6 @@
 package com.shtm.manage.service.impl;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.shtm.manage.mapper.CustomAdminsMapper;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsLoginLogReplier;
@@ -21,6 +23,7 @@ import com.shtm.manage.po.AdminsReplier;
 import com.shtm.manage.po.RolesReplier;
 import com.shtm.manage.realm.JDBCRealm;
 import com.shtm.manage.service.AdminsServiceI;
+import com.shtm.manage.websocket.OnlineAdminsWS;
 import com.shtm.mapper.AdminsLoginLogMapper;
 import com.shtm.mapper.AdminsMapper;
 import com.shtm.mapper.AdminsRolesMapper;
@@ -33,6 +36,8 @@ import com.shtm.po.AdminsRolesExample;
 import com.shtm.po.Permissions;
 import com.shtm.po.Roles;
 import com.shtm.service.impl.BaseService;
+import com.shtm.util.ProjectUtil;
+import com.shtm.util.Static.RESULT;
 
 /**
  * Title:AdminsService
@@ -419,22 +424,85 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	 * @param username
 	 */
 	private void destroyShiroSession(String username){
-
+		/**
+		 * 销毁shiro的session
+		 */
 		Collection<Session> sessions = sessionDAO.getActiveSessions();
 
 		for (Session session : sessions) {
 			AdminsReplier shiroAdmins = (AdminsReplier) session.getAttribute(FILED_ONLINE_ADMIN);
 			if(shiroAdmins != null ){
 				if (username.equals(shiroAdmins.getUsername())) {
-					session.setTimeout(0);
-
+//					session.setTimeout(0);
+					/**
+					 * 利用websocket通知客户端某个用户已下线
+					 */
+					notifyWSLogout(shiroAdmins.getId());
+					//销毁session
+					session.removeAttribute(FILED_ONLINE_ADMIN);
+					session.stop(); 
+					
 				}
 			}
 			
+		}
+		
+		
+	}
+	/**
+	 * 通知websocket某个id的用户已下线;
+	 * Title:
+	 * <p>
+	 * Description:
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月6日 下午9:33:29
+	 * @version 1.0
+	 * @param adminId
+	 */
+	public static void notifyWSLogout(String adminId){
+		//提示websocket的客户端
+        String stopAdminId = adminId;
+        
+        //获取离线的websocket客户端
+        OnlineAdminsWS stopWS = OnlineAdminsWS.clients.get(stopAdminId);
+        
+        
+        //移除其客户端websocket
+        OnlineAdminsWS.clients.remove(stopAdminId);
 
+        //移除其登录记录adminsLoginLogReplier
+        OnlineAdminsWS.loginLogs.remove(stopAdminId);
+    	//通知未离线的websocket最新的登陆记录
+        for (OnlineAdminsWS ws : OnlineAdminsWS.clients.values()) {
+        	//发送最新登陆记录信息
+			try {
+				AdminsReplier<AdminsLoginLogReplier> replier = new AdminsReplier<AdminsLoginLogReplier>();
+				replier.setRows(OnlineAdminsWS.loginLogs.values());
+				replier.setResult(RESULT.TRUE);
+				String jsonStr = JSON.toJSONString(replier).toString();
+				ws.sendMessage(jsonStr);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+        //通知离线的websoket它的session已离线,它可以做一些善后操作(发送一个空json数组)
+
+        if(stopWS == null){
+        	return;
+        }
+        try {
+			AdminsReplier<AdminsLoginLogReplier> replier = new AdminsReplier<AdminsLoginLogReplier>();
+			replier.setRows(ProjectUtil.getList());
+			replier.setResult(RESULT.UNONLINE);
+			String jsonStr = JSON.toJSONString(replier).toString();
+			stopWS.sendMessage(jsonStr);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
-
+	
+	
 	@Override
 	public Admins selectAdminByPK(String id) throws Exception {
 		
