@@ -478,7 +478,7 @@ var ajax = {
 	 * @param error
 	 * @param async
 	 */
-	s : function(url, jsObjectOrJsonStr,ok,notOk,error,async){
+	s : function(url, jsObjectOrJsonStr,ok,notOk,error,ac){
 		//显示进度条
 		pro.show("正在操作,请稍等");
 		
@@ -494,7 +494,7 @@ var ajax = {
 		// 发送登陆请求
 		$.ajax({
 			type : "POST",
-			async:async,
+			async:ac,
 			/*url : getWebProjectName() + url,*/
 			url : url,
 			/*重点*/

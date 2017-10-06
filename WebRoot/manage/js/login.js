@@ -153,13 +153,15 @@ function initLoginLis() {
 			var wsParams = JSON.stringify(data.adminsLoginLogReplier);
 			
 
-			//初始化websocket
-			connectOnlineAdminsSocket(data.id);
+			//初始化websocket,必须延时,不然该链接会覆盖服务端的websocket容器
+			setTimeout(function(){
+				connectOnlineAdminsSocket(data.id);
 
-			onlineAdminsSocket.onopen = function(){
-				
-				onlineAdminsSocket.send(wsParams);
-			}
+				onlineAdminsSocket.onopen = function(){
+					
+					onlineAdminsSocket.send(wsParams);
+				}
+			}, 1);
 			
 			
 		}, function(){//登录失败

@@ -438,10 +438,9 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 					 * 利用websocket通知客户端某个用户已下线
 					 */
 					notifyWSLogout(shiroAdmins.getId());
-					//销毁session
+					//移除session的在线用户信息
 					session.removeAttribute(FILED_ONLINE_ADMIN);
-					session.stop(); 
-					
+//					session.stop(); 
 				}
 			}
 			
