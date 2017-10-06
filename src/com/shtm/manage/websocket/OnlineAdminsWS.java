@@ -17,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import com.alibaba.fastjson.JSON;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsLoginLogReplier;
+import com.shtm.manage.po.AdminsReplier;
 import com.shtm.util.ProjectUtil;
 
 /**
@@ -60,13 +61,16 @@ public class OnlineAdminsWS extends ProjectUtil{
 	 */
 	@OnClose
 	public void onClose() {
-		clients.remove(adminId); // 从集合中删除
+		// 从集合中删除
+		clients.remove(adminId); 
 		loginLogs.remove(adminId);
 		//发送最新登陆记录信息
 		for (OnlineAdminsWS ws : clients.values()) {
 			try {
-				String jsonStr = JSON.toJSONString(loginLogs.values()).toString();
-				
+				AdminsReplier<AdminsLoginLogReplier> replier = new AdminsReplier<AdminsLoginLogReplier>();
+				replier.setRows(loginLogs.values());
+				replier.setResult(RESULT.TRUE);
+				String jsonStr = JSON.toJSONString(replier).toString();
 				ws.sendMessage(jsonStr);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -84,10 +88,9 @@ public class OnlineAdminsWS extends ProjectUtil{
 	 */
 	@OnMessage
 	public void onMessage(String message) {
-//		fromObject
 		AdminsLoginLogReceiver receiver = JSON.parseObject(message, AdminsLoginLogReceiver.class);
 		
-		//是否有新的admin登陸記錄
+		//是否有新的admin登陸記錄,没有新的登陆记录说明其只是想获取登陆列表
 		if(receiver != null && receiver.getLoginAdmin() !=null && !receiver.getLoginAdmin().trim().isEmpty()){
 			AdminsLoginLogReplier replier = new AdminsLoginLogReplier();
 			
@@ -99,8 +102,10 @@ public class OnlineAdminsWS extends ProjectUtil{
 		//推送最新登陆记录信息
 		for (OnlineAdminsWS ws : clients.values()) {
 			try {
-				String jsonStr = JSON.toJSONString(loginLogs.values()).toString();
-				
+				AdminsReplier<AdminsLoginLogReplier> replier = new AdminsReplier<AdminsLoginLogReplier>();
+				replier.setRows(loginLogs.values());
+				replier.setResult(RESULT.TRUE);
+				String jsonStr = JSON.toJSONString(replier).toString();
 				ws.sendMessage(jsonStr);
 			} catch (IOException e) {
 				e.printStackTrace();

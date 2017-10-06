@@ -38,17 +38,6 @@ function refreshOnlineAdminDG(data){
 	onlineAdmins_datagrid.datagrid({    
 		title:"共 "+data.length+" 人在线",
 		data:data,
-		onLoadSuccess:function(data){
-			responseHandler.handleSuccess(data, function() {
-
-			}, function() {
-
-			});
-		    	
-	    },
-	    onLoadError:function(){
-	    	responseHandler.handleFailure();
-	    },
 		hideColumn:[[
 			{
 				field:'loginAdmin',

@@ -82,7 +82,6 @@ function loadLoginUI() {
 	ajax.send(manageForwardUrl+"/admins/getOnlineAdmin.action", 
 	function(data){
 		//在线(不在线的话,ajax内部会处理)
-		
 		//加载主题
 		setLocalTheme(data.theme);
 
@@ -91,6 +90,7 @@ function loadLoginUI() {
 		//初始化websocket
 		onlineAdminsSocket.onopen = function(){
 			var p = JSON.stringify(data.adminsLoginLogReplier);
+			//websocket发送登录记录信息
 			onlineAdminsSocket.send(p);
 		}
 			

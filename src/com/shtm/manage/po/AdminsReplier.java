@@ -1,9 +1,8 @@
 package com.shtm.manage.po;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.shtm.po.Admins;
-import com.shtm.po.AdminsLoginLog;
 
 /**
  * Title:CustomAdmins
@@ -49,19 +48,19 @@ public class AdminsReplier<T> extends Admins{
 	public void setAdminsLoginLogReplier(AdminsLoginLogReplier adminsLoginLogReplier) {
 		this.adminsLoginLogReplier = adminsLoginLogReplier;
 	}
-
+	
 
 	// 返回数据
-	private List<T> rows;
+	private Collection<T> rows;
 
 	// 记录总数
 	private Integer total;
 
-	public List<T> getRows() {
+	public Collection<T> getRows() {
 		return rows;
 	}
 
-	public void setRows(List<T> rows) {
+	public void setRows(Collection<T> rows) {
 		this.rows = rows;
 	}
 
