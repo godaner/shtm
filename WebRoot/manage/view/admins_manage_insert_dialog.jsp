@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- 新建用户弹窗 start -->
-<div id="insertAdminDialog" style="display: none;width:450px;">
+<div id="insertAdminDialog" class="easyui-dialog" data-options="closed:true" style="display: none;width:450px;">
 	<form id="insertAdminForm" enctype="multipart/form-data" method="post">
 		<table id="insertAdminTable">
 			<!-- <tr>

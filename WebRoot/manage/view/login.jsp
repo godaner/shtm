@@ -4,7 +4,7 @@
 <%@include file="./base.jsp"%>
 <link rel="stylesheet" type="text/css" href="${manageStaticSrcUrl}/css/login.css">
 <!-- 这里不要指定其为 class="easyui-dialog",不然会有闪屏现象 -->
-<div id="login_dialog">
+<div id="login_dialog" class="easyui-dialog" data-options="closed:true">
 
 	<form id="loginForm" method="post">
 		<table id="logintable">

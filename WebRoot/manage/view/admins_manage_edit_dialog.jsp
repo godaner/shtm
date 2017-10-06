@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- 用户属性编辑弹窗 start -->
-<div id="editAdminDialog" style="display: none;width:450px;">
+<div id="editAdminDialog" class="easyui-dialog" data-options="closed:true" style="display: none;width:450px;">
 	<form id="editAdminForm" enctype="multipart/form-data" method="post">
 		<table id="editAdminTable">
 			<!-- <tr>
@@ -27,7 +27,7 @@
 					<label>名称</label> 
 				</td>
 				<td>
-					<input id="username" name="username" class="easyui-textbox input" data-options="editable:false,prompt:'请输入用户名',required:true" style="width:100%"> 
+					<input id="username" name="username" class="easyui-textbox input" data-options="editable:true,prompt:'请输入用户名',required:true" style="width:100%"> 
 				</td>
 			</tr>
 			<tr>

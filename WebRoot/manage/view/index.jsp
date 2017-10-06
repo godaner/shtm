@@ -88,7 +88,7 @@
 	<!-- 登录弹框 end -->
 	
 	<!-- 登录弹框 start -->
-	<%@include file="./confirm_admin_pw.jsp"%>
+	<%@include file="./confirm_admin_pw_dialog.jsp"%>
 	<!-- 登录弹框 end -->
 	
 </body>

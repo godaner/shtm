@@ -11,6 +11,8 @@ package com.shtm.util;
  */
 public interface Static {
 	
+	
+	
 	/**
 	 * 
 	 * Title:ROLES_STATUS

@@ -51,7 +51,7 @@ public class RolesService extends BaseService implements RolesServiceI {
 		
 
 		eject(dbR == null, "角色已不存在");
-		eject(dbR.getStatus() != ROLES_STATUS.ACTIVITY, "当前角色状态不允许更新");
+//		eject(dbR.getStatus() != ROLES_STATUS.ACTIVITY, "当前角色状态不允许更新");
 		eject(isStaticRole(dbR),"不能更新内置角色的权限");
 		
 		

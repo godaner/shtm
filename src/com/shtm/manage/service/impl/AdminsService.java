@@ -121,7 +121,6 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		
 		return replier;
 		
-		
 	}
 
 	@Override
@@ -224,25 +223,30 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 
 	@Override
 	public void updateAdmin(AdminsReceiver receiver) throws Exception {
+		//不能更新自己
+		eject(receiver.getId().equals(getOnlineAdmin().getId()),"不能更新自己");
+		
 		Admins dbA = adminsMapper.selectByPrimaryKey(receiver.getId());
+		
 		//判断管理员是否存在
 		eject(dbA == null ||
 				dbA.getStatus() == ADMINS_STATUS.DELETE, "管理员不存在");
 		
-		//不能更新name
-//		if(!dbA.getUsername().equals(receiver.getUsername())){
-//			/**
-//			 * 判断name是否存在
-//			 */
-//			AdminsExample example = new AdminsExample();
-//			com.shtm.po.AdminsExample.Criteria criteria = example.createCriteria();
-//			criteria.andUsernameEqualTo(receiver.getUsername());
-//			List<Admins> list = adminsMapper.selectByExample(example);
-//			
-//			eject(list.size() >= 1, "该名称已存在");
-//		}else{
-//			receiver.setUsername(null);
-//		}
+		
+		//更新name
+		if(!dbA.getUsername().equals(receiver.getUsername())){
+			/**
+			 * 判断name是否存在
+			 */
+			AdminsExample example = new AdminsExample();
+			com.shtm.po.AdminsExample.Criteria criteria = example.createCriteria();
+			criteria.andUsernameEqualTo(receiver.getUsername());
+			List<Admins> list = adminsMapper.selectByExample(example);
+			
+			eject(list.size() >= 1, "该名称已存在");
+		}else{
+			receiver.setUsername(null);
+		}
 		/**
 		 * 判断password是否需要更新
 		 */
@@ -263,7 +267,7 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		
 		receiver.setStaticc(null);
 		
-		receiver.setUsername(null);
+//		receiver.setUsername(null);
 		
 		
 		//更新
@@ -417,14 +421,13 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 
 		for (Session session : sessions) {
 			AdminsReplier shiroAdmins = (AdminsReplier) session.getAttribute(FILED_ONLINE_ADMIN);
-			if(shiroAdmins == null ){
-				break;
-			}
-			if (username.equals(shiroAdmins.getUsername())) {
-				session.setTimeout(0);
-				break;
+			if(shiroAdmins != null ){
+				if (username.equals(shiroAdmins.getUsername())) {
+					session.setTimeout(0);
 
+				}
 			}
+			
 
 		}
 	}
@@ -433,6 +436,19 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	public Admins selectAdminByPK(String id) throws Exception {
 		
 		return adminsMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public void frozen(String id) throws Exception {
+		
+		Admins ad = new Admins();
+		
+		ad.setId(id);
+		
+		ad.setStatus(ADMINS_STATUS.FROZEN);
+		
+		adminsMapper.updateByPrimaryKeySelective(ad);
+		
 	}
 	
 	

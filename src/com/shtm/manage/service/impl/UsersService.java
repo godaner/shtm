@@ -131,7 +131,7 @@ public class UsersService extends BaseService implements UsersServiceI {
 		Criteria c = null;
 		List<Users> dbUsers = null;
 		// 如果修改了用户名
-		/*if (!dbUser.getUsername().toLowerCase().equals(username)) {
+		if (!dbUser.getUsername().toLowerCase().equals(username)) {
 			ue = new UsersExample();
 			c = ue.createCriteria();
 			c.andUsernameEqualTo(username.toLowerCase()).andStatusNotEqualTo(USERS_STATUS.DELETE);
@@ -139,7 +139,7 @@ public class UsersService extends BaseService implements UsersServiceI {
 			dbUsers = usersMapper.selectByExample(ue);
 
 			eject(dbUsers.size() > 0, "该用户名已存在");
-		}*/
+		}
 
 		/**
 		 * 验证email是否已存在
@@ -185,7 +185,7 @@ public class UsersService extends BaseService implements UsersServiceI {
 			/**
 			 * 禁止更新字段
 			 */
-			receiver.setUsername(null);
+//			receiver.setUsername(null);
 			
 			/**
 			 * 更新数据库

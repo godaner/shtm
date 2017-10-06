@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- 新建用户弹窗 start -->
-<div id="insertRoleDialog" style="display: none;width:450px;">
+<div id="insertRoleDialog" class="easyui-dialog"  data-options="closed:true"  style="display: none;width:450px;">
 	<form id="insertRoleForm" method="post">
 		<table id="insertRoleTable">
 			<tr>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- 用户属性编辑弹窗 start -->
-<div id="editGoodDialog" style="display: none;width:450px;">
+<div id="editGoodDialog" class="easyui-dialog"  data-options="closed:true"  style="display: none;width:450px;">
 	<form id="editGoodForm" enctype="multipart/form-data" method="post">
 		<table id="editGoodTable">
 			<!-- <tr>

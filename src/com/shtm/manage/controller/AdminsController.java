@@ -258,7 +258,7 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 			// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
 			SecurityUtils.getSubject().logout();
 			
-			replier.setResult(RESULT.TRUE);
+			replier.setResult(RESULT.UNONLINE);
 
 			replier.setMsg("注销成功");
 		} catch (Exception e) {
@@ -507,6 +507,8 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 			
 			replier.setResult(RESULT.TRUE);
 
+			replier.setMsg("");
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -530,11 +532,15 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 	 * @version 1.0
 	 * @return
 	 */
+	@RequiresAuthentication
 	@RequestMapping("/checkOnlineAdminPW")
-	public @ResponseBody AdminsReplier checkOnlineAdminPW(@Validated(value={CheckOnlineAdminPWGroups.class}) AdminsReceiver receiver){
+	public @ResponseBody AdminsReplier checkOnlineAdminPW(@Validated(value={CheckOnlineAdminPWGroups.class}) AdminsReceiver receiver,
+			BindingResult result){
 				
 		AdminsReplier replier = new AdminsReplier();
 		try {
+			
+			getError(result);
 
 			Admins adb = service.selectAdminByPK(ProjectUtil.getOnlineAdmin().getId());
 			
@@ -545,6 +551,45 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 			eject(!md5pw.equals(adb.getPassword()), "密码错误");
 			
 			replier.setResult(RESULT.TRUE);
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+		return replier;
+	}
+	/**
+	 * Title:
+	 * <p>
+	 * Description:冻结当前账户
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月6日 上午11:13:07
+	 * @version 1.0
+	 * @return
+	 */
+	@RequiresAuthentication
+	@RequestMapping("/frozen")
+	public @ResponseBody AdminsReplier frozen(){
+				
+		AdminsReplier replier = new AdminsReplier();
+		try {
+			
+			service.frozen(getOnlineAdmin().getId());
+			
+			replier.setMsg("冻结成功");
+			
+			replier.setResult(RESULT.UNONLINE);
+			
+			//销毁session,登出
+
+			SecurityUtils.getSubject().getSession().removeAttribute(FILED_ONLINE_ADMIN);
+			
+			// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
+			SecurityUtils.getSubject().logout();
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -70,7 +70,7 @@
 			class="easyui-linkbutton"
 			data-options="iconCls:'icon-no',plain:true"
 			id="forezeBtn" 
-			href="javascript:void(0);">
+			href="javascript:toFrozen();">
 				申请冻结
 			</a>			
 

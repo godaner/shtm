@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- 用户退款申请查看弹窗 start -->
-<div id="checkBuyerApplyDialog" style="display: none;width:70%;height:70%;">
+<div id="checkBuyerApplyDialog" class="easyui-dialog" data-options="closed:true"  style="display: none;width:70%;height:70%;">
 	<table style="width:100%;height:100%;">
 		<tr>
 			<td colspan="2" align="center">

@@ -53,7 +53,7 @@ function initNorthLis(){
 		ajax.send(
 				url,
 				function(data){
-					
+					/*
 					//连接服务器成功
 
 					//重设主题为默认defaultTheme在index.js
@@ -64,7 +64,7 @@ function initNorthLis(){
 					setUsername("");
 					
 					//关闭连接
-					onlineAdminsSocket.close();
+					onlineAdminsSocket.close();*/
 					
 					
 				},
@@ -139,4 +139,24 @@ function setLocalTheme(newThemeString){
 	var newTheme = currtThemeString.substring(0, replaceEndPosition)
 			+ theme + "/easyui.css";
 	$("#easyuiTheme").attr("href", newTheme);
+}
+
+
+/**
+ * 冻结按钮出发事件
+ */
+function toFrozen(){
+	confirmAdminPWDialog.open(function(r){
+		if(r){
+			//发送冻结请求
+			ajax.send(manageForwardUrl+"/admins/frozen.action", function(data){
+			
+				
+				
+			}, function(data){
+			}, function(){
+				
+			});
+		}
+	});
 }

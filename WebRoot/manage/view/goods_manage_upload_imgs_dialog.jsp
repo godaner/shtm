@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@include file="./base.jsp"%>
 <!-- 图片上传dialog -->
-<div id="goods_upload_imgs_dialog" style="padding:10px 10px;display:none;width: 400px;">
+<div id="goods_upload_imgs_dialog" class="easyui-dialog"  data-options="closed:true"  style="padding:10px 10px;display:none;width: 400px;">
 	<form id="goods_upload_imgs_form" enctype="multipart/form-data" method="post">
 		
 		<!-- <input type="file" id="file" name="file" style="width:100%"> -->

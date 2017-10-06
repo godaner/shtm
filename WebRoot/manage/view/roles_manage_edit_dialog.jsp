@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- 用户属性编辑弹窗 start -->
-<div id="editRoleDialog" style="display: none;width:450px;">
+<div id="editRoleDialog" class="easyui-dialog" data-options="closed:true" style="display: none;width:450px;">
 	<form id="editRoleForm" method="post">
 		<table id="editRoleTable">
 			<tr>

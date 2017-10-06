@@ -25,7 +25,8 @@ public class Admins {
     private String username;
     
     
-    @Pattern(regexp=Static.REG.PASSWORD,message="{admins.password.reg.error}",groups={InsertAdminGroups.class,LoginGroups.class,CheckOnlineAdminPWGroups.class})
+    @NotNull(message="{admins.password.notblank.error}",groups={InsertAdminGroups.class,LoginGroups.class,CheckOnlineAdminPWGroups.class})
+    @Pattern(regexp=Static.REG.PASSWORD,message="{admins.password.reg.error}",groups={InsertAdminGroups.class,LoginGroups.class})
     private String password;
     
     private String salt;

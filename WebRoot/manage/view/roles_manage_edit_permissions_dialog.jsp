@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- 管理员角色辑弹窗 start -->
-<div id="editRolePermissionDialog" style="display: none;width:600px;">
+<div id="editRolePermissionDialog" class="easyui-dialog"  data-options="closed:true"  style="display: none;width:600px;">
 	<div id="roles_permissions_datagrid" style="margin-top:15px;width:100%;">
 		
 	</div>  

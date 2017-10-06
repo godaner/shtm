@@ -215,5 +215,18 @@ public interface AdminsServiceI {
 	 */
 	public Admins selectAdminByPK(String id) throws Exception;
 
+	/**
+	 * Title:
+	 * <p>
+	 * Description:冻结自定id的admin;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月6日 上午11:16:10
+	 * @version 1.0
+	 * @param id
+	 * @throws Exception
+	 */
+	public void frozen(String id) throws Exception;
+
 
 }

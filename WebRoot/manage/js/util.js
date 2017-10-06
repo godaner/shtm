@@ -540,6 +540,20 @@ var ajax = {
 	}
 
 };
+
+/**
+ * 关闭所有的easyui的dialog
+ */
+function closeAllEasyuiDialog(){
+	//关闭所有的dialog
+	var all_easyui_dialog = $(".easyui-dialog");
+	all_easyui_dialog.each(function(){
+		$(this).dialog({
+			closed:true
+		});
+		$(this).dialog('close');
+	});
+}
 /**
  * 对服务器的响应进行分发处理;
  */
@@ -566,11 +580,29 @@ var responseHandler = {
 	
 			// 离线
 			if (data.result == -1) {
-	
-				loginDialog.show();
-	
+				
+				
 				c("已离线");
 				
+				//关闭所有的easyui的dialog
+				closeAllEasyuiDialog();
+				//显示登录框
+				loginDialog.show();
+				//重设主题为默认defaultTheme在index.js
+				setLocalTheme(defaultTheme);
+				
+				//调用north方法
+				setUsername("");
+				
+				if(onlineAdminsSocket){
+					//关闭连接
+					onlineAdminsSocket.close();
+					
+				}
+				
+				
+				//调用的是操作失败的方法!!!注意
+//				return notOkCallFun(data);
 				return ;
 	
 			}
