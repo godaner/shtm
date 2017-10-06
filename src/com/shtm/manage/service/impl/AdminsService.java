@@ -428,6 +428,12 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 
 		}
 	}
+
+	@Override
+	public Admins selectAdminByPK(String id) throws Exception {
+		
+		return adminsMapper.selectByPrimaryKey(id);
+	}
 	
 	
 	

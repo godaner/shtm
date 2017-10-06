@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
+import com.shtm.manage.groups.AdminsGroups.CheckOnlineAdminPWGroups;
 import com.shtm.manage.groups.AdminsGroups.DeleteAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.InsertAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.SelectAdminGroups;
@@ -513,6 +514,43 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 			replier.setMsg(e.getMessage());
 		}
 
+		return replier;
+	}
+	
+	
+	
+	/**
+	 * 
+	 * Title:
+	 * <p>
+	 * Description:检测在线用户的密码
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月6日 上午10:42:54
+	 * @version 1.0
+	 * @return
+	 */
+	@RequestMapping("/checkOnlineAdminPW")
+	public @ResponseBody AdminsReplier checkOnlineAdminPW(@Validated(value={CheckOnlineAdminPWGroups.class}) AdminsReceiver receiver){
+				
+		AdminsReplier replier = new AdminsReplier();
+		try {
+
+			Admins adb = service.selectAdminByPK(ProjectUtil.getOnlineAdmin().getId());
+			
+			eject(adb == null, "账户不存在");
+			
+			String md5pw = md5(receiver.getPassword() + adb.getSalt());
+			
+			eject(!md5pw.equals(adb.getPassword()), "密码错误");
+			
+			replier.setResult(RESULT.TRUE);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
 		return replier;
 	}
 	

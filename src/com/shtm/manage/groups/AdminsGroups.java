@@ -90,4 +90,16 @@ public interface AdminsGroups {
 	 * @version 1.0
 	 */
 	public interface UpdateAdminRolesGroups{};
+	
+	
+	/**
+	 * Title:CheckOnlineAdminPW
+	 * <p>
+	 * Description:检测在线用户密码所使用的分组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月6日 上午10:43:56
+	 * @version 1.0
+	 */
+	public interface CheckOnlineAdminPWGroups{};
 }

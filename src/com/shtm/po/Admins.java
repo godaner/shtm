@@ -7,6 +7,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.shtm.manage.groups.AdminsGroups.CheckOnlineAdminPWGroups;
 import com.shtm.manage.groups.AdminsGroups.DeleteAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.InsertAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.LoginGroups;
@@ -24,7 +25,7 @@ public class Admins {
     private String username;
     
     
-    @Pattern(regexp=Static.REG.PASSWORD,message="{admins.password.reg.error}",groups={InsertAdminGroups.class,LoginGroups.class})
+    @Pattern(regexp=Static.REG.PASSWORD,message="{admins.password.reg.error}",groups={InsertAdminGroups.class,LoginGroups.class,CheckOnlineAdminPWGroups.class})
     private String password;
     
     private String salt;

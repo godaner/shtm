@@ -201,5 +201,19 @@ public interface AdminsServiceI {
 	 */
 	public void updateAdminRoles(String id, String[] rolesIds) throws Exception;
 
+	/**
+	 * Title:
+	 * <p>
+	 * Description:通过主键查询;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月6日 上午10:56:44
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public Admins selectAdminByPK(String id) throws Exception;
+
 
 }
