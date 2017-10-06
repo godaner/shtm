@@ -33,8 +33,8 @@ import com.shtm.util.ProjectUtil;
 public class OnlineAdminsWS extends ProjectUtil{
 
 	// concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。若要实现服务端与单一客户端通信的话，可以使用Map来存放，其中Key可以为用户标识
-	private static Map<String, OnlineAdminsWS> clients = new ConcurrentHashMap<String, OnlineAdminsWS>();  
-	private static Map<String, AdminsLoginLogReplier> loginLogs = new ConcurrentHashMap<String, AdminsLoginLogReplier>();  
+	public static Map<String, OnlineAdminsWS> clients = new ConcurrentHashMap<String, OnlineAdminsWS>();  
+	public static Map<String, AdminsLoginLogReplier> loginLogs = new ConcurrentHashMap<String, AdminsLoginLogReplier>();  
 	//websocket的session
 	private Session session;      
 	private String adminId;  

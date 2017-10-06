@@ -253,8 +253,8 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 			if(onlineAdmin != null){
 				replier.setId(onlineAdmin.getId());
 			}
-			
-			SecurityUtils.getSubject().getSession().removeAttribute(FILED_ONLINE_ADMIN);
+			//不要在此处移除在线用户参数,因为session监听器会用到
+//			SecurityUtils.getSubject().getSession().removeAttribute(FILED_ONLINE_ADMIN);
 			
 			// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
 			SecurityUtils.getSubject().logout();

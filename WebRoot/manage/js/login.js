@@ -197,6 +197,19 @@ function connectOnlineAdminsSocket(adminId){
 		var data = $.parseJSON(event.data);
 		c("ws----");
 		c(data);
+		if(data.length == 0){
+			//说明当前的客户端的session已经离线
+			onlineAdminsSocket.close();
+			
+			//关闭所有的dialog
+			closeAllEasyuiDialog();
+			
+			//显示登录
+			login_dialog.show();
+			
+			
+		}
+		//刷行在线列表
 		refreshOnlineAdminDG(data);
 		c("----ws");
 		
