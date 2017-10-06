@@ -37,6 +37,14 @@ function loadEastUI(){
 function refreshOnlineAdminDG(data){
 	onlineAdmins_datagrid.datagrid({    
 		title:"共 "+data.length+" 人在线",
+		toolbar: [{
+			iconCls: 'icon-remove',
+			text:"踢出",
+			handler: function(){
+				kickOutAdmin();
+			}
+		}]
+		,
 		data:data,
 		hideColumn:[[
 			{
@@ -85,4 +93,28 @@ function refreshOnlineAdminDG(data){
 			    
 	    ]]    
 	});  
+}
+
+/**
+ * 踢出管理员
+ */
+var currtDatagridOnlineRow;
+function kickOutAdmin(){
+	//获取datagrid当前选择行
+	var row = onlineAdmins_datagrid.datagrid('getSelected');
+	if(isEmpty(row)){
+		showMsg("请先选择行");
+		return ;
+	}
+	
+	var adminId = row.loginAdmin;
+	var url = manageForwardUrl+"/admins/kickOutAdmin.action?id="+adminId;
+	ajax.send(url, function(data){
+		
+	}, function(){
+		
+	}, function(){
+		
+	});
+	
 }

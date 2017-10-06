@@ -122,6 +122,17 @@ public interface AdminsGroups {
 	 * @version 1.0
 	 */
 	public interface UpdateAdminSelfGroups{};
+	/**
+	 * 
+	 * Title:KickOutAdminGroups
+	 * <p>
+	 * Description:踢出管理员的验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月6日 下午8:22:38
+	 * @version 1.0
+	 */
+	public interface KickOutAdminGroups{};
 	
 	
 }

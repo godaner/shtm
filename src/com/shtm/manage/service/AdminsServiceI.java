@@ -242,5 +242,19 @@ public interface AdminsServiceI {
 	 */
 	public AdminsReplier updateAdminSelf(AdminsReceiver receiver) throws Exception;
 
+	/**
+	 * Title:
+	 * <p>
+	 * Description:踢出管理员;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月6日 下午8:27:10
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public void kickOutAdmin(String id) throws Exception;
+
 
 }

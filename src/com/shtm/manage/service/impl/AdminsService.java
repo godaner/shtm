@@ -418,7 +418,7 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	 * @version 1.0
 	 * @param username
 	 */
-	public void destroyShiroSession(String username){
+	private void destroyShiroSession(String username){
 
 		Collection<Session> sessions = sessionDAO.getActiveSessions();
 
@@ -513,6 +513,18 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		BeanUtils.copyProperties(dbA, replier);
 		
 		return replier;
+	}
+
+	@Override
+	public void kickOutAdmin(String id) throws Exception {
+
+		Admins dbAd = adminsMapper.selectByPrimaryKey(id);
+
+		// 判断管理员是否存在
+		eject(dbAd == null || dbAd.getStatus() == ADMINS_STATUS.DELETE,
+				"管理员不存在");
+
+		destroyShiroSession(dbAd.getUsername());
 	}
 	
 	

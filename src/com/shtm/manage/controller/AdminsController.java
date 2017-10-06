@@ -17,6 +17,7 @@ import com.shtm.controller.BaseController;
 import com.shtm.manage.groups.AdminsGroups.CheckOnlineAdminPWGroups;
 import com.shtm.manage.groups.AdminsGroups.DeleteAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.InsertAdminGroups;
+import com.shtm.manage.groups.AdminsGroups.KickOutAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.SelectAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.SelectAdminRolesById;
 import com.shtm.manage.groups.AdminsGroups.UpdateAdminGroups;
@@ -647,6 +648,39 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 		return replier;
 	}
 	
+	/**
+	 * 
+	 * Title:
+	 * <p>
+	 * Description:更新当前用户的信息;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月6日 下午3:42:58
+	 * @version 1.0
+	 * @param receiver
+	 * @param result
+	 * @return
+	 */
+	@RequiresAuthentication
+	@RequiresPermissions("admins:kickOut")
+	@RequestMapping("/kickOutAdmin")
+	public @ResponseBody AdminsReplier kickOutAdmin(@Validated(value={KickOutAdminGroups.class}) AdminsReceiver receiver,
+			BindingResult result){
+				
+		AdminsReplier replier = new AdminsReplier();
+		try {
+			
+			
+			service.kickOutAdmin(receiver.getId());
+			replier.setMsg("踢出成功");
+			replier.setResult(RESULT.TRUE);
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+		return replier;
+	}
 	
 	
 }
