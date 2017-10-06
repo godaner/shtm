@@ -139,6 +139,7 @@ public class RolesService extends BaseService implements RolesServiceI {
 		//打算更新的roles是否存在
 		eject(dbR == null || dbR.getStatus() == ROLES_STATUS.DELETE, "该劫色已不存在");
 		
+		eject(isStaticRole(dbR),"不能更新内置角色的信息");
 
 		//更新name
 		if(!dbR.getName().equals(receiver.getName())){

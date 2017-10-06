@@ -34,7 +34,7 @@
 			<a 
 			class="easyui-linkbutton"
 			data-options=""
-			href="javascript:void(0);">
+			href="javascript:showEditAdminSelfDialog();">
 				管理员:
 				<label id="usernameDisplayer" >
 					${sessionScope.onlineUser.username}

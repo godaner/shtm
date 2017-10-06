@@ -228,5 +228,19 @@ public interface AdminsServiceI {
 	 */
 	public void frozen(String id) throws Exception;
 
+	/**
+	 * Title:
+	 * <p>
+	 * Description:更新自身的信息;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月6日 下午3:52:54
+	 * @version 1.0
+	 * @param receiver
+	 * @return 
+	 * @throws Exception
+	 */
+	public AdminsReplier updateAdminSelf(AdminsReceiver receiver) throws Exception;
+
 
 }

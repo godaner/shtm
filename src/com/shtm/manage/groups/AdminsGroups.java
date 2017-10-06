@@ -9,6 +9,15 @@ package com.shtm.manage.groups;
  * @date 2017年9月22日 下午7:09:51
  * @version 1.0
  */
+/**
+ * Title:AdminsGroups
+ * <p>
+ * Description:
+ * <p>
+ * @author Kor_Zhang
+ * @date 2017年10月6日 下午3:47:39
+ * @version 1.0
+ */
 public interface AdminsGroups {
 	/**
 	 * Title:InsertAdmins
@@ -102,4 +111,17 @@ public interface AdminsGroups {
 	 * @version 1.0
 	 */
 	public interface CheckOnlineAdminPWGroups{};
+
+	/**
+	 * Title:UpdateAdminSelfGroups
+	 * <p>
+	 * Description:管理员更新自身所使用的验证组;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月6日 下午3:47:41
+	 * @version 1.0
+	 */
+	public interface UpdateAdminSelfGroups{};
+	
+	
 }

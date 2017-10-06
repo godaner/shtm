@@ -625,6 +625,7 @@ var responseHandler = {
 			}
 			//未分发的事件
 			c("此处的ajax结果未被responseHandler#handleSuccess分发.");
+			c(data);
 		}finally{
 
 			// 关闭进度条

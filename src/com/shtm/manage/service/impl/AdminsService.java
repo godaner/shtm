@@ -228,9 +228,12 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		
 		Admins dbA = adminsMapper.selectByPrimaryKey(receiver.getId());
 		
+		
 		//判断管理员是否存在
 		eject(dbA == null ||
 				dbA.getStatus() == ADMINS_STATUS.DELETE, "管理员不存在");
+		
+		eject(isStaticAdmin(dbA),"不能更新内置管理员的信息");
 		
 		
 		//更新name
@@ -445,10 +448,71 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		
 		ad.setId(id);
 		
+//		eject(ad.getStaticc().equals(ADMINS_STATIC.YES), "内置管理员不能被冻结");
+		
 		ad.setStatus(ADMINS_STATUS.FROZEN);
 		
 		adminsMapper.updateByPrimaryKeySelective(ad);
 		
+	}
+
+	@Override
+	public AdminsReplier updateAdminSelf(AdminsReceiver receiver) throws Exception {
+		Admins dbA = adminsMapper.selectByPrimaryKey(receiver.getId());
+		
+		//判断管理员是否存在
+		eject(dbA == null ||
+				dbA.getStatus() == ADMINS_STATUS.DELETE, "管理员不存在");
+		
+		
+		//更新name
+		if(!dbA.getUsername().equals(receiver.getUsername())){
+			/**
+			 * 判断name是否存在
+			 */
+			AdminsExample example = new AdminsExample();
+			com.shtm.po.AdminsExample.Criteria criteria = example.createCriteria();
+			criteria.andUsernameEqualTo(receiver.getUsername());
+			List<Admins> list = adminsMapper.selectByExample(example);
+			
+			eject(list.size() >= 1, "该名称已存在");
+		}else{
+			receiver.setUsername(null);
+		}
+		/**
+		 * 判断password是否需要更新
+		 */
+		String password = receiver.getPassword();
+		if (password != null && !password.isEmpty()) {
+			//如果有更新情况,加密密码
+			receiver.setPassword(md5(password + dbA.getSalt()));
+		}
+		if(password.trim().equals("")){
+			receiver.setPassword(null);
+		}
+		
+		
+		/**
+		 * 禁止更新的字段
+		 */
+		receiver.setCreatetime(null);
+		receiver.setCreator(null);
+		receiver.setSalt(null);
+		receiver.setStatus(null);
+		
+		adminsMapper.updateByPrimaryKeySelective(receiver);
+		
+		//返回數據
+		AdminsReplier replier = new AdminsReplier();
+		
+		dbA = adminsMapper.selectByPrimaryKey(receiver.getId());
+		//屏蔽字段
+		dbA.setPassword("");
+		
+		
+		BeanUtils.copyProperties(dbA, replier);
+		
+		return replier;
 	}
 	
 	

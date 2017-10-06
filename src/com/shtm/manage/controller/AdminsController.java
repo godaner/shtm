@@ -21,6 +21,7 @@ import com.shtm.manage.groups.AdminsGroups.SelectAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.SelectAdminRolesById;
 import com.shtm.manage.groups.AdminsGroups.UpdateAdminGroups;
 import com.shtm.manage.groups.AdminsGroups.UpdateAdminRolesGroups;
+import com.shtm.manage.groups.AdminsGroups.UpdateAdminSelfGroups;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsLoginLogReplier;
 import com.shtm.manage.po.AdminsReceiver;
@@ -598,5 +599,54 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 		}
 		return replier;
 	}
+	
+	/**
+	 * 
+	 * Title:
+	 * <p>
+	 * Description:更新当前用户的信息;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月6日 下午3:42:58
+	 * @version 1.0
+	 * @param receiver
+	 * @param result
+	 * @return
+	 */
+	@RequiresAuthentication
+	@RequestMapping("/updateAdminSelf")
+	public @ResponseBody AdminsReplier updateAdminSelf(@Validated(value={UpdateAdminSelfGroups.class}) AdminsReceiver receiver,
+			BindingResult result){
+				
+		AdminsReplier replier = new AdminsReplier();
+		try {
+			
+			AdminsReplier onlineAdmin = getOnlineAdmin();
+			
+			receiver.setId(onlineAdmin.getId());
+			
+			replier = service.updateAdminSelf(receiver);
+			
+			//更新登陸記錄中的username,前臺將發送該信息給websocket更新websocket的在綫管理員列表信息;
+			onlineAdmin.getAdminsLoginLogReplier().setAdminName(replier.getUsername());
+			replier.setAdminsLoginLogReplier(onlineAdmin.getAdminsLoginLogReplier());
+			
+			//更新session的在綫对象,用戶前臺的獲取
+			setOnlineAdmin(replier);
+			
+			replier.setMsg("同步成功");
+			
+			replier.setResult(RESULT.TRUE);
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			replier.setResult(RESULT.FALSE);
+			replier.setMsg(e.getMessage());
+		}
+		return replier;
+	}
+	
+	
 	
 }

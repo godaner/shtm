@@ -8,7 +8,7 @@
 		<input id="pw" class="easyui-textbox" data-options="required:true,prompt:'请输入您的密码'" style="width:100%">
 	</div>
 	<div style="margin: 20px 0px;text-align:center;width:100%;height:20px;">
-		<a id="confirm_adminPW_btn" href="javascript:confirmAdminPW();" class="easyui-linkbutton" data-options="iconCls:'icon-search'">检验</a>   
+		<a id="confirm_adminPW_btn" href="javascript:confirmAdminPW();" class="easyui-linkbutton" data-options="">申请</a>   
 	</div>
 </div>  
 <script type="text/javascript">
@@ -23,7 +23,13 @@
 			open:function(callfun){
 				pw.textbox('setText',"");
 				confirmCallFun = callfun;
-				confirm_adminPW_dialog.dialog('open');
+				confirm_adminPW_dialog.dialog({
+					 title:"請輸入您的密碼",
+						resizable : true,
+						modal : true,
+						closed : false,
+						borer:false
+				});
 			},
 			close:function(){
 				confirm_adminPW_dialog.dialog('close');
@@ -31,6 +37,12 @@
 	};
 	/* 确认密码 */
 	function confirmAdminPW(){
+		//驗證密碼
+		pw.textbox('validate');
+		if(!pw.textbox('isValid')){
+			return ;
+		}
+		
 		var pwv = pw.textbox('getText');
 		//验证密码
 		ajax.send(manageForwardUrl+"/admins/checkOnlineAdminPW.action?password="+pwv, function(data){

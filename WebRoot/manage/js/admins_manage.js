@@ -297,7 +297,7 @@ function editAdmin(){
 function submitAdminEdit(){
 
 	//提示信息
-	pro.show("正在修改");
+//	pro.show("正在修改");
 	
 	editAdminForm.form('submit', {  
 	    url:manageForwardUrl+"/admins/updateAdmin.action",    

@@ -91,6 +91,10 @@
 	<%@include file="./confirm_admin_pw_dialog.jsp"%>
 	<!-- 登录弹框 end -->
 	
+	<!-- 管理員編輯自身信息弹框 start -->
+	<%@include file="./admins_edit_self_dialog.jsp"%>
+	<!-- 管理員編輯自身信息弹框 end -->
+	
 </body>
 
 
@@ -145,6 +149,7 @@
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/north.js"></script>
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/west.js"></script>
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/index.js"></script>
+<script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/admins_edit_self_dialog.js"></script>
 <!-- 获取登录信息的js start -->
 <%@include file="./login_recored.jsp" %>
 <!-- 获取登录信息的js end -->
