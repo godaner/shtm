@@ -306,13 +306,17 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 
 	@Override
 	public AdminsLoginLogReplier insertAdminsLoginLog(String adminId,
-			AdminsLoginLogReceiver receiver) throws Exception {
+			AdminsLoginLogReceiver receiver){
 		//插入登录记录
 		//设置参数
 		receiver.setTime(new Date());
 		receiver.setId(uuid());
 		receiver.setLoginAdmin(adminId);
-		adminsLoginLogMapper.insert(receiver);
+		try{
+			adminsLoginLogMapper.insert(receiver);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		
 		AdminsLoginLogReplier replier = new AdminsLoginLogReplier();
 		
@@ -472,8 +476,11 @@ public class AdminsService extends BaseService implements AdminsServiceI {
         //通知离线的websoket它的session已离线,它可以做一些善后操作(发送一个空json数组),例如客戶端要調用ws.close()
         OnlineAdminsWS.sendSpecialMsgToWS(stopWS,ProjectUtil.getList(),RESULT.UNONLINE);
         try {
-        	//關閉ws鏈接
-			stopWS.session.close();
+        	if(stopWS != null){
+        		//關閉ws鏈接
+        		stopWS.session.close();
+        	}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -48,7 +48,7 @@ public interface AdminsServiceI {
 	 * @param adminsLoginLogReceiver
 	 * @throws Exception
 	 */
-	public AdminsLoginLogReplier insertAdminsLoginLog(String adminId,AdminsLoginLogReceiver adminsLoginLogReceiver) throws Exception;
+	public AdminsLoginLogReplier insertAdminsLoginLog(String adminId,AdminsLoginLogReceiver adminsLoginLogReceiver);
 	
 	
 	/**
