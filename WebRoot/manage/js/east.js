@@ -35,7 +35,8 @@ function loadEastUI(){
  * @param data
  */
 function refreshOnlineAdminDG(data){
-	onlineAdmins_datagrid.datagrid({    
+	onlineAdmins_datagrid.datagrid({   
+		singleSelect:true,
 		title:"共 "+data.length+" 人在线",
 		toolbar: [{
 			iconCls: 'icon-remove',

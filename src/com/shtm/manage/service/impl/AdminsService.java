@@ -1,6 +1,5 @@
 package com.shtm.manage.service.impl;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -117,10 +116,12 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		dbAd.setPassword(null);
 		
 		BeanUtils.copyProperties(dbAd, replier);
-		
 
 		//强制已登录的该用户下线
-		destroyShiroSession(dbAd.getUsername());
+		destroyShiroSession(dbAd.getId());
+		
+		//设置在线用户
+		setOnlineAdmin(replier);
 		
 		return replier;
 		
@@ -129,19 +130,13 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	@Override
 	public void updateTheme(AdminsReceiver receiver) throws Exception {
 		
+		Admins newAdmin = new Admins();
 		
-		//设置Example
-		AdminsExample ae = new AdminsExample();
+		newAdmin.setId(receiver.getId());
 		
-		Criteria cc = ae.createCriteria();
+		newAdmin.setTheme(receiver.getTheme());
 		
-		cc.andIdEqualTo(receiver.getId());
-		
-		//设置要更新的字段
-		receiver.setId(null);
-		
-		//执行更新
-		adminsMapper.updateByExampleSelective(receiver,ae );
+		adminsMapper.updateByPrimaryKeySelective(newAdmin);
 		
 	}
 
@@ -276,8 +271,24 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 //		receiver.setUsername(null);
 		
 		
+		
 		//更新
 		adminsMapper.updateByPrimaryKeySelective(receiver);
+		
+		
+		dbA = adminsMapper.selectByPrimaryKey(receiver.getId());
+		
+		AdminsReplier replier = new AdminsReplier();
+		
+		BeanUtils.copyProperties(dbA, replier);
+		
+		//通知shiro的session和websoket更新
+		notifyShiroSessionAndWSUpdate(replier.getId(),replier);
+		
+		//判斷是否凍結
+		if(receiver.getStatus() == ADMINS_STATUS.FROZEN){
+			notifyWSLogout(receiver.getId());
+		}
 		
 	}
 
@@ -423,9 +434,9 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	 * @author Kor_Zhang
 	 * @date 2017年10月3日 下午4:39:40
 	 * @version 1.0
-	 * @param username
+	 * @param adminId
 	 */
-	private void destroyShiroSession(String username){
+	private void destroyShiroSession(String adminId){
 		/**
 		 * 销毁shiro的session
 		 */
@@ -434,7 +445,7 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		for (Session session : sessions) {
 			AdminsReplier shiroAdmins = (AdminsReplier) session.getAttribute(FILED_ONLINE_ADMIN);
 			if(shiroAdmins != null ){
-				if (username.equals(shiroAdmins.getUsername())) {
+				if (adminId.equals(shiroAdmins.getId())) {
 //					session.setTimeout(0);
 					/**
 					 * 利用websocket通知客户端某个用户已下线
@@ -464,32 +475,63 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	 * @param adminId
 	 */
 	public static void notifyWSLogout(String adminId){
-		//提示websocket的客户端
-        String stopAdminId = adminId;
         
-        //获取离线的websocket客户端
-        OnlineAdminsWS stopWS = OnlineAdminsWS.clients.get(stopAdminId);
-        
-        //一處某個id的相關的ws信息
-        OnlineAdminsWS.removeWSInfo(stopAdminId);
+        OnlineAdminsWS stopWS  = OnlineAdminsWS.getWS(adminId);
         
         //通知离线的websoket它的session已离线,它可以做一些善后操作(发送一个空json数组),例如客戶端要調用ws.close()
         OnlineAdminsWS.sendSpecialMsgToWS(stopWS,ProjectUtil.getList(),RESULT.UNONLINE);
-        try {
-        	if(stopWS != null){
-        		//關閉ws鏈接
-        		stopWS.session.close();
-        	}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
         
+        //获取并且移除离线的websocket客户端和admin信息
+        OnlineAdminsWS.removeWSAndAdmin(adminId, true);
         
     	//通知未离线的websocket最新的登陆记录
         OnlineAdminsWS.broadcastOnlineAdminWS();
         
         
+	}
+	/**
+	 * Title:
+	 * <p>
+	 * Description:通知websoket和session某用户更新了信息;要求发送广播;<br/>
+	 * 注意:只是更新了admins的基本信息,并没有更新其登录记录;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月7日 下午2:27:46
+	 * @version 1.0
+	 * @param adminId
+	 * @param newAdmin
+	 */
+	public static void notifyShiroSessionAndWSUpdate(String adminId,AdminsReplier newAdmin){
+       /**
+        * 保持登陸記錄
+        */
+        AdminsReplier wsAd = OnlineAdminsWS.getAdmin(adminId);
+        
+        if(wsAd == null){
+        	return ;
+        }
+        //設置loginlog的參數
+        
+        AdminsLoginLogReplier adminsLoginLogReplier = wsAd.getAdminsLoginLogReplier();
+        
+        adminsLoginLogReplier.setAdminName(newAdmin.getUsername());
+        
+        newAdmin.setAdminsLoginLogReplier(adminsLoginLogReplier);
+		
+		
+        /**
+         * 更新shiro的session中的信息
+         */
+        setOnlineAdmin(newAdmin);
+        
+        /**
+         * 更新ws中的信息
+         */
+		
+        OnlineAdminsWS.updateAdmin(adminId, newAdmin);
+        
+        //向容器中所有的ws广播更新
+        OnlineAdminsWS.broadcastOnlineAdminWS();
 	}
 	
 	
@@ -511,6 +553,8 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		ad.setStatus(ADMINS_STATUS.FROZEN);
 		
 		adminsMapper.updateByPrimaryKeySelective(ad);
+		
+		notifyWSLogout(id);
 		
 	}
 
@@ -582,11 +626,15 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		eject(dbAd == null || dbAd.getStatus() == ADMINS_STATUS.DELETE,
 				"管理员不存在");
 
-		destroyShiroSession(dbAd.getUsername());
+		destroyShiroSession(dbAd.getId());
 	}
 
 	@Override
 	public void logout() throws Exception {
+		
+		if(getOnlineAdmin() == null){
+			return;
+		}
 		
 		String adminId = getOnlineAdmin().getId();
 

@@ -1,18 +1,14 @@
 package com.shtm.manage.listener;
 
-import java.io.IOException;
-
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.SessionListener;
 import org.springframework.stereotype.Component;
 
-import com.alibaba.fastjson.JSON;
-import com.shtm.manage.po.AdminsLoginLogReplier;
 import com.shtm.manage.po.AdminsReplier;
 import com.shtm.manage.service.impl.AdminsService;
-import com.shtm.manage.websocket.OnlineAdminsWS;
 import com.shtm.util.ProjectUtil;
-import com.shtm.util.Static.RESULT;
+import com.shtm.util.Static;
 
 @Component
 public class ShiroSessionListener implements SessionListener{  
@@ -35,7 +31,12 @@ public class ShiroSessionListener implements SessionListener{
     	/**
     	 * 专门用于处理会话超时
     	 */
-
+    	
+    	
+    	SecurityUtils.getSubject().getSession().removeAttribute(Static.FILED_ONLINE_ADMIN);
+		// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
+		SecurityUtils.getSubject().logout();
+    	
 		AdminsReplier admin = (AdminsReplier) session.getAttribute(ProjectUtil.FILED_ONLINE_ADMIN);
 		if (admin == null) {
 			return;

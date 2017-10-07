@@ -7,6 +7,9 @@ var onlineAdminsSocket;
 /**
  * 鏈接在綫用戶統計服務器
  */
+
+//在线
+var admin;
 function connectOnlineAdminsSocket(adminId){
 	if(!isEmpty(onlineAdminsSocket)){//關閉原有的ws
 		if(onlineAdminsSocket.readyState == onlineAdminsSocket.CONNECTING){
@@ -35,11 +38,40 @@ function connectOnlineAdminsSocket(adminId){
 			//清空用户名显示
 			setUsername("");
 			
+			//重设主题为默认defaultTheme在index.js
+			setLocalTheme(defaultTheme);
+			
 			//關閉ws
 			closeOnlineAdminsSocket(onlineAdminsSocket);
 		}
+		
 		//刷行在线列表
-		refreshOnlineAdminDG(data.rows);
+		//提取每个admin的登陆记录
+		var rows = [];
+		for(var i = 0; i<data.rows.length;i++){
+			var d  = data.rows[i];
+			var loginLog = d.adminsLoginLogReplier;
+			if(!isEmpty(loginLog)){
+				rows.push(loginLog);
+			}
+			//獲取本客戶端的admin數據
+			if(d.id == data.id){
+				admin = d;
+			}
+			
+		}
+		
+		
+		//刷新在线列表
+		refreshOnlineAdminDG(rows);
+		
+//		c(admin);
+		//重设主题
+		setLocalTheme(admin.theme);
+
+		//用户名显示
+		setUsername(admin.username);
+		
 		c("----ws");
 		
 	};
@@ -51,6 +83,8 @@ function connectOnlineAdminsSocket(adminId){
  * @param ws
  */
 function closeOnlineAdminsSocket(ws){
-	ws.close();
-	ws = undefined;
+	if(!isEmpty(ws)){
+		ws.close();
+		ws = undefined;
+	}
 }

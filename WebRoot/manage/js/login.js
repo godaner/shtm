@@ -84,12 +84,11 @@ function loadLoginUI() {
 		//在线(不在线的话,ajax内部会处理)
 		//加载主题
 		setLocalTheme(data.theme);
-
 		//初始化websocket
 		connectOnlineAdminsSocket(data.id);
 		//初始化websocket
 		onlineAdminsSocket.onopen = function(){
-			var p = JSON.stringify(data.adminsLoginLogReplier);
+			var p = JSON.stringify(data);
 			//websocket发送登录记录信息
 			onlineAdminsSocket.send(p);
 		}
@@ -146,11 +145,11 @@ function initLoginLis() {
 			//加载主题
 
 			setLocalTheme(data.theme);
-			
+//			c(data.theme);
 			//连接websocket,记录在线管理员信息
 			
 
-			var wsParams = JSON.stringify(data.adminsLoginLogReplier);
+			var wsParams = JSON.stringify(data);
 			
 
 			//初始化websocket,必须延时,不然该链接会覆盖服务端的websocket容器

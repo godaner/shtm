@@ -206,9 +206,7 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 
 			replier.setResult(RESULT.TRUE);
 			
-			setOnlineAdmin(replier);
-			
-			//插入登录记录
+			//设置登录记录的登录结果
 			adminsLoginLogReceiver.setResult(ADMINS_LOGIN_LOG_RESULT.SUCCESS);
 			
 		} catch (Exception e) {

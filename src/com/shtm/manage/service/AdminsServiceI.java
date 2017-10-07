@@ -218,7 +218,7 @@ public interface AdminsServiceI {
 	/**
 	 * Title:
 	 * <p>
-	 * Description:冻结自定id的admin;
+	 * Description:冻结自身;
 	 * <p>
 	 * @author Kor_Zhang
 	 * @date 2017年10月6日 上午11:16:10

@@ -593,13 +593,8 @@ var responseHandler = {
 				
 				//调用north方法
 				setUsername("");
-				
-				if(onlineAdminsSocket){
-					//关闭连接
-					onlineAdminsSocket.close();
-					
-				}
-				
+				//关闭websocket连接
+				closeOnlineAdminsSocket(onlineAdminsSocket);
 				
 				//调用的是操作失败的方法!!!注意
 //				return notOkCallFun(data);
