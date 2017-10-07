@@ -27,15 +27,11 @@ public class ShiroSessionListener implements SessionListener{
   
     @Override  
     public void onExpiration(Session session) {//会话过期时触发
-    	
+
+        System.out.println("会话過期：" + session.getId()); 
     	/**
     	 * 专门用于处理会话超时
     	 */
-    	
-    	
-    	SecurityUtils.getSubject().getSession().removeAttribute(Static.FILED_ONLINE_ADMIN);
-		// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
-		SecurityUtils.getSubject().logout();
     	
 		AdminsReplier admin = (AdminsReplier) session.getAttribute(ProjectUtil.FILED_ONLINE_ADMIN);
 		if (admin == null) {

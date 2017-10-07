@@ -642,7 +642,7 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		notifyWSLogout(adminId);
 		
 		SecurityUtils.getSubject().getSession().removeAttribute(FILED_ONLINE_ADMIN);
-		// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
+		// 登出,將使session過期
 		SecurityUtils.getSubject().logout();
 		
 		
