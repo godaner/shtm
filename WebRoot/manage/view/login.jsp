@@ -34,7 +34,7 @@
 			<tr>
 				<td>验证码:</td>
 				<td><img style="cursor: pointer;" alt="点击获取验证码"
-					id="verifyCodeImg" src="${baseUrl}/admins/verifyCode.action">
+					id="verifyCodeImg" src="${baseUrl}/admins/verifyCode.action?t=666666">
 	
 				</td>
 			</tr>

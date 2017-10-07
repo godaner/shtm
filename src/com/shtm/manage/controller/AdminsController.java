@@ -169,7 +169,7 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 
 		vc.createCode();
 
-		setApplicationAttr(FILED_LOGIN_VERIFYCODE, vc.getCode());
+		setSessionAttr(FILED_LOGIN_VERIFYCODE, vc.getCode());
 
 		vc.write(res.getOutputStream());
 

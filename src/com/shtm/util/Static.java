@@ -113,6 +113,10 @@ public interface Static {
 		 */
 		static final String FIELD_WEB_ADDR = "config.webaddr";
 		/**
+		 * 存放websocket网站地址字段
+		 */
+		static final String FIELD_WS_ADDR = "config.wsaddr";
+		/**
 		 * 用户头像资源存放路径
 		 * 
 		 */
