@@ -16,6 +16,9 @@
 	</form>
 </div>
 <!-- 工具栏 end -->
+
+
+<!-- easyui的datagrid start -->
 <div id="clazzs_manage_content" class="easyui-panel" data-options="fit:true">
 
 	<table id="clazzs_datagrid" class="easyui-datagrid" data-options="fit:true">  
@@ -23,6 +26,7 @@
 	</table>
 
 </div>
+<!-- easyui的datagrid end -->
 
 
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/clazzs_manage.js"></script>

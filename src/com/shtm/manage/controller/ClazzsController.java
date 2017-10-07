@@ -32,15 +32,10 @@ import com.shtm.manage.service.ClazzsServiceI;
 public class ClazzsController extends BaseController<ClazzsServiceI> {
 
 	/**
-	 * Title:selectClazzs
-	 * <p>
-	 * Description:查詢所有的clazzs
-	 * <p>
-	 * 
-	 * @author Kor_Zhang
-	 * @date 2017年9月26日 上午10:07:06
-	 * @version 1.0
+	 * 描述:查詢所有的clazzs;
+	 * @author xiaoyu
 	 * @return
+	 * @throws Exception
 	 */
 	@RequestMapping("/selectAllClazzs")
 	public @ResponseBody ClazzsReplier selectAllClazzs() throws Exception {

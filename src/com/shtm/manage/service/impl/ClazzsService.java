@@ -37,6 +37,7 @@ public class ClazzsService extends BaseService implements ClazzsServiceI {
 	public ClazzsReplier selectAllClazzs() throws Exception {
 		
 		ClazzsReplier replier = new ClazzsReplier();
+		
 		replier.setRows(customClazzsMapper.selectAllClazzs());
 		
 		//設置最大clazzs數量

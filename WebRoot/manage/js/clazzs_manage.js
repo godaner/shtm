@@ -2,9 +2,9 @@
 /**
  * 变量申明
  */
-var clazzs_datagrid;
-var clazzsSearchForm;
-$(function() {
+var clazzs_datagrid = undefined;
+var clazzsSearchForm = undefined;
+$(function() {//html的dom加载完成后再执行
 
 	initClazzsManageVar();
 
@@ -22,12 +22,15 @@ function initClazzsManageVar() {
  * 加载界面
  */
 function loadClazzsManageUI() {
-
-	//類型列表
-	clazzs_datagrid.datagrid({
+	
+	//申明clazzs_datagrid的参数clazzs_datagrid_options
+	var clazzs_datagrid_options = {
+		//请求数据的地址
 		url : manageForwardUrl + "/clazzs/selectClazzsDatagrid.action",
+		//指定工具欄
 		toolbar : "#clazzs_dg_tb",
 		//queryParams:users_to_goods_tab_context.getContent(),
+		//分頁
 		pagination : true,
 		striped : true,
 		fitColumns : true,
@@ -73,7 +76,10 @@ function loadClazzsManageUI() {
 				return value;
 			}
 		}] ]
-	});
+	};
+	
+	//初始化类型列表的datagrid
+	clazzs_datagrid.datagrid(clazzs_datagrid_options);
 }
 
 /**
