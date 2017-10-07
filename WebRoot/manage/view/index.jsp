@@ -65,10 +65,10 @@
 
 
 		<!-- 西部start -->
-		<div data-options="region:'west',split:true" title="菜单"
+		<div id="layout_west" data-options="region:'west',split:true" title="菜单"
 			style="width: 250px;">
 			<div id="west_panel" class="easyui-panel" data-options="fit:true">
-				<%@include file="./west.jsp"%>
+				 <%@include file="./west.jsp"%> 
 			</div>
 		</div>
 		<!-- 西部 end -->
