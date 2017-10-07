@@ -8,8 +8,10 @@ var onlineAdminsSocket;
  * 鏈接在綫用戶統計服務器
  */
 function connectOnlineAdminsSocket(adminId){
-	if(!isEmpty(onlineAdminsSocket)){
-		onlineAdminsSocket.close();
+	if(!isEmpty(onlineAdminsSocket)){//關閉原有的ws
+		if(onlineAdminsSocket.readyState == onlineAdminsSocket.CONNECTING){
+			closeOnlineAdminsSocket(onlineAdminsSocket);
+		}
 	}
 	if ('WebSocket' in window) {
 		onlineAdminsSocket = new WebSocket(manageWebSocketUrl+"/onlineAdminsWS/"+adminId);
@@ -33,8 +35,8 @@ function connectOnlineAdminsSocket(adminId){
 			//清空用户名显示
 			setUsername("");
 			
-			//千万不要放开这个罪魁祸首!!!!这将导致单一登录模式的错误:具体错误不做详细！！！
-//			onlineAdminsSocket.close();
+			//關閉ws
+			closeOnlineAdminsSocket(onlineAdminsSocket);
 		}
 		//刷行在线列表
 		refreshOnlineAdminDG(data.rows);
@@ -43,4 +45,12 @@ function connectOnlineAdminsSocket(adminId){
 	};
 	
 	
+}
+/**
+ * 關閉在綫用戶統計ws
+ * @param ws
+ */
+function closeOnlineAdminsSocket(ws){
+	ws.close();
+	ws = undefined;
 }

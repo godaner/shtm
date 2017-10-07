@@ -10,8 +10,6 @@
 <c:set var="manageForwardUrl" value="${pageContext.request.contextPath}"></c:set>
 <!-- 本模塊webscoket請求url -->
 <c:set var="manageWebSocketUrl" value="ws://localhost${pageContext.request.contextPath}"></c:set>
-
-
 <script type="text/javascript" charset="utf-8">
 	/* 项目名url */
 	var baseUrl = '${baseUrl}';

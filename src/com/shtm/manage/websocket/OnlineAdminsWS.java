@@ -1,6 +1,7 @@
 package com.shtm.manage.websocket;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -37,7 +38,7 @@ public class OnlineAdminsWS extends ProjectUtil{
 	public static Map<String, OnlineAdminsWS> clients = new ConcurrentHashMap<String, OnlineAdminsWS>();  
 	public static Map<String, AdminsLoginLogReplier> loginLogs = new ConcurrentHashMap<String, AdminsLoginLogReplier>();  
 	//websocket的session
-	private Session session;      
+	public Session session;      
 	private String adminId;  
 
 	/**
@@ -61,21 +62,15 @@ public class OnlineAdminsWS extends ProjectUtil{
 	 */
 	@OnClose
 	public void onClose() {
+		/**
+		 * 不做任何事情
+		 */
+		
 		// 从集合中删除
-		clients.remove(adminId); 
+		/*clients.remove(adminId); 
 		loginLogs.remove(adminId);
-		//发送最新登陆记录信息
-		for (OnlineAdminsWS ws : clients.values()) {
-			try {
-				AdminsReplier<AdminsLoginLogReplier> replier = new AdminsReplier<AdminsLoginLogReplier>();
-				replier.setRows(loginLogs.values());
-				replier.setResult(RESULT.TRUE);
-				String jsonStr = JSON.toJSONString(replier).toString();
-				ws.sendMessage(jsonStr);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		//推送最新登陆记录信息
+		broadcastOnlineAdminWS();*/
 	}
 
 	/**
@@ -98,21 +93,75 @@ public class OnlineAdminsWS extends ProjectUtil{
 			
 			loginLogs.put(replier.getLoginAdmin(), replier);
 		}
-		
 		//推送最新登陆记录信息
-		for (OnlineAdminsWS ws : clients.values()) {
-			try {
-				AdminsReplier<AdminsLoginLogReplier> replier = new AdminsReplier<AdminsLoginLogReplier>();
-				replier.setRows(loginLogs.values());
-				replier.setResult(RESULT.TRUE);
-				String jsonStr = JSON.toJSONString(replier).toString();
-				ws.sendMessage(jsonStr);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		broadcastOnlineAdminWS();
+		
 	}
 
+	
+	/**
+	 * Title:
+	 * <p>
+	 * Description:移除某個id的在在綫用戶的相關信息;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月7日 上午11:27:55
+	 * @version 1.0
+	 * @param adminId
+	 */
+	public static synchronized void removeWSInfo(String adminId) {
+		//移除其客户端websocket
+        OnlineAdminsWS.clients.remove(adminId);
+
+        //移除其登录记录adminsLoginLogReplier
+        OnlineAdminsWS.loginLogs.remove(adminId);
+	}
+	
+	/**
+	 * 
+	 * Title:
+	 * <p>
+	 * Description:向所有的websocket發送廣播;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月7日 上午10:54:00
+	 * @version 1.0
+	 */
+	public static synchronized void broadcastOnlineAdminWS() {
+		//推送最新登陆记录信息
+		for (OnlineAdminsWS ws : clients.values()) {
+			sendSpecialMsgToWS(ws, loginLogs.values(), RESULT.TRUE);
+		}
+    }
+	
+	/**
+	 * 
+	 * Title:
+	 * <p>
+	 * Description:發送指定信息到某個ws;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月7日 上午11:21:08
+	 * @version 1.0
+	 * @param ws
+	 * @param rows
+	 * @param result
+	 */
+	public static synchronized void sendSpecialMsgToWS(OnlineAdminsWS ws,Collection<?> rows,Integer result){
+		try {
+			if(ws == null || !ws.session.isOpen()){//是否允許發送信息
+				return;
+			}
+			AdminsReplier replier = new AdminsReplier();
+			replier.setRows(rows);
+			replier.setResult(result);
+			String jsonStr = JSON.toJSONString(replier).toString();
+			ws.sendMessage(jsonStr);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * 发生错误时调用
 	 * 

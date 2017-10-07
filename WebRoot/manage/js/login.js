@@ -154,14 +154,11 @@ function initLoginLis() {
 			
 
 			//初始化websocket,必须延时,不然该链接会覆盖服务端的websocket容器
-			setTimeout(function(){
-				connectOnlineAdminsSocket(data.id);
+			connectOnlineAdminsSocket(data.id);
 
-				onlineAdminsSocket.onopen = function(){
-					
-					onlineAdminsSocket.send(wsParams);
-				}
-			}, 1);
+			onlineAdminsSocket.onopen = function(){
+				onlineAdminsSocket.send(wsParams);
+			}
 			
 			
 		}, function(){//登录失败

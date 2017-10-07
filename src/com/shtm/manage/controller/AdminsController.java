@@ -249,15 +249,9 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 
 		AdminsReplier replier = new AdminsReplier();
 		try {
-			Admins onlineAdmin = getOnlineAdmin();
-			//设置离线的admins的id
-			if(onlineAdmin != null){
-				replier.setId(onlineAdmin.getId());
-			}
 			
-			SecurityUtils.getSubject().getSession().removeAttribute(FILED_ONLINE_ADMIN);
-			// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
-			SecurityUtils.getSubject().logout();
+			service.logout();
+			
 			
 			replier.setResult(RESULT.UNONLINE);
 

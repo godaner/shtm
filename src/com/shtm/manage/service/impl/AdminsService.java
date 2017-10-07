@@ -14,7 +14,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
 import com.shtm.manage.mapper.CustomAdminsMapper;
 import com.shtm.manage.po.AdminsLoginLogReceiver;
 import com.shtm.manage.po.AdminsLoginLogReplier;
@@ -37,7 +36,6 @@ import com.shtm.po.Permissions;
 import com.shtm.po.Roles;
 import com.shtm.service.impl.BaseService;
 import com.shtm.util.ProjectUtil;
-import com.shtm.util.Static.RESULT;
 
 /**
  * Title:AdminsService
@@ -449,10 +447,12 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		
 	}
 	/**
-	 * 通知websocket某个id的用户已下线;
+	 * 
 	 * Title:
 	 * <p>
-	 * Description:
+	 * Description:通知websocket某个id的用户已下线;
+	 * <br/>
+	 * websocket將向該ws發送離綫信息,並移除該ws相關信息;且通知其他ws該ws已離綫;
 	 * <p>
 	 * @author Kor_Zhang
 	 * @date 2017年10月6日 下午9:33:29
@@ -466,39 +466,23 @@ public class AdminsService extends BaseService implements AdminsServiceI {
         //获取离线的websocket客户端
         OnlineAdminsWS stopWS = OnlineAdminsWS.clients.get(stopAdminId);
         
+        //一處某個id的相關的ws信息
+        OnlineAdminsWS.removeWSInfo(stopAdminId);
         
-        //移除其客户端websocket
-        OnlineAdminsWS.clients.remove(stopAdminId);
-
-        //移除其登录记录adminsLoginLogReplier
-        OnlineAdminsWS.loginLogs.remove(stopAdminId);
-    	//通知未离线的websocket最新的登陆记录
-        for (OnlineAdminsWS ws : OnlineAdminsWS.clients.values()) {
-        	//发送最新登陆记录信息
-			try {
-				AdminsReplier<AdminsLoginLogReplier> replier = new AdminsReplier<AdminsLoginLogReplier>();
-				replier.setRows(OnlineAdminsWS.loginLogs.values());
-				replier.setResult(RESULT.TRUE);
-				String jsonStr = JSON.toJSONString(replier).toString();
-				ws.sendMessage(jsonStr);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-        //通知离线的websoket它的session已离线,它可以做一些善后操作(发送一个空json数组)
-
-        if(stopWS == null){
-        	return;
-        }
+        //通知离线的websoket它的session已离线,它可以做一些善后操作(发送一个空json数组),例如客戶端要調用ws.close()
+        OnlineAdminsWS.sendSpecialMsgToWS(stopWS,ProjectUtil.getList(),RESULT.UNONLINE);
         try {
-			AdminsReplier<AdminsLoginLogReplier> replier = new AdminsReplier<AdminsLoginLogReplier>();
-			replier.setRows(ProjectUtil.getList());
-			replier.setResult(RESULT.UNONLINE);
-			String jsonStr = JSON.toJSONString(replier).toString();
-			stopWS.sendMessage(jsonStr);
+        	//關閉ws鏈接
+			stopWS.session.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+        
+        
+    	//通知未离线的websocket最新的登陆记录
+        OnlineAdminsWS.broadcastOnlineAdminWS();
+        
+        
 	}
 	
 	
@@ -592,6 +576,21 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 				"管理员不存在");
 
 		destroyShiroSession(dbAd.getUsername());
+	}
+
+	@Override
+	public void logout() throws Exception {
+		
+		String adminId = getOnlineAdmin().getId();
+
+		//通知ws某個用戶已離綫;
+		notifyWSLogout(adminId);
+		
+		SecurityUtils.getSubject().getSession().removeAttribute(FILED_ONLINE_ADMIN);
+		// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
+		SecurityUtils.getSubject().logout();
+		
+		
 	}
 	
 	

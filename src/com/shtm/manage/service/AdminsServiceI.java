@@ -256,5 +256,18 @@ public interface AdminsServiceI {
 	 */
 	public void kickOutAdmin(String id) throws Exception;
 
+	/**
+	 * 
+	 * Title:
+	 * <p>
+	 * Description:離綫操作;
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年10月7日 上午11:01:58
+	 * @version 1.0
+	 * @throws Exception
+	 */
+	public void logout() throws Exception;
+
 
 }

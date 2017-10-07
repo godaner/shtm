@@ -53,6 +53,13 @@ function initNorthLis(){
 		ajax.send(
 				url,
 				function(data){
+					/**
+					 * 此處不許處理,ws將接受和處理離綫信息;
+					 */
+					
+					
+					
+					
 					/*
 					//连接服务器成功
 
