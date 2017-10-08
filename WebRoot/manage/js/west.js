@@ -54,6 +54,8 @@ function loadWestUI(){
 	    	}); 
 	    },
 	    onLoadSuccess:function(node, data){
+	    	
+	    	
 	    	//设置url到attributes
 	    	for (var i = 0; i < data.length; i++) {
 				var d = data[i];

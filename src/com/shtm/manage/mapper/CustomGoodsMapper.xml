@@ -16,7 +16,7 @@
 			<if test="condition !=null and condition!=''">
 				AND condition = #{condition}
 			</if>
-			<if test="status !=null and status!=''">
+			<if test="status !=null and status !=''">
 				AND status = #{status}
 			</if>
 			<if test="owner !=null and owner!=''">

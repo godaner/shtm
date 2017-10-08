@@ -14,7 +14,7 @@
 			<if test="email !=null and email!=''">
 				AND email LIKE '%${email}%'
 			</if>
-			<if test="sex !=null">
+			<if test="sex !=null and sex!=''">
 				AND sex = #{sex}
 			</if>
 			<if test="description !=null and description!=''">
@@ -23,7 +23,7 @@
 			<if test="status !=null">
 				AND status = #{status}
 			</if>
-			<if test="id !=null">
+			<if test="id !=null and id!=''">
 				AND id = #{id}
 			</if>
 		</where>
