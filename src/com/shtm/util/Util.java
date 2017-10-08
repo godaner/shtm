@@ -91,6 +91,21 @@ public class Util extends RedisUtil {
 		return new SimpleDateFormat(pattern).format(date);
 	} 
 	/**
+	  * Title:
+	  * <p>
+	  * Description:格式化日期
+	  * <p>
+	  * @author Kor_Zhang
+	  * @date 2017年10月8日 下午10:16:50
+	  * @version 1.0
+	  * @param date
+	  * @return
+	  */
+	public static String formatDate(Date date){
+		
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+	} 
+	/**
 	 * 
 	 * Title:
 	 * <p>

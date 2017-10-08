@@ -1,9 +1,7 @@
 package com.shtm.manage.service.impl;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -27,6 +26,7 @@ import com.shtm.po.Users;
 import com.shtm.po.UsersExample;
 import com.shtm.po.UsersExample.Criteria;
 import com.shtm.service.impl.BaseService;
+import com.shtm.util.ProjectUtil;
 
 /**
  * 
@@ -390,7 +390,8 @@ public class UsersService extends BaseService implements UsersServiceI {
         // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
         HSSFRow row = sheet.createRow((int) 0);  
         // 第四步，创建单元格，并设置值表头 设置表头居中  
-        HSSFCellStyle style = wb.createCellStyle();  
+        HSSFCellStyle style = wb.createCellStyle();
+        HSSFDataFormat format= wb.createDataFormat();
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式  
         style.setWrapText(true);
   
@@ -398,14 +399,52 @@ public class UsersService extends BaseService implements UsersServiceI {
         cell.setCellValue("id");  
         cell.setCellStyle(style);  
         sheet.setColumnWidth(0, 40*256);
+        
         cell = row.createCell((short) 1);  
         cell.setCellValue("用户名");  
         cell.setCellStyle(style);  
         sheet.setColumnWidth(1, 20*256);
+        
         cell = row.createCell((short) 2);  
         cell.setCellValue("邮箱");  
         cell.setCellStyle(style);  
         sheet.setColumnWidth(2, 30*256);
+
+        cell = row.createCell((short) 3);  
+        cell.setCellValue("性別");  
+        cell.setCellStyle(style);  
+        sheet.setColumnWidth(3, 8*256);
+
+        cell = row.createCell((short) 4);  
+        cell.setCellValue("生日");  
+        cell.setCellStyle(style);  
+        sheet.setColumnWidth(4, 20*256);
+
+        cell = row.createCell((short) 5);  
+        cell.setCellValue("介绍");  
+        cell.setCellStyle(style);  
+        sheet.setColumnWidth(5, 88*256);
+
+        cell = row.createCell((short) 6);  
+        cell.setCellValue("积分");  
+        cell.setCellStyle(style);  
+        sheet.setColumnWidth(6, 8*256);
+        
+        cell = row.createCell((short) 7);  
+        cell.setCellValue("余额");  
+        cell.setCellStyle(style);  
+        sheet.setColumnWidth(7, 8*256);
+        
+
+        cell = row.createCell((short) 8);  
+        cell.setCellValue("注册时间");  
+        cell.setCellStyle(style);  
+        sheet.setColumnWidth(8, 20*256);
+
+        cell = row.createCell((short) 9);  
+        cell.setCellValue("状态");  
+        cell.setCellStyle(style);  
+        sheet.setColumnWidth(9, 8*256);
   
         // 第五步，写入实体数据 实际应用中这些数据从数据库得到，  
         List<UsersReplier> list = customUsersMapper.selectUsersDatagrid(rceiver);  
@@ -418,7 +457,16 @@ public class UsersService extends BaseService implements UsersServiceI {
             row.createCell((short) 0).setCellValue(u.getId());  
             row.createCell((short) 1).setCellValue(u.getUsername());  
             row.createCell((short) 2).setCellValue(u.getEmail());  
-             
+            row.createCell((short) 3).setCellValue(u.getSex()); 
+            if(u.getBirthday()==null){
+            	u.setBirthday(new Date());
+            }
+            row.createCell((short) 4).setCellValue(ProjectUtil.formatDate(u.getBirthday()));  
+            row.createCell((short) 5).setCellValue(u.getDescription());  
+            row.createCell((short) 6).setCellValue(u.getScore());  
+            row.createCell((short) 7).setCellValue(u.getMoney());   
+            row.createCell((short) 8).setCellValue(u.getRegisttime().toLocaleString());   
+            row.createCell((short) 9).setCellValue(u.getStatus());
         }  
         // 第六步，将文件存到指定位置  
         try{  
