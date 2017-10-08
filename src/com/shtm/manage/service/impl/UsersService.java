@@ -1,8 +1,19 @@
 package com.shtm.manage.service.impl;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -369,5 +380,68 @@ public class UsersService extends BaseService implements UsersServiceI {
 		}
 
 	}
+
+	@Override
+	public void getUsersExcel(UsersReceiver rceiver, HttpServletResponse response) throws Exception{
+		// 第一步，创建一个webbook，对应一个Excel文件  
+        HSSFWorkbook wb = new HSSFWorkbook();  
+        // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet  
+        HSSFSheet sheet = wb.createSheet("用户表");  
+        // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
+        HSSFRow row = sheet.createRow((int) 0);  
+        // 第四步，创建单元格，并设置值表头 设置表头居中  
+        HSSFCellStyle style = wb.createCellStyle();  
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式  
+        style.setWrapText(true);
+  
+        HSSFCell cell = row.createCell((short) 0);  
+        cell.setCellValue("id");  
+        cell.setCellStyle(style);  
+        sheet.setColumnWidth(0, 40*256);
+        cell = row.createCell((short) 1);  
+        cell.setCellValue("用户名");  
+        cell.setCellStyle(style);  
+        sheet.setColumnWidth(1, 20*256);
+        cell = row.createCell((short) 2);  
+        cell.setCellValue("邮箱");  
+        cell.setCellStyle(style);  
+        sheet.setColumnWidth(2, 30*256);
+  
+        // 第五步，写入实体数据 实际应用中这些数据从数据库得到，  
+        List<UsersReplier> list = customUsersMapper.selectUsersDatagrid(rceiver);  
+  
+        for (int i = 0; i < list.size(); i++)  
+        {  
+            row = sheet.createRow((int) i + 1);  
+            Users u = (Users) list.get(i);  
+            // 第四步，创建单元格，并设置值  
+            row.createCell((short) 0).setCellValue(u.getId());  
+            row.createCell((short) 1).setCellValue(u.getUsername());  
+            row.createCell((short) 2).setCellValue(u.getEmail());  
+             
+        }  
+        // 第六步，将文件存到指定位置  
+        try{  
+        	String dateStr = formatDate(new Date(), "yyyy_MM_dd_HH_mm_ss");
+        	String path = getValue(CONFIG.FILED_SRC_USERS_EXCEL).toString();
+        	String fileName = dateStr+"_users.xls";
+            
+            
+			String mimetype = "application/x-msdownload";
+			response.setContentType(mimetype);
+			String downFileName = "dataFile.xlsx";
+			String inlineType = "attachment"; // 是否内联附件
+			response.setHeader("Content-Disposition", inlineType
+					+ ";filename=\"" + fileName + "\"");
+			OutputStream out = response.getOutputStream();
+			wb.write(out);
+			out.flush();
+			out.close();
+            
+        }catch (Exception e){  
+            e.printStackTrace();  
+        }  
+    }  
+	
 
 }

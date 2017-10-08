@@ -26,6 +26,8 @@
 		<a href="javascript:editUser();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
 		|
 		<a href="javascript:insertUser();" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
+		|
+		<a href="javascript:getExcel();" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">导出报表</a>
 	</form>
 </div>
 <!-- 工具栏 end -->

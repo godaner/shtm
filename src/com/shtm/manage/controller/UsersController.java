@@ -6,10 +6,13 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
+import com.shtm.manage.groups.UsersGroups.GetUsersExcelGroups;
 import com.shtm.manage.po.UsersReceiver;
 import com.shtm.manage.po.UsersReplier;
 import com.shtm.manage.service.UsersServiceI;
@@ -245,5 +248,59 @@ public class UsersController extends BaseController<UsersServiceI>{
 			replier.setResult(RESULT.FALSE);
 		}
 		return replier;
+	}
+	
+
+	/**
+	  * Title:checkGetUsersExcelCondition
+	  * <p>
+	  * Description:检测用户是否具有调用getExcel方法的条件;
+	  * <p>
+	  * @author Kor_Zhang
+	  * @date 2017年10月8日 下午11:24:03
+	  * @version 1.0
+	  * @param rceiver
+	  * @return
+	  * @throws Exception
+	  */
+	@RequiresAuthentication
+	@RequiresPermissions("users:select")
+	@RequestMapping("checkGetUsersExcelCondition")
+	public @ResponseBody UsersReplier checkGetUsersExcelCondition() throws Exception{
+		
+		
+		UsersReplier replier = new UsersReplier();
+		
+		replier.setMsg("");
+		
+		replier.setResult(RESULT.TRUE);
+		
+		return replier;
+	}
+	/**
+	 * Title:getUsersExcel
+	 * <p>
+	 * Description:导出excel
+	 * <p>
+	 * @author Kor_Zhang
+	 * @date 2017年9月20日 下午4:54:57
+	 * @version 1.0
+	 * @param id
+	 * @return
+	 */
+	@RequiresAuthentication
+	@RequiresPermissions("users:select")
+	@RequestMapping("getUsersExcel")
+	public void getUsersExcel(@Validated(value={GetUsersExcelGroups.class}) UsersReceiver rceiver,BindingResult result) throws Exception{
+		
+		
+		try {
+			
+			getError(result);
+			
+			service.getUsersExcel(rceiver,getResponse());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

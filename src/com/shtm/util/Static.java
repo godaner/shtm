@@ -126,6 +126,11 @@ public interface Static {
 		 * 
 		 */
 		static final String FILED_SRC_GOODS_IMGS = "config.src.goods.imgs";
+		/**
+		 * 生成的excel存放位置
+		 * 
+		 */
+		static final String FILED_SRC_USERS_EXCEL = "config.src.users.excel";
 		
 		/**
 		 * 用户头像尺寸版本字段

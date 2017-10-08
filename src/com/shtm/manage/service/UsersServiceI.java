@@ -1,5 +1,9 @@
 package com.shtm.manage.service;
 
+import java.io.File;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.shtm.manage.po.UsersReceiver;
 import com.shtm.manage.po.UsersReplier;
 
@@ -81,4 +85,18 @@ public interface UsersServiceI {
 	 * @param receiver
 	 */
 	public void insertUser(UsersReceiver receiver)throws Exception;
+
+	/**
+	  * Title:
+	  * <p>
+	  * Description:获取excel
+	  * <p>
+	  * @author Kor_Zhang
+	  * @date 2017年10月8日 下午10:06:39
+	  * @version 1.0
+	  * @param rceiver
+	  * @return 
+	  * @throws Exception
+	  */
+	public void getUsersExcel(UsersReceiver rceiver, HttpServletResponse response) throws Exception;
 }

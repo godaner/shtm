@@ -71,7 +71,25 @@ public class Util extends RedisUtil {
 	public final static ValidateCode vc = new ValidateCode(160, 40, 5, 150);
 
 	
-	
+	/**
+	  * Title:
+	  * <p>
+	  * Description:格式化日期
+	  * <p>
+	  * @author Kor_Zhang
+	  * @date 2017年10月8日 下午10:16:50
+	  * @version 1.0
+	  * @param date
+	  * @param pattern
+	  * @return
+	  */
+	public static String formatDate(Date date,String pattern){
+		if(pattern == null || pattern.trim().equals("")){
+			pattern = "yyyy-MM-dd HH:mm:ss";
+		}
+		
+		return new SimpleDateFormat(pattern).format(date);
+	} 
 	/**
 	 * 
 	 * Title:
