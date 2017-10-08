@@ -1,7 +1,11 @@
 package com.shtm.manage.po;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.shtm.manage.groups.UsersGroups.GetUsersExcelGroups;
 import com.shtm.po.Users;
 
 /**
@@ -17,16 +21,22 @@ import com.shtm.po.Users;
 public class UsersReceiver extends Users {
 	
 
-	//排序方式
+	// 排序方式
+	@NotNull(message = "{users.order.notnull.error}", groups = { GetUsersExcelGroups.class })
 	private String order;
-	
-	//排序字段
+
+	// 排序字段
+	@NotNull(message = "{users.sort.notnull.error}", groups = { GetUsersExcelGroups.class })
 	private String sort;
 
 	// 当前多少页数
+	@NotNull(message = "{users.page.notnull.error}", groups = { GetUsersExcelGroups.class })
+	@Range(message = "{users.page.range.error}", groups = { GetUsersExcelGroups.class })
 	private Integer page;
 
 	// 一页的行数
+	@NotNull(message = "{users.rows.notnull.error}", groups = { GetUsersExcelGroups.class })
+	@Range(message = "{users.rows.range.error}", groups = { GetUsersExcelGroups.class })
 	private Integer rows;
 	
 	// 分页开始

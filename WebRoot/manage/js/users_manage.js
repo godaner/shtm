@@ -603,4 +603,41 @@ function clearInsertUserForm(){
 	insertUserForm.clearEasyuiForm();
 	
 }
+/**
+ * 获取excel
+ */
+function getExcel(){
+	/**
+	 * 检测当前用户是否具有导出excel的条件
+	 */
+	var url = manageForwardUrl+"/users/checkGetUsersExcelCondition.action";
+	ajax.send(url, function(data){
 
+		//获取筛选条件
+		var searchConditions = usersSearchForm.serializeObject();
+
+		//获取分页参数
+		var options = users_datagrid.datagrid('options');
+		var page = options.pageNumber;
+		var rows = options.pageSize;
+		var sortName = options.sortName;
+		var sortOrder = options.sortOrder;
+		searchConditions['page'] = page;
+		searchConditions['rows'] = rows;
+		searchConditions['sort'] = sortName;
+		searchConditions['order'] = sortOrder;
+		
+		//转化为表单参数
+		var formParam = jsObj2FormParams(searchConditions);
+		
+		window.open(manageForwardUrl+"/users/getUsersExcel.action?"+formParam);
+		
+	}, function(data){
+		
+	}, function(){
+		
+	})
+	
+	
+	
+}

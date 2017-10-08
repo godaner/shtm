@@ -1,5 +1,18 @@
 
 /**
+ * js对象转化为表单参数
+ * @param jsObj
+ */
+function jsObj2FormParams(jsObj){
+	var formParam = "";
+	for(var name in jsObj){
+		formParam = formParam + name +"="+jsObj[name] + "&";
+		
+	}
+	return formParam.substring(0, formParam.length - 1);
+}
+
+/**
  * WebSocket构造法;
  * baseUrl形如ws://localhost:8080/websocket
  * 
