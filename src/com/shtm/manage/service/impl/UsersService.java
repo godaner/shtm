@@ -16,9 +16,6 @@ import com.shtm.po.Users;
 import com.shtm.po.UsersExample;
 import com.shtm.po.UsersExample.Criteria;
 import com.shtm.service.impl.BaseService;
-import com.shtm.util.Static.CONFIG;
-import com.shtm.util.Static.REG;
-import com.shtm.util.Static.USERS_STATUS;
 
 /**
  * 
