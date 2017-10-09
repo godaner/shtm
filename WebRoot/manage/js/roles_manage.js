@@ -67,8 +67,6 @@ function initRolesManageVar(){
 	
 	birthday = $("#birthday");
 	
-	roleIdSearch = $("#roleIdSearch");
-	
 	
 	//设置按钮
 	birthday.datebox({
@@ -114,11 +112,10 @@ function loadRolesManageUI(){
 	
 	
 	//判斷加载參數
-	var key = "roleId";
+	var key = "id";
 	if(admins_to_roles_tab_context.contain(key)){
-		c(admins_to_roles_tab_context);
-		roleIdSearch.textbox("setValue",admins_to_roles_tab_context.getAttr(key));
-		
+		rolesIdSearch.textbox("setValue",admins_to_roles_tab_context.getAttr(key));
+
 	}
 	
 	//加载roles的datagrid

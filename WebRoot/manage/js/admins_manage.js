@@ -698,7 +698,7 @@ function checkRole(roleId,roleName){
 			
 			admins_to_roles_tab_context.clear();
 			
-			admins_to_roles_tab_context.setAttr("roleId", roleId);
+			admins_to_roles_tab_context.setAttr("id", roleId);
 			
 			addTab(roles_manage_tab_title,roles_manage_tab_url);
 			
