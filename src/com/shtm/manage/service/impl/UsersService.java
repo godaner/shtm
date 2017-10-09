@@ -21,6 +21,8 @@ import com.shtm.manage.mapper.CustomUsersMapper;
 import com.shtm.manage.po.UsersReceiver;
 import com.shtm.manage.po.UsersReplier;
 import com.shtm.manage.po.echarts.ECharts;
+import com.shtm.manage.po.echarts.NameValue;
+import com.shtm.manage.po.echarts.Series;
 import com.shtm.manage.service.UsersServiceI;
 import com.shtm.mapper.UsersMapper;
 import com.shtm.po.Users;
@@ -492,8 +494,16 @@ public class UsersService extends BaseService implements UsersServiceI {
 
 	@Override
 	public ECharts getUsersSexCircleChartData() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		ECharts e = new ECharts();
+		List<NameValue> seriesData = customUsersMapper.getUsersSexCircleChartData();
+		
+		Series s = new Series();
+		
+		s.setData(seriesData);
+		
+		e.setSeries(s);
+		
+		return e;
 	}  
 	
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.shtm.manage.po.UsersReceiver;
 import com.shtm.manage.po.UsersReplier;
+import com.shtm.manage.po.echarts.NameValue;
 
 
 /**
@@ -43,4 +44,17 @@ public interface CustomUsersMapper {
 	 * @throws Exception
 	 */
 	Integer selectUsersNum(UsersReceiver po)throws Exception;
+	/**
+	 * 
+	  * Title:
+	  * <p>
+	  * Description:获取性别圆饼图数据;
+	  * <p>
+	  * @author Kor_Zhang
+	  * @date 2017年10月10日 上午12:19:10
+	  * @version 1.0
+	  * @return
+	  * @throws Exception
+	 */
+	List<NameValue> getUsersSexCircleChartData() throws Exception;
 }
