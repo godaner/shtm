@@ -2,14 +2,27 @@ package com.shtm.manage.po;
 
 import java.util.List;
 
-public class Replier<T> {
+
+/**
+  * Title:
+  * <p>
+  * Description:簡單的信息返回者;
+  * <p>
+  * @author Kor_Zhang
+  * @date 2017年10月9日 下午6:36:29
+  * @version 1.0
+  * @param <T>
+  */
+public class SimpleReplier<T> {
 	// 操作结果
 	private Integer result;
 
 	// 返回信息
 	private String msg;
 
+	// 返回列表
 	private List<T> rows;
+
 
 	public Integer getResult() {
 		return result;

@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shtm.manage.mapper.CustomUsersMapper;
 import com.shtm.manage.po.UsersReceiver;
 import com.shtm.manage.po.UsersReplier;
+import com.shtm.manage.po.echarts.ECharts;
 import com.shtm.manage.service.UsersServiceI;
 import com.shtm.mapper.UsersMapper;
 import com.shtm.po.Users;
@@ -487,7 +488,13 @@ public class UsersService extends BaseService implements UsersServiceI {
         }catch (Exception e){  
             e.printStackTrace();  
         }  
-    }  
+    }
+
+	@Override
+	public ECharts getUsersSexCircleChartData() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}  
 	
 
 }

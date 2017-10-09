@@ -4,12 +4,12 @@
 <link rel="stylesheet" type="text/css" href="${manageStaticSrcUrl}/css/users_chart.css">
 
 
-
-<div id="picturePlace" style="width:500px;height:500px"></div>
+	<!-- 性别圆饼图 -->
+	<div id="users_sex_0" style="width:100%;height:500px"></div>
 
 
 
 
  
 <script type="text/javascript" src="${manageStaticSrcUrl}/plugin/echarts.common.min.js"></script>
-<script type="text/javascript" src="${manageStaticSrcUrl}/js/users_chart.js"></script>
+<script type="text/javascript" src="${manageStaticSrcUrl}/js/users_charts.js"></script>
