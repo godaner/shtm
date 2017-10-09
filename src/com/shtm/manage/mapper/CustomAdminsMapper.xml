@@ -32,23 +32,52 @@
 		</where>
 	</sql>
 	
+	<resultMap autoMapping="true" type="com.shtm.manage.po.AdminsReplier" id="selectAdminsDatagrid_resultMap">
+		<id property="id"  column="id" />  
+		<collection property="roles"  ofType="com.shtm.po.Roles" javaType="ArrayList">
+			<id column="roleId" property="id"/>
+			<result column="roleName" property="name"/>
+		</collection>
+	</resultMap>
 	
-	
-	<select id="selectAdminsDatagrid" parameterType="com.shtm.manage.po.AdminsReceiver" resultType="com.shtm.manage.po.AdminsReplier">
-	select u1.*,u2.id as creator,u2.username as creatorName
-	from
-	(
-		SELECT u0.*,rownum as n
-		FROM
+	<select id="selectAdminsDatagrid" parameterType="com.shtm.manage.po.AdminsReceiver" resultMap="selectAdminsDatagrid_resultMap">
+	<!-- 	select u1.*,u2.id as creator,u2.username as creatorName,getRolesByAdminId(u1.id) as roles
+		from
 		(
-			SELECT *
-			FROM admins
-			<include refid="selectAdminsConditions"></include>
-			ORDER BY ${sort} ${order}
-		) u0
-		WHERE rownum &lt;=#{end}
-	) u1,admins u2
-	where u1.n &gt;= #{start} AND u1.creator = u2.id(+)
+			SELECT u0.*,rownum as n
+			FROM
+			(
+				SELECT *
+				FROM admins
+				<include refid="selectAdminsConditions"></include>
+				ORDER BY ${sort} ${order}
+			) u0
+			WHERE rownum &lt;=#{end}
+		) u1,admins u2
+		where u1.n &gt;= #{start} AND u1.creator = u2.id(+) -->
+	
+	
+		SELECT a0.*,u2.id as creator,u2.username as creatorName,r.id AS roleId,r.name roleName
+		FROM (
+		    select u1.*
+		    from
+		    (
+		      SELECT u0.*,rownum as n
+		      FROM
+		      (
+		        SELECT *
+		        FROM admins
+		        <include refid="selectAdminsConditions"></include>
+				ORDER BY ${sort} ${order}
+		      ) u0
+		      WHERE rownum &lt;=#{end}
+		    ) u1
+		    where u1.n &gt;= #{start}
+		) a0 ,ROLES r,admins u2,ADMINS_ROLES ar
+		WHERE a0.creator = u2.id(+) AND  a0.id = ar.ADMIN(+) AND r.id(+) = ar.ROLE
+	
+	
+	
 		
 	</select>
 	<select id="selectAdminsNum" parameterType="com.shtm.manage.po.AdminsReceiver"

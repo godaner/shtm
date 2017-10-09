@@ -13,6 +13,9 @@
 			<if test="status !=null">
 				and status = #{status}
 			</if>
+			<if test="id !=null">
+				and id = #{id}
+			</if>
 			and STATUS !=-1
 		</where>
 	</sql>

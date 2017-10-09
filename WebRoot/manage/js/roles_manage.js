@@ -29,7 +29,7 @@ var buttons;
 var currtRolesRow;
 //请求的管理员头像的尺寸
 var headimgSize = 60;
-var rolesSearchId;
+var rolesIdSearch;
 var roles_permissions_datagrid;
 
 var editRolePermissionDialog;
@@ -54,7 +54,7 @@ function initRolesManageVar(){
 	insertRoleDialog = $("#insertRoleDialog");
 	insertRoleForm = $("#insertRoleForm");
 
-	rolesSearchId = rolesSearchForm.find("#id");
+	rolesIdSearch = rolesSearchForm.find("#id");
 	
 	editRolePermissionDialog = $("#editRolePermissionDialog");
 	
@@ -111,21 +111,18 @@ function loadRolesManageUI(){
 	});
 	
 	
-	/*id	1
-	username	123
-	password	4297f44b13955235245b2497399d7a93
-	salt	123
-	status	1
-	createtime	1505441889000
-	creator	null
-	theme	bootstrap
-	email	null*/
-	
+	//判斷加载參數
+	var key = "id";
+	if(admins_to_roles_tab_context.contain(key)){
+		rolesIdSearch.textbox("setValue",admins_to_roles_tab_context.getAttr(key));
+
+	}
 	
 	//加载roles的datagrid
 	roles_datagrid.datagrid({    
 	    url:manageForwardUrl+"/roles/selectRolesDatagrid.action",
 	    toolbar:"#roles_dg_tb",
+	    queryParams:admins_to_roles_tab_context.removeObj(key),
 	    pagination:true,
 	    striped:true,
 	    fitColumns:true,
@@ -453,14 +450,14 @@ function clearInsertRoleForm(){
  * 查看某个管理员信息
  * @param roleId
  */
-function checkRole(roleId){
+/*function checkRole(roleId){
 	
 	clearRoleSearch();
 	
-	rolesSearchId.textbox("setValue",roleId);
+	rolesIdSearch.textbox("setValue",roleId);
 	
 	searchRoles();
-};
+};*/
 
 /**
  * 编辑管理员角色

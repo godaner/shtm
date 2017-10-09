@@ -471,13 +471,11 @@ public class UsersService extends BaseService implements UsersServiceI {
         // 第六步，将文件存到指定位置  
         try{  
         	String dateStr = formatDate(new Date(), "yyyy_MM_dd_HH_mm_ss");
-        	String path = getValue(CONFIG.FILED_SRC_USERS_EXCEL).toString();
         	String fileName = dateStr+"_users.xls";
             
             
 			String mimetype = "application/x-msdownload";
 			response.setContentType(mimetype);
-			String downFileName = "dataFile.xlsx";
 			String inlineType = "attachment"; // 是否内联附件
 			response.setHeader("Content-Disposition", inlineType
 					+ ";filename=\"" + fileName + "\"");
