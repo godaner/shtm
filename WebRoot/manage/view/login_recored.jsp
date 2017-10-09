@@ -12,8 +12,14 @@
 -->
 <script type="text/javascript" charset="utf-8" src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
 <script  type="text/javascript" charset="utf-8">
-	c(remote_ip_info);
-	c(returnCitySN);
+	var remote_ip_info = remote_ip_info;
+	if(isEmpty(remote_ip_info)){//联网无效处理
+		remote_ip_info = {"cip": "0.0.0.0", "cid": "000000", "cname": "未知"};
+	}
+	var returnCitySN = returnCitySN;
+	if(isEmpty(returnCitySN)){//联网无效处理
+		returnCitySN = {"ret":-1,"start":-1,"end":-1,"country":"未知","province":"未知","city":"未知","district":"","isp":"","type":"","desc":""};
+	}
 </script> 
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/visit.js"></script>
 <!-- 

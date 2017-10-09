@@ -29,4 +29,15 @@
 <!-- easyui的datagrid end -->
 
 
+
+<!-- 管理员属性编辑弹窗 start -->
+<%@include file="./clazzs_manage_edit_dialog.jsp" %>
+<!-- 管理员属性编辑弹窗 end -->
+
+<!-- 新增管理员弹窗 start -->
+<%@include file="./clazzs_manage_insert_dialog.jsp" %>
+<!-- 新增管理员弹窗 end -->
+
+
+
 <script type="text/javascript" charset="utf-8" src="${manageStaticSrcUrl}/js/clazzs_manage.js"></script>

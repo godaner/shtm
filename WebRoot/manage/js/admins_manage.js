@@ -135,7 +135,6 @@ function loadAdminsManageUI(){
 		checkOnSelect:true,
 		selectOncheck:true,
 	    sortName : 'createtime',
-	    nowrap:false,
 	    sortOrder : 'desc', //降序
 	    onLoadSuccess:function(data){
 	    	responseHandler.handleSuccess(data, function(){
@@ -181,7 +180,9 @@ function loadAdminsManageUI(){
 	        },    
 	        {
 	        	field:'custom_roles',
-	        	title:'角色',
+	        	title:'角色',	    
+	        	nowrap:false,
+	        	width:25,
         		formatter: function(value,row,index){
 					var roles = row.roles;
 					var r = "";

@@ -159,7 +159,7 @@ public class ClazzsController extends BaseController<ClazzsServiceI> {
 	
 	/**
 	 * 
-	 * Title:
+	 * Title:updateClazzs
 	 * <p>
 	 * Description:更新類型
 	 * <p>

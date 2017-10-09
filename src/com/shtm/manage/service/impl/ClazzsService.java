@@ -104,7 +104,7 @@ public class ClazzsService extends BaseService implements ClazzsServiceI {
 		eject(list.size() > 0, "该类名已存在");
 		
 		//禁止更新num字段
-		receiver.setNum(list.get(0).getNum());
+		receiver.setNum(null);
 		
 		
 		clazzsMapper.updateByPrimaryKeySelective(receiver);
