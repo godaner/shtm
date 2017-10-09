@@ -1,8 +1,10 @@
 package com.shtm.manage.po;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.shtm.po.Admins;
+import com.shtm.po.Roles;
 
 /**
  * Title:CustomAdmins
@@ -84,17 +86,15 @@ public class AdminsReplier<T> extends Admins{
 		this.creatorName = creatorName;
 	}
 
-	@Override
-	public String toString() {
-		return "AdminsReplier [result=" + result + ", msg=" + msg + ", rows="
-				+ rows + ", total=" + total + ", creatorName=" + creatorName
-				+ ", getId()=" + getId() + ", getUsername()=" + getUsername()
-				+ ", getPassword()=" + getPassword() + ", getSalt()="
-				+ getSalt() + ", getStatus()=" + getStatus()
-				+ ", getCreatetime()=" + getCreatetime() + ", getCreator()="
-				+ getCreator() + ", getTheme()=" + getTheme() + ", getEmail()="
-				+ getEmail() + ", getStaticc()=" + getStaticc()
-				+ ", getDescription()=" + getDescription() + "]";
+	//該admin的roles
+	private List<Roles> roles;
+
+	public List<Roles> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Roles> roles) {
+		this.roles = roles;
 	}
 	
 	

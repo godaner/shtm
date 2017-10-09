@@ -128,6 +128,9 @@
 	//管理员的tab的title,url
 	//var admins_manage_tab_title = "管理员管理";
 	//var admins_manage_tab_url = manageStaticSrcUrl+'/view/admins_manage.jsp';
+	//角色的tab的title,url
+	var roles_manage_tab_title = "角色管理";
+	var roles_manage_tab_url = manageStaticSrcUrl+'/view/roles_manage.jsp';
 
 	
 	//users跳转到goods的tab的上下文环境
@@ -136,6 +139,8 @@
 	var goods_to_users_tab_context = new Context();
 	//admins跳转到admins的tab的上下文环境
 	//var admins_to_admins_tab_context = new Context();
+	//admins跳转到roles的tab的上下文环境
+	var admins_to_roles_tab_context = new Context();
 	
 	
 </script>

@@ -177,6 +177,20 @@ function loadAdminsManageUI(){
         		formatter: function(value,row,index){
 					return "******";
 				}
+	        },    
+	        {
+	        	field:'custom_roles',
+	        	title:'角色',
+	        	width:30,
+        		formatter: function(value,row,index){
+					var roles = row.roles;
+					var r = "";
+					for (var i = 0; i < roles.length; i++) {
+						r = r + "<a href=javascript:checkRole('"+roles[i].id+"','"+roles[i].name+"')>"+roles[i].name+"</a>,";
+					}
+					r = r.substring(0, r.length-1);
+					return r;
+				}
 	        },   
 	        {
 	        	field:'description',
@@ -649,11 +663,45 @@ function submitAdminRolesEdit(){
 	ajax.sendJson(url, 
 	data, 
 	function(data){
-		c(data);
+//		c(data);
 		editAdminRoleDialog.dialog("close");
+		admins_datagrid.datagrid('reload');
 	}, function(){
 		editAdminRoleDialog.dialog("open");
 	}, function(){
 		
 	});
 }
+
+
+/**
+ * 跳转tab查看角色
+ * @param roleId
+ */
+function checkRole(roleId,roleName){
+	
+	confirm("确认查询角色 "+roleName+" 的信息?", function(r){
+		if(r){
+			if(tabs.tabs('exists',roles_manage_tab_title)){
+				
+				tabs.tabs('select',roles_manage_tab_title);
+				//清空条件
+				rolesSearchForm.clearEasyuiForm();
+				
+				rolesIdSearch.textbox("setValue",roleId);
+				
+				searchRoles();
+				
+				return;
+			}
+
+			
+			admins_to_roles_tab_context.clear();
+			
+			admins_to_roles_tab_context.setAttr("roleId", roleId);
+			
+			addTab(roles_manage_tab_title,roles_manage_tab_url);
+			
+		}
+	});
+};
