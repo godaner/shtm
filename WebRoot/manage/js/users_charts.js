@@ -33,7 +33,7 @@ function load_users_sex_0(){
 		
 		series.data = data.series.data;
 		
-		series.name = "来源";
+		series.name = "性别";
 		
 		var users_sex_0_option = getCircleOptions(title, legend, series)
 		// 为echarts对象加载数据
