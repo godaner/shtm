@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.shtm.controller.BaseController;
 import com.shtm.manage.po.UsersReceiver;
 import com.shtm.manage.po.UsersReplier;
+import com.shtm.manage.po.echarts.ECharts;
 import com.shtm.manage.service.UsersServiceI;
-import com.shtm.util.Static.RESULT;
 
 /**
   * Title:
@@ -41,26 +41,26 @@ public class UsersChartsController extends BaseController<UsersServiceI>{
 	 */
 	@RequiresAuthentication
 	@RequiresPermissions("users:select")
-	@RequestMapping("insertUser")
-	public @ResponseBody UsersReplier insertUser(UsersReceiver receiver) throws Exception{
+	@RequestMapping("getUsersSexCircleChartData")
+	public @ResponseBody ECharts getUsersSexCircleChartData() throws Exception{
 		
 		
-		UsersReplier replier = new UsersReplier();
+		ECharts echarts = new ECharts();
 		try {
 			
-			service.insertUser(receiver);
+			echarts = service.getUsersSexCircleChartData();
 			
-			replier.setMsg("添加用户成功");
+			echarts.setMsg("获取性别分布成功");
 			
-			replier.setResult(RESULT.TRUE);
+			echarts.setResult(RESULT.TRUE);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 
-			replier.setMsg("添加失败");
+			echarts.setMsg(e.getMessage());
 			
-			replier.setResult(RESULT.FALSE);
+			echarts.setResult(RESULT.FALSE);
 		}
-		return replier;
+		return echarts;
 	}
 }

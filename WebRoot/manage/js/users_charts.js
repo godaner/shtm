@@ -13,7 +13,7 @@ function load_users_sex_0(){
 
 	
 	
-	var url = manageForwardUrl+"/users/getUsersSexCircleChartData.action";
+	var url = manageForwardUrl+"/userscharts/getUsersSexCircleChartData.action";
 	ajax.send(url, function(data){
 		
 		var title = {};

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.shtm.manage.po.Replier;
+import com.shtm.manage.po.SimpleReplier;
 import com.shtm.util.Static.RESULT;
 import com.shtm.util.Util;
 
@@ -27,7 +27,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		
 		ex.printStackTrace();
 		
-		Replier r = new Replier();
+		SimpleReplier r = new SimpleReplier();
 		
 		r.setRows(Util.getList());
 		
