@@ -758,7 +758,7 @@ function clearGoodSearch(){
 function insertGood(){
 
 	
-	insertGoodDialog.dialog('open');
+//	insertGoodDialog.dialog('open');
 	
 	
 }
@@ -985,7 +985,7 @@ function updateMainImg(goodsId,goodImgId){
  */
 function openAddGoodsImgDialog(){
 	goods_upload_imgs_dialog.dialog({   
-	    title:"新增商品商品图片",
+	    title:"新增商品图片",
 		resizable : true,
 		modal : true,
 		closed : false,

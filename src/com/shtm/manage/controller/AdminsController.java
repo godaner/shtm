@@ -390,7 +390,7 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 			/**
 			 * 执行业务
 			 */
-			service.insertAdmin(ad.getId(), receiver);
+			replier = service.insertAdmin(ad.getId(), receiver);
 
 			replier.setResult(RESULT.TRUE);
 

@@ -220,13 +220,6 @@ function loadRolesManageUI(){
 }
 
 
-/**
- * 删除管理员
- */
-function deleteRole(){
-	
-}
-
 
 /**
  * 编辑roles,弹出编辑框
@@ -288,8 +281,9 @@ function submitRoleEdit(){
 	    	responseHandler.handleSuccess(data, function(){
 	    		//更新成功
 				
-				//刷新表格
-				roles_datagrid.datagrid("reload");
+	    		//刷新表格
+	    		updateDatagridSelectedRow( manageForwardUrl + "/roles/selectRolesDatagrid.action",
+    			roles_datagrid);
 	    	}, function(){
 
 				//失敗
@@ -338,13 +332,13 @@ function deleteRole(){
 			var url = manageForwardUrl+"/roles/deleteRole.action?id="+id;
 			ajax.send(url, function(data){
 				//显示信息
-				showMsg(data.msg);
+//				showMsg(data.msg);
 				
 				//关闭信息编辑
 				editRoleDialog.dialog('close');
 				
 				//刷新表格
-				roles_datagrid.datagrid("reload");
+				removeDatagridSelectedRow(admins_datagrid);
 				
 			}, function(){
 				
@@ -413,7 +407,10 @@ function submitNewRole(){
 	    	responseHandler.handleSuccess(data, function(){
 	    		//更新成功
 				//刷新表格
-				roles_datagrid.datagrid("reload");
+	    		roles_datagrid.datagrid('insertRow',{
+	    			index: 0,	// 索引从0开始
+	    			row: data
+				});
 	    	}, function(){
 	    		//失敗
 				//打開信息编辑
@@ -597,8 +594,9 @@ function submitRolePermissionsEdit(){
 	ajax.sendJson(url, 
 	data, 
 	function(data){
-		c(data);
-		editRolePermissionDialog.dialog("close");
+		//刷新表格
+		updateDatagridSelectedRow( manageForwardUrl + "/roles/selectRolesDatagrid.action",
+		roles_datagrid);
 	}, function(){
 		editRolePermissionDialog.dialog("open");
 	}, function(){

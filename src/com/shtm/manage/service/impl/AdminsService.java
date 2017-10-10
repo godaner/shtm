@@ -157,7 +157,7 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	}
 
 	@Override
-	public void insertAdmin(String id,AdminsReceiver receiver) throws Exception {
+	public AdminsReplier insertAdmin(String id,AdminsReceiver receiver) throws Exception {
 
 		/**
 		 * 小寫郵箱和用戶名
@@ -190,6 +190,12 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		receiver.setPassword(md5(receiver.getPassword()+receiver.getSalt()));
 		
 		adminsMapper.insert(receiver);
+		
+		AdminsReplier replier = new AdminsReplier();
+		
+		BeanUtils.copyProperties(receiver, replier);
+		
+		return replier;
 	}
 
 	@Override
