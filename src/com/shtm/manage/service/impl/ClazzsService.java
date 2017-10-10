@@ -2,6 +2,7 @@ package com.shtm.manage.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,7 +72,7 @@ public class ClazzsService extends BaseService implements ClazzsServiceI {
 	}
 
 	@Override
-	public void insertClazz(ClazzsReceiver receiver) throws Exception {
+	public ClazzsReplier insertClazz(ClazzsReceiver receiver) throws Exception {
 		
 		//查询是否存在同名clazz
 		ClazzsExample example = new ClazzsExample();
@@ -90,6 +91,12 @@ public class ClazzsService extends BaseService implements ClazzsServiceI {
 		receiver.setId(uuid());
 		
 		clazzsMapper.insert(receiver);
+		
+		ClazzsReplier replier = new ClazzsReplier();
+		
+		BeanUtils.copyProperties(receiver, replier);
+		
+		return replier;
 	}
 
 	@Override

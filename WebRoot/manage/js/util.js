@@ -7,7 +7,7 @@
  * @param datagrid
  */
 function removeDatagridSelectedRow(datagrid){
-	var row = goods_datagrid.datagrid('getSelected');
+	var row = datagrid.datagrid('getSelected');
 	var rowIndex = datagrid.datagrid("getRowIndex",row);
 	datagrid.datagrid('deleteRow',rowIndex);
 }
@@ -19,7 +19,7 @@ function removeDatagridSelectedRow(datagrid){
  * @param url	manageForwardUrl+"/goods/selectGoodsDatagrid.action"
  */
 function updateDatagridSelectedRow(url,datagrid){
-	var row = goods_datagrid.datagrid('getSelected');
+	var row = datagrid.datagrid('getSelected');
 	//更新指定行
 	var rowIndex = datagrid.datagrid("getRowIndex",row) + 1;
 	var strParams = "sort=id&order=desc&page=1&rows=1&id="+row.id;

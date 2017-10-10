@@ -63,9 +63,10 @@ public interface ClazzsServiceI {
 	 * @date 2017年9月29日 上午9:27:31
 	 * @version 1.0
 	 * @param receiver
+	 * @return 
 	 * @throws Exception
 	 */
-	void insertClazz(ClazzsReceiver receiver) throws Exception;
+	ClazzsReplier insertClazz(ClazzsReceiver receiver) throws Exception;
 
 	/**
 	 * Title:

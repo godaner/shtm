@@ -4,13 +4,13 @@
 	
 	<sql id="selectClazzsConditions">
 		<where>
-			
+			1 = 1
 			<if test="text !=null and text!=''">
 				AND text like '%${text}%'
 			</if>
 			
 			<if test="id !=null and id!=''">
-				AND id like #{id}
+				AND id = #{id}
 			</if>
 		</where>
 	</sql>

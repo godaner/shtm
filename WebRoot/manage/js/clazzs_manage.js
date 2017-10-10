@@ -211,7 +211,9 @@ function submitClazzEdit(){
 	    		//关闭信息编辑
 		    	editClazzDialog.dialog('close');
 				//刷新表格
-				clazzs_datagrid.datagrid("reload");
+//				clazzs_datagrid.datagrid("reload");
+		    	updateDatagridSelectedRow( manageForwardUrl + "/clazzs/selectClazzsDatagrid.action",
+		    			clazzs_datagrid);
 	    	}, function(){
 
 				//失敗
@@ -256,7 +258,13 @@ function submitNewClazz(){
 	    	responseHandler.handleSuccess(data, function(){
 	    		//更新成功
 				//刷新表格
-				clazzs_datagrid.datagrid("reload");
+//				clazzs_datagrid.datagrid("reload");
+	    		
+	    		clazzs_datagrid.datagrid('insertRow',{
+	    			index: 0,	// 索引从0开始
+	    			row: data
+	    		});
+	    		
 	    	}, function(){
 	    		//失敗
 				//打開信息编辑
@@ -312,13 +320,14 @@ function deleteClazz(){
 			var url = manageForwardUrl+"/clazzs/deleteClazz.action?id="+id;
 			ajax.send(url, function(data){
 				//显示信息
-				showMsg(data.msg);
+//				showMsg(data.msg);
 				
 				//关闭信息编辑
 				editClazzDialog.dialog('close');
 				
 				//刷新表格
-				clazzs_datagrid.datagrid("reload");
+//				clazzs_datagrid.datagrid("reload");
+				removeDatagridSelectedRow(clazzs_datagrid);
 				
 			}, function(){
 				

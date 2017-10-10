@@ -197,7 +197,7 @@ public class UsersController extends BaseController<UsersServiceI>{
 		UsersReplier replier = new UsersReplier();
 		try {
 			
-			service.insertUser(receiver);
+			replier = service.insertUser(receiver);
 			
 			replier.setMsg("添加用户成功");
 			
@@ -206,7 +206,7 @@ public class UsersController extends BaseController<UsersServiceI>{
 		} catch (Exception e) {
 			e.printStackTrace();
 
-			replier.setMsg("添加失败");
+			replier.setMsg(e.getMessage());
 			
 			replier.setResult(RESULT.FALSE);
 		}

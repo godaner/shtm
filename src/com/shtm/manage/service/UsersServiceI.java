@@ -84,8 +84,9 @@ public interface UsersServiceI {
 	 * @date 2017年9月21日 上午11:58:38
 	 * @version 1.0
 	 * @param receiver
+	 * @return 
 	 */
-	public void insertUser(UsersReceiver receiver)throws Exception;
+	public UsersReplier insertUser(UsersReceiver receiver)throws Exception;
 
 	/**
 	  * Title:

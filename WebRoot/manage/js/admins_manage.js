@@ -268,6 +268,39 @@ function loadAdminsManageUI(){
  * 删除管理员
  */
 function deleteAdmin(){
+
+	//获取datagrid当前选择行
+	var row = admins_datagrid.datagrid('getSelected');
+	//确认删除?
+	confirm("确认删除"+row.username+"?",function(r){
+		if(r){
+			//进度条
+			
+			
+			var id = row.id;
+			
+			
+			var url = manageForwardUrl+"/users/deleteAdmin.action?id="+id;
+			ajax.send(url, function(data){
+				//显示信息
+//				showMsg(data.msg);
+				
+				//关闭信息编辑
+				editAdminDialog.dialog('close');
+				
+				//刷新表格
+//				users_datagrid.datagrid("reload");
+
+				//刷新表格
+//				clazzs_datagrid.datagrid("reload");
+				removeDatagridSelectedRow(admins_datagrid);
+				
+			}, function(){
+				
+			});
+		}
+	});
+	
 	
 }
 

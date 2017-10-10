@@ -144,7 +144,7 @@ public class ClazzsController extends BaseController<ClazzsServiceI> {
 			
 			getError(result);
 			
-			service.insertClazz(receiver);
+			replier = service.insertClazz(receiver);
 
 			replier.setMsg("插入數據成功");
 			replier.setResult(RESULT.TRUE);
