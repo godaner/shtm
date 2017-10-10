@@ -651,7 +651,14 @@ function submitGoodEdit(){
 	    		//更新成功
 				
 				//刷新表格
-				goods_datagrid.datagrid("reload");
+	    		
+//				goods_datagrid.datagrid("reload");
+	    		
+	    		
+	    		//刷新指定行
+	    		updateDatagridSelectedRow(manageForwardUrl+"/goods/selectGoodsDatagrid.action",
+						goods_datagrid);
+	    		
 	    	}, function(){
 	    		//失敗
 				//打開信息编辑
@@ -673,6 +680,7 @@ function submitGoodEdit(){
 	
 
 }
+
 /**
  * 重置用戶信息
  */
@@ -702,8 +710,10 @@ function deleteGood(){
 				//关闭信息编辑
 				editGoodDialog.dialog('close');
 				
-				//刷新表格
-				goods_datagrid.datagrid("reload");
+				//刪除被選擇的行表格
+//				goods_datagrid.datagrid("reload");
+				
+				removeDatagridSelectedRow(goods_datagrid);
 				
 			}, function(){
 				
@@ -958,6 +968,11 @@ function updateMainImg(goodsId,goodImgId){
 	ajax.send(manageForwardUrl+"/goods/updateGoodsMainImg.action?owner="+goodsId+"&id="+goodImgId, 
 	function(data){
 		goods_imgs_datagrid.datagrid("reload");
+		//更新成功
+		
+		//刷新指定行
+		updateDatagridSelectedRow(manageForwardUrl+"/goods/selectGoodsDatagrid.action",
+				goods_datagrid);
 	}, function(){
 		
 	}, function(){
@@ -1003,9 +1018,9 @@ function submitGoodsImgs(){
 	    	
 	    	responseHandler.handleSuccess(data, function(data){
 	    		//更新成功
-				
-				//刷新商品图片列表
-				goods_imgs_datagrid.datagrid("reload");
+	    		goods_imgs_datagrid.datagrid("reload");
+	    		//刷新指定行
+	    		
 	    	}, function(){
 	    		
 	    	});

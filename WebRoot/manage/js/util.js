@@ -1,4 +1,43 @@
 
+
+
+/**
+ * 刪除datagrid被選擇的行;<br/>
+ * datagrid必須為單行顯示;
+ * @param datagrid
+ */
+function removeDatagridSelectedRow(datagrid){
+	var row = goods_datagrid.datagrid('getSelected');
+	var rowIndex = datagrid.datagrid("getRowIndex",row);
+	datagrid.datagrid('deleteRow',rowIndex);
+}
+
+/**
+ * 连接服务器更新datagrid选择的一行某行;<br/>
+ * datagrid必須為單行顯示;
+ * @param datagrid	easyui的datagrid;
+ * @param url	manageForwardUrl+"/goods/selectGoodsDatagrid.action"
+ */
+function updateDatagridSelectedRow(url,datagrid){
+	var row = goods_datagrid.datagrid('getSelected');
+	//更新指定行
+	var rowIndex = datagrid.datagrid("getRowIndex",row) + 1;
+	var strParams = "sort=id&order=desc&page=1&rows=1&id="+row.id;
+	ajax.send(url+"?"+strParams,
+	function(data){
+		c(data.rows);
+		datagrid.datagrid('updateRow',{
+			index: rowIndex-1,
+			row: data.rows[0]
+		});
+
+	}, function(data){
+		
+	}, function(){
+		
+	});
+}
+
 /**
  * js对象转化为表单参数
  * @param jsObj
