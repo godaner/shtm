@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shtm.manage.mapper.CustomUsersMapper">
-	
-	<!-- 获取echarts的饼状图的数据 -->
-	<select id="getUsersSexCircleChartData" resultType="com.shtm.manage.po.echarts.NameValue">
-		select CASE WHEN sex=1 THEN '男' WHEN sex=0 THEN '女' WHEN sex=-1 THEN '未设置' END AS NAME,COUNT(*) AS VALUE
-		from users
-		group by sex
-	</select>
-	
-	
-	
-	
-	
-	
+
 	<sql id="selectUsersConditions">
 		<where>
 			STATUS != -1

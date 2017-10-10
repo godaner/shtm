@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shtm.manage.mapper.CustomUsersChartsMapper">
+	
+	<!-- 获取echarts的饼状图的数据 -->
+	<select id="getUsersSexCircleChartData" resultType="com.shtm.manage.po.echarts.NameValue">
+		select CASE WHEN sex=1 THEN '男' WHEN sex=0 THEN '女' WHEN sex=-1 THEN '未设置' END AS NAME,COUNT(*) AS VALUE
+		from users
+		group by sex
+	</select>
+	<!-- 获取echarts所需的用户月注册数折线图的数据 -->
+	<select id="getUsersMonthRegistNumberChartData" resultType="com.shtm.manage.po.echarts.NameValue">
+		select to_char(u.REGISTTIME,'mm') AS NAME,COUNT(u.id) AS VALUE 
+		from users u  
+		WHERE to_char(u.REGISTTIME,'yyyy') = to_char(SYSDATE,'yyyy') 
+		group by to_char(u.REGISTTIME,'mm')
+		order by name asc
+	</select>
+	
+</mapper>
