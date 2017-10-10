@@ -150,7 +150,7 @@ function clearGoodSearch(){
  * 新增clazzs
  */
 function insertClazzs(){
-	
+	insertClazzDialog.dialog('open');
 }
 /**
  * 编辑clazzs
@@ -190,8 +190,9 @@ function submitClazzEdit(){
 	
 	//用easyui提交表单的方式提交;
 	editClazzForm.form('submit', {  
-	    url:manageForwardUrl+"/clazzs/updateClazzs.action",    
+	    url:manageForwardUrl+"/clazzs/updateClazz.action",    
 	    ajax:true,
+	    iframe:false,
 	    //提交表单前的回调事件
 	    onSubmit: function(){   
 	    	//使用easyui的表单验证
@@ -292,3 +293,41 @@ function resetClazz(){
 	
 	showMsg("重置成功");
 }
+
+
+
+/**
+ * 删除clazz
+ */
+function deleteClazz(){
+	//确认删除?
+	confirm("确认删除"+currtClzzsRow.text+"?",function(r){
+		if(r){
+			//进度条
+			
+			
+			var id = currtClzzsRow.id;
+			
+			
+			var url = manageForwardUrl+"/clazzs/deleteClazz.action?id="+id;
+			ajax.send(url, function(data){
+				//显示信息
+				showMsg(data.msg);
+				
+				//关闭信息编辑
+				editClazzDialog.dialog('close');
+				
+				//刷新表格
+				clazzs_datagrid.datagrid("reload");
+				
+			}, function(){
+				
+			});
+		}
+	});
+	
+	
+	
+}
+
+

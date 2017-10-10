@@ -52,7 +52,7 @@ public interface ClazzsServiceI {
 	 * @param receiver
 	 * @throws Exception
 	 */
-	void deleteClazzs(ClazzsReceiver receiver) throws Exception;
+	void deleteClazz(ClazzsReceiver receiver) throws Exception;
 
 	/**
 	 * Title:
@@ -65,7 +65,7 @@ public interface ClazzsServiceI {
 	 * @param receiver
 	 * @throws Exception
 	 */
-	void insertClazzs(ClazzsReceiver receiver) throws Exception;
+	void insertClazz(ClazzsReceiver receiver) throws Exception;
 
 	/**
 	 * Title:
@@ -78,7 +78,7 @@ public interface ClazzsServiceI {
 	 * @param receiver
 	 * @throws Exception
 	 */
-	void updateClazzs(ClazzsReceiver receiver) throws Exception;
+	void updateClazz(ClazzsReceiver receiver) throws Exception;
 
 	
 }

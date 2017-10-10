@@ -9,7 +9,7 @@
 					<label>名称</label> 
 				</td>
 				<td>
-					<input id="username" name="username" class="easyui-textbox input" data-options="prompt:'请输入用户名',required:true" style="width:100%"> 
+					<input id="text" name="text" class="easyui-textbox input" data-options="prompt:'请输入名称',required:true" style="width:100%"> 
 				</td>
 			</tr>
 			<tr>

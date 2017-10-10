@@ -64,14 +64,14 @@ public class ClazzsService extends BaseService implements ClazzsServiceI {
 	}
 
 	@Override
-	public void deleteClazzs(ClazzsReceiver receiver) throws Exception {
+	public void deleteClazz(ClazzsReceiver receiver) throws Exception {
 		
 		clazzsMapper.deleteByPrimaryKey(receiver.getId());
 		
 	}
 
 	@Override
-	public void insertClazzs(ClazzsReceiver receiver) throws Exception {
+	public void insertClazz(ClazzsReceiver receiver) throws Exception {
 		
 		//查询是否存在同名clazz
 		ClazzsExample example = new ClazzsExample();
@@ -87,11 +87,13 @@ public class ClazzsService extends BaseService implements ClazzsServiceI {
 		//执行插入
 		receiver.setNum(0d);
 		
+		receiver.setId(uuid());
+		
 		clazzsMapper.insert(receiver);
 	}
 
 	@Override
-	public void updateClazzs(ClazzsReceiver receiver) throws Exception {
+	public void updateClazz(ClazzsReceiver receiver) throws Exception {
 		//查询是否存在同名clazz
 		ClazzsExample example = new ClazzsExample();
 
