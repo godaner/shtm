@@ -245,8 +245,6 @@ function loadGoodsManageUI(){
 					case -1:
 						break;
 					case -2:
-						fun = "updateGoodsStatus('-7','"+goodsId+"')";
-						words = words+"("+font.color("取消通过", "green")+")";
 						break;
 					case -3:
 						fun = "updateGoodsStatus('-7','"+goodsId+"')";

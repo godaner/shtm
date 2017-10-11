@@ -19,6 +19,7 @@ import com.shtm.mapper.FilesMapper;
 import com.shtm.mapper.GoodsClazzsMapper;
 import com.shtm.mapper.GoodsImgsMapper;
 import com.shtm.mapper.GoodsMapper;
+import com.shtm.mapper.UsersMapper;
 import com.shtm.po.Clazzs;
 import com.shtm.po.Files;
 import com.shtm.po.Goods;
@@ -27,6 +28,7 @@ import com.shtm.po.GoodsClazzsExample;
 import com.shtm.po.GoodsClazzsExample.Criteria;
 import com.shtm.po.GoodsImgs;
 import com.shtm.po.GoodsImgsExample;
+import com.shtm.po.Users;
 import com.shtm.service.impl.BaseService;
 
 /**
@@ -41,6 +43,9 @@ import com.shtm.service.impl.BaseService;
 @Service
 public class GoodsService extends BaseService implements GoodsServiceI {
 
+	@Autowired
+	private UsersMapper usersMapper;
+	
 	@Autowired
 	private GoodsMapper goodsMapper;
 	
@@ -454,6 +459,22 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 			if (newStatus == GOODS_STAUS.RETURN_MONEY_SUCCESS || 
 					newStatus == GOODS_STAUS.BUYER_RECEIVED_AND_FINISHED	){
 				goodsMapper.updateByPrimaryKeySelective(g);
+				if(newStatus == GOODS_STAUS.RETURN_MONEY_SUCCESS){//退款成功
+					//退款到buyer用户
+					Users dbu = usersMapper.selectByPrimaryKey(dbGood.getBuyer());
+					
+					if(null != dbu){
+						Users nu = new Users();
+						
+						nu.setId(dbu.getId());
+						
+						nu.setMoney(dbu.getMoney()+dbGood.getSprice());
+						
+						usersMapper.updateByPrimaryKeySelective(nu);
+					}
+					
+					
+				}
 			} else {
 				eject("更新状态失败");
 			}
