@@ -472,7 +472,18 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 						
 						usersMapper.updateByPrimaryKeySelective(nu);
 					}
+					//从owner扣款
+					Users owner = usersMapper.selectByPrimaryKey(dbGood.getOwner());
 					
+					if(null != owner){
+						Users nu = new Users();
+						
+						nu.setId(owner.getId());
+						
+						nu.setMoney(owner.getMoney()-dbGood.getSprice());
+						
+						usersMapper.updateByPrimaryKeySelective(nu);
+					}
 					
 				}
 			} else {
