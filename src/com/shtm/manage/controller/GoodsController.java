@@ -19,14 +19,14 @@ import com.shtm.manage.groups.GoodsGroups.SelectGoodsByPK;
 import com.shtm.manage.groups.GoodsGroups.SelectGoodsDatagrid;
 import com.shtm.manage.groups.GoodsGroups.SelectGoodsImgsDatagrid;
 import com.shtm.manage.groups.GoodsGroups.UpdateGoodGroups;
-import com.shtm.manage.groups.GoodsGroups.UpdateGoodsStatusGroups;
 import com.shtm.manage.groups.GoodsGroups.UpdateGoodsMainImgGroups;
+import com.shtm.manage.groups.GoodsGroups.UpdateGoodsStatusGroups;
 import com.shtm.manage.groups.GoodsGroups.UploadGoodsImgsGroups;
 import com.shtm.manage.po.GoodsImgsReceiver;
+import com.shtm.manage.po.GoodsImgsReplier;
 import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 import com.shtm.manage.service.GoodsServiceI;
-import com.shtm.util.Static.CONFIG;
 
 /**
  * Title:GoodsController
@@ -138,7 +138,7 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	@RequiresAuthentication
 	@RequiresPermissions("goods:select")
 	@RequestMapping("/selectGoodsImgsDatagrid")
-	public @ResponseBody GoodsReplier selectGoodsImgsDatagrid(@Validated(value={SelectGoodsImgsDatagrid.class}) GoodsReceiver receiver,
+	public @ResponseBody GoodsReplier selectGoodsImgsDatagrid(@Validated(value={SelectGoodsImgsDatagrid.class}) GoodsImgsReceiver receiver,
 			BindingResult result)
 			throws Exception {
 
@@ -373,15 +373,15 @@ public class GoodsController extends BaseController<GoodsServiceI> {
 	@RequiresAuthentication
 	@RequiresPermissions("goods:update")
 	@RequestMapping("/uploadGoodsImgs")
-	public @ResponseBody GoodsReplier uploadGoodsImgs(@Validated(value={UploadGoodsImgsGroups.class}) GoodsReceiver receiver,
+	public @ResponseBody GoodsImgsReplier uploadGoodsImgs(@Validated(value={UploadGoodsImgsGroups.class}) GoodsImgsReceiver receiver,
 			BindingResult result){
-		GoodsReplier replier = new GoodsReplier();
+		GoodsImgsReplier replier = new GoodsImgsReplier();
 
 		try {
 			
 			getError(result);
 			
-			service.uploadGoodsImgs(receiver);
+			replier = service.uploadGoodsImgs(receiver);
 
 			replier.setResult(RESULT.TRUE);
 

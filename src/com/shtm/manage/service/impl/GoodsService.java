@@ -202,7 +202,7 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 	}
 
 	@Override
-	public GoodsReplier selectGoodsImgsDatagrid(GoodsReceiver receiver)
+	public GoodsReplier selectGoodsImgsDatagrid(GoodsImgsReceiver receiver)
 			throws Exception {
 		
 		GoodsReplier replier = new GoodsReplier();
@@ -217,7 +217,7 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 	}
 
 	@Override
-	public void uploadGoodsImgs(GoodsReceiver receiver) throws Exception {
+	public GoodsImgsReplier uploadGoodsImgs(GoodsImgsReceiver receiver) throws Exception {
 		
 		/**
 		 * 判断上传图片的数量
@@ -260,19 +260,28 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		/**
 		 * 保存goodsimgs
 		 */
-		GoodsImgs gi = new GoodsImgs();
 		
-		gi.setId(uuid);
-		gi.setImg(uuid);
-		gi.setMain(GOODS_IMGS_IS_MAIN.NO);
-		gi.setOwner(receiver.getId());
+		receiver.setId(uuid);
+		receiver.setImg(uuid);
+		receiver.setMain(GOODS_IMGS_IS_MAIN.NO);
+		receiver.setOwner(receiver.getGoodsId());
 		
-		goodsImgsMapper.insert(gi);
+		goodsImgsMapper.insert(receiver);
+		
+		GoodsImgsReplier replier = new GoodsImgsReplier();
+		
+		BeanUtils.copyProperties(receiver, replier);
+		
+		replier.setPath(f.getPath());
+		
+		return replier;
 		
 	}
 
 	@Override
 	public void updateGoodsMainImg(GoodsImgsReceiver receiver) throws Exception {
+		//查询goodsimg的所有者(goodid);
+		GoodsImgs gi = goodsImgsMapper.selectByPrimaryKey(receiver.getId());
 		
 		/**
 		 * 更新旧的所有图片为非主图
@@ -282,7 +291,7 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		
 		com.shtm.po.GoodsImgsExample.Criteria criteria0 = example.createCriteria();
 		
-		criteria0.andOwnerEqualTo(receiver.getOwner());
+		criteria0.andOwnerEqualTo(gi.getOwner());
 		
 		
 		//设置更新字段

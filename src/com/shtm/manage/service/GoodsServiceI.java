@@ -1,6 +1,7 @@
 package com.shtm.manage.service;
 
 import com.shtm.manage.po.GoodsImgsReceiver;
+import com.shtm.manage.po.GoodsImgsReplier;
 import com.shtm.manage.po.GoodsReceiver;
 import com.shtm.manage.po.GoodsReplier;
 
@@ -82,7 +83,7 @@ public interface GoodsServiceI {
 	 * @return
 	 * @throws Exception
 	 */
-	GoodsReplier selectGoodsImgsDatagrid(GoodsReceiver receiver) throws Exception;
+	GoodsReplier selectGoodsImgsDatagrid(GoodsImgsReceiver receiver) throws Exception;
 
 	/**
 	 * Title:
@@ -93,9 +94,10 @@ public interface GoodsServiceI {
 	 * @date 2017年9月27日 下午8:09:44
 	 * @version 1.0
 	 * @param receiver
+	 * @return 
 	 * @throws Exception
 	 */
-	void uploadGoodsImgs(GoodsReceiver receiver) throws Exception;
+	GoodsImgsReplier uploadGoodsImgs(GoodsImgsReceiver receiver) throws Exception;
 
 	/**
 	 * Title:
