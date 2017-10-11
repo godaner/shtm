@@ -969,12 +969,13 @@ function updateMainImg(goodImgId){
 	ajax.send(manageForwardUrl+"/goods/updateGoodsMainImg.action?id="+goodImgId, 
 	function(data){
 		//更新成功
-		
-		updateDatagridSelectedRow(manageForwardUrl+"/goods/selectGoodsImgsDatagrid.action",
-				goods_imgs_datagrid);
 		//刷新指定行
 		updateDatagridSelectedRow(manageForwardUrl+"/goods/selectGoodsDatagrid.action",
 				goods_datagrid);
+		goods_imgs_datagrid.datagrid('reload');
+		/*updateDatagridSelectedRow(manageForwardUrl+"/goods/selectGoodsImgsDatagrid.action",
+				goods_imgs_datagrid);*/
+		
 		
 		
 	}, function(){
