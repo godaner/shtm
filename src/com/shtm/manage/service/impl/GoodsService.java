@@ -458,6 +458,11 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		if (oldStatus == GOODS_STAUS.WAIT_RETURN_MONEY) {
 			if (newStatus == GOODS_STAUS.RETURN_MONEY_SUCCESS || 
 					newStatus == GOODS_STAUS.BUYER_RECEIVED_AND_FINISHED	){
+				//拒绝退款后清除凭证
+				if(newStatus == GOODS_STAUS.BUYER_RECEIVED_AND_FINISHED){//退款成功
+					g.setRefusereturnmoneybill("");
+				}
+				
 				goodsMapper.updateByPrimaryKeySelective(g);
 				if(newStatus == GOODS_STAUS.RETURN_MONEY_SUCCESS){//退款成功
 					//退款到buyer用户
@@ -486,6 +491,7 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 					}
 					
 				}
+				
 			} else {
 				eject("更新状态失败");
 			}
