@@ -79,13 +79,15 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 
 		// 设置记录总数
 		Integer totalNum = customGoodsMapper.selectGoodsNum(receiver);
-
+		
 		replier.setTotal(totalNum);
 
 		return replier;
 		
 	}
-
+	public static void main(String[] args) {
+		System.out.println(5/2);
+	}
 	@Override
 	public void updateGood(GoodsReceiver receiver) throws Exception {
 		//判斷商品狀態
