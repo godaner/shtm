@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shtm.manage.mapper.CustomGoodsImgsMapper">
+	
 	<!-- 查询商品图片列表信息 -->
-	<select id="selectGoodsImgsDatagrid" parameterType="com.shtm.manage.po.GoodsReceiver" resultType="com.shtm.manage.po.GoodsImgsReplier">
-		  SELECT T0.*
-		  FROM 
-		  (
-		    SELECT GI0.*,F0.PATH,ROWNUM AS N
-		    FROM GOODS G0,FILES F0,GOODS_IMGS GI0
-		    WHERE G0.ID = GI0.OWNER AND GI0.IMG = F0.ID and g0.id = #{id} AND ROWNUM &lt;=#{end}
-		   ) T0
-		   WHERE T0.N &gt;=#{start}
+	<select id="selectGoodsImgsDatagrid" parameterType="com.shtm.manage.po.GoodsImgsReceiver" resultType="com.shtm.manage.po.GoodsImgsReplier">
+		SELECT T0.*
+		FROM 
+		(
+		   SELECT t1.*
+		    FROM 
+		        (
+		          SELECT GI0.*,F0.PATH,ROWNUM AS N
+		         FROM GOODS G0,FILES F0,GOODS_IMGS GI0
+		         WHERE G0.ID = GI0.OWNER AND GI0.IMG = F0.ID and g0.id = #{goodsId}
+		         <if test="id !=null and id!=''">
+					AND gi0.id = #{id}
+				 </if>
+		        ) t1
+		 
+		WHERE t1.N &lt;=#{end}
+		) T0
+		WHERE T0.N &gt;=#{start}
+
+		 
   
 	</select>
 	<!-- 查询指定id的商品图片数量 -->
@@ -18,8 +30,10 @@
 
 		SELECT count(*)
 		FROM GOODS G0,GOODS_IMGS GI0
-		WHERE G0.ID = GI0.OWNER and g0.id = #{id}
-	  
+		WHERE G0.ID = GI0.OWNER and g0.id = #{goodsId}
+	  	<if test="id !=null and id!=''">
+			AND gi0.id = #{id}
+		</if>
 	</select>
 	
 	

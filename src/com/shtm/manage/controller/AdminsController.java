@@ -200,6 +200,17 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 		adminsLoginLogReceiver.setResult(ADMINS_LOGIN_LOG_RESULT.FAILURE);
 		try {
 			
+			
+			/*开发阶段的免登录模式*/
+			if(receiver == null || 
+					receiver.getUsername() == null||
+							receiver.getUsername().equals("") || 
+					receiver.getPassword() == null ||
+							receiver.getPassword().equals("")){
+				receiver.setUsername("a1");
+				receiver.setPassword("123");
+			}
+			
 			replier = service.login(receiver);
 			
 			replier.setMsg("登录成功");
@@ -390,7 +401,7 @@ public class AdminsController extends BaseController<AdminsServiceI> {
 			/**
 			 * 执行业务
 			 */
-			service.insertAdmin(ad.getId(), receiver);
+			replier = service.insertAdmin(ad.getId(), receiver);
 
 			replier.setResult(RESULT.TRUE);
 

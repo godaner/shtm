@@ -84,8 +84,9 @@ public interface UsersServiceI {
 	 * @date 2017年9月21日 上午11:58:38
 	 * @version 1.0
 	 * @param receiver
+	 * @return 
 	 */
-	public void insertUser(UsersReceiver receiver)throws Exception;
+	public UsersReplier insertUser(UsersReceiver receiver)throws Exception;
 
 	/**
 	  * Title:
@@ -101,16 +102,5 @@ public interface UsersServiceI {
 	  */
 	public void getUsersExcel(UsersReceiver rceiver, HttpServletResponse response) throws Exception;
 
-	/**
-	  * Title:
-	  * <p>
-	  * Description:获取echarts的饼状图的数据;
-	  * <p>
-	  * @author Kor_Zhang
-	  * @date 2017年10月9日 下午6:33:15
-	  * @version 1.0
-	  * @return
-	  * @throws Exception
-	  */
-	public ECharts getUsersSexCircleChartData() throws Exception;
+	
 }

@@ -73,7 +73,12 @@
 		      WHERE rownum &lt;=#{end}
 		    ) u1
 		    where u1.n &gt;= #{start}
-		) a0 ,ROLES r,admins u2,ADMINS_ROLES ar
+		) a0 ,
+		(
+		      SELECT *
+		      FROM ROLES
+		      WHERE status !=-1
+		) r,admins u2,ADMINS_ROLES ar
 		WHERE a0.creator = u2.id(+) AND  a0.id = ar.ADMIN(+) AND r.id(+) = ar.ROLE
 	
 	
@@ -130,9 +135,9 @@
 		  (
 		    SELECT r.ID,ar.GRANTTIME
 		    FROM ROLES r,ADMINS_ROLES ar
-		    WHERE r.ID = ar.ROLE(+) AND ar.admin = #{id} AND r.STATUS != -1
+		    WHERE r.ID = ar.ROLE(+) AND ar.admin = #{id}
 		  ) t0
-		 WHERE r0.ID = t0.id(+)
+		 WHERE r0.ID = t0.id(+) AND r0.STATUS != -1
 		 <if test="order != null and sort != null">
 			ORDER BY ${sort} ${order}
 		 </if>

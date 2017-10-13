@@ -9,7 +9,7 @@ package com.shtm.manage.po.echarts;
   * @date 2017年10月9日 下午5:17:56
   * @version 1.0
   */
-public class KeyValue {
+public class NameValue {
 	private String name;
 	private String value;
 	public String getName() {

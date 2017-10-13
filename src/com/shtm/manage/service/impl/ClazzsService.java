@@ -2,6 +2,7 @@ package com.shtm.manage.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,14 +65,14 @@ public class ClazzsService extends BaseService implements ClazzsServiceI {
 	}
 
 	@Override
-	public void deleteClazzs(ClazzsReceiver receiver) throws Exception {
+	public void deleteClazz(ClazzsReceiver receiver) throws Exception {
 		
 		clazzsMapper.deleteByPrimaryKey(receiver.getId());
 		
 	}
 
 	@Override
-	public void insertClazzs(ClazzsReceiver receiver) throws Exception {
+	public ClazzsReplier insertClazz(ClazzsReceiver receiver) throws Exception {
 		
 		//查询是否存在同名clazz
 		ClazzsExample example = new ClazzsExample();
@@ -87,11 +88,19 @@ public class ClazzsService extends BaseService implements ClazzsServiceI {
 		//执行插入
 		receiver.setNum(0d);
 		
+		receiver.setId(uuid());
+		
 		clazzsMapper.insert(receiver);
+		
+		ClazzsReplier replier = new ClazzsReplier();
+		
+		BeanUtils.copyProperties(receiver, replier);
+		
+		return replier;
 	}
 
 	@Override
-	public void updateClazzs(ClazzsReceiver receiver) throws Exception {
+	public void updateClazz(ClazzsReceiver receiver) throws Exception {
 		//查询是否存在同名clazz
 		ClazzsExample example = new ClazzsExample();
 
@@ -104,7 +113,7 @@ public class ClazzsService extends BaseService implements ClazzsServiceI {
 		eject(list.size() > 0, "该类名已存在");
 		
 		//禁止更新num字段
-		receiver.setNum(list.get(0).getNum());
+		receiver.setNum(null);
 		
 		
 		clazzsMapper.updateByPrimaryKeySelective(receiver);

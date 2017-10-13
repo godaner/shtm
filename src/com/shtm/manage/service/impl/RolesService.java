@@ -2,6 +2,7 @@ package com.shtm.manage.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +74,7 @@ public class RolesService extends BaseService implements RolesServiceI {
 	}
 
 	@Override
-	public void insertRoleGroups(RolesReceiver receiver) throws Exception {
+	public RolesReplier insertRoleGroups(RolesReceiver receiver) throws Exception {
 		
 		/**
 		 * 判断name是否存在
@@ -97,6 +98,12 @@ public class RolesService extends BaseService implements RolesServiceI {
 		 */
 		
 		rolesMapper.insert(receiver);
+		
+		RolesReplier replier = new RolesReplier();
+		
+		BeanUtils.copyProperties(receiver, replier);
+		
+		return replier;
 		
 	}
 

@@ -43,4 +43,5 @@ public interface CustomUsersMapper {
 	 * @throws Exception
 	 */
 	Integer selectUsersNum(UsersReceiver po)throws Exception;
+	
 }

@@ -2,8 +2,10 @@ package com.shtm.manage.mapper;
 
 import java.util.List;
 
+import com.shtm.manage.po.GoodsImgsReceiver;
 import com.shtm.manage.po.GoodsImgsReplier;
 import com.shtm.manage.po.GoodsReceiver;
+import com.shtm.po.Goods;
 
 /**
  * Title:CustomGoodsImgsMapper
@@ -27,7 +29,7 @@ public interface CustomGoodsImgsMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<GoodsImgsReplier> selectGoodsImgsDatagrid(GoodsReceiver receiver) throws Exception;
+	public List<GoodsImgsReplier> selectGoodsImgsDatagrid(GoodsImgsReceiver receiver) throws Exception;
 
 	/**
 	 * Title:
@@ -40,6 +42,6 @@ public interface CustomGoodsImgsMapper {
 	 * @param string
 	 * @return
 	 */
-	public Integer selectGoodsImgsNum(GoodsReceiver receiver) throws Exception;
+	public Integer selectGoodsImgsNum(GoodsImgsReceiver receiver) throws Exception;
 
 }

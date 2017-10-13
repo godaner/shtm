@@ -219,6 +219,7 @@ function loadGoodsManageUI(){
 					var goodsId= row.id;
 					var sellerId= row.owner;
 					var fileName = row.refusereturnmoneybill;
+					c(fileName);
 					var fun = "void(0);"
 					var words = statusCode2String(value);
 					
@@ -244,8 +245,6 @@ function loadGoodsManageUI(){
 					case -1:
 						break;
 					case -2:
-						fun = "updateGoodsStatus('-7','"+goodsId+"')";
-						words = words+"("+font.color("取消通过", "green")+")";
 						break;
 					case -3:
 						fun = "updateGoodsStatus('-7','"+goodsId+"')";
@@ -651,7 +650,14 @@ function submitGoodEdit(){
 	    		//更新成功
 				
 				//刷新表格
-				goods_datagrid.datagrid("reload");
+	    		
+//				goods_datagrid.datagrid("reload");
+	    		
+	    		
+	    		//刷新指定行
+	    		updateDatagridSelectedRow(manageForwardUrl+"/goods/selectGoodsDatagrid.action",
+						goods_datagrid);
+	    		
 	    	}, function(){
 	    		//失敗
 				//打開信息编辑
@@ -673,6 +679,7 @@ function submitGoodEdit(){
 	
 
 }
+
 /**
  * 重置用戶信息
  */
@@ -702,8 +709,10 @@ function deleteGood(){
 				//关闭信息编辑
 				editGoodDialog.dialog('close');
 				
-				//刷新表格
-				goods_datagrid.datagrid("reload");
+				//刪除被選擇的行表格
+//				goods_datagrid.datagrid("reload");
+				
+				removeDatagridSelectedRow(goods_datagrid);
 				
 			}, function(){
 				
@@ -748,7 +757,7 @@ function clearGoodSearch(){
 function insertGood(){
 
 	
-	insertGoodDialog.dialog('open');
+//	insertGoodDialog.dialog('open');
 	
 	
 }
@@ -852,7 +861,7 @@ function checkGoodsImgs(goodsid,goodstitle){
 	//商品图片列表
 	goods_imgs_datagrid.datagrid({    
 	    /*toolbar:'#goods_imgs_dg_tb',*/
-		url:manageForwardUrl+"/goods/selectGoodsImgsDatagrid.action?id="+goodsid,
+		url:manageForwardUrl+"/goods/selectGoodsImgsDatagrid.action?goodsId="+goodsid,
 		onLoadSuccess:function(data){
 	    	responseHandler.handleSuccess(data, function(){
 	    		
@@ -923,7 +932,7 @@ function checkGoodsImgs(goodsid,goodstitle){
 				sortable : true,
 				formatter: function(value,row,index){
 						var goodsImgsId = row.id;
-						var a = "<a href=javascript:updateMainImg('"+currtShowImgsGoodsId+"','"+goodsImgsId+"');>设置为主图</a>";
+						var a = "<a href=javascript:updateMainImg('"+goodsImgsId+"');>设置为主图</a>";
 						return a;
 				}
 			}
@@ -942,7 +951,8 @@ function checkGoodsImgs(goodsid,goodstitle){
 function deleteGoodsImg(goodsImgId){
 	ajax.send(manageForwardUrl+"/goods/deleteGoodsImg.action?id="+goodsImgId, 
 			function(data){
-				goods_imgs_datagrid.datagrid("reload");
+				removeDatagridSelectedRow(goods_imgs_datagrid)
+				//刷新指定行
 			}, function(){
 				
 			}, function(){
@@ -951,13 +961,21 @@ function deleteGoodsImg(goodsImgId){
 }
 /**
  * 更新商品主图
- * @param goodsId
  * @param goodImgId
  */
-function updateMainImg(goodsId,goodImgId){
-	ajax.send(manageForwardUrl+"/goods/updateGoodsMainImg.action?owner="+goodsId+"&id="+goodImgId, 
+function updateMainImg(goodImgId){
+	ajax.send(manageForwardUrl+"/goods/updateGoodsMainImg.action?id="+goodImgId, 
 	function(data){
-		goods_imgs_datagrid.datagrid("reload");
+		//更新成功
+		//刷新指定行
+		updateDatagridSelectedRow(manageForwardUrl+"/goods/selectGoodsDatagrid.action",
+				goods_datagrid);
+		goods_imgs_datagrid.datagrid('reload');
+		/*updateDatagridSelectedRow(manageForwardUrl+"/goods/selectGoodsImgsDatagrid.action",
+				goods_imgs_datagrid);*/
+		
+		
+		
 	}, function(){
 		
 	}, function(){
@@ -970,7 +988,7 @@ function updateMainImg(goodsId,goodImgId){
  */
 function openAddGoodsImgDialog(){
 	goods_upload_imgs_dialog.dialog({   
-	    title:"新增商品商品图片",
+	    title:"新增商品图片",
 		resizable : true,
 		modal : true,
 		closed : false,
@@ -986,7 +1004,7 @@ function openAddGoodsImgDialog(){
 function submitGoodsImgs(){
 	pro.show();
 	goods_upload_imgs_form.form('submit', {    
-	    url:manageForwardUrl+"/goods/uploadGoodsImgs.action?id="+currtShowImgsGoodsId,    
+	    url:manageForwardUrl+"/goods/uploadGoodsImgs.action?goodsId="+currtShowImgsGoodsId,    
 	    ajax:true,
 	    iframe:false,
 	    onSubmit: function(){   
@@ -1000,12 +1018,12 @@ function submitGoodsImgs(){
 	    success:function(data){ 
 	    	data = JSON.parse(data);
 	    	
-	    	
 	    	responseHandler.handleSuccess(data, function(data){
-	    		//更新成功
-				
-				//刷新商品图片列表
-				goods_imgs_datagrid.datagrid("reload");
+	    		//刷新指定行
+	    		goods_imgs_datagrid.datagrid('insertRow',{
+	    			index: 0,	// 索引从0开始
+	    			row: data
+	    		});
 	    	}, function(){
 	    		
 	    	});
@@ -1115,12 +1133,14 @@ function updateGoodsStatus(newStatus,goodsId){
 	}
 	ajax.send(manageForwardUrl+"/goods/updateGoodsStatus.action?id="+goodsId+"&status="+newStatus, 
 	function(data){
-		
-		goods_datagrid.datagrid("reload");
+		//刷新指定行
+		updateDatagridSelectedRow(manageForwardUrl+"/goods/selectGoodsDatagrid.action",
+				goods_datagrid);
 		
 		checkBuyerApplyDialog.dialog("close");
-	}, function(){
-		goods_datagrid.datagrid("reload");
+	}, function(){//刷新指定行
+		updateDatagridSelectedRow(manageForwardUrl+"/goods/selectGoodsDatagrid.action",
+				goods_datagrid);
 	}, function(){
 		
 	})

@@ -19,6 +19,7 @@ import com.shtm.mapper.FilesMapper;
 import com.shtm.mapper.GoodsClazzsMapper;
 import com.shtm.mapper.GoodsImgsMapper;
 import com.shtm.mapper.GoodsMapper;
+import com.shtm.mapper.UsersMapper;
 import com.shtm.po.Clazzs;
 import com.shtm.po.Files;
 import com.shtm.po.Goods;
@@ -27,6 +28,7 @@ import com.shtm.po.GoodsClazzsExample;
 import com.shtm.po.GoodsClazzsExample.Criteria;
 import com.shtm.po.GoodsImgs;
 import com.shtm.po.GoodsImgsExample;
+import com.shtm.po.Users;
 import com.shtm.service.impl.BaseService;
 
 /**
@@ -41,6 +43,9 @@ import com.shtm.service.impl.BaseService;
 @Service
 public class GoodsService extends BaseService implements GoodsServiceI {
 
+	@Autowired
+	private UsersMapper usersMapper;
+	
 	@Autowired
 	private GoodsMapper goodsMapper;
 	
@@ -74,13 +79,15 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 
 		// 设置记录总数
 		Integer totalNum = customGoodsMapper.selectGoodsNum(receiver);
-
+		
 		replier.setTotal(totalNum);
 
 		return replier;
 		
 	}
-
+	public static void main(String[] args) {
+		System.out.println(5/2);
+	}
 	@Override
 	public void updateGood(GoodsReceiver receiver) throws Exception {
 		//判斷商品狀態
@@ -202,7 +209,7 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 	}
 
 	@Override
-	public GoodsReplier selectGoodsImgsDatagrid(GoodsReceiver receiver)
+	public GoodsReplier selectGoodsImgsDatagrid(GoodsImgsReceiver receiver)
 			throws Exception {
 		
 		GoodsReplier replier = new GoodsReplier();
@@ -217,7 +224,7 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 	}
 
 	@Override
-	public void uploadGoodsImgs(GoodsReceiver receiver) throws Exception {
+	public GoodsImgsReplier uploadGoodsImgs(GoodsImgsReceiver receiver) throws Exception {
 		
 		/**
 		 * 判断上传图片的数量
@@ -260,19 +267,28 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		/**
 		 * 保存goodsimgs
 		 */
-		GoodsImgs gi = new GoodsImgs();
 		
-		gi.setId(uuid);
-		gi.setImg(uuid);
-		gi.setMain(GOODS_IMGS_IS_MAIN.NO);
-		gi.setOwner(receiver.getId());
+		receiver.setId(uuid);
+		receiver.setImg(uuid);
+		receiver.setMain(GOODS_IMGS_IS_MAIN.NO);
+		receiver.setOwner(receiver.getGoodsId());
 		
-		goodsImgsMapper.insert(gi);
+		goodsImgsMapper.insert(receiver);
+		
+		GoodsImgsReplier replier = new GoodsImgsReplier();
+		
+		BeanUtils.copyProperties(receiver, replier);
+		
+		replier.setPath(f.getPath());
+		
+		return replier;
 		
 	}
 
 	@Override
 	public void updateGoodsMainImg(GoodsImgsReceiver receiver) throws Exception {
+		//查询goodsimg的所有者(goodid);
+		GoodsImgs gi = goodsImgsMapper.selectByPrimaryKey(receiver.getId());
 		
 		/**
 		 * 更新旧的所有图片为非主图
@@ -282,7 +298,7 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		
 		com.shtm.po.GoodsImgsExample.Criteria criteria0 = example.createCriteria();
 		
-		criteria0.andOwnerEqualTo(receiver.getOwner());
+		criteria0.andOwnerEqualTo(gi.getOwner());
 		
 		
 		//设置更新字段
@@ -444,7 +460,40 @@ public class GoodsService extends BaseService implements GoodsServiceI {
 		if (oldStatus == GOODS_STAUS.WAIT_RETURN_MONEY) {
 			if (newStatus == GOODS_STAUS.RETURN_MONEY_SUCCESS || 
 					newStatus == GOODS_STAUS.BUYER_RECEIVED_AND_FINISHED	){
+				//拒绝退款后清除凭证
+				if(newStatus == GOODS_STAUS.BUYER_RECEIVED_AND_FINISHED){//退款成功
+					g.setRefusereturnmoneybill("");
+				}
+				
 				goodsMapper.updateByPrimaryKeySelective(g);
+				if(newStatus == GOODS_STAUS.RETURN_MONEY_SUCCESS){//退款成功
+					//退款到buyer用户
+					Users dbu = usersMapper.selectByPrimaryKey(dbGood.getBuyer());
+					
+					if(null != dbu){
+						Users nu = new Users();
+						
+						nu.setId(dbu.getId());
+						
+						nu.setMoney(dbu.getMoney()+dbGood.getSprice());
+						
+						usersMapper.updateByPrimaryKeySelective(nu);
+					}
+					//从owner扣款
+					Users owner = usersMapper.selectByPrimaryKey(dbGood.getOwner());
+					
+					if(null != owner){
+						Users nu = new Users();
+						
+						nu.setId(owner.getId());
+						
+						nu.setMoney(owner.getMoney()-dbGood.getSprice());
+						
+						usersMapper.updateByPrimaryKeySelective(nu);
+					}
+					
+				}
+				
 			} else {
 				eject("更新状态失败");
 			}

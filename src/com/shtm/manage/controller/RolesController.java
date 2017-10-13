@@ -130,7 +130,7 @@ public class RolesController extends BaseController<RolesServiceI> {
 		try {
 			getError(result);
 
-			service.insertRoleGroups(receiver);
+			replier = service.insertRoleGroups(receiver);
 
 			replier.setResult(RESULT.TRUE);
 			replier.setMsg("添加角色成功");

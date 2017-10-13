@@ -10,7 +10,7 @@ public class GoodsImgs {
 	@NotBlank(message="{goodsimgs.id.notblank.error}",groups={UpdateGoodsMainImgGroups.class,DeleteGoodsImgGroups.class})
     private String id;
 
-	@NotBlank(message="{goodsimgs.owner.notblank.error}",groups={UpdateGoodsMainImgGroups.class})
+	@NotBlank(message="{goodsimgs.owner.notblank.error}",groups={})
     private String owner;
     
     private String img;

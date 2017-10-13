@@ -13,6 +13,7 @@ import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shtm.manage.mapper.CustomUsersMapper;
 import com.shtm.manage.po.UsersReceiver;
 import com.shtm.manage.po.UsersReplier;
-import com.shtm.manage.po.echarts.ECharts;
 import com.shtm.manage.service.UsersServiceI;
 import com.shtm.mapper.UsersMapper;
 import com.shtm.po.Users;
@@ -243,7 +243,7 @@ public class UsersService extends BaseService implements UsersServiceI {
 	}
 
 	@Override
-	public void insertUser(UsersReceiver receiver) throws Exception {
+	public UsersReplier insertUser(UsersReceiver receiver) throws Exception {
 		
 		String uuid = uuid();
 
@@ -380,6 +380,11 @@ public class UsersService extends BaseService implements UsersServiceI {
 			throw e;
 		}
 
+		UsersReplier replier = new UsersReplier();
+		BeanUtils.copyProperties(receiver, replier);
+		replier.setBuyNumber(0);
+		replier.setSellNumber(0);
+		return replier;
 	}
 
 	@Override
@@ -490,11 +495,7 @@ public class UsersService extends BaseService implements UsersServiceI {
         }  
     }
 
-	@Override
-	public ECharts getUsersSexCircleChartData() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}  
+	
 	
 
 }

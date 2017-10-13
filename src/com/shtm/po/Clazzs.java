@@ -2,16 +2,16 @@ package com.shtm.po;
 
 import javax.validation.constraints.NotNull;
 
-import com.shtm.manage.groups.ClazzsGroups.DeleteClazzsGroups;
-import com.shtm.manage.groups.ClazzsGroups.InsertClazzsGroups;
-import com.shtm.manage.groups.ClazzsGroups.UpdateClazzsGroups;
+import com.shtm.manage.groups.ClazzsGroups.DeleteClazzGroups;
+import com.shtm.manage.groups.ClazzsGroups.InsertClazzGroups;
+import com.shtm.manage.groups.ClazzsGroups.UpdateClazzGroups;
 
 public class Clazzs {
 	
-	@NotNull(message="{clazzs.id.notnull.error}",groups={InsertClazzsGroups.class,DeleteClazzsGroups.class,UpdateClazzsGroups.class})
+	@NotNull(message="{clazzs.id.notnull.error}",groups={DeleteClazzGroups.class,UpdateClazzGroups.class})
     private String id;
 	
-	@NotNull(message="{clazzs.text.notnull.error}",groups={InsertClazzsGroups.class,UpdateClazzsGroups.class})
+	@NotNull(message="{clazzs.text.notnull.error}",groups={InsertClazzGroups.class,UpdateClazzGroups.class})
     private String text;
 
     private Double num;

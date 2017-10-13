@@ -37,9 +37,10 @@ public interface RolesServiceI {
 	 * @date 2017年10月2日 上午11:49:01
 	 * @version 1.0
 	 * @param receiver
+	 * @return 
 	 * @throws Exception
 	 */
-	void insertRoleGroups(RolesReceiver receiver) throws Exception;
+	RolesReplier insertRoleGroups(RolesReceiver receiver) throws Exception;
 
 	/**
 	 * Title:

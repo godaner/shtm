@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shtm.controller.BaseController;
-import com.shtm.manage.groups.ClazzsGroups.DeleteClazzsGroups;
-import com.shtm.manage.groups.ClazzsGroups.InsertClazzsGroups;
+import com.shtm.manage.groups.ClazzsGroups.DeleteClazzGroups;
+import com.shtm.manage.groups.ClazzsGroups.InsertClazzGroups;
 import com.shtm.manage.groups.ClazzsGroups.SelectClazzsDatagridGroups;
-import com.shtm.manage.groups.ClazzsGroups.UpdateClazzsGroups;
+import com.shtm.manage.groups.ClazzsGroups.UpdateClazzGroups;
 import com.shtm.manage.po.ClazzsReceiver;
 import com.shtm.manage.po.ClazzsReplier;
 import com.shtm.manage.service.ClazzsServiceI;
@@ -100,8 +100,8 @@ public class ClazzsController extends BaseController<ClazzsServiceI> {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/deleteClazzs")
-	public @ResponseBody ClazzsReplier deleteClazzs(@Validated(value={DeleteClazzsGroups.class}) ClazzsReceiver receiver,
+	@RequestMapping("/deleteClazz")
+	public @ResponseBody ClazzsReplier deleteClazz(@Validated(value={DeleteClazzGroups.class}) ClazzsReceiver receiver,
 			BindingResult result) throws Exception {
 		
 		ClazzsReplier replier = new ClazzsReplier();
@@ -109,7 +109,7 @@ public class ClazzsController extends BaseController<ClazzsServiceI> {
 			
 			getError(result);
 			
-			service.deleteClazzs(receiver);
+			service.deleteClazz(receiver);
 
 			replier.setMsg("删除成功");
 			replier.setResult(RESULT.TRUE);
@@ -135,8 +135,8 @@ public class ClazzsController extends BaseController<ClazzsServiceI> {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/insertClazzs")
-	public @ResponseBody ClazzsReplier insertClazzs(@Validated(value={InsertClazzsGroups.class}) ClazzsReceiver receiver,
+	@RequestMapping("/insertClazz")
+	public @ResponseBody ClazzsReplier insertClazz(@Validated(value={InsertClazzGroups.class}) ClazzsReceiver receiver,
 			BindingResult result) throws Exception {
 		
 		ClazzsReplier replier = new ClazzsReplier();
@@ -144,7 +144,7 @@ public class ClazzsController extends BaseController<ClazzsServiceI> {
 			
 			getError(result);
 			
-			service.insertClazzs(receiver);
+			replier = service.insertClazz(receiver);
 
 			replier.setMsg("插入數據成功");
 			replier.setResult(RESULT.TRUE);
@@ -159,7 +159,7 @@ public class ClazzsController extends BaseController<ClazzsServiceI> {
 	
 	/**
 	 * 
-	 * Title:
+	 * Title:updateClazzs
 	 * <p>
 	 * Description:更新類型
 	 * <p>
@@ -171,8 +171,8 @@ public class ClazzsController extends BaseController<ClazzsServiceI> {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/updateClazzs")
-	public @ResponseBody ClazzsReplier updateClazzs(@Validated(value={UpdateClazzsGroups.class}) ClazzsReceiver receiver,
+	@RequestMapping("/updateClazz")
+	public @ResponseBody ClazzsReplier updateClazz(@Validated(value={UpdateClazzGroups.class}) ClazzsReceiver receiver,
 			BindingResult result) throws Exception {
 		
 		ClazzsReplier replier = new ClazzsReplier();
@@ -180,7 +180,7 @@ public class ClazzsController extends BaseController<ClazzsServiceI> {
 			
 			getError(result);
 			
-			service.updateClazzs(receiver);
+			service.updateClazz(receiver);
 
 			replier.setMsg("更新數據成功");
 			replier.setResult(RESULT.TRUE);

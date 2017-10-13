@@ -135,7 +135,6 @@ function loadAdminsManageUI(){
 		checkOnSelect:true,
 		selectOncheck:true,
 	    sortName : 'createtime',
-	    nowrap:false,
 	    sortOrder : 'desc', //降序
 	    onLoadSuccess:function(data){
 	    	responseHandler.handleSuccess(data, function(){
@@ -181,8 +180,11 @@ function loadAdminsManageUI(){
 	        },    
 	        {
 	        	field:'custom_roles',
-	        	title:'角色',
+	        	title:'角色',	    
+	        	nowrap:false,
+	        	width:25,
         		formatter: function(value,row,index){
+        			
 					var roles = row.roles;
 					var r = "";
 					for (var i = 0; i < roles.length; i++) {
@@ -267,6 +269,39 @@ function loadAdminsManageUI(){
  * 删除管理员
  */
 function deleteAdmin(){
+
+	//获取datagrid当前选择行
+	var row = admins_datagrid.datagrid('getSelected');
+	//确认删除?
+	confirm("确认删除"+row.username+"?",function(r){
+		if(r){
+			//进度条
+			
+			
+			var id = row.id;
+			
+			
+			var url = manageForwardUrl+"/users/deleteAdmin.action?id="+id;
+			ajax.send(url, function(data){
+				//显示信息
+//				showMsg(data.msg);
+				
+				//关闭信息编辑
+				editAdminDialog.dialog('close');
+				
+				//刷新表格
+//				users_datagrid.datagrid("reload");
+
+				//刷新表格
+//				clazzs_datagrid.datagrid("reload");
+				removeDatagridSelectedRow(admins_datagrid);
+				
+			}, function(){
+				
+			});
+		}
+	});
+	
 	
 }
 
@@ -311,7 +346,7 @@ function editAdmin(){
 function submitAdminEdit(){
 
 	//提示信息
-//	pro.show("正在修改");
+	pro.show("正在修改");
 	
 	editAdminForm.form('submit', {  
 	    url:manageForwardUrl+"/admins/updateAdmin.action",    
@@ -332,7 +367,8 @@ function submitAdminEdit(){
 	    		//更新成功
 				
 				//刷新表格
-				admins_datagrid.datagrid("reload");
+	    		updateDatagridSelectedRow( manageForwardUrl + "/admins/selectAdminsDatagrid.action",
+    			admins_datagrid);
 	    	}, function(){
 
 				//失敗
@@ -385,9 +421,10 @@ function deleteAdmin(){
 				
 				//关闭信息编辑
 				editAdminDialog.dialog('close');
-				
 				//刷新表格
-				admins_datagrid.datagrid("reload");
+				
+//				clazzs_datagrid.datagrid("reload");
+				removeDatagridSelectedRow(admins_datagrid);
 				
 			}, function(){
 				
@@ -455,8 +492,12 @@ function submitNewAdmin(){
 	    	data = JSON.parse(data);
 	    	responseHandler.handleSuccess(data, function(){
 	    		//更新成功
-				//刷新表格
-				admins_datagrid.datagrid("reload");
+	    		//刷新表格
+//				users_datagrid.datagrid("reload");
+				users_datagrid.datagrid('insertRow',{
+	    			index: 0,	// 索引从0开始
+	    			row: data
+				});
 	    	}, function(){
 	    		//失敗
 				//打開信息编辑
@@ -665,7 +706,10 @@ function submitAdminRolesEdit(){
 	function(data){
 //		c(data);
 		editAdminRoleDialog.dialog("close");
-		admins_datagrid.datagrid('reload');
+
+		//刷新表格
+		updateDatagridSelectedRow( manageForwardUrl + "/admins/selectAdminsDatagrid.action",
+		admins_datagrid);
 	}, function(){
 		editAdminRoleDialog.dialog("open");
 	}, function(){

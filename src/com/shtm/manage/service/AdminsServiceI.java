@@ -88,9 +88,10 @@ public interface AdminsServiceI {
 	 * @date 2017年9月22日 下午4:19:34
 	 * @version 1.0
 	 * @param receiver
+	 * @return 
 	 * @throws Exception
 	 */
-	public void insertAdmin(String id,AdminsReceiver receiver) throws Exception;
+	public AdminsReplier insertAdmin(String id,AdminsReceiver receiver) throws Exception;
 
 	/**
 	 * Title:deleteAdmin

@@ -29,7 +29,7 @@ public interface ClazzsGroups {
 	 * @date 2017年9月29日 上午9:19:25
 	 * @version 1.0
 	 */
-	public interface DeleteClazzsGroups{};
+	public interface DeleteClazzGroups{};
 	/**
 	 * Title:InsertClazzsGroups
 	 * <p>
@@ -39,7 +39,7 @@ public interface ClazzsGroups {
 	 * @date 2017年9月29日 上午9:19:49
 	 * @version 1.0
 	 */
-	public interface InsertClazzsGroups{};
+	public interface InsertClazzGroups{};
 	
 	
 	/**
@@ -51,5 +51,5 @@ public interface ClazzsGroups {
 	 * @date 2017年9月29日 上午9:33:31
 	 * @version 1.0
 	 */
-	public interface UpdateClazzsGroups{};
+	public interface UpdateClazzGroups{};
 }

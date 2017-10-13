@@ -371,6 +371,32 @@ function checkBuyGoods(buyerId,username){
  */
 function deleteUser(){
 	
+	//确认删除?
+	confirm("确认删除"+currtClzzsRow.text+"?",function(r){
+		if(r){
+			//进度条
+			
+			
+			var id = currtClzzsRow.id;
+			
+			
+			var url = manageForwardUrl+"/clazzs/deleteClazz.action?id="+id;
+			ajax.send(url, function(data){
+				//显示信息
+				showMsg(data.msg);
+				
+				//关闭信息编辑
+				editClazzDialog.dialog('close');
+				
+				//刷新表格
+//				users_datagrid.datagrid("reload");
+				removeDatagridSelectedRow(users_datagrid);
+				
+			}, function(){
+				
+			});
+		}
+	});
 }
 
 
@@ -441,7 +467,9 @@ function submitUserEdit(){
 	    	responseHandler.handleSuccess(data, function(data){
 	    		//更新成功
 	    		//刷新表格
-				users_datagrid.datagrid("reload");
+//				users_datagrid.datagrid("reload");
+	    		updateDatagridSelectedRow( manageForwardUrl + "/users/selectUsersDatagrid.action",
+    			users_datagrid);
 	    	}, function(data){
 	    		//失敗
 				//打開信息编辑
@@ -479,25 +507,32 @@ function resetUser(){
  * 删除用户
  */
 function deleteUser(){
+
+	//获取datagrid当前选择行
+	var row = users_datagrid.datagrid('getSelected');
 	//确认删除?
-	confirm("确认删除"+currtEditDatagridRow.username+"?",function(r){
+	confirm("确认删除"+row.username+"?",function(r){
 		if(r){
 			//进度条
 			
 			
-			var id = currtEditDatagridRow.id;
+			var id = row.id;
 			
 			
 			var url = manageForwardUrl+"/users/deleteUser.action?id="+id;
 			ajax.send(url, function(data){
 				//显示信息
-				showMsg(data.msg);
+//				showMsg(data.msg);
 				
 				//关闭信息编辑
 				editUserDialog.dialog('close');
 				
 				//刷新表格
-				users_datagrid.datagrid("reload");
+//				users_datagrid.datagrid("reload");
+
+				//刷新表格
+//				users_datagrid.datagrid("reload");
+				removeDatagridSelectedRow(users_datagrid);
 				
 			}, function(){
 				
@@ -562,31 +597,26 @@ function submitNewUser(){
 	    success:function(data){ 
 //	    	c(data);
 	    	data = JSON.parse(data);
-	    	
-	    	pro.close();
-			//提示信息
-			showMsg(data.msg);
-
-			if(data.result == 1){
-				//更新成功
-				
+	    	responseHandler.handleSuccess(data, function(data){
 				//刷新表格
-				users_datagrid.datagrid("reload");
-				
-			}else{
-				//失敗
-				//打開信息编辑
+//				users_datagrid.datagrid("reload");
+				c(data);
+				users_datagrid.datagrid('insertRow',{
+	    			index: 0,	// 索引从0开始
+	    			row: data
+				});
+	    	}, function(data){
 				insertUserDialog.dialog('open');
-			}
+	    		
+	    	});
+				
+			
 	    } ,
 	    onLoadError:function(){
-	    	//失敗
-			//提示信息
-			showMsg(data.msg);
-	    	//关闭进度条
-	    	pro.close();
-			//打開信息编辑
-	    	insertUserDialog.dialog('open');
+	    	responseHandler.handleFailure(function(){
+				//打開信息编辑
+		    	insertUserDialog.dialog('open');
+	    	});
 	    }
 	});  
 

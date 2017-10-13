@@ -157,7 +157,7 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	}
 
 	@Override
-	public void insertAdmin(String id,AdminsReceiver receiver) throws Exception {
+	public AdminsReplier insertAdmin(String id,AdminsReceiver receiver) throws Exception {
 
 		/**
 		 * 小寫郵箱和用戶名
@@ -190,6 +190,12 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		receiver.setPassword(md5(receiver.getPassword()+receiver.getSalt()));
 		
 		adminsMapper.insert(receiver);
+		
+		AdminsReplier replier = new AdminsReplier();
+		
+		BeanUtils.copyProperties(receiver, replier);
+		
+		return replier;
 	}
 
 	@Override
@@ -283,7 +289,10 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 		BeanUtils.copyProperties(dbA, replier);
 		
 		//通知shiro的session和websoket更新
-		notifyShiroSessionAndWSUpdate(replier.getId(),replier);
+//		notifyShiroSessionAndWSUpdate(replier.getId(),replier);
+		
+		//迫使其掉线
+		notifyWSLogout(replier.getId());
 		
 		//判斷是否凍結
 		if(receiver.getStatus() == ADMINS_STATUS.FROZEN){
@@ -500,11 +509,11 @@ public class AdminsService extends BaseService implements AdminsServiceI {
 	 * @version 1.0
 	 * @param adminId
 	 * @param newAdmin
-	 */
+	 *//*
 	public static void notifyShiroSessionAndWSUpdate(String adminId,AdminsReplier newAdmin){
-       /**
+       *//**
         * 保持登陸記錄
-        */
+        *//*
         AdminsReplier wsAd = OnlineAdminsWS.getAdmin(adminId);
         
         if(wsAd == null){
@@ -517,23 +526,19 @@ public class AdminsService extends BaseService implements AdminsServiceI {
         adminsLoginLogReplier.setAdminName(newAdmin.getUsername());
         
         newAdmin.setAdminsLoginLogReplier(adminsLoginLogReplier);
-		
-		
-        /**
-         * 更新shiro的session中的信息
-         */
-        setOnlineAdmin(newAdmin);
         
-        /**
+        
+        
+        *//**
          * 更新ws中的信息
-         */
+         *//*
 		
         OnlineAdminsWS.updateAdmin(adminId, newAdmin);
         
         //向容器中所有的ws广播更新
         OnlineAdminsWS.broadcastOnlineAdminWS();
 	}
-	
+	*/
 	
 	@Override
 	public Admins selectAdminByPK(String id) throws Exception {

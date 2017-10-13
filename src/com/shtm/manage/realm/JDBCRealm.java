@@ -87,6 +87,7 @@ public class JDBCRealm extends AuthorizingRealm {
 		List<Roles> roles = Util.getList();
 		try {
 			roles = adminsService.selectRoles(dbAdmin.getId());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
