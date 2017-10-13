@@ -338,7 +338,7 @@ function deleteRole(){
 				editRoleDialog.dialog('close');
 				
 				//刷新表格
-				removeDatagridSelectedRow(admins_datagrid);
+				removeDatagridSelectedRow(roles_datagrid);
 				
 			}, function(){
 				

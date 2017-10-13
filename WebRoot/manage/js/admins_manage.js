@@ -184,6 +184,7 @@ function loadAdminsManageUI(){
 	        	nowrap:false,
 	        	width:25,
         		formatter: function(value,row,index){
+        			
 					var roles = row.roles;
 					var r = "";
 					for (var i = 0; i < roles.length; i++) {

@@ -26,6 +26,10 @@ function updateDatagridSelectedRow(url,datagrid){
 	ajax.send(url+"?"+strParams,
 	function(data){
 		c(data.rows);
+		c(data.rows.length);
+		if(data.rows.length == 0){
+			data.rows.push("");
+		}
 		datagrid.datagrid('updateRow',{
 			index: rowIndex-1,
 			row: data.rows[0]
