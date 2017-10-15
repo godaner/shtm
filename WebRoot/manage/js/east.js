@@ -74,6 +74,9 @@ function refreshOnlineAdminDG(data){
 				field:'addrs',
 				title:'地址',
 				formatter: function(value,row,index){
+					if(isEmpty(value)){
+						return "未知";
+					}
 					var province = row.province;
 					var city = row.city;
 					return province+"-"+city;
@@ -82,12 +85,23 @@ function refreshOnlineAdminDG(data){
 			,
 			{
 				field:'ip',
-				title:'ip'
+				title:'ip',
+				formatter: function(value,row,index){
+					if(isEmpty(value)||value=='undefined'){
+						
+						return "未知";
+					}
+					
+					return value;
+				}
 			},
 			{
 				field:'time',
 				title:'登陸時間',
 				formatter: function(value,row,index){
+					if(isEmpty(value)){
+						return "未知";
+					}
 					return timeFormatter.formatTime(value);
 				}
 			}
